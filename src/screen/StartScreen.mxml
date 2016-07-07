@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<f:StackScreenNavigatorItem xmlns:f="library://ns.feathersui.com/mxml"
+                            xmlns:fx="http://ns.adobe.com/mxml/2009">
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:VerticalLayout verticalAlign="middle" horizontalAlign="center"/>
+        </f:layout>
+
+        <f:Button label="Start"/>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        ]]></fx:Script>
+</f:StackScreenNavigatorItem>
