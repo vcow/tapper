@@ -14,7 +14,7 @@
             <entry library-id="b389fef9-5fd6-48fd-9a74-5e0233e22511">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="6549b979-2777-43b1-9b4b-94ca7c159bfd">
+            <entry library-id="d849fbaa-4951-4135-bfe8-3e41f8dfb5ed">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -72,13 +72,13 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="6549b979-2777-43b1-9b4b-94ca7c159bfd" />
+        <properties id="d849fbaa-4951-4135-bfe8-3e41f8dfb5ed" />
         <CLASSES>
-          <root url="file://C:/FeathersSDK3.0.1/frameworks/themes/MetalWorksMobileTheme" />
+          <root url="file://$MODULE_DIR$/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://C:/FeathersSDK3.0.1/frameworks/themes/MetalWorksMobileTheme" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>

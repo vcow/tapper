@@ -1,15 +1,12 @@
 <?xml version="1.0"?>
-<f:StackScreenNavigatorItem xmlns:f="library://ns.feathersui.com/mxml"
-                            xmlns:fx="http://ns.adobe.com/mxml/2009">
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
+    <f:layout>
+        <f:VerticalLayout verticalAlign="middle" horizontalAlign="center"/>
+    </f:layout>
 
-    <f:LayoutGroup>
-        <f:layout>
-            <f:VerticalLayout verticalAlign="middle" horizontalAlign="center"/>
-        </f:layout>
-
-        <f:Button label="Start"/>
-    </f:LayoutGroup>
+    <f:Button label="Start" triggered="{dispatchEventWith(START)}"/>
 
     <fx:Script><![CDATA[
+        public static const START:String = "startGame";
         ]]></fx:Script>
-</f:StackScreenNavigatorItem>
+</f:LayoutGroup>

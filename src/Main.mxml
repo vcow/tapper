@@ -1,11 +1,43 @@
 <?xml version="1.0"?>
 <f:StackScreenNavigatorApplication xmlns:f="library://ns.feathersui.com/mxml"
                                    xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:screen="screen.*"
-                                   rootScreenID="startScreenItem"
-                                   theme="feathers.themes.MetalWorksMobileTheme">
+                                   rootScreenID="startScreenItem">
 
-    <screen:StartScreen id="startScreenItem"/>
+    <f:StackScreenNavigatorItem id="startScreenItem">
+        <screen:StartScreen/>
+    </f:StackScreenNavigatorItem>
+
+    <f:StackScreenNavigatorItem id="gameScreenItem">
+        <screen:GameScreen/>
+    </f:StackScreenNavigatorItem>
+
+    <fx:Metadata>
+        [SWF(frameRate="60", backgroundColor="#14485e")]
+    </fx:Metadata>
 
     <fx:Script><![CDATA[
+        import config.ApplicationConfig;
+
+        import robotlegs.bender.framework.api.IContext;
+        import robotlegs.bender.framework.impl.Context;
+        import robotlegs.starling.bundles.mvcs.StarlingBundle;
+        import robotlegs.starling.extensions.viewProcessorMap.ViewProcessorMapExtension;
+        import robotlegs.starling.extensions.contextView.ContextView;
+
+        import starling.core.Starling;
+
+        override protected function initialize():void
+        {
+            var context:IContext = new Context();
+            context.install(StarlingBundle, ViewProcessorMapExtension)
+                    .configure(ApplicationConfig, new ContextView(Starling.current))
+                    .initialize(onInitialized);
+
+            super.initialize();
+        }
+
+        private function onInitialized():void
+        {
+        }
         ]]></fx:Script>
 </f:StackScreenNavigatorApplication>
