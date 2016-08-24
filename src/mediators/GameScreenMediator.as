@@ -5,7 +5,7 @@ package mediators
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
-	import screen.GameScreen;
+	import view.GameScreen;
 
 	import starling.events.Event;
 

@@ -95,7 +95,7 @@
         <!-- Whether the app will begin auto-orienting on launch. Optional. Mobile only. Default false -->
         <autoOrients>true</autoOrients>
 
-        <!-- Whether the app launches in full screen. Optional. Mobile only. Default false -->
+        <!-- Whether the app launches in full view. Optional. Mobile only. Default false -->
         <fullScreen>true</fullScreen>
 
         <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->

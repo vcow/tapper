@@ -2,14 +2,18 @@ package mediators
 {
 	import events.SwitchScreenEvent;
 
+	import feathers.controls.StackScreenNavigator;
+
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
-	public class AppMediator extends Mediator
+	import view.Application;
+
+	public class ApplicationMediator extends Mediator
 	{
 		[Inject]
-		public var view:Main;
+		public var view:Application;
 
-		public function AppMediator()
+		public function ApplicationMediator()
 		{
 			super();
 		}
@@ -25,13 +29,13 @@ package mediators
 		{
 			switch (event.type) {
 				case SwitchScreenEvent.POP:
-					view.popScreen();
+					StackScreenNavigator(view).popScreen();
 					break;
 				case SwitchScreenEvent.POP_TO_ROOT:
-					view.popToRootScreen();
+					StackScreenNavigator(view).popToRootScreen();
 					break;
 				case SwitchScreenEvent.SWITCH_TO_GAME:
-					view.pushScreen("gameScreenItem");
+					StackScreenNavigator(view).pushScreen("gameScreenItem");
 					break;
 			}
 		}

@@ -4,7 +4,7 @@ package mediators
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
-	import screen.StartScreen;
+	import view.StartScreen;
 
 	import starling.events.Event;
 

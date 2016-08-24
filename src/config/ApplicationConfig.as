@@ -1,6 +1,3 @@
-/**
- * Created by Yakov on 23.08.2016.
- */
 package config
 {
 	import commands.StartGameCommand;
@@ -8,7 +5,7 @@ package config
 
 	import events.GameStateEvent;
 
-	import mediators.AppMediator;
+	import mediators.ApplicationMediator;
 	import mediators.GameScreenMediator;
 	import mediators.StartScreenMediator;
 
@@ -20,9 +17,11 @@ package config
 	import robotlegs.bender.framework.api.IInjector;
 	import robotlegs.starling.extensions.mediatorMap.api.IMediatorMap;
 
-	import screen.GameScreen;
+	import view.Application;
 
-	import screen.StartScreen;
+	import view.GameScreen;
+
+	import view.StartScreen;
 
 	public class ApplicationConfig implements IConfig
 	{
@@ -43,7 +42,7 @@ package config
 		{
 			injector.map(GameModel).toSingleton(GameModel);
 
-			mediatorMap.map(Main).toMediator(AppMediator);
+			mediatorMap.map(Application).toMediator(ApplicationMediator);
 			mediatorMap.map(StartScreen).toMediator(StartScreenMediator);
 			mediatorMap.map(GameScreen).toMediator(GameScreenMediator);
 
