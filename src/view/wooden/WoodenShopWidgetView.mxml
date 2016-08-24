@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+               implements="starling.animation.IAnimatable" filter="{new GlowFilter(glowColor)}"
+               removedFromStage="onRemovedFromStage()">
+
+    <fx:Declarations>
+        <f:LayoutGroup id="borderGroup" backgroundSkin="{border}">
+            <f:layout>
+                <f:HorizontalLayout paddingLeft="25" paddingRight="25" paddingTop="15" paddingBottom="15"/>
+            </f:layout>
+
+            <f:Label id="unitNameLabel" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
+        </f:LayoutGroup>
+    </fx:Declarations>
+
+    <fx:Metadata>
+        [Event(name="complete", type="starling.events.Event")]
+        [Event(name="close", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.core.Starling;
+
+        import starling.display.Image;
+        import starling.events.Event;
+        import starling.filters.GlowFilter;
+        import starling.textures.RenderTexture;
+        import starling.textures.Texture;
+        import starling.textures.TextureAtlas;
+
+        private var _border:Image;
+        private var _noise:Image;
+        private var _batch:RenderTexture;
+
+        private var _noiseTextures:Vector.<Texture>;
+        private var _idleTextures:Vector.<Texture>;
+
+        private static const IN:int = 0;
+        private static const IDLE:int = 1;
+        private static const OUT:int = 2;
+
+        private var _currentAnimation:Vector.<Texture>;
+        private var _step:int = IN;
+
+        private var _text:String;
+        private var _timeout:Number;
+
+        private var _currentTime:Number = 0;
+        private var _currentFrame:int = 0;
+        private const _timeStep:Number = 1.0 / NOISE_FPS;
+
+        private static const NOISE_FPS:Number = 18;
+
+        private var _isAnimated:Boolean;
+        private var _isActive:Boolean;
+
+        public var color:uint = 0xffffff;
+
+        [Bindable]
+        public var glowColor:uint = 0xffffff;
+
+        private static var _noiseAtlas:TextureAtlas;
+        private static var _woodenAtlas:TextureAtlas;
+
+        private static function get noiseAtlas():TextureAtlas
+        {
+            if (!_noiseAtlas)
+            {
+                _noiseAtlas = AtlasLibrary.getInstance().manager.getTextureAtlas("noise_anim");
+            }
+            return _noiseAtlas;
+        }
+
+        private static function get woodenAtlas():TextureAtlas
+        {
+            if (!_woodenAtlas)
+            {
+                _woodenAtlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _woodenAtlas;
+        }
+
+        private function get border():Image
+        {
+            if (!_border)
+            {
+                _border = new Image(woodenAtlas.getTexture("wooden_shop_widget_border"));
+                _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
+            }
+            return _border;
+        }
+
+        public function advanceTime(time:Number):void
+        {
+            if (!_isAnimated) beginNoise();
+
+            _currentTime += time;
+            if (_currentTime >= _timeStep)
+            {
+                var delta:int = Math.floor(_currentTime / _timeStep);
+                _currentTime = 0;
+                _currentFrame = _currentFrame + delta;
+                if (_currentFrame >= _currentAnimation.length)
+                {
+                    switch (_step)
+                    {
+                        case IN:
+                            _currentAnimation = _idleTextures;
+                            _currentFrame = 0;
+                            _step = IDLE;
+                            break;
+                        case IDLE:
+                            _currentFrame %= _currentAnimation.length;
+                            break;
+                        case OUT:
+                            completeNoise();
+                            return;
+                    }
+                }
+                _noise.texture = _currentAnimation[_currentFrame];
+                if (_batch) _batch.drawBundled(drawBundled);
+            }
+        }
+
+        private function completeNoise():void
+        {
+            _isActive = false;
+
+            if (_isAnimated)
+            {
+                Starling.juggler.remove(this);
+                _isAnimated = false;
+                _text = null;
+                dispatchEventWith(starling.events.Event.COMPLETE);
+            }
+        }
+
+        private function beginNoise(restart:Boolean = false):void
+        {
+            _isActive = true;
+
+            if (!_isAnimated || restart)
+            {
+                _currentAnimation = _noiseTextures;
+                _currentTime = 0;
+                _currentFrame = 0;
+                _step = IN;
+
+                if (_timeout)
+                {
+                    Starling.juggler.delayCall(outCallback, _timeout);
+                }
+                _isAnimated = true;
+            }
+        }
+
+        private function outCallback():void
+        {
+            if (_isAnimated)
+            {
+                _currentFrame = 0;
+                _currentAnimation = _noiseTextures;
+                _step = OUT;
+            }
+
+            if (_isActive)
+            {
+                _isActive = false;
+                dispatchEventWith(starling.events.Event.CLOSE);
+            }
+        }
+
+        public function set timeout(value:Number):void
+        {
+            _timeout = value;
+            if (_isActive)
+            {
+                Starling.juggler.removeDelayedCalls(outCallback);
+                if (_timeout) Starling.juggler.delayCall(outCallback, _timeout);
+            }
+        }
+
+        public function set text(value:String):void
+        {
+            if (value == _text) return;
+            _text = value;
+
+            if (isInitialized)
+            {
+                if (_text)
+                {
+                    unitNameLabel.text = text;
+                    measureWidget();
+                }
+                else
+                {
+                    if (_batch)
+                    {
+                        _batch.dispose();
+                        _batch = null;
+                    }
+                    this.backgroundSkin = null;
+                }
+
+                Starling.juggler.remove(this);
+                Starling.juggler.removeDelayedCalls(outCallback);
+
+                if (_text)
+                {
+                    if (_isActive)
+                    {
+                        if (_timeout) Starling.juggler.delayCall(outCallback, _timeout);
+                    }
+                    else
+                    {
+                        beginNoise(true);
+                    }
+                }
+                else if (!_text && _isActive)
+                {
+                    outCallback();
+                }
+            }
+
+            if (text && !Starling.juggler.contains(this))
+            {
+                Starling.juggler.add(this);
+            }
+        }
+
+        public function get text():String
+        {
+            return LocaleManager.getInstance().getString("common", "shop.widget.title", [_text]);
+        }
+
+        private function measureWidget():void
+        {
+            unitNameLabel.validate();
+            borderGroup.validate();
+
+            var w:Number = borderGroup.width;
+            var h:Number = borderGroup.height;
+
+            if (w && h)
+            {
+                _noise.width = w;
+                _noise.height = h;
+
+                var backSkin:RenderTexture = new RenderTexture(w, h, false);
+                var skin:Image = new Image(backSkin);
+                skin.color = color;
+                this.backgroundSkin = skin;
+
+                if (_batch) _batch.dispose();
+                _batch = backSkin;
+
+                backSkin.drawBundled(drawBundled);
+            }
+            else
+            {
+                this.backgroundSkin = null;
+                if (_batch) _batch.dispose();
+                _batch = null;
+            }
+        }
+
+        private function drawBundled():void
+        {
+            if (filter) filter.cache();
+            _batch.draw(borderGroup);
+            _batch.draw(_noise);
+        }
+
+        override public function dispose():void
+        {
+            if (_batch) _batch.dispose();
+            super.dispose();
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            _noiseTextures = noiseAtlas.getTextures("noise");
+            _idleTextures = noiseAtlas.getTextures("idle");
+
+            _noise = new Image(_noiseTextures[0]);
+            _noise.blendMode = starling.display.BlendMode.MASK;
+
+            if (_text)
+            {
+                unitNameLabel.text = text;
+                measureWidget();
+            }
+        }
+
+        private function onRemovedFromStage():void
+        {
+            if (_isAnimated)
+            {
+                Starling.juggler.removeDelayedCalls(outCallback);
+                Starling.juggler.remove(this);
+                _isActive = false;
+                _text = null;
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

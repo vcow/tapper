@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:37f6f5d69a4335aa4c3b6b6d09204119:a0fb8b8bd0e83057f661447c54b45572:b02a08e20f4cdce60483e65273ad1152$ -->
+<TextureAtlas imagePath="title.atf" width="2048" height="2048">
+    <SubTexture name="back" x="1" y="1" width="576" height="1024"/>
+    <SubTexture name="Layer 1-letters_000" x="579" y="1" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_001" x="1" y="1389" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_002" x="579" y="157" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_003" x="1000" y="1" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_004" x="157" y="1389" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_005" x="579" y="313" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_006" x="1000" y="157" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_007" x="1421" y="1" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_008" x="579" y="469" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_009" x="1000" y="313" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_010" x="1421" y="157" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_011" x="579" y="625" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_012" x="1000" y="469" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_013" x="1421" y="313" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_014" x="1842" y="1" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_015" x="579" y="781" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_016" x="1000" y="625" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_017" x="1421" y="469" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_018" x="1000" y="781" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_019" x="1421" y="625" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_020" x="1421" y="781" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_021" x="1842" y="422" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_022" x="389" y="1027" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_023" x="579" y="937" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_024" x="1000" y="937" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_025" x="1421" y="937" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_026" x="545" y="1093" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_027" x="545" y="1249" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_028" x="966" y="1093" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_029" x="966" y="1249" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_030" x="1387" y="1093" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_031" x="1387" y="1249" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_032" x="1" y="1810" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_033" x="545" y="1405" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_034" x="966" y="1405" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_035" x="1387" y="1405" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_036" x="1808" y="1093" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_037" x="385" y="1561" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_038" x="806" y="1561" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_039" x="1227" y="1561" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_040" x="422" y="1717" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_041" x="843" y="1717" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_042" x="1264" y="1717" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_043" x="422" y="1873" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_044" x="843" y="1873" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_045" x="1264" y="1873" width="419" height="154"/>
+    <SubTexture name="Layer 1-letters_046" x="1685" y="1561" rotated="true" width="154" height="419"/>
+    <SubTexture name="Layer 1-letters_047" x="1841" y="1514" rotated="true" width="154" height="419"/>
+    <SubTexture name="menu_bn_disabled" x="313" y="1389" rotated="true" width="70" height="299"/>
+    <SubTexture name="menu_bn_down" x="1964" y="1144" rotated="true" width="67" height="295" frameX="-2" frameY="-1" frameWidth="299" frameHeight="70"/>
+    <SubTexture name="menu_bn_normal" x="1964" y="843" rotated="true" width="70" height="299"/>
+    <SubTexture name="progress_back" x="1" y="1027" width="386" height="360" frameX="-5" frameY="-5" frameWidth="396" frameHeight="370"/>
+    <SubTexture name="progress_bar" x="1" y="1966" width="386" height="25" frameX="-5" frameY="-5" frameWidth="396" frameHeight="35"/>
+    <SubTexture name="progress_border" x="1998" y="1" rotated="true" width="35" height="396"/>
+    <SubTexture name="settings_down" x="1842" y="843" width="59" height="59" frameX="-2" frameY="-2" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="settings_normal" x="313" y="1690" width="59" height="59" frameX="-2" frameY="-2" frameWidth="64" frameHeight="64"/>
+</TextureAtlas>

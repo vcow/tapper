@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               implements="com.vcow.textinput.ITextInputKeyboard" backgroundSkin="{new Quad(10, 10, 0x464646)}">
+
+    <fx:Metadata>
+        [Event(name="char", type="starling.events.Event")]
+        [Event(name="clear", type="starling.events.Event")]
+        [Event(name="close", type="starling.events.Event")]
+        [Event(name="switch_eng", type="starling.events.Event")]
+        [Event(name="switch_rus", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import starling.display.Quad;
+        import starling.events.Event;
+
+        [Embed(source="back_icon.png")]
+        protected static var backIconClass:Class;
+
+        [Embed(source="enter_icon.png")]
+        protected static var enterIconClass:Class;
+
+        [Embed(source="shift_icon.png")]
+        protected static var shiftIconClass:Class;
+
+        private var _isUpperCase:Boolean;
+
+        [Bindable]
+        public var buttonLabelProperties:Object;
+
+        protected function onPushButton(event:starling.events.Event):void
+        {
+            var button:TextInputKeyboardButton = TextInputKeyboardButton(event.target);
+            dispatchEventWith('char', false, button.label);
+        }
+
+        protected function switchRegister():void
+        {
+            _isUpperCase = !_isUpperCase;
+            doSwitchRegister(this);
+        }
+
+        private function doSwitchRegister(container:starling.display.DisplayObjectContainer):void
+        {
+            for (var i:int = 0, l:int = container.numChildren; i < l; ++i)
+            {
+                var child:starling.display.DisplayObject = container.getChildAt(i);
+                if (child is TextInputKeyboardButton)
+                {
+                    var button:TextInputKeyboardButton = TextInputKeyboardButton(child);
+                    if (button.label)
+                    {
+                        switch (button.label)
+                        {
+                            case "eng":
+                            case "рус":
+                                break;
+                            case ".":
+                            case ",":
+                                button.label = _isUpperCase ? "," : ".";
+                                break;
+                            default:
+                                button.label = _isUpperCase ? button.label.toUpperCase() : button.label.toLowerCase();
+                        }
+                    }
+                }
+                else if (child is starling.display.DisplayObjectContainer)
+                {
+                    doSwitchRegister(starling.display.DisplayObjectContainer(child));
+                }
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

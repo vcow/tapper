@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+                               backgroundSkin="{new Image(_unitData.icon)}">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:Label text="{_unitData.count}" visible="{_unitData.count >= 0}" includeInLayout="{_unitData.count >= 0}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('unit_count_22')}}"
+             touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData right="10" bottom="0"/>
+        </f:layoutData>
+    </f:Label>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import starling.display.Image;
+
+        import vo.Unit;
+
+        [Bindable]
+        public var _unitData:Unit;
+
+        override public function set data(value:Object):void
+        {
+            super.data = value;
+            _unitData = data as Unit;
+        }
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

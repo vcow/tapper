@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               removedFromStage="onRemovedFromStage()">
+    <f:backgroundSkin>
+        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('message_box_back'))}">
+            <f:layout>
+                <f:VerticalLayout padding="6"/>
+            </f:layout>
+            <f:LayoutGroup backgroundSkin="{borderImage}" touchable="false">
+                <f:layoutData>
+                    <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+                </f:layoutData>
+            </f:LayoutGroup>
+        </f:LayoutGroup>
+    </f:backgroundSkin>
+
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:VerticalLayout padding="20" paddingBottom="25" gap="20" horizontalAlign="center"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
+        </f:layoutData>
+
+        <f:Label maxWidth="410" wordWrap="true" text="{message}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('message_box', NaN, 0xffffff, TextFormatAlign.CENTER)}}">
+            <f:layoutData>
+                <f:VerticalLayoutData percentHeight="100"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:LayoutGroup id="buttonGroup">
+            <f:layout>
+                <f:HorizontalLayout horizontalAlign="center" gap="10"/>
+            </f:layout>
+        </f:LayoutGroup>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import feathers.controls.Button;
+        import feathers.text.BitmapFontTextFormat;
+
+        import flash.geom.Rectangle;
+
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Image;
+        import starling.events.EventDispatcher;
+
+        import starling.textures.TextureAtlas;
+
+        import vo.MessageBoxData;
+
+        [Bindable]
+        private var message:String;
+
+        private var _data:MessageBoxData;
+        private var _result:uint;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        private static var _borderImage:Image;
+        private function get borderImage():Image
+        {
+            if (!_borderImage)
+            {
+                _borderImage = new Image(atlas.getTexture("message_box_border"));
+                _borderImage.scale9Grid = new flash.geom.Rectangle(35, 35, 8, 8);
+            }
+            return _borderImage;
+        }
+
+        public function set data(value:MessageBoxData):void
+        {
+            if (value)
+            {
+                _data = value;
+                message = value.message;
+                if (isInitialized)
+                    setButtons(value.buttons);
+            }
+        }
+
+        private function setButtons(value:uint):void
+        {
+            var lm:LocaleManager = LocaleManager.getInstance();
+            buttonGroup.removeChildren();
+            if ((value & Const.ON_OK) != 0)
+                addButton(lm.getString("common", "ok.bn.label"), Const.ON_OK, this);
+            if ((value & Const.ON_YES) != 0)
+                addButton(lm.getString("common", "yes.bn.label"), Const.ON_YES, this);
+            if ((value & Const.ON_NO) != 0)
+                addButton(lm.getString("common", "no.bn.label"), Const.ON_NO, this);
+            if ((value & Const.ON_CANCEL) != 0)
+                addButton(lm.getString("common", "cancel.bn.label"), Const.ON_CANCEL, this);
+        }
+
+        private function addButton(label:String, data:uint, eventDispatcher:starling.events.EventDispatcher):void
+        {
+            var button:Button = new Button();
+            var triggeredHandler:Function = function (event:starling.events.Event):void
+            {
+                _result = data;
+                removedHandler(null);
+                eventDispatcher.dispatchEventWith(starling.events.Event.CLOSE, false, data);
+            };
+            var removedHandler:Function = function (event:starling.events.Event):void
+            {
+                button.removeEventListener(starling.events.Event.TRIGGERED, triggeredHandler);
+                button.removeEventListener(starling.events.Event.REMOVED_FROM_STAGE, removedHandler);
+            };
+            button.addEventListener(starling.events.Event.TRIGGERED, triggeredHandler);
+            button.addEventListener(starling.events.Event.REMOVED_FROM_STAGE, removedHandler);
+            button.styleProvider = StylesLibrary.messageBoxButtonStyleProvider;
+            button.label = label;
+            buttonGroup.addChild(button);
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+            setButtons(_data.buttons);
+        }
+
+        private function onRemovedFromStage():void
+        {
+            if (_data && _data.callback != null)
+            {
+                _data.callback(_result);
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

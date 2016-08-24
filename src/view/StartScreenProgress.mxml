@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{backgroundImage}" width="396">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup id="progressGroup" clipContent="true" touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData bottom="0"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
+    <f:ImageLoader id="buttonsBack" source="{atlas.getTexture('progress_back')}"
+                   includeInLayout="false" touchable="false" visible="false"/>
+
+    <fx:Metadata>
+        [Event(name="animationComplete", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+
+        import starling.animation.Transitions;
+
+        import starling.animation.Tween;
+
+        import starling.core.Starling;
+
+        import starling.display.Image;
+        import starling.textures.TextureAtlas;
+
+        private static var _backgroundImage:Image;
+
+        private var _progress:Number = 0;
+        private var _expanded:Boolean;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("title");
+            }
+            return _atlas;
+        }
+
+        protected static function get backgroundImage():Image
+        {
+            if (!_backgroundImage)
+            {
+                _backgroundImage = new Image(atlas.getTexture("progress_border"));
+                _backgroundImage.scale9Grid = new flash.geom.Rectangle(0, 15, 396, 5);
+            }
+            return _backgroundImage;
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            var progressBar:Image = new Image(atlas.getTexture("progress_bar"));
+            progressGroup.addChild(progressBar);
+            updateProgress();
+        }
+
+        public function set progress(value:Number):void
+        {
+            if (value == _progress) return;
+            _progress = value;
+            updateProgress();
+        }
+
+        public function get progress():Number
+        {
+            return _progress;
+        }
+
+        private function updateProgress():void
+        {
+            if (isInitialized)
+            {
+                progressGroup.width = 396;
+                if (_progress >= 1.0)
+                {
+                    if (!_expanded)
+                    {
+                        Starling.juggler.removeTweens(this);
+                        Starling.juggler.removeTweens(buttonsBack);
+                        Starling.juggler.removeTweens(progressGroup);
+
+                        height = 35;
+                        buttonsBack.alpha = 0;
+                        buttonsBack.visible = true;
+                        var tween:Tween = new Tween(this, 0.5, Transitions.EASE_OUT);
+                        tween.animate("height", 370);
+                        tween.roundToInt = true;
+                        tween.onCompleteArgs = [this];
+                        tween.onComplete = function (self:StartScreenProgress):void
+                        {
+                            var tween:Tween = new Tween(self.buttonsBack, 0.25, Transitions.EASE_IN);
+                            tween.fadeTo(1.0);
+                            tween.onCompleteArgs = [self];
+                            tween.onComplete = function (self:StartScreenProgress):void
+                            {
+                                self.dispatchEventWith("animationComplete");
+                            };
+                            Starling.juggler.add(tween);
+                        };
+                        Starling.juggler.add(tween);
+
+                        tween = new Tween(progressGroup, 0.25, Transitions.EASE_IN);
+                        tween.fadeTo(0);
+                        tween.onCompleteArgs = [this];
+                        tween.onComplete = function (self:StartScreenProgress):void
+                        {
+                            self.progressGroup.visible = false;
+                        };
+                        Starling.juggler.add(tween);
+
+                        _expanded = true;
+                    }
+                }
+                else
+                {
+                    progressGroup.width = Math.round(6 + (396 - 12) * _progress);
+                    if (_expanded)
+                    {
+                        Starling.juggler.removeTweens(this);
+                        Starling.juggler.removeTweens(buttonsBack);
+                        Starling.juggler.removeTweens(progressGroup);
+
+                        height = 396;
+                        buttonsBack.visible = false;
+                        progressGroup.visible = true;
+                        progressGroup.alpha = 1.0;
+                        _expanded = false;
+                    }
+                }
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

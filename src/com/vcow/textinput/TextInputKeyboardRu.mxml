@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<textinput:TextInputKeyboardBase xmlns:f="library://ns.feathersui.com/mxml"
+                                 xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:textinput="com.vcow.textinput.*">
+    <textinput:layout>
+        <f:VerticalLayout paddingTop="15" paddingBottom="20" horizontalAlign="center" gap="7"/>
+    </textinput:layout>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="5" paddingBottom="5"/>
+        </f:layout>
+
+        <textinput:TextInputKeyboardButton label="1" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="2" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="3" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="4" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="5" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="6" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="7" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="8" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="9" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="0" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton defaultLabelProperties="{buttonLabelProperties}"
+                                           defaultIcon="{new Image(Texture.fromEmbeddedAsset(backIconClass))}"
+                                           triggered="dispatchEventWith('clear')" width="70"/>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="5"/>
+        </f:layout>
+
+        <textinput:TextInputKeyboardButton label="й" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ц" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="у" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="к" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="е" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="н" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="г" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ш" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="щ" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="з" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="х" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ъ" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="5"/>
+        </f:layout>
+
+        <textinput:TextInputKeyboardButton label="ф" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ы" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="в" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="а" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="п" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="р" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="о" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="л" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="д" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ж" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="э" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="5"/>
+        </f:layout>
+
+        <textinput:TextInputKeyboardButton defaultLabelProperties="{buttonLabelProperties}"
+                                           defaultIcon="{new Image(Texture.fromEmbeddedAsset(shiftIconClass))}"
+                                           triggered="switchRegister()" width="70"/>
+        <textinput:TextInputKeyboardButton label="я" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ч" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="с" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="м" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="и" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="т" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ь" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="б" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="ю" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="." defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="5" paddingTop="5"/>
+        </f:layout>
+
+        <textinput:TextInputKeyboardButton label="eng" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="dispatchEventWith('switch_eng')" width="70"/>
+        <f:LayoutGroup width="5"/>
+        <textinput:TextInputKeyboardButton label="+" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label="-" defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)"/>
+        <textinput:TextInputKeyboardButton label=" " defaultLabelProperties="{buttonLabelProperties}"
+                                           triggered="onPushButton(event)" width="200"/>
+        <textinput:TextInputKeyboardButton defaultLabelProperties="{buttonLabelProperties}"
+                                           defaultIcon="{new Image(Texture.fromEmbeddedAsset(enterIconClass))}"
+                                           triggered="{dispatchEventWith('close')}" width="90"/>
+    </f:LayoutGroup>
+    <fx:Script><![CDATA[
+        import starling.display.Image;
+        import starling.textures.Texture;
+        ]]></fx:Script>
+</textinput:TextInputKeyboardBase>

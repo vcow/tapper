@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:textinput="com.vcow.textinput.*" touch="onTouch(event)"
+               backgroundSkin="{backSkin}" creationComplete="onCreationComplete()">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <textinput:TextInputLabel text="{promptText}" textRendererProperties="{promptProperties}" touchable="false"
+                              visible="{promptVisibility &amp;&amp; !isEdited &amp;&amp; !text}">
+        <textinput:layoutData>
+            <f:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
+        </textinput:layoutData>
+    </textinput:TextInputLabel>
+
+    <textinput:TextInputLabel id="textInput" text="{text}" textRendererFactory="textRendererFactory"
+                              isQuickHitAreaEnabled="false"
+                              textRendererProperties="{textRendererProperties}">
+        <textinput:layoutData>
+            <f:AnchorLayoutData left="0" right="0" top="{verticalTextOffset}" bottom="{-verticalTextOffset}"/>
+        </textinput:layoutData>
+    </textinput:TextInputLabel>
+
+    <f:LayoutGroup touchable="false" backgroundSkin="{new Quad(2, 2, cursorColor)}" visible="{isEdited}">
+        <f:layoutData>
+            <f:AnchorLayoutData id="cursor" top="8" bottom="0"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import feathers.core.ITextRenderer;
+
+        import flash.geom.Rectangle;
+
+        import flash.events.TimerEvent;
+
+        import starling.core.Starling;
+
+        import starling.display.Quad;
+        import starling.events.Event;
+        import starling.events.Touch;
+        import starling.events.TouchPhase;
+
+        private var _backSkin:Quad;
+
+        private var _backScreenColor:uint = 0xffffff;
+        private var _backScreenAlpha:Number = 0;
+
+        private var _showPrompt:Boolean = false;
+        private var _text:String = "";
+
+        public var cursorOffset:Number = 0;
+
+        private var _isEdited:Boolean;
+
+        private var _keyboard:TextInputKeyboardScreen;
+
+        private var _currentPosition:int;
+
+        [Bindable]
+        public var verticalTextOffset:Number = 0;
+
+        [Bindable]
+        public var cursorColor:uint;
+
+        [Bindable(event="isEditedChanged")]
+        private function get isEdited():Boolean
+        {
+            return _isEdited;
+        }
+
+        public var maxChars:int = -1;
+
+        private function set isEdited(value:Boolean):void
+        {
+            if (value == _isEdited) return;
+
+            _isEdited = value;
+            if (_isEdited)
+            {
+                if (_keyboard) return;
+                _keyboard = new TextInputKeyboardScreen();
+                _keyboard.textInput = this;
+                _keyboard.addEventListener(starling.events.Event.CLOSE, onCloseKeyboard);
+                _keyboard.addEventListener("clear", onKeyboardClear);
+                _keyboard.addEventListener("type", onKeyboardType);
+                Starling.current.stage.addChild(_keyboard);
+            }
+            else
+            {
+                if (!_keyboard) return;
+                _keyboard.removeEventListener(starling.events.Event.CLOSE, onCloseKeyboard);
+                _keyboard.removeEventListener("clear", onKeyboardClear);
+                _keyboard.removeEventListener("type", onKeyboardType);
+                _keyboard.removeFromParent(true);
+                _keyboard = null;
+            }
+
+            dispatchEventWith("isEditedChanged");
+        }
+
+        private function onKeyboardClear(event:starling.events.Event):void
+        {
+            if (_currentPosition <= 0) return;
+            var txt:String = text.substr(0, _currentPosition - 1);
+            if (_currentPosition < text.length) txt += text.substr(_currentPosition);
+            --_currentPosition;
+            text = txt;
+        }
+
+        private function onKeyboardType(event:starling.events.Event):void
+        {
+            if (maxChars >= 0 && text.length >= maxChars) return;
+
+            var ch:String = String(event.data);
+            if (_currentPosition <= 0)
+            {
+                var txt:String = ch + text;
+                _currentPosition = 1;
+            }
+            else if (_currentPosition >= text.length)
+            {
+                txt = text + ch;
+                _currentPosition = txt.length;
+            }
+            else
+            {
+                txt = text.substr(0, _currentPosition) + ch + text.substr(_currentPosition);
+                ++_currentPosition;
+            }
+            text = txt;
+        }
+
+        private function onCloseKeyboard(event:starling.events.Event):void
+        {
+            isEdited = false;
+        }
+
+        [Bindable(event="textChanged")]
+        public function get text():String
+        {
+            return _text;
+        }
+
+        public function set text(value:String):void
+        {
+            if (value == _text) return;
+
+            _text = value;
+            dispatchEventWith("textChanged");
+
+            textInput.validate();
+
+            if (_text)
+            {
+                var rc:Rectangle = getCharRect(Math.max(_currentPosition - 1, 0));
+                setCursor(_currentPosition == 0 ? rc.topLeft : rc.bottomRight);
+            }
+            else
+            {
+                setCursor(getEmptyCursorPoint());
+            }
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+            createBackScreen();
+        }
+
+        private function createBackScreen():void
+        {
+            _backSkin = new Quad(80, 25, _backScreenColor);
+            _backSkin.alpha = _backScreenAlpha;
+            dispatchEventWith("backSkinChanged");
+        }
+
+        [Bindable(event="promptVisibilityChanged")]
+        private function get promptVisibility():Boolean
+        {
+            return _showPrompt;
+        }
+
+        [Bindable(event="backSkinChanged")]
+        private function get backSkin():Quad
+        {
+            return _backSkin;
+        }
+
+        public function set backgroundColor(value:uint):void
+        {
+            if (value == _backScreenColor) return;
+            _backScreenColor = value;
+            createBackScreen();
+        }
+
+        public function set backgroundAlpha(value:Number):void
+        {
+            if (value == _backScreenAlpha) return;
+            _backScreenAlpha = value;
+            createBackScreen();
+        }
+
+        public function set showPrompt(value:Boolean):void
+        {
+            if (value == _showPrompt) return;
+            _showPrompt = value;
+            dispatchEventWith("promptVisibilityChanged");
+        }
+
+        [Bindable]
+        public var promptText:String = "";
+
+        [Bindable]
+        public var promptProperties:Object;
+
+        [Bindable]
+        public var textRendererProperties:Object;
+
+        private static function textRendererFactory():ITextRenderer
+        {
+            var textRenderer:TextInputTextFieldTextRenderer = new TextInputTextFieldTextRenderer();
+            textRenderer.embedFonts = true;
+            return textRenderer;
+        }
+
+        private function onCreationComplete():void
+        {
+            addEventListener(TextInputTextFieldTextRenderer.TEXT_SELECT, onTextSelect);
+            onTextSelect(new starling.events.Event(TextInputTextFieldTextRenderer.TEXT_SELECT, true,
+                    {index: -1, point: new Point()}));
+        }
+
+        private function onTextSelect(event:starling.events.Event):void
+        {
+            event.stopPropagation();
+
+            var pt:Point;
+            if (event.data.index < 0)
+            {
+                if (text)
+                {
+                    var rc:Rectangle = getCharRect(0);
+                    if (event.data.point.x <= rc.x)
+                    {
+                        pt = rc.topLeft;
+                        _currentPosition = 0;
+                    }
+                    else
+                    {
+                        rc = getCharRect(text.length - 1);
+                        pt = rc.bottomRight;
+                        _currentPosition = text.length;
+                    }
+                }
+                else
+                {
+                    pt = getEmptyCursorPoint();
+                    _currentPosition = 0;
+                }
+            }
+            else
+            {
+                _currentPosition = event.data.index;
+                rc = getCharRect(event.data.index);
+                pt = event.data.point.x < rc.x + rc.width / 2 ? rc.topLeft : rc.bottomRight;
+            }
+
+            setCursor(pt);
+            isEdited = event.target is TextInputTextFieldTextRenderer;
+        }
+
+        private function getEmptyCursorPoint():Point
+        {
+            var pt:Point;
+            switch (TextInputTextFieldTextRenderer(textInput.getTextRenderer()).textFormat.align)
+            {
+                case TextFormatAlign.LEFT:
+                case TextFormatAlign.START:
+                    pt = new Point();
+                    break;
+                case TextFormatAlign.RIGHT:
+                case TextFormatAlign.END:
+                    pt = new Point(textInput.width, 0);
+                    break;
+                default:
+                    pt = new Point(textInput.width / 2, 0);
+            }
+            return pt;
+        }
+
+        public function touch(pt:Point):void
+        {
+            if (!text) return;
+
+            var cursorPt:Point = new Point();
+            for (var i:int = 0, l:int = text.length; i < l; ++i)
+            {
+                var rc:Rectangle = getCharRect(i);
+                if (Math.abs(pt.x - rc.x) < Math.abs(pt.x - cursorPt.x))
+                {
+                    cursorPt = rc.topLeft;
+                    _currentPosition = i;
+                }
+                if (Math.abs(pt.x - (rc.x + rc.width)) < Math.abs(pt.x - cursorPt.x))
+                {
+                    cursorPt = rc.bottomRight;
+                    _currentPosition = i + 1;
+                }
+            }
+            setCursor(cursorPt);
+        }
+
+        private function getCharRect(index:int):Rectangle
+        {
+            var rc:Rectangle = TextInputTextFieldTextRenderer(textInput.getTextRenderer()).getCharRect(index);
+            if (!rc) return new flash.geom.Rectangle();
+            rc.x += cursorOffset;
+            return rc;
+        }
+
+        private function setCursor(pt:Point):void
+        {
+            cursor.left = pt.x;
+        }
+
+        private function onTouch(event:starling.events.TouchEvent):void
+        {
+            var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
+            if (touch)
+            {
+                isEdited = true;
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

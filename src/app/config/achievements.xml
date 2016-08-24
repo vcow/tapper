@@ -1,0 +1,113 @@
+﻿<?xml version="1.0"?>
+<achievements>
+	<achievement id="levelup1">
+		<rewards>
+			<action id="levelUp">1</action>
+		</rewards>
+		<conditions>
+			<money min="5000"/>
+			<level min="0" max="0"/>
+			<top min="5">foreman</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup2">
+		<rewards>
+			<action id="levelUp">2</action>
+		</rewards>
+		<conditions>
+			<money min="50000"/>
+			<level min="1" max="1"/>
+			<top min="2">verwolf</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup3">
+		<rewards>
+			<action id="levelUp">3</action>
+		</rewards>
+		<conditions>
+			<money min="150000"/>
+			<level min="2" max="2"/>
+			<top min="3">official</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup4">
+		<rewards>
+			<action id="levelUp">4</action>
+		</rewards>
+		<conditions>
+			<money min="2000000"/>
+			<level min="3" max="3"/>
+			<top min="1">deputy</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup5">
+		<rewards>
+			<action id="levelUp">5</action>
+		</rewards>
+		<conditions>
+			<money min="3500000"/>
+			<level min="4" max="4"/>
+			<unit min="1">sect</unit>
+			<top min="3">ship</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup6">
+		<rewards>
+			<action id="levelUp">6</action>
+		</rewards>
+		<conditions>
+			<level max="5"/>
+			<top min="1">oon</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup7">
+		<rewards>
+			<action id="levelUp">7</action>
+		</rewards>
+		<conditions>
+			<money min="5000000"/>
+			<level max="6"/>
+			<unit min="1">frs</unit>
+			<unit min="1">oon</unit>
+			<unit min="1">nato</unit>
+		</conditions>
+	</achievement>
+	<achievement id="levelup8">
+		<rewards>
+			<action id="levelUp">8</action>
+		</rewards>
+		<conditions>
+			<money min="700000000"/>
+			<level max="7"/>
+			<unit min="1">death_star</unit>
+		</conditions>
+	</achievement>
+	<achievement id="levelup9">
+		<rewards>
+			<action id="levelUp">9</action>
+		</rewards>
+		<conditions>
+			<money min="1200000000"/>
+			<level max="8"/>
+			<top min="1">space_fleet</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup10">
+		<rewards>
+			<action id="levelUp">10</action>
+		</rewards>
+		<conditions>
+			<money min="3500000000"/>
+			<level max="9"/>
+			<top min="1">planet_system</top>
+		</conditions>
+	</achievement>
+	<achievement id="levelup11">
+		<rewards>
+			<action id="levelUp">11</action>
+		</rewards>
+		<conditions>
+			<unit min="1">universe</unit>
+		</conditions>
+	</achievement>
+</achievements>

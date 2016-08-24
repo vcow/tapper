@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                               backgroundSkin="{new Image(atlas.getTexture('shop_item_back'))}"
+                               initialize="{_trigger = new TapToTrigger(this)}">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <!-- Иконка -->
+    <f:ImageLoader source="{_unitInfoData.iconSmall}" touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData left="20" top="14"/>
+        </f:layoutData>
+    </f:ImageLoader>
+
+    <!-- Название товара -->
+    <f:Label text="{_unitInfoData.name ? _unitInfoData.name.toUpperCase() : ''}" touchable="false"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_title_23')}}">
+        <f:layoutData>
+            <f:AnchorLayoutData left="160" top="13"/>
+        </f:layoutData>
+    </f:Label>
+
+    <!-- Награда за использование -->
+    <f:LayoutGroup touchable="false">
+        <f:layout>
+            <f:VerticalLayout gap="-2"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="162" top="56"/>
+        </f:layoutData>
+
+        <f:LayoutGroup includeInLayout="{Boolean(_unitInfoData.ppcLabel || _unitInfoData.ppsLabel)}"
+                       visible="{Boolean(_unitInfoData.ppcLabel || _unitInfoData.ppsLabel)}">
+            <f:layout>
+                <f:VerticalLayout gap="-2"/>
+            </f:layout>
+
+            <!-- PPC -->
+            <f:LayoutGroup includeInLayout="{Boolean(_unitInfoData.ppcLabel)}"
+                           visible="{Boolean(_unitInfoData.ppcLabel)}">
+                <f:layout>
+                    <f:HorizontalLayout gap="10"/>
+                </f:layout>
+
+                <f:ImageLoader source="{atlas.getTexture('shop_ppc_label')}"/>
+
+                <f:Label text="{_unitInfoData.ppcLabel}"
+                         textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"/>
+            </f:LayoutGroup>
+
+            <!-- PPS -->
+            <f:LayoutGroup includeInLayout="{Boolean(_unitInfoData.ppsLabel)}"
+                           visible="{Boolean(_unitInfoData.ppsLabel)}">
+                <f:layout>
+                    <f:HorizontalLayout gap="10"/>
+                </f:layout>
+
+                <f:ImageLoader source="{atlas.getTexture('shop_pps_label')}"/>
+
+                <f:Label text="{_unitInfoData.ppsLabel}"
+                         textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"/>
+            </f:LayoutGroup>
+        </f:LayoutGroup>
+
+        <!-- Одноразовый профит -->
+        <f:Label text="{_unitInfoData.profitLabel}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"
+                 includeInLayout="{Boolean(_unitInfoData.profitLabel)}" visible="{Boolean(_unitInfoData.profitLabel)}"/>
+
+        <!-- Действие -->
+        <f:Label text="{_unitInfoData.actionLabel}" wordWrap="true" maxWidth="116"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20', NaN, 0xffffff, TextFormatAlign.LEFT, -7)}}"
+                 includeInLayout="{Boolean(_unitInfoData.actionLabel)}" visible="{Boolean(_unitInfoData.actionLabel)}"/>
+    </f:LayoutGroup>
+
+    <!-- Цена -->
+    <f:LayoutGroup backgroundSkin="{getPriceBack(_unitInfoData.available)}" minWidth="197" touchable="false">
+        <f:layout>
+            <f:VerticalLayout horizontalAlign="right" verticalAlign="middle"
+                              paddingTop="5" paddingLeft="18" paddingRight="18"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData top="58" left="298"/>
+        </f:layoutData>
+
+        <f:Label text="{_unitInfoData.priceLabel}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_31')}}"/>
+    </f:LayoutGroup>
+
+    <!-- Лимит -->
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_item_limit_back'))}"
+                   maxHeight="37" visible="{_unitInfoData.rest >= 0}" includeInLayout="{_unitInfoData.rest >= 0}"
+                   touchable="false">
+        <f:layout>
+            <f:HorizontalLayout horizontalAlign="center" paddingLeft="5" paddingRight="5"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData right="15" bottom="0"/>
+        </f:layoutData>
+
+        <f:Label text="{getLimitLabel(_unitInfoData.rest)}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"
+                 scale="0.5"/>
+    </f:LayoutGroup>
+
+    <!-- Количество исользований -->
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_item_limit_back'))}"
+                   maxHeight="37" visible="{_unitInfoData.profitLimit > 0}" includeInLayout="{_unitInfoData.profitLimit > 0}"
+                   touchable="false">
+        <f:layout>
+            <f:HorizontalLayout horizontalAlign="center" paddingLeft="5" paddingRight="5"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="25" bottom="0"/>
+        </f:layoutData>
+
+        <f:Label text="{LocaleManager.getInstance().getString('common', 'item.profit.limit.label', [_unitInfoData.profitLimit])}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"
+                 scale="0.5"/>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+        import feathers.utils.touch.TapToTrigger;
+
+        import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Image;
+        import starling.textures.TextureAtlas;
+
+        import vo.UnitInfo;
+
+        private var _trigger:TapToTrigger;
+
+        [Bindable]
+        private var _unitInfoData:UnitInfo;
+
+        override public function set data(value:Object):void
+        {
+            super.data = value;
+            _unitInfoData = data as UnitInfo;
+        }
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        private static function getPriceBack(available:Boolean):Image
+        {
+            return available ? null : new Image(atlas.getTexture("shop_price_marker_red"));
+        }
+
+        private static function getLimitLabel(rest:int):String
+        {
+            if (rest > 0)
+            {
+                return LocaleManager.getInstance().getString("common", "item.limit.label", [rest]);
+            }
+            else if (rest == 0)
+            {
+                return LocaleManager.getInstance().getString("common", "item.limit.label.zero");
+            }
+            return null;
+        }
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

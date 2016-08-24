@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:view="view.*"
+               removedFromStage="onRemovedFromStage()">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('vip_back'))}" minWidth="576" minHeight="1024">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
+        </f:layoutData>
+
+        <view:VipWatches rotation="{Math.PI / 180.0 * 29.5}" touchable="false">
+            <view:layoutData>
+                <f:AnchorLayoutData top="34" right="3"/>
+            </view:layoutData>
+        </view:VipWatches>
+
+        <f:Button defaultSkin="{new Image(atlas.getTexture('vip_back_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('vip_back_bn_down'))}"
+                  triggered="{dispatchEventWith('back')}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="60" top="57"/>
+            </f:layoutData>
+        </f:Button>
+
+        <f:List dataProvider="{_mediator.packList}" itemRendererType="view.PackListItemRenderer"
+                triggered="onSelectPack(event)" maxHeight="656"
+                visible="{_mediator.shopAvailable}">
+            <f:layout>
+                <f:VerticalLayout gap="7"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="-2" verticalCenter="52"/>
+            </f:layoutData>
+        </f:List>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="back", type="starling.events.Event")]
+        [Event(name="buyPack", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import app.AppFacade;
+
+        import mediators.VipScreenMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+        import resources.AtlasLibrary;
+
+        import starling.display.Image;
+
+        import starling.events.Event;
+        import starling.textures.TextureAtlas;
+
+        import vo.Pack;
+
+        public static const MEDIATOR_NAME:String = "vipScreenMediator";
+
+        private var _purchasePopup:BuyPackPopup;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        [Bindable]
+        public var _mediator:VipScreenMediator;
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as VipScreenMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                var mediator:VipScreenMediator = new VipScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
+            }
+        }
+
+        override public function dispose():void
+        {
+            if (_mediator)
+            {
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+                _mediator = null;
+            }
+            super.dispose();
+        }
+
+        private function onSelectPack(event:starling.events.Event):void
+        {
+            if (_purchasePopup) return;
+
+            var pack:Pack = event.data as Pack;
+            if (pack)
+            {
+                _purchasePopup = new BuyPackPopup();
+                _purchasePopup.pack = pack;
+                _purchasePopup.addEventListener(starling.events.Event.CLOSE, function (event:starling.events.Event):void
+                {
+                    _purchasePopup.removeEventListener(starling.events.Event.CLOSE, arguments.callee);
+                    _purchasePopup = null;
+
+                    if (event.data == Const.ON_OK)
+                    {
+                        dispatchEventWith("buyPack", false, pack);
+                    }
+                });
+                WindowManager.getInstance().openWindow(_purchasePopup, true);
+            }
+        }
+
+        private function onRemovedFromStage():void
+        {
+            if (_purchasePopup)
+            {
+                _purchasePopup.close(Const.ON_CANCEL);
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

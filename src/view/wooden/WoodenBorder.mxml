@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <view:LevelView assetId="{assetId}" godMode="{godMode}" touchable="false">
+        <view:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-5" verticalCenter="-6"/>
+        </view:layoutData>
+    </view:LevelView>
+
+    <f:Label text="{description}" maxWidth="430" filter="{new GlowFilter(0x000000, 1.0, 1.0, 1.0)}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_description', NaN, 0xffffff, TextFormatAlign.RIGHT, -12)}}">
+        <f:layoutData>
+            <f:AnchorLayoutData bottom="66 " right="70"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('wooden_img_border'))}"
+                      touchable="false"/>
+
+    <f:LayoutGroup backgroundSkin="{levelTitleBack}" maxHeight="44" touchable="false">
+        <f:layout>
+            <f:HorizontalLayout paddingLeft="25" paddingRight="27" verticalAlign="middle" horizontalAlign="center"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData bottom="12" horizontalCenter="-4"/>
+        </f:layoutData>
+
+        <f:Label text="{title}" paddingBottom="6"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 30, 0x544317)}}"/>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import flash.geom.Rectangle;
+
+        import resources.AtlasLibrary;
+
+        import starling.display.Image;
+        import starling.filters.GlowFilter;
+        import starling.textures.TextureAtlas;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _atlas;
+        }
+
+        private var _levelTitleBack:Image;
+        private function get levelTitleBack():Image
+        {
+            if (!_levelTitleBack)
+            {
+                _levelTitleBack = new Image(atlas.getTexture('wooden_level_title_back'));
+                _levelTitleBack.scale9Grid = new flash.geom.Rectangle(25, 0, 214, 44);
+            }
+            return _levelTitleBack;
+        }
+
+        [Bindable]
+        public var assetId:String;
+
+        [Bindable]
+        public var godMode:int;
+
+        [Bindable]
+        public var title:String;
+
+        [Bindable]
+        public var description:String;
+        ]]></fx:Script>
+</f:LayoutGroup>

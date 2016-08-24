@@ -1,2 +1,9 @@
 /.idea
 /build
+/*.iml
+/assets/raw
+/assets/src/letters/letters.aep Logs
+/assets/src/letters/Adobe After Effects Auto-Save
+/assets/library
+/src/resources/graphics/assets/*.png
+*.DS_Store

@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<view:GameScreenViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+                         xmlns:wooden="view.wooden.*" xmlns:view="view.*"
+                         backgroundSkin="{new Image(atlas.getTexture('wooden_back'))}"
+                         minWidth="576" minHeight="1024">
+    <view:layout>
+        <f:AnchorLayout/>
+    </view:layout>
+    <view:layoutData>
+        <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
+    </view:layoutData>
+
+    <wooden:WoodenIndicator id="indicatorView" value="{_mediator.money}">
+        <wooden:layoutData>
+            <f:AnchorLayoutData right="16" top="17"/>
+        </wooden:layoutData>
+    </wooden:WoodenIndicator>
+
+    <wooden:WoodenBorder assetId="{_mediator.levelAssetId}" godMode="{_mediator.godMode}"
+                         title="{_mediator.levelTitle}" description="{_mediator.levelDescription}">
+        <wooden:layoutData>
+            <f:AnchorLayoutData horizontalCenter="3" top="100"/>
+        </wooden:layoutData>
+    </wooden:WoodenBorder>
+
+    <f:Button defaultSkin="{new Image(atlas.getTexture('wooden_back_bn_up'))}"
+              downSkin="{new Image(atlas.getTexture('wooden_back_bn_down'))}"
+              triggered="onBackButton()">
+        <f:layoutData>
+            <f:AnchorLayoutData left="23" top="12"/>
+        </f:layoutData>
+    </f:Button>
+
+    <wooden:WoodenShopWidget
+            dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}"
+            goToShop="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}">
+        <wooden:layoutData>
+            <f:AnchorLayoutData top="509" right="16"/>
+        </wooden:layoutData>
+
+        <f:Button styleProvider="{_shopButtonStyleProvider}" triggered="onShopButton()"/>
+    </wooden:WoodenShopWidget>
+
+    <f:Button defaultSkin="{new Image(atlas.getTexture('wooden_action_bn_up'))}"
+              downSkin="{new Image(atlas.getTexture('wooden_action_bn_down'))}"
+              triggered="onTapButton()">
+        <f:layoutData>
+            <f:AnchorLayoutData top="542" left="38"/>
+        </f:layoutData>
+    </f:Button>
+
+    <f:List styleProvider="{StylesLibrary.woodenScrollerStyleProvider}" dataProvider="{_mediator.unitsList}"
+            itemRendererType="view.UnitListItemRenderer" isSelectable="false" width="536" height="326">
+        <f:layout>
+            <f:TiledRowsLayout useSquareTiles="false" verticalGap="10" horizontalGap="10" paddingTop="10"
+                               paddingBottom="10" paddingLeft="25" paddingRight="25"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="0" bottom="42"/>
+        </f:layoutData>
+    </f:List>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.skin.ButtonStyleProviderBase;
+
+        import starling.display.Image;
+        import starling.textures.TextureAtlas;
+
+        private static var _click2:Sound;
+        private static function get click2():Sound
+        {
+            if (!_click2)
+            {
+                _click2 = AtlasLibrary.getInstance().manager.getSound("click2");
+            }
+            return _click2;
+        }
+
+        private static var _click3:Sound;
+        private static function get click3():Sound
+        {
+            if (!_click3)
+            {
+                _click3 = AtlasLibrary.getInstance().manager.getSound("click3");
+            }
+            return _click3;
+        }
+
+        [Bindable]
+        private var _shopButtonStyleProvider:ButtonStyleProviderBase = StylesLibrary.woodenShopButtonStyleNormalProvider;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _atlas;
+        }
+
+        private function onShopButton():void
+        {
+            dispatchEventWith(SHOP, true);
+            _shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider;
+            SoundManager.getInstance().playSound(click2);
+        }
+
+        private function onBackButton():void
+        {
+            dispatchEventWith(BACK, true);
+            SoundManager.getInstance().playSound(click3);
+        }
+
+        private function onTapButton():void
+        {
+            dispatchEventWith(TAP, true);
+        }
+        ]]></fx:Script>
+</view:GameScreenViewBase>

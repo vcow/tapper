@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:textinput="com.vcow.textinput.*"
+               backgroundSkin="{new Image(atlas.getTexture('top_popup_back'))}" maxWidth="422" maxHeight="422">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.name.input.title')}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 36, 0x4d220d)}}"
+             scaleX="0.8" maxWidth="380">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" top="15"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.name.result.title')}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 36, 0x4d220d)}}"
+             scaleX="0.8" maxWidth="380">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" top="125"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:Label text="{scoresLabel}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('top_message', NaN, 0x4d220d)}}"
+             scaleX="0.8" maxWidth="380">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" top="164"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.name.result.description')}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 36, 0x4d220d, TextFormatAlign.CENTER, -24)}}"
+             maxWidth="380" wordWrap="true" scaleX="0.9">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" bottom="150"/>
+        </f:layoutData>
+    </f:Label>
+
+    <textinput:TextInput id="nameTextField" cursorColor="#b9feb9" width="348" cursorOffset="-2"
+                         textRendererProperties="{{textFormat: new flash.text.TextFormat('supermolot', 42, 0xb9feb9, null, null, null, null, null, TextFormatAlign.CENTER)}}"
+                         promptProperties="{{textFormat: new BitmapFontTextFormat('top_message', 42, 0x00451d, TextFormatAlign.CENTER)}}"
+                         promptText="{LocaleManager.getInstance().getString('common', 'pantheon.name.input.prompt')}"
+                         showPrompt="true" maxChars="8" verticalTextOffset="-4">
+        <textinput:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-1" top="63"/>
+        </textinput:layoutData>
+    </textinput:TextInput>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="-1"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="0" bottom="50"/>
+        </f:layoutData>
+
+        <f:Button label="{LocaleManager.getInstance().getString('common', 'yes.bn.label').toUpperCase()}"
+                  defaultSkin="{new Image(atlas.getTexture('top_bn1_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('top_bn1_down'))}"
+                  defaultLabelProperties="{{textFormat: new BitmapFontTextFormat('marble_slab'), scaleX: 0.8}}"
+                  isEnabled="{getName(nameTextField.text).length > 0}"
+                  alpha="{getName(nameTextField.text).length > 0 ? 1.0 : 0.75}"
+                  triggered="{dispatchEventWith('close', false, Const.ON_OK)}"
+                  padding="10" labelOffsetY="-5"/>
+
+        <f:Button label="{LocaleManager.getInstance().getString('common', 'no.bn.label').toUpperCase()}"
+                  defaultSkin="{new Image(atlas.getTexture('top_bn2_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('top_bn2_down'))}"
+                  defaultLabelProperties="{{textFormat: new BitmapFontTextFormat('marble_slab'), scaleX: 0.8}}"
+                  triggered="{dispatchEventWith('close')}"
+                  padding="10" labelOffsetY="-5"/>
+    </f:LayoutGroup>
+
+
+    <fx:Metadata>
+        [Event(name="close", type="starling.events.Event")]
+        [Event(name="register", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Image;
+        import starling.textures.TextureAtlas;
+        import starling.utils.StringUtil;
+
+        private var _scoresLabel:String = "";
+
+        [Embed(source="supermolot_black.ttf", fontFamily="supermolot",
+                fontWeight="normal", fontStyle="normal", mimeType="application/x-font", embedAsCFF="false")]
+        public static const _supermolot_black_ttf:Class;
+
+        [Bindable(event="scoresChanged")]
+        private function get scoresLabel():String
+        {
+            return _scoresLabel;
+        }
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        public function set scores(value:Number):void
+        {
+            _scoresLabel = StringUtils.divideByDigits(value);
+            dispatchEventWith("scoresChanged");
+        }
+
+        public function get userName():String
+        {
+            return getName(nameTextField.text);
+        }
+
+        private static function getName(rawName:String):String
+        {
+            return StringUtil.trim(rawName);
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

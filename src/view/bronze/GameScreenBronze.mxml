@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<view:GameScreenViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
+                         backgroundSkin="{new Quad(10, 10, 0xff0000)}">
+    <view:layout>
+        <f:AnchorLayout/>
+    </view:layout>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:VerticalLayout gap="5" horizontalAlign="center"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
+        </f:layoutData>
+
+        <f:LayoutGroup>
+            <f:layout>
+                <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
+            </f:layout>
+            <f:layoutData>
+                <f:VerticalLayoutData percentWidth="100"/>
+            </f:layoutData>
+
+            <f:Button styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+                      triggered="{dispatchEventWith(BACK, true)}"/>
+
+            <f:Label text="{_mediator.money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+                <f:layoutData>
+                    <f:HorizontalLayoutData percentWidth="100"/>
+                </f:layoutData>
+            </f:Label>
+
+            <f:Button styleProvider="{StylesLibrary.woodenShopButtonStyleNormalProvider}"
+                      triggered="{dispatchEventWith(SHOP, true)}"/>
+        </f:LayoutGroup>
+
+        <f:LayoutGroup height="70">
+            <f:layout>
+                <f:AnchorLayout/>
+            </f:layout>
+
+            <f:Label text="{_mediator.levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
+                <f:layoutData>
+                    <f:AnchorLayoutData verticalCenter="0"/>
+                </f:layoutData>
+            </f:Label>
+        </f:LayoutGroup>
+
+        <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{_mediator.unitsList}"
+                itemRendererType="view.UnitListItemRenderer" isSelectable="false">
+            <f:layout>
+                <f:TiledRowsLayout gap="2" padding="5" paddingTop="10"/>
+            </f:layout>
+            <f:layoutData>
+                <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+            </f:layoutData>
+        </f:List>
+    </f:LayoutGroup>
+
+    <view:ShopWidgetBase id="sv">
+        <view:layoutData>
+            <f:AnchorLayoutData top="50" right="0"/>
+        </view:layoutData>
+    </view:ShopWidgetBase>
+
+    <fx:Script><![CDATA[
+        import resources.StylesLibrary;
+
+        import starling.display.Quad;
+        ]]></fx:Script>
+</view:GameScreenViewBase>

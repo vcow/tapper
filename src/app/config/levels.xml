@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<levels>
+	<level id="0" asset="schoolar" title="level.schoolar.title" description="level.schoolar.description"/>
+	<level id="1" asset="student" title="level.student.title" description="level.student.description"/>
+	<level id="2" asset="carriage" title="level.carriage.title" description="level.carriage.description"/>
+	<level id="3" asset="monarch" title="level.monarch.title" description="level.monarch.description"/>
+	<level id="4" asset="president" title="level.president.title" description="level.president.description"/>
+	<level id="5" asset="pope" title="level.pope.title" description="level.pope.description"/>
+	<level id="6" asset="zog" title="level.zog.title" description="level.zog.description"/>
+	<level id="7" asset="lucifer" title="level.lucifer.title" description="level.lucifer.description"/>
+	<level id="8" asset="vader" title="level.vader.title" description="level.vader.description"/>
+	<level id="9" asset="palpatin" title="level.palpatin.title" description="level.palpatin.description"/>
+	<level id="10" asset="ubermensch" title="level.ubermensch.title" description="level.ubermensch.description"/>
+	<level id="11" asset="god" title="level.god.title" description="level.god.description"/>
+</levels>

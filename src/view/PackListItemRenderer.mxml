@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                               backgroundSkin="{new Image(atlas.getTexture('vip_card_back'))}"
+                               maxWidth="361" maxHeight="213">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:Label text="{title}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('vip_title', 36, 0x5a371b, TextFormatAlign.RIGHT, -5)}}">
+        <f:layoutData>
+            <f:AnchorLayoutData right="40" bottom="35"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:ImageLoader width="120" height="90" scaleContent="true" maintainAspectRatio="true" source="{icon}"
+                   filter="{new DropShadowFilter(1, Math.PI * 45.0 / 180.0, 0x000000, 0.5, 0.3)}">
+        <f:layoutData>
+            <f:AnchorLayoutData left="36" top="32"/>
+        </f:layoutData>
+    </f:ImageLoader>
+
+    <f:Label text="{price}" minWidth="110" scaleX="0.85"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('currency', 32, 0x544317, TextFormatAlign.CENTER)}}">
+        <f:layoutData>
+            <f:AnchorLayoutData left="162" top="30"/>
+        </f:layoutData>
+    </f:Label>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+        import feathers.utils.touch.TapToTrigger;
+
+        import resources.AtlasLibrary;
+
+        import starling.display.Image;
+        import starling.filters.DropShadowFilter;
+        import starling.textures.Texture;
+
+        import starling.textures.TextureAtlas;
+
+        import vo.Pack;
+
+        private var _trigger:TapToTrigger;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        [Bindable]
+        private var title:String;
+
+        [Bindable]
+        private var price:String;
+
+        [Bindable]
+        private var icon:Texture;
+
+        override public function set data(value:Object):void
+        {
+            super.data = value;
+            var pack:Pack = data as Pack;
+            if (pack)
+            {
+                title = pack.title;
+                price = pack.price;
+                icon = pack.iconSmall;
+            }
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+            _trigger = new TapToTrigger(this);
+        }
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

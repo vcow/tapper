@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               width="108" height="108" pivotX="54" pivotY="54"
+               addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()"
+               creationComplete="initWatches()">
+
+    <f:ImageLoader id="secondArrow" source="{atlas.getTexture('vip_arrow_sec')}" pivotX="3.5" pivotY="12.5" x="54" y="93"/>
+
+    <f:ImageLoader id="minuteArrow" source="{atlas.getTexture('vip_arrow_min')}" pivotX="5.5" pivotY="50.5" x="54" y="54"/>
+
+    <f:ImageLoader id="hourArrow" source="{atlas.getTexture('vip_arrow_hour')}" pivotX="6" pivotY="36" x="54" y="54"/>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+
+        import starling.textures.TextureAtlas;
+
+        import flash.events.TimerEvent;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        private var _timer:Timer;
+
+        private function onAddedToStage():void
+        {
+            initWatches();
+            startTimer();
+        }
+
+        private function onRemovedFromStage():void
+        {
+            stopTimer();
+        }
+
+        private function onTimer(event:TimerEvent):void
+        {
+            initWatches();
+        }
+
+        private function startTimer():void
+        {
+            if (_timer)
+            {
+                _timer.reset();
+            }
+            else
+            {
+                _timer = new Timer(300);
+                _timer.addEventListener(TimerEvent.TIMER, onTimer);
+                _timer.start();
+            }
+        }
+
+        private function stopTimer():void
+        {
+            if (_timer)
+            {
+                _timer.removeEventListener(TimerEvent.TIMER, onTimer);
+                _timer.stop();
+                _timer = null;
+            }
+        }
+
+        private function initWatches():void
+        {
+            if (isCreated)
+            {
+                var now:Date = new Date();
+                var s:int = now.getSeconds();
+                var m:int = now.getMinutes();
+                var h:int = now.getHours();
+                hourArrow.rotation = calcRotation((h % 12) * 60 + m, 720);
+                minuteArrow.rotation = calcRotation(m * 60 + s, 3600);
+                secondArrow.rotation = calcRotation(s * 1000 + now.getMilliseconds(), 60000);
+            }
+        }
+
+        private static function calcRotation(value:int, circle:int):Number
+        {
+            value %= circle;
+            return Number(value) / Number(circle) * Math.PI * 2.0;
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

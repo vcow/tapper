@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:textinput="com.vcow.textinput.*"
+               autoSizeMode="stage">
+    <f:layout>
+        <f:VerticalLayout/>
+    </f:layout>
+
+    <f:LayoutGroup backgroundSkin="{blend}" touch="onTouch(event)">
+        <f:layoutData>
+            <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
+    <textinput:TextInputKeyboardRu
+            buttonLabelProperties="{{textFormat: new BitmapFontTextFormat('top_message', 24, 0xffffff)}}"
+            switch_eng="{selectedLanguage = 'en'}" visible="{selectedLanguage == 'ru'}"
+            includeInLayout="{selectedLanguage == 'ru'}" close="{dispatchEventWith('close')}"
+            char="{dispatchEventWith('type', false, event.data)}"
+            clear="{dispatchEventWith('clear')}">
+        <textinput:layoutData>
+            <f:VerticalLayoutData percentWidth="100"/>
+        </textinput:layoutData>
+    </textinput:TextInputKeyboardRu>
+
+    <textinput:TextInputKeyboardEng
+            buttonLabelProperties="{{textFormat: new BitmapFontTextFormat('top_message', 24, 0xffffff)}}"
+            switch_rus="{selectedLanguage = 'ru'}" visible="{selectedLanguage == 'en'}"
+            includeInLayout="{selectedLanguage == 'en'}" close="{dispatchEventWith('close')}"
+            char="{dispatchEventWith('type', false, event.data)}"
+            clear="{dispatchEventWith('clear')}">
+        <textinput:layoutData>
+            <f:VerticalLayoutData percentWidth="100"/>
+        </textinput:layoutData>
+    </textinput:TextInputKeyboardEng>
+
+    <fx:Metadata>
+        [Event(name="close", type="starling.events.Event")]
+        [Event(name="type", type="starling.events.Event")]
+        [Event(name="clear", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import flash.geom.Rectangle;
+
+        import starling.display.Quad;
+        import starling.events.Touch;
+        import starling.events.TouchEvent;
+        import starling.events.TouchPhase;
+
+        [Bindable]
+        private var blend:Quad;
+
+        [Bindable]
+        private var selectedLanguage:String = Capabilities.language == "en" ? "en" : "ru";
+
+        public var textInput:TextInput;
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            blend = new Quad(10, 10, 0x000000);
+            blend.alpha = 0;
+        }
+
+        private function onTouch(event:starling.events.TouchEvent):void
+        {
+            var touch:Touch = event.getTouch(this, TouchPhase.BEGAN);
+            if (touch)
+            {
+                if (textInput)
+                {
+                    var pt:Point = textInput.localToGlobal(new Point(0, 0));
+                    var textInputRc:Rectangle = new flash.geom.Rectangle(pt.x, pt.y, textInput.width, textInput.height);
+                    if (textInputRc.contains(touch.globalX, touch.globalY))
+                    {
+                        textInput.touch(textInput.globalToLocal(new Point(touch.globalX, touch.globalY)));
+                        return;
+                    }
+                }
+                dispatchEventWith(starling.events.Event.CLOSE);
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

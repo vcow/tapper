@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+<levels>
+	<!-- Уровень игрока: iconId - уникальный идентификатор, соответствует уровню; index - порядок в иерархии уровней;
+	 	title - заголовок уровня (optional); description - описание уровня (optional) -->
+	<level id="level_1" index="0" title="Level 1" description="desc1"/>
+</levels>

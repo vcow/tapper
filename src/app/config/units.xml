@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<units>
+	<unit id="silver_fish" index="0" name="name.silver_fish" description="description.silver_fish" price="0" priceGrowth="0">
+		<ppc value="100%" maxCount="3"/>
+	</unit>
+	<unit id="golden_fish" index="0" name="name.golden_fish" description="description.golden_fish" price="0" priceGrowth="0">
+		<ppc value="200%" maxCount="3"/>
+	</unit>
+	<unit id="illegal" index="1" name="name.illegal" description="description.illegal" price="25" priceGrowth="10%">
+		<ppc value="1" maxCount="100"/>
+	</unit>
+	<unit id="peon" index="2" name="name.peon" description="description.peon" price="250" priceGrowth="10%">
+		<ppc value="1"/>
+	</unit>
+	<unit id="worker" index="3" name="name.worker" description="description.worker" price="700" priceGrowth="10%">
+		<pps value="7"/>
+		<ppc value="1"/>
+	</unit>
+	<unit id="foreman" index="4" name="name.foreman" description="description.foreman" price="1500" priceGrowth="10%">
+		<pps value="10"/>
+		<ppc value="2"/>
+	</unit>
+	<unit id="manager" index="5" name="name.manager" description="description.manager" price="3000" priceGrowth="10%">
+		<pps value="15"/>
+		<ppc value="3"/>
+	</unit>
+	<unit id="booster" index="6" name="name.booster" description="description.booster" price="5500" priceGrowth="10%">
+		<pps value="25"/>
+		<ppc value="5"/>
+	</unit>
+	<unit id="seller" index="7" name="name.seller" description="description.seller" price="9500" priceGrowth="10%">
+		<pps value="35"/>
+		<ppc value="8"/>
+	</unit>
+	<unit id="produsser" index="8" name="name.produsser" description="description.produsser" price="15000" priceGrowth="10%">
+		<pps value="60"/>
+		<ppc value="12"/>
+	</unit>
+	<unit id="imagemaker" index="9" name="name.imagemaker" description="description.imagemaker" price="30000" priceGrowth="10%">
+		<ppc value="35"/>
+	</unit>
+	<unit id="verwolf" index="10" name="name.verwolf" description="description.verwolf" price="50000" priceGrowth="10%">
+		<pps value="140"/>
+		<ppc value="25"/>
+	</unit>
+	<unit id="insider" index="11" name="name.insider" description="description.insider" price="85000" priceGrowth="10%">
+		<pps value="220"/>
+		<ppc value="40"/>
+	</unit>
+	<unit id="official" index="12" name="name.official" description="description.official" price="150000" priceGrowth="10%">
+		<pps value="345"/>
+		<ppc value="70"/>
+	</unit>
+	<unit id="sect" index="13" name="name.sect" description="description.sect" price="250000" priceGrowth="10%">
+		<pps value="1000"/>
+	</unit>
+	<unit id="party" index="14" name="name.party" description="description.party" price="400000" priceGrowth="10%">
+		<pps value="850"/>
+		<ppc value="170"/>
+	</unit>
+	<unit id="pr" index="15" name="name.pr" description="description.pr" price="700000" priceGrowth="10%">
+		<ppc value="500"/>
+	</unit>
+	<unit id="greens" index="16" name="name.greens" description="description.greens" price="1250000" priceGrowth="10%">
+		<ppc value="800"/>
+	</unit>
+	<unit id="deputy" index="17" name="name.deputy" description="description.deputy" price="2000000" priceGrowth="10%">
+		<pps value="3400"/>
+		<ppc value="690"/>
+	</unit>
+	<unit id="newspaper" index="18" name="name.newspaper" description="description.newspaper" price="3500000" priceGrowth="10%">
+		<pps value="5600"/>
+		<ppc value="1100"/>
+	</unit>
+	<unit id="ship" index="19" name="name.ship" description="description.ship" price="6000000" priceGrowth="10%">
+		<pps value="9000"/>
+		<ppc value="1800"/>
+	</unit>
+	<unit id="factory" index="20" name="name.factory" description="description.factory" price="10000000" priceGrowth="10%">
+		<pps value="14000"/>
+		<ppc value="2500"/>
+	</unit>
+	<unit id="portal" index="21" name="name.portal" description="description.portal" price="15000000" priceGrowth="10%">
+		<pps value="23000"/>
+		<ppc value="4500"/>
+	</unit>
+	<unit id="tv" index="22" name="name.tv" description="description.tv" price="30000000" priceGrowth="10%">
+		<pps value="35000"/>
+		<ppc value="7500"/>
+	</unit>
+	<unit id="diplomat" index="23" name="name.diplomat" description="description.diplomat" price="50000000" priceGrowth="10%">
+		<pps value="60000"/>
+		<ppc value="12000"/>
+	</unit>
+	<unit id="president" index="24" name="name.president" description="description.president" price="85000000" priceGrowth="10%">
+		<pps value="100000"/>
+		<ppc value="20000"/>
+	</unit>
+	<unit id="oon" index="25" name="name.oon" description="description.oon" price="150000000" priceGrowth="10%" maxCount="1">
+		<ppc value="60000"/>
+	</unit>
+	<unit id="nato" index="26" name="name.nato" description="description.nato" price="250000000" priceGrowth="10%" maxCount="1">
+		<pps value="270000"/>
+		<ppc value="55000"/>
+	</unit>
+	<unit id="frs" index="27" name="name.frs" description="description.frs" price="450000000" priceGrowth="10%" maxCount="1">
+		<pps value="450000"/>
+		<ppc value="85000"/>
+	</unit>
+	<unit id="death_star" index="28" name="name.death_star" description="description.death_star" price="700000000" priceGrowth="10%" maxCount="3">
+		<pps value="700000"/>
+		<ppc value="150000"/>
+	</unit>
+	<unit id="space_fleet" index="29" name="name.space_fleet" description="description.space_fleet" price="1200000000" priceGrowth="10%">
+		<pps value="1000000"/>
+		<ppc value="200000"/>
+	</unit>
+	<unit id="dead_planet" index="30" name="name.dead_planet" description="description.dead_planet" price="2000000000" priceGrowth="10%">
+		<pps value="4000000"/>
+	</unit>
+	<unit id="live_planet" index="31" name="name.live_planet" description="description.live_planet" price="3500000000" priceGrowth="10%">
+		<pps value="3200000"/>
+		<ppc value="600000"/>
+	</unit>
+	<unit id="planet_system" index="32" name="name.planet_system" description="description.planet_system" price="6000000000" priceGrowth="10%">
+		<pps value="5300000"/>
+		<ppc value="1050000"/>
+	</unit>
+	<unit id="galaxy" index="33" name="name.galaxy" description="description.galaxy" price="10000000000" priceGrowth="10%">
+		<pps value="8700000"/>
+		<ppc value="1700000"/>
+	</unit>
+	<unit id="universe" index="34" name="name.universe" description="description.universe" price="100000000000" priceGrowth="10%" maxCount="1">
+		<action id="godMode" title="God mode" description="description.godmode"/>
+	</unit>
+</units>

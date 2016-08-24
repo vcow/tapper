@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                               minWidth="450" filter="{itemFilter}">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:VerticalLayout gap="-7" horizontalAlign="center"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
+        </f:layoutData>
+
+        <f:Label text="{title}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('marble_slab', 33)}}"/>
+
+        <f:Label text="{scores}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('marble_slab', 44)}}"/>
+    </f:LayoutGroup>
+
+    <f:ImageLoader source="{atlas.getTexture('top_leader_icon')}" visible="{isUserItem}" touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData left="-5" verticalCenter="0"/>
+        </f:layoutData>
+    </f:ImageLoader>
+
+    <f:ImageLoader source="{atlas.getTexture('top_leader_icon')}" visible="{isUserItem}" touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData right="-5" verticalCenter="0"/>
+        </f:layoutData>
+    </f:ImageLoader>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.filters.FragmentFilter;
+        import starling.filters.GlowFilter;
+        import starling.textures.TextureAtlas;
+
+        import vo.TopItem;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        [Bindable]
+        private var title:String;
+
+        [Bindable]
+        private var scores:String;
+
+        [Bindable]
+        private var itemFilter:FragmentFilter;
+
+        [Bindable]
+        private var isUserItem:Boolean;
+
+        override public function set data(value:Object):void
+        {
+            super.data = value;
+
+            var item:TopItem = value as TopItem;
+            if (item)
+            {
+                title = LocaleManager.getInstance().getString("common", "pantheon.record",
+                    [item.place, item.name]);
+                scores = StringUtils.divideByDigits(item.scores);
+                isUserItem = item.isUserItem;
+                filter = isUserItem ? new GlowFilter(0xfffcc3, 2, 10, 1) : null;
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

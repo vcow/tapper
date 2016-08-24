@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               width="301" height="620" clipContent="true" touchable="{!menuIsAnimated}">
+
+    <f:LayoutGroup id="menuPanel" backgroundSkin="{new Image(atlas.getTexture('top_menu'))}" x="-9" y="-399">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+
+        <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.exit.button.label')}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('vip_title', NaN, 0x46331b)}}"
+                 touchable="false">
+            <f:layoutData>
+                <f:AnchorLayoutData left="88" top="129"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.save.button.label')}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('vip_title', 42, 0x46331b)}}"
+                 touchable="false">
+            <f:layoutData>
+                <f:AnchorLayoutData left="20" top="236"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:LayoutGroup>
+            <f:layout>
+                <f:VerticalLayout gap="30"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData left="15" top="120"/>
+            </f:layoutData>
+
+            <f:Button defaultSkin="{defaultExitButtonSkin}" triggered="onCollapseExpand('exit')"/>
+
+            <f:Button defaultSkin="{defaultSaveButtonSkin}" triggered="onCollapseExpand('save')"/>
+        </f:LayoutGroup>
+
+        <f:Button defaultSkin="{defaultExpandButtonSkin}" downSkin="{new Image(atlas.getTexture('top_menu_btn_down'))}"
+                  triggered="onCollapseExpand()">
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="-48" bottom="24"/>
+            </f:layoutData>
+        </f:Button>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="exit", type="starling.events.Event")]
+        [Event(name="save", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.animation.Transitions;
+        import starling.animation.Tween;
+        import starling.core.Starling;
+        import starling.display.Image;
+        import starling.display.Quad;
+        import starling.textures.TextureAtlas;
+
+        private var _isExpanded:Boolean;
+
+        [Bindable]
+        private var menuIsAnimated:Boolean;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        private var _defaultExpandButtonSkin:Quad;
+        private function get defaultExpandButtonSkin():Quad
+        {
+            if (!_defaultExpandButtonSkin)
+            {
+                _defaultExpandButtonSkin = new Quad(87, 127, 0x000000);
+                _defaultExpandButtonSkin.alpha = 0;
+            }
+            return _defaultExpandButtonSkin;
+        }
+
+        private var _defaultExitButtonSkin:Quad;
+        private function get defaultExitButtonSkin():Quad
+        {
+            if (!_defaultExitButtonSkin)
+            {
+                _defaultExitButtonSkin = new Quad(225, 72, 0x000000);
+                _defaultExitButtonSkin.alpha = 0;
+            }
+            return _defaultExitButtonSkin;
+        }
+
+        private var _defaultSaveButtonSkin:Quad;
+        private function get defaultSaveButtonSkin():Quad
+        {
+            if (!_defaultSaveButtonSkin)
+            {
+                _defaultSaveButtonSkin = new Quad(225, 72, 0x000000);
+                _defaultSaveButtonSkin.alpha = 0;
+            }
+            return _defaultSaveButtonSkin;
+        }
+
+        private function onCollapseExpand(eventType:String = null):void
+        {
+            if (menuIsAnimated) return;
+
+            if (_isExpanded)
+            {
+                collapse(eventType, false);
+            }
+            else
+            {
+                expand(eventType, false);
+            }
+        }
+
+        private function onTweenComplete(isExpanded:Boolean, eventType:String):void
+        {
+            _isExpanded = isExpanded;
+            menuIsAnimated = false;
+            if (eventType) dispatchEventWith(eventType);
+        }
+
+        public function collapse(eventType:String = null, immediate:Boolean = true):void
+        {
+            Starling.juggler.removeTweens(menuPanel);
+
+            if (immediate)
+            {
+                menuPanel.y = -399;
+                menuIsAnimated = true;
+                _isExpanded = false;
+                if (eventType) dispatchEventWith(eventType);
+            }
+            else
+            {
+                var tween:Tween = new Tween(menuPanel, 0.4, Transitions.EASE_IN_OUT);
+                tween.animate("y", -399);
+                tween.onCompleteArgs = [false, eventType];
+                tween.onComplete = onTweenComplete;
+                menuIsAnimated = true;
+                Starling.juggler.add(tween);
+            }
+        }
+
+        public function expand(eventType:String = null, immediate:Boolean = true):void
+        {
+            Starling.juggler.removeTweens(menuPanel);
+
+            if (immediate)
+            {
+                menuPanel.y = -107;
+                menuIsAnimated = true;
+                _isExpanded = true;
+                if (eventType) dispatchEventWith(eventType);
+            }
+            else
+            {
+                var tween:Tween = new Tween(menuPanel, 0.65, Transitions.EASE_OUT);
+                tween.animate("y", -107);
+                tween.onCompleteArgs = [true, eventType];
+                tween.onComplete = onTweenComplete;
+                menuIsAnimated = true;
+                Starling.juggler.add(tween);
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

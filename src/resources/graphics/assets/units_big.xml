@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6b5284fa53842f5873a1fc131198675e:3d143e18bed71ebf5df78d194c0e831d:73b820832d28bf4fd1a21fb2fd8c5cee$ -->
+<TextureAtlas imagePath="units_big.atf" width="1024" height="1024">
+    <SubTexture name="booster" x="1" y="1" width="160" height="120"/>
+    <SubTexture name="dead_planet" x="163" y="1" width="160" height="120"/>
+    <SubTexture name="death_star" x="325" y="1" width="160" height="120"/>
+    <SubTexture name="deputy" x="487" y="1" width="160" height="120"/>
+    <SubTexture name="diplomat" x="649" y="1" width="160" height="120"/>
+    <SubTexture name="factory" x="811" y="1" width="160" height="120"/>
+    <SubTexture name="foreman" x="1" y="123" rotated="true" width="120" height="160"/>
+    <SubTexture name="frs" x="1" y="285" rotated="true" width="120" height="160"/>
+    <SubTexture name="galaxy" x="1" y="447" rotated="true" width="120" height="160"/>
+    <SubTexture name="golden_fish" x="1" y="609" rotated="true" width="120" height="160"/>
+    <SubTexture name="greens" x="1" y="771" rotated="true" width="120" height="160"/>
+    <SubTexture name="illegal" x="123" y="123" width="160" height="120"/>
+    <SubTexture name="imagemaker" x="285" y="123" width="160" height="120"/>
+    <SubTexture name="insider" x="447" y="123" width="160" height="120"/>
+    <SubTexture name="live_planet" x="609" y="123" width="160" height="120"/>
+    <SubTexture name="manager" x="771" y="123" width="160" height="120"/>
+    <SubTexture name="nato" x="123" y="245" rotated="true" width="120" height="160"/>
+    <SubTexture name="newspaper" x="123" y="407" rotated="true" width="120" height="160"/>
+    <SubTexture name="official" x="123" y="569" rotated="true" width="120" height="160"/>
+    <SubTexture name="oon" x="123" y="731" rotated="true" width="120" height="160"/>
+    <SubTexture name="party" x="123" y="893" width="160" height="120"/>
+    <SubTexture name="peon" x="245" y="245" rotated="true" width="120" height="160"/>
+    <SubTexture name="planet_system" x="245" y="407" rotated="true" width="120" height="160"/>
+    <SubTexture name="portal" x="245" y="569" rotated="true" width="120" height="160"/>
+    <SubTexture name="pr" x="245" y="731" rotated="true" width="120" height="160"/>
+    <SubTexture name="president" x="285" y="893" width="160" height="120"/>
+    <SubTexture name="produsser" x="447" y="245" width="160" height="120"/>
+    <SubTexture name="sect" x="609" y="245" width="160" height="120"/>
+    <SubTexture name="seller" x="771" y="245" width="160" height="120"/>
+    <SubTexture name="ship" x="367" y="367" rotated="true" width="120" height="160"/>
+    <SubTexture name="silver_fish" x="367" y="529" rotated="true" width="120" height="160"/>
+    <SubTexture name="space_fleet" x="367" y="691" rotated="true" width="120" height="160"/>
+    <SubTexture name="tv" x="447" y="853" rotated="true" width="120" height="160"/>
+    <SubTexture name="universe" x="569" y="367" width="160" height="120"/>
+    <SubTexture name="verwolf" x="731" y="367" width="160" height="120"/>
+    <SubTexture name="worker" x="893" y="367" rotated="true" width="120" height="160"/>
+</TextureAtlas>

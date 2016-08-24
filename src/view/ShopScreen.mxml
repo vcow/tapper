@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+               creationComplete="updateScroller()" addedToStage="{if (isCreated) updateScroller()}">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_back'))}" minWidth="576" minHeight="1024">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
+        </f:layoutData>
+
+        <!-- Кнопка возврата -->
+        <f:Button defaultSkin="{new Image(atlas.getTexture('shop_back_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('shop_back_bn_down'))}"
+                  triggered="{dispatchEventWith('back')}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="25" top="21"/>
+            </f:layoutData>
+        </f:Button>
+
+        <!-- Список товаров -->
+        <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}"
+                dataProvider="{getUnitsList(_mediator.unitsList)}"
+                itemRendererType="view.ShopListItemRenderer" isSelectable="false"
+                triggered="{onSelectUnit(event)}" maxHeight="600">
+            <f:layout>
+                <f:VerticalLayout id="listViewLayout" gap="3"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData left="19" right="17" top="226" bottom="153"/>
+            </f:layoutData>
+        </f:List>
+
+        <!-- Счет -->
+        <f:LayoutGroup touchable="false" rotation="{Math.PI / 180.0 * 2.5}" minWidth="450">
+            <f:layout>
+                <f:HorizontalLayout gap="14" horizontalAlign="center"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData left="42" top="155"/>
+            </f:layoutData>
+
+            <f:Label text="{LocaleManager.getInstance().getString('common', 'shop.money.label')}"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"
+                     scale="0.73" paddingTop="15"/>
+
+            <f:Label text="{_mediator.money}"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"/>
+        </f:LayoutGroup>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="back", type="starling.events.Event")]
+        [Event(name="buyUnit", type="starling.events.Event")]
+        [Event(name="vip", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import app.AppFacade;
+
+        import feathers.data.ListCollection;
+        import feathers.text.BitmapFontTextFormat;
+
+        import mediators.ShopScreenMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Image;
+        import starling.events.Event;
+        import starling.rendering.Painter;
+        import starling.textures.TextureAtlas;
+
+        import vo.UnitInfo;
+
+        private static const INVALIDATION_FLAG_AUTOSCROLL:String = "autoscroll";
+
+        public static const MEDIATOR_NAME:String = "shopScreenMediator";
+
+        [Bindable]
+        public var _mediator:ShopScreenMediator;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as ShopScreenMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                var mediator:ShopScreenMediator = new ShopScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
+            }
+        }
+
+        override public function dispose():void
+        {
+            if (_mediator)
+            {
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+                _mediator = null;
+            }
+            super.dispose();
+        }
+
+        override public function render(painter:Painter):void
+        {
+            if (isInvalid(INVALIDATION_FLAG_AUTOSCROLL))
+            {
+                scrollToLastAvailable();
+            }
+
+            super.render(painter);
+        }
+
+        public function scrollToLastAvailable():void
+        {
+            var lastAvailable:int = getLastAvailable();
+            var h:int = getListItemHeight();
+            if (h > 0 && lastAvailable >= 0)
+            {
+                var itemHeight:int = h + listViewLayout.gap;
+                listView.scrollToPosition(0, Math.max(0, itemHeight * lastAvailable - listView.height + h));
+            }
+        }
+
+        private function updateScroller():void
+        {
+            var lastAvailable:int = getLastAvailable();
+            var h:int = getListItemHeight();
+            if (h > 0 && lastAvailable >= 0)
+            {
+                var itemHeight:int = h + listViewLayout.gap;
+                listView.verticalScrollPosition = Math.max(0, itemHeight * lastAvailable - listView.height + h);
+            }
+
+            isInvalid(INVALIDATION_FLAG_AUTOSCROLL);
+        }
+
+        private function getListItemHeight():int
+        {
+            var h:int = 0;
+            if (isInitialized && listView.viewPort is starling.display.DisplayObjectContainer &&
+                    starling.display.DisplayObjectContainer(listView.viewPort).numChildren > 0)
+            {
+                listView.validate();
+                h = starling.display.DisplayObjectContainer(listView.viewPort).getChildAt(0).height;
+            }
+            return h;
+        }
+
+        private function getLastAvailable():int
+        {
+            var lastAvailable:int = -1;
+            if (_mediator.unitsList && !isNaN(_mediator.money) && _mediator.unitsList.length > 0)
+            {
+                for (var i:int = 0, l:int = _mediator.unitsList.length; i < l; i++)
+                {
+                    var unit:UnitInfo = _mediator.unitsList.getItemAt(i) as UnitInfo;
+                    if (unit)
+                    {
+                        var price:Number = unit.price;
+                        if (price >= 0 && price <= _mediator.money) lastAvailable = i;
+                    }
+                }
+            }
+            return lastAvailable;
+        }
+
+        public function buyUnit(unit:UnitInfo, available:Boolean):void
+        {
+            var popup:BuyUnitPopUp = new BuyUnitPopUp();
+            popup.data = unit;
+            popup.available = available;
+            popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.addEventListener("openVip", onOpenVip);
+            WindowManager.getInstance().openWindow(popup, true);
+        }
+
+        private function onClosePopup(event:starling.events.Event):void
+        {
+            var popup:BuyUnitPopUp = BuyUnitPopUp(event.target);
+            popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.removeEventListener("openVip", onOpenVip);
+
+            if (event.data == Const.ON_OK)
+            {
+                dispatchEventWith("buyUnit", false, popup.data);
+            }
+        }
+
+        private function onOpenVip(event:starling.events.Event):void
+        {
+            dispatchEventWith("vip");
+        }
+
+        private function onSelectUnit(event:starling.events.Event):void
+        {
+            var unit:UnitInfo = event.data as UnitInfo;
+            if (unit)
+            {
+                buyUnit(unit, unit.price >= 0 && unit.price <= _mediator.money);
+            }
+        }
+
+        private function getUnitsList(unitsList:ListCollection):ListCollection
+        {
+            invalidate(INVALIDATION_FLAG_AUTOSCROLL);
+            return unitsList;
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

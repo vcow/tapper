@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<f:Button xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+          defaultSkin="{new Quad(42, 50, 0x7d7d7d)}" downSkin="{new Quad(42, 50, 0x959595)}">
+    <fx:Script><![CDATA[
+        import starling.display.Quad;
+        ]]></fx:Script>
+</f:Button>

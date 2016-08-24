@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e10e7b3f9a5f90dd96687242a58a4095:f21ac131fe803a9d859281f3ce8b4db9:11b4642694e69c91b01ee4b929327e7a$ -->
+<TextureAtlas imagePath="states.png" width="2048" height="2048">
+    <SubTexture name="carriage" x="1" y="1" width="443" height="332"/>
+    <SubTexture name="god" x="446" y="1" width="443" height="332"/>
+    <SubTexture name="god_mode/carriage" x="1781" y="166" width="149" height="117"/>
+    <SubTexture name="god_mode/god" x="446" y="749" width="311" height="328"/>
+    <SubTexture name="god_mode/lucifer" x="1672" y="739" width="371" height="240"/>
+    <SubTexture name="god_mode/monarch" x="891" y="1" width="443" height="332"/>
+    <SubTexture name="god_mode/palpatin" x="1329" y="1003" width="298" height="325"/>
+    <SubTexture name="god_mode/pope" x="891" y="1003" width="436" height="332"/>
+    <SubTexture name="god_mode/president" x="1336" y="1" width="443" height="332"/>
+    <SubTexture name="god_mode/schoolar" x="1672" y="981" width="299" height="325"/>
+    <SubTexture name="god_mode/shine" x="1" y="415" width="334" height="334"/>
+    <SubTexture name="god_mode/student" x="1629" y="1308" width="377" height="318"/>
+    <SubTexture name="god_mode/triangle" x="1781" y="1" width="237" height="163"/>
+    <SubTexture name="god_mode/ubermensch" x="1329" y="1330" width="277" height="332"/>
+    <SubTexture name="god_mode/vader" x="1672" y="415" width="371" height="322"/>
+    <SubTexture name="god_mode/zog" x="1781" y="285" width="130" height="128"/>
+    <SubTexture name="lucifer" x="1" y="751" width="443" height="332"/>
+    <SubTexture name="monarch" x="337" y="415" width="443" height="332"/>
+    <SubTexture name="palpatin" x="782" y="335" width="443" height="332"/>
+    <SubTexture name="pope" x="1227" y="335" width="443" height="332"/>
+    <SubTexture name="president" x="782" y="669" width="443" height="332"/>
+    <SubTexture name="schoolar" x="1227" y="669" width="443" height="332"/>
+    <SubTexture name="student" x="1" y="1308" width="443" height="332"/>
+    <SubTexture name="ubermensch" x="1" y="1642" width="443" height="332"/>
+    <SubTexture name="vader" x="446" y="1308" width="443" height="332"/>
+    <SubTexture name="zog" x="446" y="1642" width="443" height="332"/>
+</TextureAtlas>

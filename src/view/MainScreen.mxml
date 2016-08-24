@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:screen="view.*" creationComplete="onCreationComplete()">
+
+    <f:ScreenNavigator id="screenNavigator" autoSizeMode="stage"/>
+
+    <screen:TutorialView id="tutorialScreen"/>
+
+    <fx:Declarations>
+        <f:LayoutGroup id="progressContainer" autoSizeMode="stage">
+            <f:layout>
+                <f:AnchorLayout/>
+            </f:layout>
+
+            <screen:PreloaderProgress id="preloaderProgress">
+                <screen:layoutData>
+                    <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
+                </screen:layoutData>
+            </screen:PreloaderProgress>
+        </f:LayoutGroup>
+    </fx:Declarations>
+
+    <fx:Script><![CDATA[
+        import app.AppFacade;
+
+        import feathers.controls.ScreenNavigatorItem;
+
+        import mediators.MainScreenMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+        import resources.AtlasLibrary;
+
+        import starling.animation.Tween;
+
+        import starling.core.Starling;
+
+        import starling.events.Event;
+        import starling.utils.AssetManager;
+
+        import view.messagebox.MessageBoxPopUp;
+
+        public static const MEDIATOR_NAME:String = "mainScreenMediator";
+
+        private var _startScreen:StartScreen;
+
+        [Bindable]
+        private var _mediator:MainScreenMediator;
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as MainScreenMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                var mediator:MainScreenMediator = new MainScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
+            }
+        }
+
+        private function onCreationComplete():void
+        {
+            this.addChildAt(progressContainer, 0);
+            loadStartScreen();
+        }
+
+        private function loadStartScreen():void
+        {
+            // Atlases
+            var assetManager:AssetManager = AtlasLibrary.getInstance().manager;
+            var assets:Array = ["title", "globe"];
+            for each (var asset:String in assets)
+            {
+                for each (var ext:String in [".atf", ".xml"])
+                {
+                    var file:File = File.applicationDirectory.resolvePath("assets" + File.separator + asset + ext);
+                    if (!file.exists) throw Error(file.nativePath + " asset isn't exists.");
+                    assetManager.enqueue(file);
+                }
+            }
+
+            assetManager.loadQueue(onPreload);
+        }
+
+        private function onPreload(ratio:Number):void
+        {
+            preloaderProgress.progress = ratio;
+
+            if (ratio >= 1.0)
+            {
+                _startScreen = new StartScreen();
+                screenNavigator.addScreen("startScreenItem", new ScreenNavigatorItem(_startScreen));
+                screenNavigator.showScreen("startScreenItem");
+                _startScreen.alpha = 0;
+                var tween:Tween = new Tween(_startScreen, 0.5);
+                tween.fadeTo(1.0);
+                tween.onComplete = loadMainContent;
+                Starling.juggler.add(tween);
+            }
+        }
+
+        private function loadMainContent():void
+        {
+            progressContainer.removeFromParent(true);
+
+            // Atlases
+            var assetManager:AssetManager = AtlasLibrary.getInstance().manager;
+            var assets:Array = ["noise_anim", "common_1", "units_big", "units_small", "wooden", "states", "packs"];
+            for each (var asset:String in assets)
+            {
+                for each (var ext:String in [".atf", ".xml"])
+                {
+                    var file:File = File.applicationDirectory.resolvePath("assets" + File.separator + asset + ext);
+                    if (!file.exists) throw Error(file.nativePath + " asset isn't exists.");
+                    assetManager.enqueue(file);
+                }
+            }
+
+            // Fonts
+            assets = ["message_box", "message_box_button", "russo", "shop_message", "shop_price_20",
+                "shop_price_31", "shop_price_52", "shop_title_23", "title_button_31", "unit_count_22",
+                "wooden_title", "wooden_description", "tutorial", "vip_title", "currency", "marble_slab",
+                "top_loser", "top_message"];
+            for each (asset in assets)
+            {
+                for each (ext in [".atf", ".fnt"])
+                {
+                    file = File.applicationDirectory.resolvePath("assets" + File.separator + asset + ext);
+                    if (!file.exists) throw Error(file.nativePath + " asset isn't exists.");
+                    assetManager.enqueueWithName(file, asset);
+                }
+            }
+
+            // Sound
+            assets = ["buy", "coin1", "coin2", "coin3", "coin4", "coin5", "coin6", "main", "shop",
+                "title", "wooden_sw_open", "click1", "click2", "click3", "champions"];
+            for each (asset in assets)
+            {
+                file = File.applicationDirectory.resolvePath("sound" + File.separator + asset + ".mp3");
+                if (!file.exists) throw Error(file.nativePath + " asset isn't exists.");
+                assetManager.enqueueWithName(file, asset);
+            }
+
+            assetManager.loadQueue(onLoadAssets);
+        }
+
+        private function onLoadAssets(ratio:Number):void
+        {
+            _startScreen.progress = ratio;
+            if (ratio >= 1.0) startGame();
+        }
+
+        private function startGame():void
+        {
+            trace("start game");
+
+            screenNavigator.addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreen()));
+            screenNavigator.addScreen("shopScreenItem", new ScreenNavigatorItem(new ShopScreen()));
+            screenNavigator.addScreen("vipScreenItem", new ScreenNavigatorItem(new VipScreen()));
+            screenNavigator.addScreen("pantheonScreenItem", new ScreenNavigatorItem(new PantheonScreen()));
+        }
+
+        override public function dispose():void
+        {
+            if (_mediator)
+            {
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+                _mediator = null;
+            }
+            super.dispose();
+        }
+
+        public function showMessageBox(message:String, buttons:uint = 3):starling.events.EventDispatcher
+        {
+            var popup:MessageBoxPopUp = new MessageBoxPopUp();
+            WindowManager.getInstance().openWindow(popup, true);
+            return popup;
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

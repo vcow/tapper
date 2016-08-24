@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<view:ShopWidgetBase xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                     xmlns:view="view.*" xmlns:wooden="view.wooden.*" removedFromStage="onRemovedFromStage()">
+
+    <fx:Declarations>
+        <wooden:WoodenShopWidgetView id="widgetView" includeInLayout="false"
+                                     close="hideView()" complete="onRemovedFromStage()" timeout="2.5"
+                                     glowColor="#77cc00" color="#f2ffdf"/>
+    </fx:Declarations>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+
+        import starling.animation.Transitions;
+        import starling.animation.Tween;
+        import starling.core.Starling;
+        import starling.display.DisplayObject;
+        import starling.events.Event;
+
+        import vo.UnitInfo;
+
+        private var _soundChannel:Channel;
+
+        override protected function onDataChanged(data:UnitInfo):void
+        {
+            super.onDataChanged(data);
+
+            Starling.juggler.removeTweens(widgetView);
+            widgetView.alpha = 1.0;
+            widgetView.scale = 1.0;
+
+            if (data)
+            {
+                widgetView.text = data.name;
+                showView();
+            }
+        }
+
+        private function hideView():void
+        {
+            if (_isActive)
+            {
+                _isActive = false;
+
+                const scaleFactor:Number = 0.3;
+                const scaleTime:Number = 0.3;
+                Starling.juggler.removeTweens(widgetView);
+                widgetView.alpha = 1.0;
+                var tween:Tween = new Tween(widgetView, scaleTime, Transitions.EASE_OUT);
+                tween.animate("x", (width - widgetView.width * scaleFactor) / 2.0);
+                tween.animate("y", 0);
+                tween.fadeTo(0.5);
+                tween.scaleTo(scaleFactor);
+                tween.delay = 0.7;
+                Starling.juggler.add(tween);
+            }
+        }
+
+        public function showView():void
+        {
+            widgetView.validate();
+
+            const scaleFactor:Number = 0.3;
+            const scaleTime:Number = 0.3;
+            var destX:Number = width - widgetView.width;
+            var destY:Number = -widgetView.height;
+            widgetView.x = (width - widgetView.width * scaleFactor) / 2.0;
+            widgetView.y = 0;
+            widgetView.scale = scaleFactor;
+            var tween:Tween = new Tween(widgetView, scaleTime, Transitions.EASE_OUT_ELASTIC);
+            tween.animate("x", destX);
+            tween.animate("y", destY);
+            tween.scaleTo(1.0);
+            Starling.juggler.add(tween);
+
+            if (!_isActive)
+            {
+                addChild(widgetView);
+                _isActive = true;
+            }
+
+            if (this.stage)
+            {
+                var soundManager:SoundManager = SoundManager.getInstance();
+                if (_soundChannel)
+                {
+                    _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                    soundManager.stopSound(_soundChannel);
+                }
+                _soundChannel = soundManager.playSound(AtlasLibrary.getInstance().manager.getSound("wooden_sw_open"));
+                if (_soundChannel) _soundChannel.addEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+            }
+        }
+
+        private function onSoundComplete(event:starling.events.Event):void
+        {
+            _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+            _soundChannel = null;
+        }
+
+        override protected function get slider():starling.display.DisplayObject
+        {
+            return widgetView;
+        }
+
+        override public function dispose():void
+        {
+            widgetView.dispose();
+            super.dispose();
+        }
+
+        private function onRemovedFromStage():void
+        {
+            Starling.juggler.removeTweens(widgetView);
+            widgetView.removeFromParent();
+            _isActive = false;
+
+            if (_soundChannel)
+            {
+                _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                SoundManager.getInstance().stopSound(_soundChannel);
+                _soundChannel = null;
+            }
+        }
+        ]]></fx:Script>
+</view:ShopWidgetBase>

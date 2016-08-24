@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{new Image(atlas.getTexture('vip_details_back'))}"
+               maxWidth="414" minHeight="545">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:Button defaultSkin="{new Image(atlas.getTexture('vip_details_close_bn_normal'))}"
+              downSkin="{new Image(atlas.getTexture('vip_details_close_bn_down'))}"
+              triggered="close(Const.ON_CANCEL)">
+        <f:layoutData>
+            <f:AnchorLayoutData top="15" right="25"/>
+        </f:layoutData>
+    </f:Button>
+
+    <f:ImageLoader width="160" height="120" scaleContent="true" maintainAspectRatio="true" source="{icon}"
+                   filter="{new DropShadowFilter(1, Math.PI * 45.0 / 180.0, 0x000000, 0.5, 0.3)}">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-7" top="72"/>
+        </f:layoutData>
+    </f:ImageLoader>
+
+    <f:LayoutGroup minHeight="335">
+        <f:layout>
+            <f:VerticalLayout horizontalAlign="center" paddingBottom="70"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-6" top="211"/>
+        </f:layoutData>
+
+        <f:Label text="{title}" maxWidth="300" scaleX="0.95"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('vip_title', NaN, 0x7c0900, TextFormatAlign.CENTER, -17)}}"/>
+
+        <f:Label text="{description}" maxWidth="380" wordWrap="true" paddingBottom="10" scaleX="0.9"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('message_box', 32, 0xffffff, TextFormatAlign.CENTER, -4)}}">
+            <f:layoutData>
+                <f:VerticalLayoutData percentHeight="100"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:Button styleProvider="{StylesLibrary.buyPackButtonStyleProvider}" label="{buyBnLabel}"
+                  triggered="close(Const.ON_OK)"/>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="close", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Image;
+        import starling.events.Event;
+        import starling.filters.DropShadowFilter;
+        import starling.textures.Texture;
+        import starling.textures.TextureAtlas;
+
+        import vo.Pack;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        [Bindable]
+        private var title:String;
+
+        [Bindable]
+        private var description:String;
+
+        [Bindable]
+        private var buyBnLabel:String;
+
+        [Bindable]
+        private var icon:Texture;
+
+        public function set pack(value:Pack):void
+        {
+            if (value)
+            {
+                title = value.title;
+                description = value.description;
+                icon = value.iconBig;
+                buyBnLabel = LocaleManager.getInstance().getString("common", "vip.buy.button.label") + " " + value.price;
+            }
+        }
+
+        public function close(result:uint):void
+        {
+            dispatchEventWith(starling.events.Event.CLOSE, false, result);
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

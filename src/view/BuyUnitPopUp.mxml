@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+               initialize="updateData()" creationComplete="updateUnavailableReason()">
+
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_message_back'))}" maxWidth="479" maxHeight="295">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+
+        <f:Label text="{title}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_message')}}">
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="0" top="19"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:ImageLoader source="{icon}" width="160" height="120" scaleContent="true" maintainAspectRatio="true"
+                       pivotX="80" pivotY="60" rotation="{-Math.PI / 180.0 * 2}"
+                       filter="{new DropShadowFilter(1, Math.PI / 180.0 * 45, 0x00000, 0.5, 0.1)}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="27" top="64"/>
+            </f:layoutData>
+        </f:ImageLoader>
+
+        <f:LayoutGroup id="descriptionGroup">
+            <f:layout>
+                <f:VerticalLayout gap="-2"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData left="208" top="56"/>
+            </f:layoutData>
+        </f:LayoutGroup>
+
+        <f:Label text="{price}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}">
+            <f:layoutData>
+                <f:AnchorLayoutData right="65" top="144"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:Button defaultSkin="{new Image(atlas.getTexture('shop_message_cancel_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('shop_message_cancel_bn_down'))}"
+                  triggered="{removeVip(); dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="49" bottom="32"/>
+            </f:layoutData>
+        </f:Button>
+
+        <f:Button defaultSkin="{new Image(atlas.getTexture('shop_message_ok_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('shop_message_ok_bn_down'))}"
+                  triggered="{removeVip(); dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"
+                  isEnabled="{available}">
+            <f:layoutData>
+                <f:AnchorLayoutData right="26" bottom="17"/>
+            </f:layoutData>
+        </f:Button>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup includeInLayout="false" visible="{!available}" touchable="false" x="160" y="228">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+
+        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_unavailable_back'))}"
+                       maxWidth="359" maxHeight="125">
+            <f:layout>
+                <f:VerticalLayout horizontalAlign="center" verticalAlign="middle"
+                                  paddingLeft="44" paddingRight="56" paddingBottom="32"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData top="12"/>
+            </f:layoutData>
+
+            <f:Label text="{unavailableReason}" scale="0.73"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52', NaN, 0xffffff, TextFormatAlign.LEFT, -14)}}"/>
+        </f:LayoutGroup>
+
+        <f:ImageLoader source="{atlas.getTexture('shop_scotch')}">
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="-9"/>
+            </f:layoutData>
+        </f:ImageLoader>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="close", type="starling.events.Event")]
+        [Event(name="openVip", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import feathers.events.FeathersEventType;
+        import feathers.text.BitmapFontTextFormat;
+
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.animation.Transitions;
+
+        import starling.animation.Tween;
+
+        import starling.core.Starling;
+
+        import starling.display.Image;
+        import starling.events.Event;
+        import starling.filters.DropShadowFilter;
+        import starling.textures.Texture;
+        import starling.textures.TextureAtlas;
+
+        import vo.UnitInfo;
+
+        private var _data:UnitInfo;
+        private var _vip:Button;
+
+        [Bindable]
+        private var price:String;
+
+        [Bindable]
+        private var title:String;
+
+        [Bindable]
+        private var icon:Texture;
+
+        [Bindable]
+        private var unavailableReason:String = "";
+
+        private var _available:Boolean;
+
+        [Bindable(event="availableChanged")]
+        public function get available():Boolean
+        {
+            return _available;
+        }
+
+        public function set available(value:Boolean):void
+        {
+            if (!value) startVip();
+            else stopVip();
+
+            if (value == _available) return;
+            _available = value;
+            updateUnavailableReason();
+            dispatchEventWith("availableChanged");
+        }
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        public function set data(value:UnitInfo):void
+        {
+            _data = value;
+            if (isInitialized) updateData();
+        }
+
+        public function get data():UnitInfo
+        {
+            return _data;
+        }
+
+        private function updateData():void
+        {
+            if (_data)
+            {
+                title = _data.name.toUpperCase();
+                icon = _data.iconBig;
+
+                var locale:LocaleManager = LocaleManager.getInstance();
+                if (_data.perClickProfit)
+                {
+                    var label:Label = new Label();
+                    label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
+                    label.text = locale.getString("common", "item.ppс.long") + ": " +
+                            (_data.perClickProfit.value.value ?
+                                    cropValueK(Math.round(_data.perClickProfit.value.value), 5).toString() :
+                            Math.round(_data.perClickProfit.value.percentValue * 100.0) + "%");
+                    descriptionGroup.addChild(label);
+                }
+                if (_data.perSecondProfit)
+                {
+                    label = new Label();
+                    label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
+                    label.text = locale.getString("common", "item.pps.long") + ": " +
+                            (_data.perSecondProfit.value.value ?
+                                    cropValueK(Math.round(_data.perSecondProfit.value.value), 6).toString() :
+                            Math.round(_data.perSecondProfit.value.percentValue * 100.0) + "%");
+                    descriptionGroup.addChild(label);
+                }
+                if (_data.profit)
+                {
+                    label = new Label();
+                    label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
+                    label.text = locale.getString("common", "item.profit") + ": " +
+                            (_data.profit.value.value ?
+                                    Math.round(_data.profit.value.value).toString() :
+                            Math.round(_data.profit.value.percentValue * 100.0) + "%");
+                    descriptionGroup.addChild(label);
+                }
+                if (_data.action)
+                {
+                    label = new Label();
+                    label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
+                    label.text = _data.action.description;
+                    descriptionGroup.addChild(label);
+                }
+
+                price = _data.priceLabel;
+            }
+        }
+
+        private static function cropValueK(value:Number, limit:int):String
+        {
+            var l:Number = 10.0;
+            while (--limit > 0) l *= 10.0;
+            value = Math.round(value);
+            if (value >= l) return Math.floor(value / 1000.0) + "к";
+            return value.toString();
+        }
+
+        private function updateUnavailableReason():void
+        {
+            if (!available && _data)
+            {
+                if (_data.price < 0)
+                    unavailableReason = LocaleManager.getInstance().getString("common", "na.limit.reason");
+                else
+                    unavailableReason = LocaleManager.getInstance().getString("common", "na.price.reason");
+            }
+            else
+            {
+                unavailableReason = "";
+            }
+        }
+
+        private function startVip():void
+        {
+            if (!_vip)
+            {
+                var skin:Image = new Image(atlas.getTexture("shop_offer_back"));
+                _vip = new Button();
+                _vip.defaultSkin = skin;
+                _vip.pivotX = Math.floor(skin.width / 2.0);
+                _vip.pivotY = Math.floor(skin.height / 2.0);
+                _vip.addEventListener(starling.events.Event.TRIGGERED, onVip);
+                if (isCreated) delayedAnimateVip();
+                else addEventListener(FeathersEventType.CREATION_COMPLETE, delayedAnimateVip);
+            }
+        }
+
+        private function stopVip():void
+        {
+            if (_vip && !Starling.juggler.containsTweens(_vip))
+            {
+                removeEventListener(FeathersEventType.CREATION_COMPLETE, delayedAnimateVip);
+                Starling.juggler.removeDelayedCalls(animateVip);
+                Starling.juggler.removeTweens(_vip);
+                _vip.removeEventListener(starling.events.Event.TRIGGERED, onVip);
+                _vip.removeFromParent(true);
+                _vip = null;
+            }
+        }
+
+        private function delayedAnimateVip(event:starling.events.Event = null):void
+        {
+            if (event)
+                removeEventListener(FeathersEventType.CREATION_COMPLETE, delayedAnimateVip);
+            Starling.juggler.delayCall(animateVip, 0.7);
+        }
+
+        private function animateVip():void
+        {
+            if (this.parent)
+            {
+                _vip.validate();
+                var destPoint:Point = new Point(Math.floor(Starling.current.stage.stageWidth / 2),
+                        Math.floor((Starling.current.stage.stageHeight - this.height) / 2 * 0.75));
+                var startPoint:Point = new Point(Math.floor(Starling.current.stage.stageWidth / 2), -height);
+                var r:Number = Math.PI / 180.0 * 30.0 * Math.random() - Math.PI / 180.0 * 15.0;
+                _vip.x = Math.floor(startPoint.x + Math.random() * _vip.width - _vip.width / 2);
+                _vip.y = startPoint.y;
+                _vip.rotation = r - Math.PI * 2 * Math.random();
+                var tween:Tween = new Tween(_vip, 0.4, Transitions.EASE_OUT);
+                tween.moveTo(Math.floor(destPoint.x + Math.random() * _vip.width - _vip.width / 2),
+                        Math.floor(destPoint.y + Math.random() * _vip.height - _vip.height / 2));
+                tween.rotateTo(r);
+                Starling.juggler.add(tween);
+                this.parent.addChild(_vip);
+            }
+        }
+
+        private function removeVip():void
+        {
+            if (_vip)
+            {
+                if (Starling.juggler.containsDelayedCalls(animateVip))
+                {
+                    Starling.juggler.removeDelayedCalls(animateVip);
+                    onVipComplete();
+                }
+                else
+                {
+                    Starling.juggler.removeTweens(_vip);
+                    _vip.removeEventListener(starling.events.Event.TRIGGERED, onVip);
+                    var tween:Tween = new Tween(_vip, 0.4, Transitions.EASE_IN);
+                    tween.animate("y", Starling.current.stage.stageHeight + _vip.height);
+                    tween.onComplete = onVipComplete;
+                    Starling.juggler.add(tween);
+                }
+            }
+        }
+
+        private function onVipComplete():void
+        {
+            _vip.removeFromParent(true);
+            _vip = null;
+        }
+
+        private function onVip(event:starling.events.Event):void
+        {
+            removeVip();
+            dispatchEventWith("openVip");
+            dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL);
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

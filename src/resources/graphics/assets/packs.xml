@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6e10467a8f31076a01581bcdaccc8a1e:8c982f1a1ddb474e0d453c3d5e1eea38:4ab7c9685eb1849a888d90f0498b631f$ -->
+<TextureAtlas imagePath="packs.atf" width="512" height="512">
+    <SubTexture name="big/qtap.golden_fish.pack" x="1" y="1" width="160" height="120"/>
+    <SubTexture name="big/qtap.golden_fish" x="163" y="1" width="160" height="120"/>
+    <SubTexture name="big/qtap.portal" x="325" y="1" width="160" height="120"/>
+    <SubTexture name="big/qtap.silver_fish.pack" x="1" y="123" width="160" height="120"/>
+    <SubTexture name="big/qtap.silver_fish" x="1" y="245" width="160" height="120"/>
+    <SubTexture name="small/qtap.golden_fish.pack" x="1" y="367" width="120" height="90"/>
+    <SubTexture name="small/qtap.golden_fish" x="123" y="367" width="120" height="90"/>
+    <SubTexture name="small/qtap.portal" x="245" y="123" width="120" height="90"/>
+    <SubTexture name="small/qtap.silver_fish.pack" x="367" y="123" width="120" height="90"/>
+    <SubTexture name="small/qtap.silver_fish" x="163" y="215" width="120" height="90"/>
+</TextureAtlas>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:b2d7418b4407e765f98ff97825a8c231:9ed886c8f51d584ccf50d2fdf0e48ac8:61baa3394e66712fb1b481dc602a719f$ -->
+<TextureAtlas imagePath="globe.atf" width="512" height="512">
+    <SubTexture name="map" x="1" y="1" width="510" height="510"/>
+</TextureAtlas>

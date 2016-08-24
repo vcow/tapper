@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:8031f30ad84223e6efbc36f05486c56d:bf160a4fe5fde9d6ea861fe3a3acdbac:1cc5fdc1f9162fc7493e41e42713b02a$ -->
+<TextureAtlas imagePath="wooden.atf" width="1024" height="2048">
+    <SubTexture name="0" x="945" y="634" rotated="true" width="46" height="31"/>
+    <SubTexture name="1" x="945" y="667" rotated="true" width="46" height="31"/>
+    <SubTexture name="2" x="945" y="700" rotated="true" width="46" height="31"/>
+    <SubTexture name="3" x="944" y="733" rotated="true" width="46" height="31"/>
+    <SubTexture name="4" x="944" y="766" rotated="true" width="46" height="31"/>
+    <SubTexture name="5" x="944" y="799" rotated="true" width="46" height="31"/>
+    <SubTexture name="6" x="944" y="832" rotated="true" width="46" height="31"/>
+    <SubTexture name="7" x="944" y="865" rotated="true" width="46" height="31"/>
+    <SubTexture name="8" x="944" y="898" rotated="true" width="46" height="31"/>
+    <SubTexture name="9" x="941" y="931" rotated="true" width="46" height="31"/>
+    <SubTexture name="space" x="941" y="964" rotated="true" width="46" height="31"/>
+    <SubTexture name="wooden_action_bn_down" x="579" y="726" width="363" height="89" frameX="0" frameY="0" frameWidth="364" frameHeight="90"/>
+    <SubTexture name="wooden_action_bn_up" x="579" y="634" width="364" height="90"/>
+    <SubTexture name="wooden_back" x="1" y="1" width="576" height="1024"/>
+    <SubTexture name="wooden_back_bn_down" x="845" y="913" width="94" height="93" frameX="0" frameY="0" frameWidth="94" frameHeight="95"/>
+    <SubTexture name="wooden_back_bn_up" x="847" y="817" rotated="true" width="95" height="94"/>
+    <SubTexture name="wooden_bar" x="993" y="664" width="19" height="326" frameX="-6" frameY="0" frameWidth="28" frameHeight="326"/>
+    <SubTexture name="wooden_img_border" x="579" y="1" rotated="true" width="434" height="545"/>
+    <SubTexture name="wooden_indicator" x="579" y="548" width="432" height="84"/>
+    <SubTexture name="wooden_level_title_back" x="579" y="817" width="266" height="44"/>
+    <SubTexture name="wooden_shop_bn_highlight_down" x="579" y="863" width="149" height="149"/>
+    <SubTexture name="wooden_shop_bn_highlight_up" x="579" y="1014" width="149" height="149"/>
+    <SubTexture name="wooden_shop_bn_normal_down" x="730" y="978" width="101" height="101" frameX="-24" frameY="-24" frameWidth="149" frameHeight="149"/>
+    <SubTexture name="wooden_shop_bn_normal_up" x="730" y="863" width="113" height="113" frameX="-18" frameY="-18" frameWidth="149" frameHeight="149"/>
+    <SubTexture name="wooden_shop_widget_border" x="833" y="1008" width="90" height="90"/>
+    <SubTexture name="wooden_thumb" x="993" y="634" rotated="true" width="29" height="28"/>
+</TextureAtlas>

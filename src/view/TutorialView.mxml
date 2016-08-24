@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               autoSizeMode="stage" visible="false" touchable="false">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup id="back" blendMode="{starling.display.BlendMode.MULTIPLY}" alpha="0.7"/>
+
+    <f:LayoutGroup id="labelContainer" width="576" height="1024">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="complete", type="starling.events.Event")]
+        [Event(name="closed", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import app.AppFacade;
+
+        import feathers.controls.Label;
+        import feathers.text.BitmapFontTextFormat;
+
+        import mediators.TutorialMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+        import starling.animation.Tween;
+        import starling.core.Starling;
+        import starling.display.Image;
+        import starling.display.Quad;
+        import starling.textures.Texture;
+
+        import flash.events.MouseEvent;
+        import flash.display.Sprite;
+        import flash.display.BitmapData;
+
+        import vo.TutorialData;
+
+        private var _tutorialIsVisible:Boolean;
+        private var _skinTexture:Texture;
+
+        protected var _mediator:TutorialMediator;
+
+        public static const MEDIATOR_NAME:String = "tutorialMediator";
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as TutorialMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                var mediator:TutorialMediator = new TutorialMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
+            }
+
+            Starling.current.nativeStage.addEventListener(flash.events.MouseEvent.MOUSE_DOWN, onTouch, false, int.MAX_VALUE);
+        }
+
+        override public function dispose():void
+        {
+            Starling.juggler.removeTweens(this);
+
+            Starling.current.nativeStage.removeEventListener(flash.events.MouseEvent.MOUSE_DOWN, onTouch);
+
+            if (_skinTexture)
+            {
+                _skinTexture.root.onRestore = null;
+                _skinTexture.dispose();
+                _skinTexture = null;
+            }
+
+            if (_mediator)
+            {
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+                _mediator = null;
+            }
+
+            super.dispose();
+        }
+
+        public function showScreen(tutorialData:TutorialData, immediate:Boolean = false):void
+        {
+            Starling.juggler.removeTweens(this);
+
+            if (_tutorialIsVisible)
+                hideScreen(true);
+
+            _skinTexture = createTexture(tutorialData.frames);
+            back.backgroundSkin = new Image(_skinTexture);
+
+            labelContainer.removeChildren(0, -1, true);
+            for each (var frame:TutorialFrame in tutorialData.frames)
+            {
+                if (frame.description)
+                {
+                    var bfTextFormat:BitmapFontTextFormat = new BitmapFontTextFormat("tutorial");
+                    switch (frame.textAlign)
+                    {
+                        case TutorialFrame.LEFT:
+                            bfTextFormat.align = TextFormatAlign.RIGHT;
+                            break;
+                        case TutorialFrame.TOP:
+                        case TutorialFrame.BOTTOM:
+                            bfTextFormat.align = TextFormatAlign.CENTER;
+                            break;
+                        default:
+                            bfTextFormat.align = TextFormatAlign.LEFT;
+                    }
+                    var label:Label = new Label();
+                    label.textRendererProperties = {textFormat: bfTextFormat};
+                    label.text = frame.description;
+
+                    var offset:Point = frame.textOffset || new Point();
+                    label.validate();
+                    switch (frame.textAlign)
+                    {
+                        case TutorialFrame.LEFT:
+                            label.x = frame.frame.x - offset.x - label.width;
+                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y) + offset.y;
+                            break;
+                        case TutorialFrame.TOP:
+                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x) + offset.x;
+                            label.y = frame.frame.y - label.height - offset.y;
+                            break;
+                        case TutorialFrame.BOTTOM:
+                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x) + offset.x;
+                            label.y = frame.frame.y + frame.frame.height + offset.y;
+                            break;
+                        default:
+                            label.x = frame.frame.x + frame.frame.width + offset.x;
+                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y) + offset.y;
+                            break;
+                    }
+                    if (label.x < 0) label.x = 0;
+                    if (label.y < 0) label.y = 0;
+                    if (label.x + label.width > Starling.current.stage.stageWidth) label.x = Starling.current.stage.stageWidth - label.width;
+                    if (label.y + label.height > Starling.current.stage.stageHeight) label.y = Starling.current.stage.stageHeight - label.height;
+
+                    label.includeInLayout = false;
+                    labelContainer.addChild(label);
+                }
+            }
+
+            if (immediate)
+            {
+                this.alpha = 1.0;
+                dispatchEventWith("complete", false, tutorialData.key);
+            }
+            else
+            {
+                this.alpha = 0;
+                var tween:Tween = new Tween(this, 1.0);
+                tween.fadeTo(1.0);
+                tween.onCompleteArgs = [this];
+                tween.onComplete = function (self:TutorialView):void
+                {
+                    self.dispatchEventWith("complete", false, tutorialData.key);
+                };
+                Starling.juggler.add(tween);
+            }
+            this.visible = true;
+            _tutorialIsVisible = true;
+        }
+
+        private function createTexture(frames:Vector.<TutorialFrame>):Texture
+        {
+            var canvas:flash.display.Sprite = new flash.display.Sprite();
+            canvas.graphics.beginFill(0x000000);
+            canvas.graphics.drawRect(0, 0, Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
+            canvas.graphics.endFill();
+
+            var offsetX:int = (Starling.current.stage.stageWidth - 576) / 2;
+            var offsetY:int = (Starling.current.stage.stageHeight - 1024) / 2;
+
+            for each (var frame:TutorialFrame in frames)
+            {
+                canvas.graphics.beginFill(0xffffff);
+                if (frame.cornerRadius)
+                    canvas.graphics.drawRoundRect(frame.frame.x + offsetX, frame.frame.y + offsetY, frame.frame.width,
+                            frame.frame.height, frame.cornerRadius, frame.cornerRadius);
+                else
+                    canvas.graphics.drawRect(frame.frame.x + offsetX, frame.frame.y + offsetY,
+                            frame.frame.width, frame.frame.height);
+                canvas.graphics.endFill();
+            }
+
+            var source:flash.display.BitmapData = new flash.display.BitmapData(Starling.current.stage.stageWidth,
+                    Starling.current.stage.stageHeight, true, 0x00000000);
+            source.draw(canvas);
+            var texture:Texture = Texture.fromBitmapData(source);
+            texture.root.onRestore = function ():void
+            {
+                texture.root.uploadBitmapData(source);
+            };
+            return texture;
+        }
+
+        public function hideScreen(immediate:Boolean = false):void
+        {
+            if (!_tutorialIsVisible) return;
+
+            if (immediate)
+            {
+                this.visible = false;
+            }
+            else
+            {
+                Starling.juggler.removeTweens(this);
+                var tween:Tween = new Tween(this, 1.0);
+                tween.fadeTo(0);
+                tween.onCompleteArgs = [this];
+                tween.onComplete = function (self:TutorialView):void
+                {
+                    self.visible = false;
+                };
+                Starling.juggler.add(tween);
+            }
+            _tutorialIsVisible = false;
+        }
+
+        private function onTouch(event:flash.events.MouseEvent):void
+        {
+            if (_tutorialIsVisible)
+            {
+                hideScreen();
+                dispatchEventWith("closed");
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

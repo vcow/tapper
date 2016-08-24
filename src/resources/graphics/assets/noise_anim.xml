@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:52992c934e4c1456f34f7f45d4bc0440:38e2f88937922303f298316b95b11383:3dc16ff0762cf207f8c762a4f18fae56$ -->
+<TextureAtlas imagePath="noise_anim.atf" width="1024" height="1024">
+    <SubTexture name="idle0000" x="1" y="1" width="298" height="169"/>
+    <SubTexture name="idle0001" x="301" y="1" width="298" height="169"/>
+    <SubTexture name="idle0002" x="601" y="1" width="298" height="169"/>
+    <SubTexture name="idle0003" x="1" y="172" rotated="true" width="169" height="298"/>
+    <SubTexture name="idle0004" x="1" y="472" rotated="true" width="169" height="298"/>
+    <SubTexture name="idle0005" x="301" y="1" width="298" height="169"/>
+    <SubTexture name="noise0000" x="1" y="1" width="298" height="169"/>
+    <SubTexture name="noise0001" x="601" y="1" width="298" height="169"/>
+    <SubTexture name="noise0002" x="1" y="772" width="298" height="169"/>
+    <SubTexture name="noise0003" x="172" y="172" rotated="true" width="169" height="298"/>
+    <SubTexture name="noise0004" x="172" y="472" rotated="true" width="169" height="298"/>
+    <SubTexture name="noise0005" x="301" y="772" width="298" height="169"/>
+    <SubTexture name="noise0006" x="601" y="172" width="298" height="169"/>
+    <SubTexture name="noise0007" x="343" y="172" rotated="true" width="169" height="298"/>
+    <SubTexture name="noise0008" x="343" y="472" rotated="true" width="169" height="298"/>
+    <SubTexture name="noise0009" x="601" y="343" width="298" height="169"/>
+    <SubTexture name="noise0010" x="1" y="172" rotated="true" width="169" height="298"/>
+    <SubTexture name="noise0011" x="1" y="472" rotated="true" width="169" height="298"/>
+    <SubTexture name="noise0012" x="301" y="1" width="298" height="169"/>
+</TextureAtlas>

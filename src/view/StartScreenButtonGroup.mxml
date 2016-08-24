@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()">
+    <f:layout>
+        <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="10"/>
+    </f:layout>
+    <f:layoutData>
+        <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
+    </f:layoutData>
+
+    <f:Button label="{LocaleManager.getInstance().getString('common', 'continue.bn.label')}"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+              isEnabled="{canContinueGame}"
+              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'continueGame')}" alpha="0"/>
+
+    <f:Button label="{LocaleManager.getInstance().getString('common', 'new.bn.label')}"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'newGame')}" alpha="0"/>
+
+    <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{_shopAvailable}"
+              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openVip')}" alpha="0"/>
+
+    <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{_pantheonAvailable}"
+              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openPantheon')}" alpha="0"/>
+
+    <fx:Metadata>
+        [Event(name="triggered", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import net.Statistics;
+        import net.Purchase;
+
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.events.Event;
+
+        [Bindable]
+        public var canContinueGame:Boolean;
+
+        [Bindable]
+        private var _pantheonAvailable:Boolean;
+
+        [Bindable]
+        private var _shopAvailable:Boolean;
+
+        private function onAddedToStage():void
+        {
+            Statistics.getInstance().addEventListener("status", onConnectionStatusChanged);
+            Purchase.getInstance().addEventListener("status", onPurchaseStatusChanged);
+            onConnectionStatusChanged(null);
+            onPurchaseStatusChanged(null);
+        }
+
+        private function onRemovedFromStage():void
+        {
+            Statistics.getInstance().removeEventListener("status", onConnectionStatusChanged);
+            Purchase.getInstance().removeEventListener("status", onPurchaseStatusChanged);
+        }
+
+        private function onConnectionStatusChanged(event:starling.events.Event):void
+        {
+            _pantheonAvailable = Statistics.getInstance().connected;
+        }
+
+        private function onPurchaseStatusChanged(event:starling.events.Event):void
+        {
+            _shopAvailable = Purchase.getInstance().isSupported;
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>
