@@ -9,6 +9,10 @@
             <mxml:HorizontalLayout/>
         </mxml:layout>
 
+        <mxml:Button label="Back" triggered="{dispatchEventWith(BACK)}"/>
     </mxml:LayoutGroup>
 
+    <fx:Script><![CDATA[
+        public static const BACK:String = "back";
+        ]]></fx:Script>
 </mxml:LayoutGroup>

@@ -22,7 +22,7 @@ package mediators
 
 		private function onStart(event:Event):void
 		{
-			eventDispatcher.dispatchEvent(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_GAME));
+			dispatch(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_GAME));
 		}
 	}
 }

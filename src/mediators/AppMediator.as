@@ -16,6 +16,8 @@ package mediators
 
 		override public function initialize():void
 		{
+			addContextListener(SwitchScreenEvent.POP, onSwitch, SwitchScreenEvent);
+			addContextListener(SwitchScreenEvent.POP_TO_ROOT, onSwitch, SwitchScreenEvent);
 			addContextListener(SwitchScreenEvent.SWITCH_TO_GAME, onSwitch, SwitchScreenEvent);
 		}
 
