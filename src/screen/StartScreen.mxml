@@ -4,9 +4,12 @@
         <f:VerticalLayout verticalAlign="middle" horizontalAlign="center"/>
     </f:layout>
 
-    <f:Button label="Start" triggered="{dispatchEventWith(START)}"/>
+    <f:Button label="Start" styleProvider="{StylesLibrary.commonButtonStyleProvider}"
+              triggered="{dispatchEventWith(START)}"/>
 
     <fx:Script><![CDATA[
+        import resources.StylesLibrary;
+
         public static const START:String = "startGame";
         ]]></fx:Script>
 </f:LayoutGroup>

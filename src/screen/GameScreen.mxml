@@ -9,10 +9,12 @@
             <mxml:HorizontalLayout/>
         </mxml:layout>
 
-        <mxml:Button label="Back" triggered="{dispatchEventWith(BACK)}"/>
+        <mxml:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
     </mxml:LayoutGroup>
 
     <fx:Script><![CDATA[
+        import resources.StylesLibrary;
+
         public static const BACK:String = "back";
         ]]></fx:Script>
 </mxml:LayoutGroup>

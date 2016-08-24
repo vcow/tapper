@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:b7b50486a8cbaf5249a7643ca0ff4c35:79b3449101c51d882291e43aa5acd40c:f1de311e8e8af67d6728736eae84e569$ -->
+<TextureAtlas imagePath="common.atf" width="256" height="512">
+    <SubTexture name="back_disabled" x="203" y="1" width="50" height="50"/>
+    <SubTexture name="back_down" x="203" y="53" width="50" height="50"/>
+    <SubTexture name="back_hover" x="203" y="105" width="50" height="50"/>
+    <SubTexture name="back_normal" x="203" y="157" width="50" height="50"/>
+    <SubTexture name="common_bn_disabled" x="125" y="311" width="60" height="60"/>
+    <SubTexture name="common_bn_down" x="187" y="311" width="60" height="60"/>
+    <SubTexture name="common_bn_hover" x="125" y="373" width="60" height="60"/>
+    <SubTexture name="common_bn_normal" x="187" y="373" width="60" height="60"/>
+    <SubTexture name="tap_bn1_disabled" x="1" y="1" width="200" height="60"/>
+    <SubTexture name="tap_bn1_down" x="1" y="63" width="200" height="60"/>
+    <SubTexture name="tap_bn1_hover" x="1" y="125" width="200" height="60"/>
+    <SubTexture name="tap_bn1_normal" x="1" y="187" width="200" height="60"/>
+    <SubTexture name="tap_bn2_disabled" x="1" y="1" width="200" height="60"/>
+    <SubTexture name="tap_bn2_down" x="1" y="249" width="200" height="60"/>
+    <SubTexture name="tap_bn2_hover" x="1" y="311" rotated="true" width="60" height="200"/>
+    <SubTexture name="tap_bn2_normal" x="63" y="311" rotated="true" width="60" height="200"/>
+</TextureAtlas>
