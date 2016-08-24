@@ -9,6 +9,10 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
+	import resources.LocalesLibrary;
+
+	import resources.locale.LocaleManager;
+
 	import robotlegs.bender.framework.impl.Context;
 	import robotlegs.starling.bundles.mvcs.StarlingBundle;
 	import robotlegs.starling.extensions.viewProcessorMap.ViewProcessorMapExtension;
@@ -34,9 +38,20 @@ package
 
 		protected function onLoadComplete(event:Event):void
 		{
+			var bundles:Array = [].concat(LocalesLibrary.commonBundle);
+			LocaleManager.getInstance().addRequiredBundles(bundles, onLocalesComplete);
+		}
+
+		private function onLocalesComplete(success:Boolean):void
+		{
+			if (!success)
+				throw Error("LocaleManager initialization failed.");
+
+			LocaleManager.getInstance().localeChain = ["en_US"];
+
 			_starling = new Starling(Application, stage);
 
-			var scaleFactorManager:ScreenDensityScaleFactorManager = new ScreenDensityScaleFactorManager(_starling);
+			new ScreenDensityScaleFactorManager(_starling);
 
 			var context:Context = new Context();
 			context.install(StarlingBundle, ViewProcessorMapExtension)

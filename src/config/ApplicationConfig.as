@@ -11,6 +11,8 @@ package config
 
 	import models.GameModel;
 
+	import resources.locale.LocaleManager;
+
 	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
 
 	import robotlegs.bender.framework.api.IConfig;
