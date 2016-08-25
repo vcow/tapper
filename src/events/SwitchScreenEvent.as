@@ -1,6 +1,3 @@
-/**
- * Created by Yakov on 24.08.2016.
- */
 package events
 {
 	import flash.events.Event;

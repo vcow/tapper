@@ -21,7 +21,7 @@ package resources
 		{
 			if (_instance) throw Error("AtlasLibrary is a static class. Use getInstance() method.");
 
-			_commonTexture = Texture.fromAtfData(new commonAsset());
+			_commonTexture = Texture.fromEmbeddedAsset(commonAsset);
 			_commonTexture.root.onRestore = onCommonRestore;
 
 			_common = new TextureAtlas(_commonTexture, new XML(new commonDescription()));

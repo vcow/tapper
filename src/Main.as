@@ -38,7 +38,10 @@ package
 
 		protected function onLoadComplete(event:Event):void
 		{
-			var bundles:Array = [].concat(LocalesLibrary.commonBundle);
+			var bundles:Array = []
+					.concat(LocalesLibrary.commonBundle)
+					.concat(LocalesLibrary.unitsBundle);
+
 			LocaleManager.getInstance().addRequiredBundles(bundles, onLocalesComplete);
 		}
 

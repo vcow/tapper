@@ -10,6 +10,7 @@ package config
 	import mediators.StartScreenMediator;
 
 	import models.GameModel;
+	import models.UnitsModel;
 
 	import resources.locale.LocaleManager;
 
@@ -42,6 +43,7 @@ package config
 
 		public function configure():void
 		{
+			injector.map(UnitsModel).toSingleton(UnitsModel);
 			injector.map(GameModel).toSingleton(GameModel);
 
 			mediatorMap.map(Application).toMediator(ApplicationMediator);

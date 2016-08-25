@@ -42,7 +42,7 @@ package resources
 		public function get arial16():String
 		{
 			if (!_arial16Font) {
-				_arial16Texture = Texture.fromAtfData(new arial16Asset());
+				_arial16Texture = Texture.fromEmbeddedAsset(arial16Asset);
 				_arial16Texture.root.onRestore = onArial16Restore;
 				_arial16Font = new BitmapFont(_arial16Texture, new XML(new arial16Description()));
 				TextField.registerBitmapFont(_arial16Font, ARIAL_16);
@@ -53,7 +53,7 @@ package resources
 		public function get arial30():String
 		{
 			if (!_arial30Font) {
-				_arial30Texture = Texture.fromAtfData(new arial30Asset());
+				_arial30Texture = Texture.fromEmbeddedAsset(arial30Asset);
 				_arial30Texture.root.onRestore = onArial30Restore;
 				_arial30Font = new BitmapFont(_arial30Texture, new XML(new arial30Description()));
 				TextField.registerBitmapFont(_arial30Font, ARIAL_30);

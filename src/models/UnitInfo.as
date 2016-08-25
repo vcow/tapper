@@ -1,0 +1,69 @@
+package models
+{
+	import resources.locale.LocaleManager;
+
+	public class UnitInfo
+	{
+		private var _id:String;
+		private var _name:String;
+		private var _price:Number;
+		private var _priceGrowth:RelValue;
+		private var _maxCount:int;
+		private var _perSecondProfit:ProfitInfo;
+		private var _perClickProfit:ProfitInfo;
+		private var _profit:ProfitInfo;
+
+		public function UnitInfo(src:XML)
+		{
+			_id = src.@id;
+			_name = LocaleManager.getInstance().getString("units", src.@name) || src.@name;
+			_price = Number(src.@price);
+			_maxCount = int(src.@maxCount);
+			if (src.hasOwnProperty("@priceGrowth")) _priceGrowth = new RelValue(src.@priceGrowth);
+
+			for each (var p:XML in src.pps) _perSecondProfit = new ProfitInfo(p);
+			for each (p in src.ppc) _perClickProfit = new ProfitInfo(p);
+			for each (p in src.p) _profit = new ProfitInfo(p);
+		}
+
+		public function get id():String
+		{
+			return _id;
+		}
+
+		public function get name():String
+		{
+			return _name;
+		}
+
+		public function get price():Number
+		{
+			return _price;
+		}
+
+		public function get priceGrowth():RelValue
+		{
+			return _priceGrowth;
+		}
+
+		public function get maxCount():int
+		{
+			return _maxCount;
+		}
+
+		public function get perSecondProfit():ProfitInfo
+		{
+			return _perSecondProfit;
+		}
+
+		public function get perClickProfit():ProfitInfo
+		{
+			return _perClickProfit;
+		}
+
+		public function get profit():ProfitInfo
+		{
+			return _profit;
+		}
+	}
+}
