@@ -1,5 +1,6 @@
 package mediators
 {
+	import events.GameEvent;
 	import events.GameStateEvent;
 	import events.SwitchScreenEvent;
 
@@ -19,8 +20,14 @@ package mediators
 		override public function initialize():void
 		{
 			addViewListener(GameScreen.BACK, onBack);
+			addViewListener(GameScreen.TAP, onTap);
 
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
+		}
+
+		private function onTap(event:Event):void
+		{
+			dispatch(new GameEvent(GameEvent.TAP));
 		}
 
 		private function onBack(event:Event):void

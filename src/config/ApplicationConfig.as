@@ -1,7 +1,11 @@
 package config
 {
+	import commands.GameTapCommand;
+	import commands.GameTickCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
+
+	import events.GameEvent;
 
 	import events.GameStateEvent;
 
@@ -11,8 +15,6 @@ package config
 
 	import models.GameModel;
 	import models.UnitsModel;
-
-	import resources.locale.LocaleManager;
 
 	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
 
@@ -52,6 +54,8 @@ package config
 
 			eventCommandMap.map(GameStateEvent.START_GAME, GameStateEvent).toCommand(StartGameCommand);
 			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);
+			eventCommandMap.map(GameEvent.TICK, GameEvent).toCommand(GameTickCommand);
+			eventCommandMap.map(GameEvent.TAP, GameEvent).toCommand(GameTapCommand);
 		}
 	}
 }

@@ -4,6 +4,8 @@ package commands
 
 	import robotlegs.bender.extensions.commandCenter.api.ICommand;
 
+	import starling.core.Starling;
+
 	public class StopGameCommand implements ICommand
 	{
 		[Inject]
@@ -11,7 +13,10 @@ package commands
 
 		public function execute():void
 		{
-			gameModel.isActive = false;
+			if (gameModel.isActive) {
+				Starling.current.juggler.removeByID(gameModel.callbackId);
+				gameModel.callbackId = 0;
+			}
 		}
 	}
 }

@@ -196,6 +196,10 @@
             <key type="filename">../graphics/common_bn_down.png</key>
             <key type="filename">../graphics/common_bn_hover.png</key>
             <key type="filename">../graphics/common_bn_normal.png</key>
+            <key type="filename">../graphics/shop_disabled.png</key>
+            <key type="filename">../graphics/shop_down.png</key>
+            <key type="filename">../graphics/shop_hover.png</key>
+            <key type="filename">../graphics/shop_normal.png</key>
             <key type="filename">../graphics/tap_bn1_disabled.png</key>
             <key type="filename">../graphics/tap_bn1_down.png</key>
             <key type="filename">../graphics/tap_bn1_hover.png</key>

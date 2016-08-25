@@ -2,8 +2,6 @@ package mediators
 {
 	import events.SwitchScreenEvent;
 
-	import models.UnitsModel;
-
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
 	import view.StartScreen;
@@ -12,9 +10,6 @@ package mediators
 
 	public class StartScreenMediator extends Mediator
 	{
-		[Inject]
-		public var units:UnitsModel;
-
 		public function StartScreenMediator()
 		{
 			super();

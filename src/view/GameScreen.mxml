@@ -1,20 +1,41 @@
 <?xml version="1.0"?>
-<mxml:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:mxml="library://ns.feathersui.com/mxml">
-    <mxml:layout>
-        <mxml:VerticalLayout/>
-    </mxml:layout>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+    <f:layout>
+        <f:VerticalLayout gap="5" horizontalAlign="center"/>
+    </f:layout>
 
-    <mxml:LayoutGroup>
-        <mxml:layout>
-            <mxml:HorizontalLayout/>
-        </mxml:layout>
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
+        </f:layout>
+        <f:layoutData>
+            <f:VerticalLayoutData percentWidth="100"/>
+        </f:layoutData>
 
-        <mxml:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
-    </mxml:LayoutGroup>
+        <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
+
+        <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+            <f:layoutData>
+                <f:HorizontalLayoutData percentWidth="100"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}"/>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup height="50"/>
+
+    <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
+              styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
 
     <fx:Script><![CDATA[
         import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
 
         public static const BACK:String = "back";
+        public static const TAP:String = "tap";
+
+        [Bindable]
+        public var money:Number = 0;
         ]]></fx:Script>
-</mxml:LayoutGroup>
+</f:LayoutGroup>
