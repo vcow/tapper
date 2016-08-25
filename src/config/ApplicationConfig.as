@@ -9,8 +9,9 @@ package config
 
 	import events.GameStateEvent;
 
-	import mediators.ApplicationMediator;
+	import mediators.MainScreenMediator;
 	import mediators.GameScreenMediator;
+	import mediators.ShopScreenMediator;
 	import mediators.StartScreenMediator;
 
 	import models.GameModel;
@@ -22,9 +23,10 @@ package config
 	import robotlegs.bender.framework.api.IInjector;
 	import robotlegs.starling.extensions.mediatorMap.api.IMediatorMap;
 
-	import view.Application;
+	import view.MainScreen;
 
 	import view.GameScreen;
+	import view.ShopScreen;
 
 	import view.StartScreen;
 
@@ -48,9 +50,10 @@ package config
 			injector.map(UnitsModel).toSingleton(UnitsModel);
 			injector.map(GameModel).toSingleton(GameModel);
 
-			mediatorMap.map(Application).toMediator(ApplicationMediator);
+			mediatorMap.map(MainScreen).toMediator(MainScreenMediator);
 			mediatorMap.map(StartScreen).toMediator(StartScreenMediator);
 			mediatorMap.map(GameScreen).toMediator(GameScreenMediator);
+			mediatorMap.map(ShopScreen).toMediator(ShopScreenMediator);
 
 			eventCommandMap.map(GameStateEvent.START_GAME, GameStateEvent).toCommand(StartGameCommand);
 			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);

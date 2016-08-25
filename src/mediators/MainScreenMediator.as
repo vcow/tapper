@@ -6,14 +6,14 @@ package mediators
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
-	import view.Application;
+	import view.MainScreen;
 
-	public class ApplicationMediator extends Mediator
+	public class MainScreenMediator extends Mediator
 	{
 		[Inject]
-		public var view:Application;
+		public var view:MainScreen;
 
-		public function ApplicationMediator()
+		public function MainScreenMediator()
 		{
 			super();
 		}
@@ -23,6 +23,7 @@ package mediators
 			addContextListener(SwitchScreenEvent.POP, onSwitch, SwitchScreenEvent);
 			addContextListener(SwitchScreenEvent.POP_TO_ROOT, onSwitch, SwitchScreenEvent);
 			addContextListener(SwitchScreenEvent.SWITCH_TO_GAME, onSwitch, SwitchScreenEvent);
+			addContextListener(SwitchScreenEvent.SWITCH_TO_SHOP, onSwitch, SwitchScreenEvent);
 		}
 
 		private function onSwitch(event:SwitchScreenEvent):void
@@ -36,6 +37,9 @@ package mediators
 					break;
 				case SwitchScreenEvent.SWITCH_TO_GAME:
 					StackScreenNavigator(view).pushScreen("gameScreenItem");
+					break;
+				case SwitchScreenEvent.SWITCH_TO_SHOP:
+					StackScreenNavigator(view).pushScreen("shopScreenItem");
 					break;
 			}
 		}

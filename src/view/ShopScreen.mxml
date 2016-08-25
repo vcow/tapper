@@ -20,21 +20,13 @@
             </f:layoutData>
         </f:Label>
 
-        <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}" triggered="{dispatchEventWith(SHOP)}"/>
+        <f:LayoutGroup width="50"/>
     </f:LayoutGroup>
-
-    <f:LayoutGroup height="50"/>
-
-    <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
-              styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
 
     <fx:Script><![CDATA[
         import resources.StylesLibrary;
-        import resources.locale.LocaleManager;
 
         public static const BACK:String = "back";
-        public static const SHOP:String = "shop";
-        public static const TAP:String = "tap";
 
         [Bindable]
         public var money:Number = 0;

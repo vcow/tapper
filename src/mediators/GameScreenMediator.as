@@ -20,9 +20,15 @@ package mediators
 		override public function initialize():void
 		{
 			addViewListener(GameScreen.BACK, onBack);
+			addViewListener(GameScreen.SHOP, onShop);
 			addViewListener(GameScreen.TAP, onTap);
 
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
+		}
+
+		private function onShop(event:Event):void
+		{
+			dispatch(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_SHOP));
 		}
 
 		private function onTap(event:Event):void

@@ -20,7 +20,7 @@ package
 
 	import starling.core.Starling;
 
-	import view.Application;
+	import view.MainScreen;
 
 	[SWF(frameRate="60", backgroundColor="#14485e")]
 	public class Main extends Sprite
@@ -52,7 +52,7 @@ package
 
 			LocaleManager.getInstance().localeChain = ["en_US"];
 
-			_starling = new Starling(Application, stage);
+			_starling = new Starling(MainScreen, stage);
 
 			new ScreenDensityScaleFactorManager(_starling);
 

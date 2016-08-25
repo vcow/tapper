@@ -10,4 +10,8 @@
     <f:StackScreenNavigatorItem id="gameScreenItem">
         <screen:GameScreen/>
     </f:StackScreenNavigatorItem>
+
+    <f:StackScreenNavigatorItem id="shopScreenItem">
+        <screen:ShopScreen/>
+    </f:StackScreenNavigatorItem>
 </f:StackScreenNavigator>
