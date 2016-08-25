@@ -4,6 +4,8 @@ package mediators
 	import events.GameStateEvent;
 	import events.SwitchScreenEvent;
 
+	import models.GameModel;
+
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
 	import view.GameScreen;
@@ -12,6 +14,12 @@ package mediators
 
 	public class GameScreenMediator extends Mediator
 	{
+		[Inject]
+		public var gameModel:GameModel;
+
+		[Inject]
+		public var view:GameScreen;
+
 		public function GameScreenMediator()
 		{
 			super();
@@ -22,6 +30,8 @@ package mediators
 			addViewListener(GameScreen.BACK, onBack);
 			addViewListener(GameScreen.SHOP, onShop);
 			addViewListener(GameScreen.TAP, onTap);
+
+			GameScreen(view).money = gameModel.money;
 
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
 		}

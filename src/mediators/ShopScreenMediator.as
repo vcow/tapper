@@ -2,14 +2,22 @@ package mediators
 {
 	import events.SwitchScreenEvent;
 
-	import robotlegs.starling.bundles.mvcs.Mediator;
+	import models.GameModel;
 
-	import view.GameScreen;
+	import robotlegs.starling.bundles.mvcs.Mediator;
 
 	import starling.events.Event;
 
+	import view.ShopScreen;
+
 	public class ShopScreenMediator extends Mediator
 	{
+		[Inject]
+		public var gameModel:GameModel;
+
+		[Inject]
+		public var view:ShopScreen;
+
 		public function ShopScreenMediator()
 		{
 			super();
@@ -17,7 +25,9 @@ package mediators
 
 		override public function initialize():void
 		{
-			addViewListener(GameScreen.BACK, onBack);
+			addViewListener(ShopScreen.BACK, onBack);
+
+			ShopScreen(view).money = gameModel.money;
 		}
 
 		private function onBack(event:Event):void
