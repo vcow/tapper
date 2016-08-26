@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{new Quad(20, 20, 0x1a5f7c)}" initialize="{_trigger = new TapToTrigger(this)}">
+    <f:layout>
+        <f:HorizontalLayout gap="4" padding="5" verticalAlign="middle"/>
+    </f:layout>
+    <f:layoutData>
+        <f:VerticalLayoutData percentWidth="100"/>
+    </f:layoutData>
+
+    <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}" touchable="false"/>
+
+    <f:LayoutGroup touchable="false">
+        <f:layout>
+            <f:VerticalLayout gap="10"/>
+        </f:layout>
+
+        <f:Label text="{title}" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}"/>
+
+        <f:Label text="{description}" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}"/>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import feathers.utils.touch.TapToTrigger;
+
+        import models.UnitInfo;
+
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Quad;
+
+        private var _trigger:TapToTrigger;
+
+        [Bindable]
+        private var title:String;
+
+        [Bindable]
+        private var description:String;
+
+        override public function set data(value:Object):void
+        {
+            _data = value as UnitInfo;
+            if (_data) {
+                title = _data.name;
+
+                var locale:LocaleManager = LocaleManager.getInstance();
+                var desc:String = "";
+                if (_data.perClickProfit) {
+                    desc += locale.getString("common", "item.ppс.short") + " " +
+                            (_data.perClickProfit.value.value ?
+                            Math.round(_data.perClickProfit.value.value).toString() :
+                            Math.round(_data.perClickProfit.value.percentValue * 100.0) + "%");
+                }
+                if (_data.perSecondProfit) {
+                    desc += (desc ? ", " : "") + locale.getString("common", "item.pps.short") + " " +
+                            (_data.perSecondProfit.value.value ?
+                            Math.round(_data.perSecondProfit.value.value).toString() :
+                            Math.round(_data.perSecondProfit.value.percentValue * 100.0) + "%");
+                }
+                if (_data.profit) {
+                    desc += (desc ? ", " : "") + "+" + (_data.profit.value.value ?
+                                    Math.round(_data.profit.value.value).toString() :
+                            Math.round(_data.profit.value.percentValue * 100.0) + "%");
+                }
+                if (_data.action) {
+                    desc += (desc ? ", " : "") + _data.action.description;
+                }
+                description = desc;
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

@@ -12,6 +12,7 @@ package models
 		private var _perSecondProfit:ProfitInfo;
 		private var _perClickProfit:ProfitInfo;
 		private var _profit:ProfitInfo;
+		private var _action:ActionInfo;
 
 		public function UnitInfo(src:XML)
 		{
@@ -24,6 +25,7 @@ package models
 			for each (var p:XML in src.pps) _perSecondProfit = new ProfitInfo(p);
 			for each (p in src.ppc) _perClickProfit = new ProfitInfo(p);
 			for each (p in src.p) _profit = new ProfitInfo(p);
+			for each (p in src.action) _action = new ActionInfo(p.@id);
 		}
 
 		public function get id():String
@@ -64,6 +66,11 @@ package models
 		public function get profit():ProfitInfo
 		{
 			return _profit;
+		}
+
+		public function get action():ActionInfo
+		{
+			return _action;
 		}
 	}
 }

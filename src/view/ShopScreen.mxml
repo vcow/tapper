@@ -23,12 +23,57 @@
         <f:LayoutGroup width="50"/>
     </f:LayoutGroup>
 
+    <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+            itemRendererType="view.ShopListItemRenderer" isSelectable="false"
+            triggered="{dispatchEventWith(SELECT_UNIT, false, event.data)}">
+        <f:layout>
+            <f:VerticalLayout gap="2"/>
+        </f:layout>
+        <f:layoutData>
+            <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+        </f:layoutData>
+    </f:List>
+
     <fx:Script><![CDATA[
+        import feathers.core.PopUpManager;
+        import feathers.data.ListCollection;
+
+        import models.UnitInfo;
+
         import resources.StylesLibrary;
 
+        import starling.events.Event;
+
         public static const BACK:String = "back";
+        public static const SELECT_UNIT:String = "selectUnit";
+        public static const BUY_UNIT:String = "buyUnit";
 
         [Bindable]
         public var money:Number;
+
+        [Bindable]
+        public var unitsList:ListCollection;
+
+        public function buyUnit(unit:UnitInfo, available:Boolean):void
+        {
+            var popup:BuyUnitPopUp = new BuyUnitPopUp();
+            popup.data = unit;
+            popup.available = available;
+            popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.addEventListener(starling.events.Event.CANCEL, onClosePopup);
+            PopUpManager.addPopUp(popup);
+        }
+
+        private function onClosePopup(event:starling.events.Event):void
+        {
+            var popup:BuyUnitPopUp = BuyUnitPopUp(event.target);
+            popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.removeEventListener(starling.events.Event.CANCEL, onClosePopup);
+            PopUpManager.removePopUp(popup);
+
+            if (event.type == starling.events.Event.CLOSE) {
+                dispatchEventWith(BUY_UNIT, false, popup.data);
+            }
+        }
         ]]></fx:Script>
 </f:LayoutGroup>

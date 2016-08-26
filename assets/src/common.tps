@@ -196,6 +196,11 @@
             <key type="filename">../graphics/common_bn_down.png</key>
             <key type="filename">../graphics/common_bn_hover.png</key>
             <key type="filename">../graphics/common_bn_normal.png</key>
+            <key type="filename">../graphics/scroll_bar.png</key>
+            <key type="filename">../graphics/scroll_button_disabled.png</key>
+            <key type="filename">../graphics/scroll_button_down.png</key>
+            <key type="filename">../graphics/scroll_button_hover.png</key>
+            <key type="filename">../graphics/scroll_button_normal.png</key>
             <key type="filename">../graphics/shop_disabled.png</key>
             <key type="filename">../graphics/shop_down.png</key>
             <key type="filename">../graphics/shop_hover.png</key>
