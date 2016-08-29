@@ -2,7 +2,7 @@ package models
 {
 	import resources.ConfigsLibrary;
 
-	public class ActionInfo
+	public class ActionInfo implements IReward
 	{
 		private var _id:String;
 		private var _name:String;

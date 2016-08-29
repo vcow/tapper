@@ -1,5 +1,6 @@
 package commands
 {
+	import events.ActionEvent;
 	import events.BuyUnitEvent;
 	import events.UIEvent;
 
@@ -40,7 +41,7 @@ package commands
 				}
 
 				if (unit.info.action) {
-					// TODO:
+					eventDispatcher.dispatchEvent(new ActionEvent(unit.info.action.id));
 				}
 			}
 		}

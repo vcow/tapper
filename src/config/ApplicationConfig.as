@@ -14,13 +14,18 @@ package config
 	import events.GameStateEvent;
 	import events.UnitEvent;
 
+	import gears.TriggerBroadcaster;
+
 	import mediators.MainScreenMediator;
 	import mediators.GameScreenMediator;
 	import mediators.ShopListItemMediator;
 	import mediators.ShopScreenMediator;
 	import mediators.StartScreenMediator;
 
+	import models.AchievementsModel;
+
 	import models.GameModel;
+	import models.LevelsModel;
 	import models.Unit;
 	import models.UnitsModel;
 
@@ -57,6 +62,9 @@ package config
 		{
 			injector.map(UnitsModel).toSingleton(UnitsModel);
 			injector.map(GameModel).toSingleton(GameModel);
+			injector.map(LevelsModel).toSingleton(LevelsModel);
+			injector.map(AchievementsModel).toSingleton(AchievementsModel);
+			injector.map(TriggerBroadcaster).toSingleton(TriggerBroadcaster);
 
 			mediatorMap.map(MainScreen).toMediator(MainScreenMediator);
 			mediatorMap.map(StartScreen).toMediator(StartScreenMediator);

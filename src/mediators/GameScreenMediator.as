@@ -7,6 +7,8 @@ package mediators
 
 	import feathers.data.ListCollection;
 
+	import models.AchievementsModel;
+
 	import models.GameModel;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
@@ -22,6 +24,9 @@ package mediators
 
 		[Inject]
 		public var view:GameScreen;
+
+		[Inject]
+		public var achievementsModel:AchievementsModel;
 
 		public function GameScreenMediator()
 		{

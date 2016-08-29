@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<achievements>
+	<achievement id="levelup1" title="Level Up" description="Level Up">
+		<rewards>
+			<action id="levelUp"/>
+		</rewards>
+		<conditions>
+			<money min="0"/>
+		</conditions>
+	</achievement>
+	<achievement id="click10" title="Click 10" description="10 clicks!">
+		<rewards>
+			<action id="popUp"/>
+			<p value="50%"/>
+		</rewards>
+		<conditions>
+			<taps min="10"/>
+		</conditions>
+	</achievement>
+</achievements>

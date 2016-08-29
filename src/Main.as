@@ -40,7 +40,9 @@ package
 		{
 			var bundles:Array = []
 					.concat(LocalesLibrary.commonBundle)
-					.concat(LocalesLibrary.unitsBundle);
+					.concat(LocalesLibrary.unitsBundle)
+					.concat(LocalesLibrary.levelsBundle)
+					.concat(LocalesLibrary.achievementsBundle);
 
 			LocaleManager.getInstance().addRequiredBundles(bundles, onLocalesComplete);
 		}

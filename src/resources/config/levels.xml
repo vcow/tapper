@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<levels>
+	<level id="1" title="Level 1" description="desc1"/>
+	<level id="2" title="Level 2" description="desc2"/>
+	<level id="3" title="Level 3" description="desc3"/>
+</levels>

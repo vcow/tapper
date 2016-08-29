@@ -40,7 +40,7 @@
 		<ppc value="15"/>
 	</unit>
 	<unit id="odessa" name="Режим одессы" price="500000" maxCount="1">
-		<action id="setSkin"/>
+		<action id="setSkinBronze"/>
 	</unit>
 	<unit id="stim" name="Стим" price="750000" priceGrowth="10%" maxCount="3">
 		<p value="100%"/>

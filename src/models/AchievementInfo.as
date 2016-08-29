@@ -1,0 +1,113 @@
+package models
+{
+	import events.AchievementEvent;
+
+	import flash.events.IEventDispatcher;
+
+	import gears.TriggerBroadcaster;
+
+	import resources.locale.LocaleManager;
+
+	public class AchievementInfo
+	{
+		private var _id:String;
+		private var _title:String;
+		private var _description:String;
+		private var _rewards:Vector.<IReward>;
+		private var _conditions:Vector.<ConditionBase>;
+
+		[Inject]
+		public var triggerBroadcaster:TriggerBroadcaster;
+
+		[Inject]
+		public var eventDispatcher:IEventDispatcher;
+
+		[PostConstruct]
+		public function postConstruct():void
+		{
+			if (_conditions.length > 0) triggerBroadcaster.subscribe(onTrigger);
+		}
+
+		private function onTrigger(trigger:String, value:*):void
+		{
+			var result:int = 0;
+			for each (var condition:ConditionBase in _conditions) {
+				if (trigger == TriggerBroadcaster.MONEY && condition is MoneyCondition) {
+					if (condition.check(value)) result++;
+				}
+				else if (trigger == TriggerBroadcaster.TAP && condition is TapsCondition) {
+					if (condition.check(value)) result++;
+				}
+			}
+			if (result == _conditions.length) {
+				triggerBroadcaster.unsubscribe(onTrigger);
+				eventDispatcher.dispatchEvent(new AchievementEvent(AchievementEvent.ACHIEVE, this));
+			}
+		}
+
+		public function AchievementInfo(src:XML)
+		{
+			var locale:LocaleManager = LocaleManager.getInstance();
+			_id = src.@id;
+			_title = locale.getString('achievements', src.@title) || src.@title;
+			_description = locale.getString('achievements', src.@description) || src.@description;
+
+			_rewards = new Vector.<IReward>();
+			for each (var rewards:XML in src.rewards) {
+				for each (var item:XML in rewards.children()) {
+					switch (item.name().toString()) {
+						case "action":
+							_rewards.push(new ActionInfo(item));
+							break;
+						case "p":
+							_rewards.push(new ProfitInfo(item));
+							break;
+						default:
+							throw Error("Unsupported reward " + item.name());
+					}
+				}
+			}
+
+			_conditions = new Vector.<ConditionBase>();
+			for each (var conditions:XML in src.conditions) {
+				for each (item in conditions.children()) {
+					switch (item.name().toString()) {
+						case "money":
+							_conditions.push(new MoneyCondition(item));
+							break;
+						case "taps":
+							_conditions.push(new TapsCondition(item));
+							break;
+						default:
+							throw Error("Unsupported condition " + item.name());
+					}
+				}
+			}
+		}
+
+		public function get id():String
+		{
+			return _id;
+		}
+
+		public function get title():String
+		{
+			return _title;
+		}
+
+		public function get description():String
+		{
+			return _description;
+		}
+
+		public function get rewards():Vector.<IReward>
+		{
+			return _rewards;
+		}
+
+		public function get conditions():Vector.<ConditionBase>
+		{
+			return _conditions;
+		}
+	}
+}
