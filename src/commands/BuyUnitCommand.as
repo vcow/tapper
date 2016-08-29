@@ -24,13 +24,15 @@ package commands
 		{
 			if (gameModel.money >= event.unit.price) {
 				var unit:Unit = new Unit(event.unit);
+				gameModel.money -= unit.info.price;
 
 				if (unit.info.perClickProfit || unit.info.perSecondProfit) {
 					injector.injectInto(unit);
 					gameModel.units.push(unit);
 					gameModel.units.sort(sortByPrice);
-					gameModel.money -= unit.info.price;
-					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_ALL));
+
+					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
 				}
 
 				if (unit.info.profit) {

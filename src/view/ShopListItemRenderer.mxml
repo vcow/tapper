@@ -19,7 +19,8 @@
 
         <f:Label text="{description}" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}"/>
 
-        <f:Label text="{price}" styleProvider="{priceStyle}"/>
+        <f:Label text="{price}" styleProvider="{available ? StylesLibrary.availablePriceLabelStyleProvider :
+                        StylesLibrary.unavailablePriceLabelStyleProvider}"/>
     </f:LayoutGroup>
 
     <fx:Script><![CDATA[
@@ -29,7 +30,6 @@
 
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
-        import resources.skin.LabelStyleProviderBase;
 
         import starling.display.Quad;
 
@@ -45,43 +45,39 @@
         private var price:Number;
 
         [Bindable]
-        private var priceStyle:LabelStyleProviderBase;
+        public var available:Boolean;
 
         override public function set data(value:Object):void
         {
-            super.data = value;
-
-            var unit:UnitInfo = value ? value.data as UnitInfo : null;
-            if (unit) {
-                title = unit.name;
+            super.data = value as UnitInfo;
+            if (data) {
+                title = data.name;
 
                 var locale:LocaleManager = LocaleManager.getInstance();
                 var desc:String = "";
-                if (unit.perClickProfit) {
+                if (data.perClickProfit) {
                     desc += locale.getString("common", "item.ppс.short") + " " +
-                            (unit.perClickProfit.value.value ?
-                            Math.round(unit.perClickProfit.value.value).toString() :
-                            Math.round(unit.perClickProfit.value.percentValue * 100.0) + "%");
+                            (data.perClickProfit.value.value ?
+                            Math.round(data.perClickProfit.value.value).toString() :
+                            Math.round(data.perClickProfit.value.percentValue * 100.0) + "%");
                 }
-                if (unit.perSecondProfit) {
+                if (data.perSecondProfit) {
                     desc += (desc ? ", " : "") + locale.getString("common", "item.pps.short") + " " +
-                            (unit.perSecondProfit.value.value ?
-                            Math.round(unit.perSecondProfit.value.value).toString() :
-                            Math.round(unit.perSecondProfit.value.percentValue * 100.0) + "%");
+                            (data.perSecondProfit.value.value ?
+                            Math.round(data.perSecondProfit.value.value).toString() :
+                            Math.round(data.perSecondProfit.value.percentValue * 100.0) + "%");
                 }
-                if (unit.profit) {
-                    desc += (desc ? ", " : "") + "+" + (unit.profit.value.value ?
-                                    Math.round(unit.profit.value.value).toString() :
-                            Math.round(unit.profit.value.percentValue * 100.0) + "%");
+                if (data.profit) {
+                    desc += (desc ? ", " : "") + "+" + (data.profit.value.value ?
+                                    Math.round(data.profit.value.value).toString() :
+                            Math.round(data.profit.value.percentValue * 100.0) + "%");
                 }
-                if (unit.action) {
-                    desc += (desc ? ", " : "") + unit.action.description;
+                if (data.action) {
+                    desc += (desc ? ", " : "") + data.action.description;
                 }
                 description = desc;
 
-                price = Math.round(unit.price);
-                priceStyle = value.available ? StylesLibrary.availablePriceLabelStyleProvider :
-                        StylesLibrary.unavailablePriceLabelStyleProvider;
+                price = Math.round(data.price);
             }
         }
         ]]></fx:Script>

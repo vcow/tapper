@@ -1,10 +1,17 @@
 package commands
 {
+	import events.UIEvent;
+
+	import flash.events.IEventDispatcher;
+
 	import models.ProfitInfo;
 	import models.Unit;
 
 	public class GameTapCommand extends CalcProfitCommandBase
 	{
+		[Inject]
+		public var eventDispatcher:IEventDispatcher;
+
 		override public function execute():void
 		{
 			gameModel.tapsTotal++;
@@ -16,6 +23,8 @@ package commands
 				if (unit.info.perClickProfit) profitList.push(unit.info.perClickProfit);
 			}
 			calcProfitList(profitList, 1);
+
+			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
 		}
 	}
 }

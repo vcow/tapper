@@ -1,10 +1,17 @@
 package commands
 {
+	import events.UIEvent;
+
+	import flash.events.IEventDispatcher;
+
 	import models.ProfitInfo;
 	import models.Unit;
 
 	public class GameTickCommand extends CalcProfitCommandBase
 	{
+		[Inject]
+		public var eventDispatcher:IEventDispatcher;
+
 		override public function execute():void
 		{
 			gameModel.tickCount++;
@@ -16,6 +23,7 @@ package commands
 				if (unit.info.perSecondProfit) profitList.push(unit.info.perSecondProfit);
 			}
 			calcProfitList(profitList);
+			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
 		}
 	}
 }

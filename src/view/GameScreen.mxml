@@ -28,7 +28,16 @@
     <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
               styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
 
+    <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+            itemRendererType="view.UnitListItemRenderer" isSelectable="false">
+        <f:layout>
+            <f:TiledRowsLayout gap="2"/>
+        </f:layout>
+    </f:List>
+
     <fx:Script><![CDATA[
+        import feathers.data.ListCollection;
+
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
@@ -38,5 +47,8 @@
 
         [Bindable]
         public var money:Number = 0;
+
+        [Bindable]
+        public var unitsList:ListCollection;
         ]]></fx:Script>
 </f:LayoutGroup>

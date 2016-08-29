@@ -5,6 +5,8 @@ package mediators
 	import events.SwitchScreenEvent;
 	import events.UIEvent;
 
+	import feathers.data.ListCollection;
+
 	import models.GameModel;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
@@ -32,29 +34,23 @@ package mediators
 			addViewListener(GameScreen.SHOP, onShop);
 			addViewListener(GameScreen.TAP, onTap);
 
-			addContextListener(UIEvent.UPDATE_ALL, onUpdateAll);
 			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
 			addContextListener(UIEvent.UPDATE_UNITS_LIST, onUpdateUnitsList);
 
-			GameScreen(view).money = gameModel.money;
+			onUpdateMoney();
+			onUpdateUnitsList();
 
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
 		}
 
-		private function onUpdateAll(Event:UIEvent = null):void
-		{
-			onUpdateMoney();
-			onUpdateUnitsList();
-		}
-
 		private function onUpdateMoney(Event:UIEvent = null):void
 		{
-
+			GameScreen(view).money = gameModel.money;
 		}
 
 		private function onUpdateUnitsList(Event:UIEvent = null):void
 		{
-
+			GameScreen(view).unitsList = new ListCollection(gameModel.units);
 		}
 
 		private function onShop(event:Event):void

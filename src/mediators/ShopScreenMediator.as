@@ -2,6 +2,7 @@ package mediators
 {
 	import events.BuyUnitEvent;
 	import events.SwitchScreenEvent;
+	import events.UIEvent;
 
 	import feathers.data.ListCollection;
 
@@ -37,17 +38,15 @@ package mediators
 			addViewListener(ShopScreen.SELECT_UNIT, onSelectUnit);
 			addViewListener(ShopScreen.BUY_UNIT, onBuyUnit);
 
-			var listData:Array = [];
-			for (var i:int = 0, l:int = unitsModel.units.length; i < l; i++) {
-				var unit:UnitInfo = unitsModel.units[i];
-				listData.push({
-					data: unit,
-					available: unit.price <= gameModel.money
-				});
-			}
+			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
 
+			onUpdateMoney();
+			ShopScreen(view).unitsList = new ListCollection(unitsModel.units);
+		}
+
+		private function onUpdateMoney(Event:UIEvent = null):void
+		{
 			ShopScreen(view).money = gameModel.money;
-			ShopScreen(view).unitsList = new ListCollection(listData);
 		}
 
 		private function onBuyUnit(event:Event):void
@@ -60,9 +59,9 @@ package mediators
 
 		private function onSelectUnit(event:Event):void
 		{
-			var unit:UnitInfo = event.data.data as UnitInfo;
+			var unit:UnitInfo = event.data as UnitInfo;
 			if (unit) {
-				ShopScreen(view).buyUnit(unit, event.data.available);
+				ShopScreen(view).buyUnit(unit, unit.price <= gameModel.money);
 			}
 		}
 

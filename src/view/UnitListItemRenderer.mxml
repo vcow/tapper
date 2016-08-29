@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+
+    <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}"/>
+
+    <fx:Script><![CDATA[
+        import starling.display.Quad;
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

@@ -4,7 +4,6 @@ package events
 
 	public class UIEvent extends Event
 	{
-		public static const UPDATE_ALL:String = "updateAll";
 		public static const UPDATE_MONEY:String = "updateMoney";
 		public static const UPDATE_UNITS_LIST:String = "updateUnitsList";
 

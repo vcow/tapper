@@ -26,7 +26,7 @@ package models
 		public function tap():void
 		{
 			_taps++;
-			if (_info.perClickProfit.maxCount && _taps >= _info.perClickProfit.maxCount) {
+			if (_info.perClickProfit && _info.perClickProfit.maxCount && _taps >= _info.perClickProfit.maxCount) {
 				eventDispatcher.dispatchEvent(new UnitEvent(UnitEvent.REMOVE_UNIT, this));
 			}
 		}
@@ -34,7 +34,7 @@ package models
 		public function tick():void
 		{
 			_ticks++;
-			if (_info.perSecondProfit.maxCount && _taps >= _info.perSecondProfit.maxCount) {
+			if (_info.perSecondProfit && _info.perSecondProfit.maxCount && _taps >= _info.perSecondProfit.maxCount) {
 				eventDispatcher.dispatchEvent(new UnitEvent(UnitEvent.REMOVE_UNIT, this));
 			}
 		}
