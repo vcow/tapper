@@ -18,13 +18,22 @@ package resources
 		[Embed(source="fonts/arial_30.fnt", mimeType="application/octet-stream")]
 		private static const arial30Description:Class;
 
+		[Embed(source="fonts/arial_26.atf", mimeType="application/octet-stream")]
+		private static const arial26Asset:Class;
+
+		[Embed(source="fonts/arial_26.fnt", mimeType="application/octet-stream")]
+		private static const arial26Description:Class;
+
 		private static const ARIAL_16:String = "arial16";
 		private static const ARIAL_30:String = "arial30";
+		private static const ARIAL_26:String = "arial26";
 
 		private var _arial16Texture:Texture;
 		private var _arial16Font:BitmapFont;
 		private var _arial30Texture:Texture;
 		private var _arial30Font:BitmapFont;
+		private var _arial26Texture:Texture;
+		private var _arial26Font:BitmapFont;
 
 		private static var _instance:FontLibrary;
 
@@ -61,6 +70,17 @@ package resources
 			return ARIAL_30;
 		}
 
+		public function get arial26():String
+		{
+			if (!_arial26Font) {
+				_arial26Texture = Texture.fromEmbeddedAsset(arial26Asset);
+				_arial26Texture.root.onRestore = onarial26Restore;
+				_arial26Font = new BitmapFont(_arial26Texture, new XML(new arial26Description()));
+				TextField.registerBitmapFont(_arial26Font, ARIAL_26);
+			}
+			return ARIAL_26;
+		}
+
 		private function onArial16Restore():void
 		{
 			_arial16Texture.root.uploadAtfData(new arial16Asset());
@@ -69,6 +89,11 @@ package resources
 		private function onArial30Restore():void
 		{
 			_arial16Texture.root.uploadAtfData(new arial30Asset());
+		}
+
+		private function onarial26Restore():void
+		{
+			_arial16Texture.root.uploadAtfData(new arial26Asset());
 		}
 	}
 }

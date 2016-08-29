@@ -1,17 +1,21 @@
 package commands
 {
-	import models.GameModel;
+	import models.ProfitInfo;
+	import models.Unit;
 
-	import robotlegs.bender.extensions.commandCenter.api.ICommand;
-
-	public class GameTapCommand implements ICommand
+	public class GameTapCommand extends CalcProfitCommandBase
 	{
-		[Inject]
-		public var gameModel:GameModel;
-
-		public function execute():void
+		override public function execute():void
 		{
 			gameModel.tapsTotal++;
+
+			var profitList:Vector.<ProfitInfo> = new Vector.<ProfitInfo>();
+			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++) {
+				var unit:Unit = gameModel.units[i];
+				unit.tap();
+				if (unit.info.perClickProfit) profitList.push(unit.info.perClickProfit);
+			}
+			calcProfitList(profitList, 1);
 		}
 	}
 }

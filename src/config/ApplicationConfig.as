@@ -1,13 +1,18 @@
 package config
 {
+	import commands.BuyUnitCommand;
 	import commands.GameTapCommand;
 	import commands.GameTickCommand;
+	import commands.RemoveUnitCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
+
+	import events.BuyUnitEvent;
 
 	import events.GameEvent;
 
 	import events.GameStateEvent;
+	import events.UnitEvent;
 
 	import mediators.MainScreenMediator;
 	import mediators.GameScreenMediator;
@@ -15,6 +20,7 @@ package config
 	import mediators.StartScreenMediator;
 
 	import models.GameModel;
+	import models.Unit;
 	import models.UnitsModel;
 
 	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
@@ -59,6 +65,8 @@ package config
 			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);
 			eventCommandMap.map(GameEvent.TICK, GameEvent).toCommand(GameTickCommand);
 			eventCommandMap.map(GameEvent.TAP, GameEvent).toCommand(GameTapCommand);
+			eventCommandMap.map(BuyUnitEvent.BUY, BuyUnitEvent).toCommand(BuyUnitCommand);
+			eventCommandMap.map(UnitEvent.REMOVE_UNIT, UnitEvent).toCommand(RemoveUnitCommand);
 		}
 	}
 }

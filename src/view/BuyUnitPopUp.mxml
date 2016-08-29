@@ -1,35 +1,47 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               backgroundSkin="{new Quad(20, 10, 0x195a75)}" filter="{new DropShadowFilter()}"
+               backgroundSkin="{new Quad(20, 10, 0x000000)}" filter="{new DropShadowFilter()}"
                initialize="updateData()">
     <f:layout>
-        <f:VerticalLayout gap="5" padding="15" horizontalAlign="center"/>
+        <f:VerticalLayout horizontalAlign="center" gap="2" padding="2"/>
     </f:layout>
 
-    <f:Label id="titleLabel" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}" paddingBottom="5"/>
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'buy.popup.title')}"
+             styleProvider="{StylesLibrary.popupTitleStyleProvider}"/>
 
-    <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}"/>
-
-    <f:LayoutGroup id="descriptionGroup">
+    <f:LayoutGroup backgroundSkin="{new Quad(20, 10, 0x195a75)}">
         <f:layout>
-            <f:VerticalLayout paddingTop="5" gap="2"/>
+            <f:VerticalLayout gap="5" padding="15" horizontalAlign="center"/>
         </f:layout>
 
-    </f:LayoutGroup>
+        <f:Label id="titleLabel" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}" paddingBottom="5"/>
 
-    <f:LayoutGroup>
-        <f:layout>
-            <f:HorizontalLayout gap="2"/>
-        </f:layout>
+        <f:Label text="{price}" styleProvider="{available ? StylesLibrary.availablePriceLabelStyleProvider :
+                        StylesLibrary.unavailablePriceLabelStyleProvider}"/>
 
-        <f:Button styleProvider="{StylesLibrary.commonButtonStyleProvider}"
-                  label="{LocaleManager.getInstance().getString('common', 'ok.bn.label')}"
-                  triggered="{dispatchEventWith(starling.events.Event.CLOSE)}"
-                  isEnabled="{available}"/>
+        <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}"/>
 
-        <f:Button styleProvider="{StylesLibrary.commonButtonStyleProvider}"
-                  label="{LocaleManager.getInstance().getString('common', 'cancel.bn.label')}"
-                  triggered="{dispatchEventWith(starling.events.Event.CANCEL)}"/>
+        <f:LayoutGroup id="descriptionGroup">
+            <f:layout>
+                <f:VerticalLayout paddingTop="5" gap="2"/>
+            </f:layout>
+
+        </f:LayoutGroup>
+
+        <f:LayoutGroup>
+            <f:layout>
+                <f:HorizontalLayout gap="2"/>
+            </f:layout>
+
+            <f:Button styleProvider="{StylesLibrary.commonButtonStyleProvider}"
+                      label="{LocaleManager.getInstance().getString('common', 'ok.bn.label')}"
+                      triggered="{dispatchEventWith(starling.events.Event.CLOSE)}"
+                      isEnabled="{available}"/>
+
+            <f:Button styleProvider="{StylesLibrary.commonButtonStyleProvider}"
+                      label="{LocaleManager.getInstance().getString('common', 'cancel.bn.label')}"
+                      triggered="{dispatchEventWith(starling.events.Event.CANCEL)}"/>
+        </f:LayoutGroup>
     </f:LayoutGroup>
 
     <fx:Metadata>
@@ -51,6 +63,9 @@
 
         [Bindable]
         public var available:Boolean;
+
+        [Bindable]
+        private var price:Number;
 
         public function set data(value:UnitInfo):void
         {
@@ -102,6 +117,8 @@
                     label.text = _data.action.description;
                     descriptionGroup.addChild(label);
                 }
+
+                price = Math.round(_data.price);
             }
         }
         ]]></fx:Script>

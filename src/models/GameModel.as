@@ -5,9 +5,10 @@ package models
 		private var _callbackId:uint;
 
 		public var tickCount:uint;
-		public var money:Number = 0;
+		public var money:Number = 10000;
 		public var moneyTotal:Number = 0;
 		public var tapsTotal:uint;
+		public var units:Vector.<Unit> = new Vector.<Unit>();
 
 		public function GameModel()
 		{

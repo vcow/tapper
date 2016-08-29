@@ -3,6 +3,7 @@ package mediators
 	import events.GameEvent;
 	import events.GameStateEvent;
 	import events.SwitchScreenEvent;
+	import events.UIEvent;
 
 	import models.GameModel;
 
@@ -31,9 +32,29 @@ package mediators
 			addViewListener(GameScreen.SHOP, onShop);
 			addViewListener(GameScreen.TAP, onTap);
 
+			addContextListener(UIEvent.UPDATE_ALL, onUpdateAll);
+			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
+			addContextListener(UIEvent.UPDATE_UNITS_LIST, onUpdateUnitsList);
+
 			GameScreen(view).money = gameModel.money;
 
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
+		}
+
+		private function onUpdateAll(Event:UIEvent = null):void
+		{
+			onUpdateMoney();
+			onUpdateUnitsList();
+		}
+
+		private function onUpdateMoney(Event:UIEvent = null):void
+		{
+
+		}
+
+		private function onUpdateUnitsList(Event:UIEvent = null):void
+		{
+
 		}
 
 		private function onShop(event:Event):void
