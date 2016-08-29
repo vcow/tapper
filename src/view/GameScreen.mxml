@@ -31,8 +31,11 @@
     <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
             itemRendererType="view.UnitListItemRenderer" isSelectable="false">
         <f:layout>
-            <f:TiledRowsLayout gap="2"/>
+            <f:TiledRowsLayout gap="2" padding="5" paddingTop="10"/>
         </f:layout>
+        <f:layoutData>
+            <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+        </f:layoutData>
     </f:List>
 
     <fx:Script><![CDATA[
