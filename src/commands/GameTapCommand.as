@@ -19,8 +19,10 @@ package commands
 			var profitList:Vector.<ProfitInfo> = new Vector.<ProfitInfo>();
 			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++) {
 				var unit:Unit = gameModel.units[i];
-				unit.tap();
-				if (unit.info.perClickProfit) profitList.push(unit.info.perClickProfit);
+				if (unit.active) {
+					unit.tap();
+					if (unit.info.perClickProfit) profitList.push(unit.info.perClickProfit);
+				}
 			}
 			calcProfitList(profitList, 1);
 

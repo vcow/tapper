@@ -5,7 +5,23 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="0"/>
+			<money min="1"/>
+		</conditions>
+	</achievement>
+	<achievement id="firstUnit" title="First Unit" description="First Unit">
+		<rewards>
+			<action id="levelUp"/>
+		</rewards>
+		<conditions>
+			<unit min="2">goy</unit>
+		</conditions>
+	</achievement>
+	<achievement id="units5" title="5 Units" description="5 Units">
+		<rewards>
+			<action id="levelUp"/>
+		</rewards>
+		<conditions>
+			<unit min="5"/>
 		</conditions>
 	</achievement>
 	<achievement id="click10" title="Click 10" description="10 clicks!">

@@ -14,6 +14,9 @@ package models
 		private var _profit:ProfitInfo;
 		private var _action:ActionInfo;
 
+		[Inject]
+		public var gameModel:GameModel;
+
 		public function UnitInfo(src:XML)
 		{
 			_id = src.@id;
@@ -38,14 +41,23 @@ package models
 			return _name;
 		}
 
-		public function get price():Number
+		public function get nameWithCounter():String
 		{
-			return _price;
+			var res:String = _name;
+			if (_maxCount > 0) res += " (" + gameModel.getUnitsByInfo(this).length + "/" + _maxCount + ")";
+			return res;
 		}
 
-		public function get priceGrowth():RelValue
+		public function get price():Number
 		{
-			return _priceGrowth;
+			var increase:Number = 0;
+			var numUnits:Number = gameModel.getUnitsByInfo(this).length;
+			if (_maxCount > 0 && numUnits >= maxCount) return NaN;
+			if (_priceGrowth) {
+				if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
+				else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
+			}
+			return Math.round(_price + increase);
 		}
 
 		public function get maxCount():int

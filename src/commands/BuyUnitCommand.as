@@ -6,6 +6,8 @@ package commands
 
 	import flash.events.IEventDispatcher;
 
+	import gears.TriggerBroadcaster;
+
 	import models.Unit;
 
 	import robotlegs.bender.framework.api.IInjector;
@@ -21,20 +23,22 @@ package commands
 		[Inject]
 		public var injector:IInjector;
 
+		[Inject]
+		public var triggerBroadcaster:TriggerBroadcaster;
+
 		override public function execute():void
 		{
-			if (gameModel.money >= event.unit.price) {
-				var unit:Unit = new Unit(event.unit);
-				gameModel.money -= unit.info.price;
+			var price:Number = event.unit.price;
+			if (gameModel.money >= price) {
+				var unit:Unit = new Unit(event.unit, price, event.unit.perClickProfit || event.unit.perSecondProfit);
+				gameModel.money -= price;
 
-				if (unit.info.perClickProfit || unit.info.perSecondProfit) {
-					injector.injectInto(unit);
-					gameModel.units.push(unit);
-					gameModel.units.sort(sortByPrice);
+				injector.injectInto(unit);
+				gameModel.units.push(unit);
+				gameModel.units.sort(sortByPrice);
 
-					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
-					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
-				}
+				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
 
 				if (unit.info.profit) {
 					calcProfit(unit.info.profit);
@@ -43,13 +47,15 @@ package commands
 				if (unit.info.action) {
 					eventDispatcher.dispatchEvent(new ActionEvent(unit.info.action.id));
 				}
+
+				triggerBroadcaster.broadcast(TriggerBroadcaster.BUY, event.unit);
 			}
 		}
 
 		private static function sortByPrice(a:Unit, b:Unit):int
 		{
-			if (a.info.price < b.info.price) return 1;
-			else if (a.info.price > b.info.price) return -1;
+			if (a.buyPrice < b.buyPrice) return 1;
+			else if (a.buyPrice > b.buyPrice) return -1;
 			return 0;
 		}
 	}

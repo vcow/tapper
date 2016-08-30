@@ -1,16 +1,17 @@
 package commands
 {
-	import events.UnitEvent;
+	import events.AchievementEvent;
 
 	import robotlegs.bender.extensions.commandCenter.api.ICommand;
 
-	public class RemoveUnitCommand implements ICommand
+	public class GetAchievmentCommand implements ICommand
 	{
 		[Inject]
-		public var event:UnitEvent;
+		public var event:AchievementEvent;
 
 		public function execute():void
 		{
+			trace("sdf");
 		}
 	}
 }

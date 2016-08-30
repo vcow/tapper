@@ -5,13 +5,13 @@ package models
 	public class GameModel
 	{
 		private var _callbackId:uint;
-		private var _money:Number = 0;
+		private var _money:Number = 1000;
 		private var _tapsTotal:uint;
+		private var _units:Vector.<Unit> = new Vector.<Unit>();
 
 		public var tickCount:uint;
 		public var moneyTotal:Number = 0;
 		public var level:uint;
-		public var units:Vector.<Unit> = new Vector.<Unit>();
 
 		[Inject]
 		public var triggerBroadcaster:TriggerBroadcaster;
@@ -58,6 +58,31 @@ package models
 			if (value == _tapsTotal) return;
 			_tapsTotal = value;
 			triggerBroadcaster.broadcast(TriggerBroadcaster.TAP, _tapsTotal);
+		}
+
+		public function getUnitsByInfo(info:UnitInfo):Vector.<Unit>
+		{
+			var res:Vector.<Unit> = new Vector.<Unit>();
+			for (var i:int = 0, l:int = _units.length; i < l; i++) {
+				var unit:Unit = _units[i];
+				if (unit.info === info) res.push(unit);
+			}
+			return res;
+		}
+
+		public function get units():Vector.<Unit>
+		{
+			return _units;
+		}
+
+		public function get activeUnits():Vector.<Unit>
+		{
+			var res:Vector.<Unit> = new Vector.<Unit>();
+			for (var i:int = 0, l:int = _units.length; i < l; i++) {
+				var unit:Unit = _units[i];
+				if (unit.active) res.push(unit);
+			}
+			return res;
 		}
 	}
 }

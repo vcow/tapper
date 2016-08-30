@@ -55,7 +55,7 @@ package mediators
 
 		private function onUpdateUnitsList(Event:UIEvent = null):void
 		{
-			GameScreen(view).unitsList = new ListCollection(gameModel.units);
+			GameScreen(view).unitsList = new ListCollection(gameModel.activeUnits);
 		}
 
 		private function onShop(event:Event):void

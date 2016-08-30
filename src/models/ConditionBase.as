@@ -2,8 +2,8 @@ package models
 {
 	public class ConditionBase
 	{
-		private var _lock:Boolean;
-		private var _reached:Boolean;
+		protected var _lock:Boolean;
+		protected var _reached:Boolean;
 
 		protected var _min:Number;
 		protected var _max:Number;

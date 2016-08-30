@@ -3,16 +3,17 @@ package config
 	import commands.BuyUnitCommand;
 	import commands.GameTapCommand;
 	import commands.GameTickCommand;
-	import commands.RemoveUnitCommand;
+	import commands.GetAchievmentCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
+
+	import events.AchievementEvent;
 
 	import events.BuyUnitEvent;
 
 	import events.GameEvent;
 
 	import events.GameStateEvent;
-	import events.UnitEvent;
 
 	import gears.TriggerBroadcaster;
 
@@ -26,7 +27,6 @@ package config
 
 	import models.GameModel;
 	import models.LevelsModel;
-	import models.Unit;
 	import models.UnitsModel;
 
 	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
@@ -77,7 +77,7 @@ package config
 			eventCommandMap.map(GameEvent.TICK, GameEvent).toCommand(GameTickCommand);
 			eventCommandMap.map(GameEvent.TAP, GameEvent).toCommand(GameTapCommand);
 			eventCommandMap.map(BuyUnitEvent.BUY, BuyUnitEvent).toCommand(BuyUnitCommand);
-			eventCommandMap.map(UnitEvent.REMOVE_UNIT, UnitEvent).toCommand(RemoveUnitCommand);
+			eventCommandMap.map(AchievementEvent.ACHIEVE, AchievementEvent).toCommand(GetAchievmentCommand);
 		}
 	}
 }

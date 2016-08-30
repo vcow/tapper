@@ -22,13 +22,16 @@ package models
 		[Inject]
 		public var eventDispatcher:IEventDispatcher;
 
+		[Inject]
+		public var gameModel:GameModel;
+
 		[PostConstruct]
 		public function postConstruct():void
 		{
 			if (_conditions.length > 0) triggerBroadcaster.subscribe(onTrigger);
 		}
 
-		private function onTrigger(trigger:String, value:*):void
+		private function onTrigger(trigger:String, value:*, ...args):void
 		{
 			var result:int = 0;
 			for each (var condition:ConditionBase in _conditions) {
@@ -37,6 +40,19 @@ package models
 				}
 				else if (trigger == TriggerBroadcaster.TAP && condition is TapsCondition) {
 					if (condition.check(value)) result++;
+				}
+				else if (trigger == TriggerBroadcaster.BUY && condition is UnitCondition) {
+					var unit:UnitInfo = value as UnitInfo;
+					if (unit) {
+						if (UnitCondition(condition).unitId) {
+							if (UnitCondition(condition).unitId == unit.id) {
+								if (condition.check(gameModel.getUnitsByInfo(unit).length)) result++;
+							}
+						}
+						else {
+							if (condition.check(gameModel.units.length)) result++;
+						}
+					}
 				}
 			}
 			if (result == _conditions.length) {
@@ -77,6 +93,9 @@ package models
 							break;
 						case "taps":
 							_conditions.push(new TapsCondition(item));
+							break;
+						case "unit":
+							_conditions.push(new UnitCondition(item));
 							break;
 						default:
 							throw Error("Unsupported condition " + item.name());

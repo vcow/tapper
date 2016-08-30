@@ -19,7 +19,7 @@
 
         <f:Label text="{description}" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}"/>
 
-        <f:Label text="{price}" styleProvider="{available ? StylesLibrary.availablePriceLabelStyleProvider :
+        <f:Label text="{priceLabel}" styleProvider="{available ? StylesLibrary.availablePriceLabelStyleProvider :
                         StylesLibrary.unavailablePriceLabelStyleProvider}"/>
     </f:LayoutGroup>
 
@@ -36,22 +36,27 @@
         private var _trigger:TapToTrigger;
 
         [Bindable]
-        private var title:String;
+        private var priceLabel:String;
 
         [Bindable]
         private var description:String;
 
         [Bindable]
-        private var price:Number;
+        public var title:String;
 
         [Bindable]
         public var available:Boolean;
+
+        public function set price(value:Number):void
+        {
+            priceLabel = isNaN(value) ? LocaleManager.getInstance().getString("common", "na.label") : value.toString();
+        }
 
         override public function set data(value:Object):void
         {
             super.data = value as UnitInfo;
             if (data) {
-                title = data.name;
+                title = data.nameWithCounter;
 
                 var locale:LocaleManager = LocaleManager.getInstance();
                 var desc:String = "";
@@ -76,8 +81,7 @@
                     desc += (desc ? ", " : "") + data.action.description;
                 }
                 description = desc;
-
-                price = Math.round(data.price);
+                price = data.price;
             }
         }
         ]]></fx:Script>

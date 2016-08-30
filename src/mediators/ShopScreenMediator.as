@@ -61,7 +61,8 @@ package mediators
 		{
 			var unit:UnitInfo = event.data as UnitInfo;
 			if (unit) {
-				ShopScreen(view).buyUnit(unit, unit.price <= gameModel.money);
+				var price:Number = unit.price;
+				if (!isNaN(price)) ShopScreen(view).buyUnit(unit, price <= gameModel.money);
 			}
 		}
 
