@@ -83,5 +83,22 @@ package models
 			}
 			return res;
 		}
+
+		public function applyEnvVariables(src:String):String
+		{
+			if (src) {
+				var match:Array = src.match(/%[^\s]+%/g);
+				while (match.length > 0) {
+					var tag:String = match.shift();
+					var index:int = src.search(tag);
+					switch (tag) {
+						case "%LEVEL%":
+							src = src.substr(0, index) + level + src.substr(index + tag.length);
+							break;
+					}
+				}
+			}
+			return src;
+		}
 	}
 }

@@ -50,7 +50,7 @@ package mediators
 
 		private function onUpdateMoney(Event:UIEvent = null):void
 		{
-			GameScreen(view).money = gameModel.money;
+			GameScreen(view).money = Math.round(gameModel.money);
 		}
 
 		private function onUpdateUnitsList(Event:UIEvent = null):void

@@ -5,13 +5,12 @@ package resources.skin
 
 	import resources.FontLibrary;
 
-	public class PopupTitleStyleProvider extends LabelStyleProviderBase
+	public class PopupDescriptionStyleProvider extends LabelStyleProviderBase
 	{
 		override protected function onSkinLabel(label:Label):void
 		{
 			label.textRendererProperties = {
-				wordWrap: true,
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial30)
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial16)
 			};
 		}
 	}

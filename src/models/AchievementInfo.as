@@ -8,6 +8,8 @@ package models
 
 	import resources.locale.LocaleManager;
 
+	import robotlegs.bender.framework.api.IInjector;
+
 	public class AchievementInfo
 	{
 		private var _id:String;
@@ -25,10 +27,14 @@ package models
 		[Inject]
 		public var gameModel:GameModel;
 
+		[Inject]
+		public var injector:IInjector;
+
 		[PostConstruct]
 		public function postConstruct():void
 		{
 			if (_conditions.length > 0) triggerBroadcaster.subscribe(onTrigger);
+			for each (var reward:IReward in _rewards) injector.injectInto(reward);
 		}
 
 		private function onTrigger(trigger:String, value:*, ...args):void
@@ -73,10 +79,13 @@ package models
 				for each (var item:XML in rewards.children()) {
 					switch (item.name().toString()) {
 						case "action":
-							_rewards.push(new ActionInfo(item));
+							_rewards.push(new ActionReward(item));
 							break;
 						case "p":
-							_rewards.push(new ProfitInfo(item));
+							_rewards.push(new ProfitReward(item));
+							break;
+						case "popup":
+							_rewards.push(new PopUpReward(item));
 							break;
 						default:
 							throw Error("Unsupported reward " + item.name());

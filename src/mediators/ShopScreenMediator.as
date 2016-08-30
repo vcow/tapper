@@ -46,7 +46,7 @@ package mediators
 
 		private function onUpdateMoney(Event:UIEvent = null):void
 		{
-			ShopScreen(view).money = gameModel.money;
+			ShopScreen(view).money = Math.round(gameModel.money);
 		}
 
 		private function onBuyUnit(event:Event):void

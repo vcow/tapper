@@ -1,5 +1,6 @@
 package mediators
 {
+	import events.PopUpEvent;
 	import events.SwitchScreenEvent;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
@@ -22,6 +23,12 @@ package mediators
 			addContextListener(SwitchScreenEvent.POP_TO_ROOT, onSwitch, SwitchScreenEvent);
 			addContextListener(SwitchScreenEvent.SWITCH_TO_GAME, onSwitch, SwitchScreenEvent);
 			addContextListener(SwitchScreenEvent.SWITCH_TO_SHOP, onSwitch, SwitchScreenEvent);
+			addContextListener(PopUpEvent.SHOW, onShowPopup, PopUpEvent);
+		}
+
+		private function onShowPopup(event:PopUpEvent):void
+		{
+			MainScreen(view).showPopUp(event.title, event.description);
 		}
 
 		private function onSwitch(event:SwitchScreenEvent):void

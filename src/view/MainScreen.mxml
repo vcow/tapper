@@ -14,4 +14,25 @@
     <f:StackScreenNavigatorItem id="shopScreenItem">
         <screen:ShopScreen/>
     </f:StackScreenNavigatorItem>
+    <fx:Script><![CDATA[
+        import feathers.core.PopUpManager;
+
+        import starling.events.Event;
+
+        public function showPopUp(title:String, description:String):void
+        {
+            var popup:PopUp = new PopUp();
+            popup.title = title;
+            popup.description = description;
+            popup.addEventListener(starling.events.Event.CLOSE, onClosePopUp);
+            PopUpManager.addPopUp(popup);
+        }
+
+        private static function onClosePopUp(event:starling.events.Event):void
+        {
+            var popup:PopUp = PopUp(event.target);
+            popup.removeEventListener(starling.events.Event.CLOSE, onClosePopUp);
+            PopUpManager.removePopUp(popup);
+        }
+        ]]></fx:Script>
 </f:StackScreenNavigator>

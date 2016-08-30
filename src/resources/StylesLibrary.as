@@ -6,6 +6,7 @@ package resources
 	import resources.skin.CommonButtonStyleProvider;
 	import resources.skin.LabelStyleProviderBase;
 	import resources.skin.MoneyLabelStyleProvider;
+	import resources.skin.PopupDescriptionStyleProvider;
 	import resources.skin.PopupTitleStyleProvider;
 	import resources.skin.ScrollerStyleProviderBase;
 	import resources.skin.ShopButtonStyleProvider;
@@ -24,6 +25,7 @@ package resources
 
 		public static const moneyLabelStyleProvider:LabelStyleProviderBase = new MoneyLabelStyleProvider();
 		public static const popupTitleStyleProvider:LabelStyleProviderBase = new PopupTitleStyleProvider();
+		public static const popupDescriptionStyleProvider:LabelStyleProviderBase = new PopupDescriptionStyleProvider();
 		public static const shopItemTitleLabelStyleProvider:LabelStyleProviderBase = new ShopItemTitleLabelStyleProvider();
 		public static const shopItemDescriptionLabelStyleProvider:LabelStyleProviderBase = new ShopItemDescriptionLabelStyleProvider();
 		public static const availablePriceLabelStyleProvider:LabelStyleProviderBase = new AvailablePriceLabelStyleProvider();

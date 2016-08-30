@@ -12,7 +12,7 @@ package models
 		private var _perSecondProfit:ProfitInfo;
 		private var _perClickProfit:ProfitInfo;
 		private var _profit:ProfitInfo;
-		private var _action:ActionInfo;
+		private var _action:ActionReward;
 
 		[Inject]
 		public var gameModel:GameModel;
@@ -28,7 +28,7 @@ package models
 			for each (var p:XML in src.pps) _perSecondProfit = new ProfitInfo(p);
 			for each (p in src.ppc) _perClickProfit = new ProfitInfo(p);
 			for each (p in src.p) _profit = new ProfitInfo(p);
-			for each (p in src.action) _action = new ActionInfo(p.@id);
+			for each (p in src.action) _action = new ActionReward(p);
 		}
 
 		public function get id():String
@@ -80,7 +80,7 @@ package models
 			return _profit;
 		}
 
-		public function get action():ActionInfo
+		public function get action():ActionReward
 		{
 			return _action;
 		}

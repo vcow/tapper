@@ -28,6 +28,12 @@ package resources
 		[Embed(source="locale/ru_RU/achievements.properties", mimeType="application/octet-stream")]
 		private static const achievements_ru_RU:Class;
 
+		[Embed(source="locale/en_US/actions.properties", mimeType="application/octet-stream")]
+		private static const actions_en_US:Class;
+
+		[Embed(source="locale/ru_RU/actions.properties", mimeType="application/octet-stream")]
+		private static const actions_ru_RU:Class;
+
 		public static const commonBundle:Array = [
 			{ locale: "en_US", bundleName: "common", useLinebreak: true, bundle: ByteArray(new common_en_US()).toString() },
 			{ locale: "ru_RU", bundleName: "common", useLinebreak: true, bundle: ByteArray(new common_ru_RU()).toString() }
@@ -46,6 +52,11 @@ package resources
 		public static const achievementsBundle:Array = [
 			{ locale: "en_US", bundleName: "achievements", useLinebreak: true, bundle: ByteArray(new achievements_en_US()).toString() },
 			{ locale: "ru_RU", bundleName: "achievements", useLinebreak: true, bundle: ByteArray(new achievements_ru_RU()).toString() }
+		];
+
+		public static const actionsBundle:Array = [
+			{ locale: "en_US", bundleName: "actions", useLinebreak: true, bundle: ByteArray(new actions_en_US()).toString() },
+			{ locale: "ru_RU", bundleName: "actions", useLinebreak: true, bundle: ByteArray(new actions_ru_RU()).toString() }
 		];
 
 		public function LocalesLibrary()

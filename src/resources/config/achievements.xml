@@ -3,6 +3,7 @@
 	<achievement id="levelup1" title="Level Up" description="Level Up">
 		<rewards>
 			<action id="levelUp"/>
+			<popup title="Level Up %LEVEL%" description="Congrats!"/>
 		</rewards>
 		<conditions>
 			<money min="1"/>
@@ -11,6 +12,7 @@
 	<achievement id="firstUnit" title="First Unit" description="First Unit">
 		<rewards>
 			<action id="levelUp"/>
+			<popup title="Level Up %LEVEL%" description="Congrats!"/>
 		</rewards>
 		<conditions>
 			<unit min="2">goy</unit>
@@ -19,6 +21,7 @@
 	<achievement id="units5" title="5 Units" description="5 Units">
 		<rewards>
 			<action id="levelUp"/>
+			<popup title="Level Up %LEVEL%" description="Congrats!"/>
 		</rewards>
 		<conditions>
 			<unit min="5"/>
@@ -26,7 +29,7 @@
 	</achievement>
 	<achievement id="click10" title="Click 10" description="10 clicks!">
 		<rewards>
-			<action id="popUp"/>
+			<popup title="10 Clicks" description="Congrats!"/>
 			<p value="50%"/>
 		</rewards>
 		<conditions>

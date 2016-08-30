@@ -1,6 +1,6 @@
 package models
 {
-	public class ProfitInfo implements IReward
+	public class ProfitInfo
 	{
 		private var _value:RelValue;
 		private var _maxCount:int;

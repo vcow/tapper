@@ -6,6 +6,7 @@ package events
 	{
 		public static const UPDATE_MONEY:String = "updateMoney";
 		public static const UPDATE_UNITS_LIST:String = "updateUnitsList";
+		public static const UPDATE_LEVEL:String = "updateLevel";
 
 		public function UIEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{

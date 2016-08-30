@@ -3,11 +3,13 @@ package config
 	import commands.BuyUnitCommand;
 	import commands.GameTapCommand;
 	import commands.GameTickCommand;
-	import commands.GetAchievmentCommand;
+	import commands.GetAchievementCommand;
+	import commands.LevelUpCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 
 	import events.AchievementEvent;
+	import events.ActionEvent;
 
 	import events.BuyUnitEvent;
 
@@ -77,7 +79,8 @@ package config
 			eventCommandMap.map(GameEvent.TICK, GameEvent).toCommand(GameTickCommand);
 			eventCommandMap.map(GameEvent.TAP, GameEvent).toCommand(GameTapCommand);
 			eventCommandMap.map(BuyUnitEvent.BUY, BuyUnitEvent).toCommand(BuyUnitCommand);
-			eventCommandMap.map(AchievementEvent.ACHIEVE, AchievementEvent).toCommand(GetAchievmentCommand);
+			eventCommandMap.map(AchievementEvent.ACHIEVE, AchievementEvent).toCommand(GetAchievementCommand);
+			eventCommandMap.map(ActionEvent.LEVEL_UP, ActionEvent).toCommand(LevelUpCommand);
 		}
 	}
 }
