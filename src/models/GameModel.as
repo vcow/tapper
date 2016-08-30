@@ -60,12 +60,11 @@ package models
 			triggerBroadcaster.broadcast(TriggerBroadcaster.TAP, _tapsTotal);
 		}
 
-		public function getUnitsByInfo(info:UnitInfo):Vector.<Unit>
+		public function getUnitsCount(info:UnitInfo):int
 		{
-			var res:Vector.<Unit> = new Vector.<Unit>();
+			var res:int = 0;
 			for (var i:int = 0, l:int = _units.length; i < l; i++) {
-				var unit:Unit = _units[i];
-				if (unit.info === info) res.push(unit);
+				if (_units[i].info === info) res++;
 			}
 			return res;
 		}

@@ -44,14 +44,14 @@ package models
 		public function get nameWithCounter():String
 		{
 			var res:String = _name;
-			if (_maxCount > 0) res += " (" + gameModel.getUnitsByInfo(this).length + "/" + _maxCount + ")";
+			if (_maxCount > 0) res += " (" + gameModel.getUnitsCount(this) + "/" + _maxCount + ")";
 			return res;
 		}
 
 		public function get price():Number
 		{
 			var increase:Number = 0;
-			var numUnits:Number = gameModel.getUnitsByInfo(this).length;
+			var numUnits:Number = gameModel.getUnitsCount(this);
 			if (_maxCount > 0 && numUnits >= maxCount) return NaN;
 			if (_priceGrowth) {
 				if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;

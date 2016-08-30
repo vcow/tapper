@@ -46,7 +46,7 @@ package models
 					if (unit) {
 						if (UnitCondition(condition).unitId) {
 							if (UnitCondition(condition).unitId == unit.id) {
-								if (condition.check(gameModel.getUnitsByInfo(unit).length)) result++;
+								if (condition.check(gameModel.getUnitsCount(unit))) result++;
 							}
 						}
 						else {
