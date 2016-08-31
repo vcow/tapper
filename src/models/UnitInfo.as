@@ -6,6 +6,7 @@ package models
 	{
 		private var _id:String;
 		private var _name:String;
+		private var _description:String;
 		private var _price:Number;
 		private var _priceGrowth:RelValue;
 		private var _maxCount:int;
@@ -21,6 +22,7 @@ package models
 		{
 			_id = src.@id;
 			_name = LocaleManager.getInstance().getString("units", src.@name) || src.@name;
+			_description = LocaleManager.getInstance().getString("units", src.@descrption) || src.@description;
 			_price = Number(src.@price);
 			_maxCount = int(src.@maxCount);
 			if (src.hasOwnProperty("@priceGrowth")) _priceGrowth = new RelValue(src.@priceGrowth);
@@ -39,6 +41,11 @@ package models
 		public function get name():String
 		{
 			return _name;
+		}
+
+		public function get description():String
+		{
+			return _description;
 		}
 
 		public function get nameWithCounter():String

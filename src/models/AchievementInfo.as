@@ -17,6 +17,7 @@ package models
 		private var _description:String;
 		private var _rewards:Vector.<IReward>;
 		private var _conditions:Vector.<ConditionBase>;
+		private var _isMedal:Boolean;
 
 		[Inject]
 		public var triggerBroadcaster:TriggerBroadcaster;
@@ -73,6 +74,7 @@ package models
 			_id = src.@id;
 			_title = locale.getString('achievements', src.@title) || src.@title;
 			_description = locale.getString('achievements', src.@description) || src.@description;
+			_isMedal = (String(src.@isMedal).toLowerCase() == "true");
 
 			_rewards = new Vector.<IReward>();
 			for each (var rewards:XML in src.rewards) {
@@ -136,6 +138,11 @@ package models
 		public function get conditions():Vector.<ConditionBase>
 		{
 			return _conditions;
+		}
+
+		public function get isMedal():Boolean
+		{
+			return _isMedal;
 		}
 	}
 }
