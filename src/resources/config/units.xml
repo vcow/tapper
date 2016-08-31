@@ -1,48 +1,48 @@
 <?xml version="1.0"?>
 <units>
-	<unit id="goy" name="Гой наёмник" price="50" priceGrowth="10%" maxCount="0">
+	<unit id="goy" name="name.goy" price="50" priceGrowth="10%">
 		<pps value="1" maxCount="10"/>
 	</unit>
-	<unit id="jew" name="Дешевый еврей помощник" price="300" priceGrowth="10%" maxCount="0">
+	<unit id="jew" name="name.jew" price="300" priceGrowth="10%">
 		<pps value="2"/>
 		<ppc value="1"/>
 	</unit>
-	<unit id="vc" name="Пылесос для денег" price="600" priceGrowth="10%" maxCount="0">
+	<unit id="vc" name="name.vc" price="600" priceGrowth="10%">
 		<pps value="3"/>
 		<ppc value="2"/>
 	</unit>
-	<unit id="beggar" name="Попрошайка" price="2000" priceGrowth="10%" maxCount="0">
+	<unit id="beggar" name="name.beggar" price="2000" priceGrowth="10%">
 		<pps value="5"/>
 		<ppc value="3"/>
 	</unit>
-	<unit id="tax" name="Налогосборщик" price="4000" priceGrowth="10%" maxCount="0">
+	<unit id="tax" name="name.tax" price="4000" priceGrowth="10%">
 		<pps value="7"/>
 		<ppc value="4"/>
 	</unit>
-	<unit id="lending" name="Кредитная компания" price="7500" priceGrowth="10%" maxCount="0">
+	<unit id="lending" name="name.lending" price="7500" priceGrowth="10%">
 		<pps value="10"/>
 		<ppc value="5"/>
 	</unit>
-	<unit id="synagogue" name="Синагога" price="10000" priceGrowth="10%" maxCount="0">
+	<unit id="synagogue" name="name.synagogue" price="10000" priceGrowth="10%">
 		<pps value="12"/>
 		<ppc value="7"/>
 	</unit>
-	<unit id="hospital" name="Еврейская больница" price="20000" priceGrowth="10%" maxCount="0">
+	<unit id="hospital" name="name.hospital" price="20000" priceGrowth="10%">
 		<pps value="15"/>
 		<ppc value="9"/>
 	</unit>
-	<unit id="md" name="Макдональдс" price="50000" priceGrowth="10%" maxCount="0">
+	<unit id="md" name="name.md" price="50000" priceGrowth="10%">
 		<pps value="18"/>
 		<ppc value="11"/>
 	</unit>
-	<unit id="mason" name="Массонская ложа" price="200000" priceGrowth="10%" maxCount="0">
+	<unit id="mason" name="name.mason" price="200000" priceGrowth="10%">
 		<pps value="25"/>
 		<ppc value="15"/>
 	</unit>
-	<unit id="odessa" name="Режим одессы" price="500000" maxCount="1">
-		<action id="setSkinBronze" title="Set skin bronze" description="???"/>
+	<unit id="odessa" name="name.odessa" price="500000" maxCount="1">
+		<action id="setSkinBronze" description="???"/>
 	</unit>
-	<unit id="stim" name="Стим" price="750000" priceGrowth="10%" maxCount="3">
+	<unit id="stim" name="name.stim" price="750000" priceGrowth="10%" maxCount="3">
 		<p value="100%"/>
 	</unit>
 </units>
