@@ -24,6 +24,7 @@ package config
 	import mediators.ShopListItemMediator;
 	import mediators.ShopScreenMediator;
 	import mediators.StartScreenMediator;
+	import mediators.UnitListItemMediator;
 
 	import models.AchievementsModel;
 
@@ -44,6 +45,7 @@ package config
 	import view.ShopScreen;
 
 	import view.StartScreen;
+	import view.UnitListItemRenderer;
 
 	public class ApplicationConfig implements IConfig
 	{
@@ -73,6 +75,7 @@ package config
 			mediatorMap.map(GameScreen).toMediator(GameScreenMediator);
 			mediatorMap.map(ShopScreen).toMediator(ShopScreenMediator);
 			mediatorMap.map(ShopListItemRenderer).toMediator(ShopListItemMediator);
+			mediatorMap.map(UnitListItemRenderer).toMediator(UnitListItemMediator);
 
 			eventCommandMap.map(GameStateEvent.START_GAME, GameStateEvent).toCommand(StartGameCommand);
 			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);

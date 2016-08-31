@@ -5,7 +5,6 @@ package events
 	public class ActionEvent extends Event
 	{
 		public static const LEVEL_UP:String = "levelUp";
-		public static const POP_UP:String = "popUp";
 		public static const SET_SKIN_BRONZE:String = "setSkinBronze";
 
 		public function ActionEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)

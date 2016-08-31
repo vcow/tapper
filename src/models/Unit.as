@@ -1,6 +1,7 @@
 package models
 {
 	import events.UIEvent;
+	import events.UnitEvent;
 
 	import flash.events.IEventDispatcher;
 
@@ -40,19 +41,38 @@ package models
 		public function tap():void
 		{
 			_taps++;
-			if (_info.perClickProfit && _info.perClickProfit.maxCount && _taps >= _info.perClickProfit.maxCount) {
-				_active = false;
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+			if (_info.perClickProfit && _info.perClickProfit.maxCount) {
+				if (_taps >= _info.perClickProfit.maxCount)
+				{
+					_active = false;
+					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+				}
+				eventDispatcher.dispatchEvent(new UnitEvent(UnitEvent.COUNT_CHANGED, this,
+						_info.perClickProfit.maxCount - _taps));
 			}
 		}
 
 		public function tick():void
 		{
 			_ticks++;
-			if (_info.perSecondProfit && _info.perSecondProfit.maxCount && _ticks >= _info.perSecondProfit.maxCount) {
-				_active = false;
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+			if (_info.perSecondProfit && _info.perSecondProfit.maxCount) {
+				if (_ticks >= _info.perSecondProfit.maxCount) {
+					_active = false;
+					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+				}
+				eventDispatcher.dispatchEvent(new UnitEvent(UnitEvent.COUNT_CHANGED, this,
+						_info.perSecondProfit.maxCount - _ticks));
 			}
+		}
+
+		public function get taps():uint
+		{
+			return _taps;
+		}
+
+		public function get ticks():uint
+		{
+			return _ticks;
 		}
 	}
 }
