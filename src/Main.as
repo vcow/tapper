@@ -53,7 +53,7 @@ package
 			if (!success)
 				throw Error("LocaleManager initialization failed.");
 
-			LocaleManager.getInstance().localeChain = ["en_US"];
+			LocaleManager.getInstance().localeChain = ["ru_RU"];
 
 			_starling = new Starling(MainScreen, stage);
 

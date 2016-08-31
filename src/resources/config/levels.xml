@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <levels>
-	<level id="0" description="Ты уличный еврей."/>
-	<level id="1" description="Ты воруешь деньги у котов и собак."/>
-	<level id="2" description="Твои навыки поражают всю твою семью."/>
-	<level id="3" description="Ты воруешь деньги у местных политиков."/>
-	<level id="4" description="Ты начал &quot;Курс Юного Еврея&quot;."/>
-	<level id="5" description="Ой-вэй! Ты воруешь деньги уже у королей и Путина."/>
-	<level id="6" description="Ты чувстсвуешь, как все завидуют твоим скиллам жида."/>
-	<level id="7" description="Ты превзошел собственного Батю."/>
-	<level id="8" description="Все жиды завидуют твоим шекелям."/>
-	<level id="9" description="Люди прилетают из других галактик, чтобы посмотреть на твои шекели."/>
-	<level id="10" description="Количество твоих шекелей растет каждую секунду."/>
-	<level id="11" description="Ты перестал есть нормальную еду, ты теперь ешь только шекели."/>
-	<level id="12" description="99% твоего тела состоит из шекелей."/>
-	<level id="13" description="Мир погряз в твоих шекелях."/>
-	<level id="14" description="Всё в солнечной системе состоит из твоих шекелей."/>
-	<level id="15" description="Ты теперь стал СУПЕР ЖИДОМ."/>
-	<level id="16" description="О боже, ты уже заменил свои глаза и нос на деньги."/>
-	<level id="17" description="Ты перестал быть человеком, ты стал одним целым с шекелем."/>
-	<level id="18" description="Пора перестать жидовать..."/>
+	<level id="0" description="level0.description"/>
+	<level id="1" description="level1.description"/>
+	<level id="2" description="level2.description"/>
+	<level id="3" description="level3.description"/>
+	<level id="4" description="level4.description"/>
+	<level id="5" description="level5.description"/>
+	<level id="6" description="level6.description"/>
+	<level id="7" description="level7.description"/>
+	<level id="8" description="level8.description"/>
+	<level id="9" description="level9.description"/>
+	<level id="10" description="level10.description"/>
+	<level id="11" description="level11.description"/>
+	<level id="12" description="level12.description"/>
+	<level id="13" description="level13.description"/>
+	<level id="14" description="level14.description"/>
+	<level id="15" description="level15.description"/>
+	<level id="16" description="level16.description"/>
+	<level id="17" description="level17.description"/>
+	<level id="18" description="level18.description"/>
 </levels>

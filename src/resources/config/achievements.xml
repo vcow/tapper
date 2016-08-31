@@ -1,13 +1,5 @@
 <?xml version="1.0"?>
 <achievements>
-	<achievement id="levelup0">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="0"/>
-		</conditions>
-	</achievement>
 	<achievement id="levelup1">
 		<rewards>
 			<action id="levelUp"/>

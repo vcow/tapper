@@ -26,8 +26,10 @@ package commands
 			}
 			inc += gameModel.money * percent;
 
-			gameModel.money += inc;
-			gameModel.moneyTotal += inc;
+			if (inc != 0) {
+				gameModel.money += inc;
+				gameModel.moneyTotal += inc;
+			}
 		}
 
 		protected function calcProfit(profit:ProfitInfo):void

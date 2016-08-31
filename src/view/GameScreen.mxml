@@ -23,7 +23,17 @@
         <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}" triggered="{dispatchEventWith(SHOP)}"/>
     </f:LayoutGroup>
 
-    <f:LayoutGroup height="50"/>
+    <f:LayoutGroup height="70">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+
+        <f:Label text="{levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
+            <f:layoutData>
+                <f:AnchorLayoutData verticalCenter="0"/>
+            </f:layoutData>
+        </f:Label>
+    </f:LayoutGroup>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
               styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
@@ -53,5 +63,8 @@
 
         [Bindable]
         public var unitsList:ListCollection;
+
+        [Bindable]
+        public var levelDescription:String;
         ]]></fx:Script>
 </f:LayoutGroup>

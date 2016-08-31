@@ -10,6 +10,8 @@ package mediators
 	import models.AchievementsModel;
 
 	import models.GameModel;
+	import models.LevelInfo;
+	import models.LevelsModel;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
@@ -28,6 +30,9 @@ package mediators
 		[Inject]
 		public var achievementsModel:AchievementsModel;
 
+		[Inject]
+		public var levelsModel:LevelsModel;
+
 		public function GameScreenMediator()
 		{
 			super();
@@ -41,9 +46,11 @@ package mediators
 
 			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
 			addContextListener(UIEvent.UPDATE_UNITS_LIST, onUpdateUnitsList);
+			addContextListener(UIEvent.UPDATE_LEVEL, onUpdateLevel);
 
 			onUpdateMoney();
 			onUpdateUnitsList();
+			onUpdateLevel();
 
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
 		}
@@ -56,6 +63,17 @@ package mediators
 		private function onUpdateUnitsList(Event:UIEvent = null):void
 		{
 			GameScreen(view).unitsList = new ListCollection(gameModel.activeUnits);
+		}
+
+		private function onUpdateLevel(Event:UIEvent = null):void
+		{
+			var level:LevelInfo = levelsModel.getLevelById(gameModel.level.toString());
+			if (level) {
+				GameScreen(view).levelDescription = level.description || "";
+			}
+			else {
+				GameScreen(view).levelDescription = "";
+			}
 		}
 
 		private function onShop(event:Event):void
