@@ -5,12 +5,12 @@ package models
 	public class GameModel
 	{
 		private var _callbackId:uint;
-		private var _money:Number = 1000;
+		private var _money:Number = 0;
 		private var _tapsTotal:uint;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
 
 		public var tickCount:uint;
-		public var moneyTotal:Number = 0;
+		public var moneyTotal:Number = 1000;
 		public var level:uint;
 
 		[Inject]

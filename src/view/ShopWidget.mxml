@@ -95,6 +95,10 @@
         {
             releaseSlider();
             var tween:Tween = new Tween(slider, 0.5, Transitions.EASE_IN);
+            tween.onComplete = function ():void
+            {
+                data = null;
+            };
             tween.moveTo(slider.width, 0);
             Starling.juggler.add(tween);
         }

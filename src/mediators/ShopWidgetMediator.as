@@ -1,5 +1,6 @@
 package mediators
 {
+	import events.SwitchScreenEvent;
 	import events.UIEvent;
 
 	import flash.utils.Dictionary;
@@ -16,7 +17,8 @@ package mediators
 
 	public class ShopWidgetMediator extends Mediator
 	{
-		private var _availableUnits:Dictionary = new Dictionary(true);
+		private var _availableUnits:Dictionary;
+		private var _lastMoney:Number = 0;
 
 		[Inject]
 		public var view:ShopWidget;
@@ -58,17 +60,21 @@ package mediators
 
 		private function onUpdateMoney(event:UIEvent = null):void
 		{
+			if (_lastMoney > gameModel.money) _availableUnits = null;
+			_lastMoney = gameModel.money;
+
 			var availableUnits:Dictionary = new Dictionary(true);
 			var newAvailable:Array = [];
-			var money:Number = gameModel.money;
+
 			for (var i:int = 0, l:int = unitsModel.units.length; i < l; i++) {
 				var unit:UnitInfo = unitsModel.units[i];
-				if (unit.price <= money) {
+				if (unit.price <= _lastMoney) {
 					availableUnits[unit] = true;
-					if (!_availableUnits[unit]) newAvailable.push(unit);
+					if (!_availableUnits || !_availableUnits[unit]) newAvailable.push(unit);
 				}
 			}
 			_availableUnits = availableUnits;
+
 			if (newAvailable.length > 0) {
 				newAvailable.sortOn("price");
 				ShopWidget(view).data = newAvailable[newAvailable.length - 1];
@@ -77,7 +83,7 @@ package mediators
 
 		private function onGoToShop(event:Event):void
 		{
-
+			dispatch(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_SHOP));
 		}
 	}
 }
