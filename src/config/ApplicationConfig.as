@@ -1,6 +1,8 @@
 package config
 {
+	import commands.ActivateCommand;
 	import commands.BuyUnitCommand;
+	import commands.DeactivateCommand;
 	import commands.GameTapCommand;
 	import commands.GameTickCommand;
 	import commands.GetAchievementCommand;
@@ -51,6 +53,8 @@ package config
 
 	public class ApplicationConfig implements IConfig
 	{
+		public static const APP_NAME:String = "simjew";
+
 		[Inject]
 		public var injector:IInjector;
 
@@ -84,6 +88,8 @@ package config
 			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);
 			eventCommandMap.map(GameEvent.TICK, GameEvent).toCommand(GameTickCommand);
 			eventCommandMap.map(GameEvent.TAP, GameEvent).toCommand(GameTapCommand);
+			eventCommandMap.map(GameEvent.ACTIVATE, GameEvent).toCommand(ActivateCommand);
+			eventCommandMap.map(GameEvent.DEACTIVATE, GameEvent).toCommand(DeactivateCommand);
 			eventCommandMap.map(BuyUnitEvent.BUY, BuyUnitEvent).toCommand(BuyUnitCommand);
 			eventCommandMap.map(AchievementEvent.ACHIEVE, AchievementEvent).toCommand(GetAchievementCommand);
 			eventCommandMap.map(ActionEvent.LEVEL_UP, ActionEvent).toCommand(LevelUpCommand);

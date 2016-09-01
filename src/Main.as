@@ -2,12 +2,16 @@ package
 {
 	import config.ApplicationConfig;
 
+	import events.GameEvent;
+
 	import feathers.utils.ScreenDensityScaleFactorManager;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.events.IEventDispatcher;
 
 	import resources.LocalesLibrary;
 
@@ -26,6 +30,7 @@ package
 	public class Main extends Sprite
 	{
 		private var _starling:Starling;
+		private var _context:Context;
 
 		public function Main()
 		{
@@ -59,8 +64,8 @@ package
 
 			new ScreenDensityScaleFactorManager(_starling);
 
-			var context:Context = new Context();
-			context.install(StarlingBundle, ViewProcessorMapExtension)
+			_context = new Context();
+			_context.install(StarlingBundle, ViewProcessorMapExtension)
 					.configure(ApplicationConfig, new ContextView(_starling))
 					.initialize(onInitialized);
 		}
@@ -69,10 +74,16 @@ package
 		{
 			_starling.start();
 			stage.addEventListener(Event.DEACTIVATE, onStageDeactivate);
+
+			var eventDispatcher:IEventDispatcher = _context.injector.getInstance(IEventDispatcher);
+			if (eventDispatcher) eventDispatcher.dispatchEvent(new GameEvent(GameEvent.ACTIVATE));
 		}
 
 		protected function onStageDeactivate(event:Event):void
 		{
+			var eventDispatcher:IEventDispatcher = _context.injector.getInstance(IEventDispatcher);
+			if (eventDispatcher) eventDispatcher.dispatchEvent(new GameEvent(GameEvent.DEACTIVATE));
+
 			_starling.stop();
 			stage.addEventListener(Event.ACTIVATE, onStageActivate);
 		}
@@ -81,6 +92,9 @@ package
 		{
 			stage.removeEventListener(Event.ACTIVATE, onStageActivate);
 			_starling.start();
+
+			var eventDispatcher:IEventDispatcher = _context.injector.getInstance(IEventDispatcher);
+			if (eventDispatcher) eventDispatcher.dispatchEvent(new GameEvent(GameEvent.ACTIVATE));
 		}
 	}
 }

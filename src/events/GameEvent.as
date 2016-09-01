@@ -6,6 +6,8 @@ package events
 	{
 		public static const TICK:String = "tick";
 		public static const TAP:String = "tap";
+		public static const ACTIVATE:String = "activate";
+		public static const DEACTIVATE:String = "deactivate";
 
 		public function GameEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{

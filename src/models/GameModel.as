@@ -1,6 +1,18 @@
 package models
 {
+	import com.adobe.crypto.MD5;
+
+	import config.ApplicationConfig;
+
+	import events.UIEvent;
+
+	import flash.events.IEventDispatcher;
+
+	import flash.utils.ByteArray;
+
 	import gears.TriggerBroadcaster;
+
+	import robotlegs.bender.framework.api.IInjector;
 
 	public class GameModel
 	{
@@ -10,14 +22,93 @@ package models
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
 
 		public var tickCount:uint;
-		public var moneyTotal:Number = 1000;
+		public var moneyTotal:Number = 0;
 		public var level:uint;
 
 		[Inject]
 		public var triggerBroadcaster:TriggerBroadcaster;
 
+		[Inject]
+		public var injector:IInjector;
+
+		[Inject]
+		public var eventDispatcher:IEventDispatcher;
+
 		public function GameModel()
 		{
+		}
+
+		public function serialize(asString:Boolean):Object
+		{
+			var unitsList:Array = [];
+			for (var i:int = 0, l:int = units.length; i < l; i++) unitsList.push(units[i].serialize(false));
+
+			var dataObject:Object = {
+				money: money,
+				tapsTotal: tapsTotal,
+				moneyTotal: moneyTotal,
+				tickCount: tickCount,
+				level: level,
+				units: unitsList
+			};
+			dataObject.hash = MD5.hashBytes(getBytes(dataObject));
+			return asString ? JSON.stringify(dataObject) : dataObject;
+		}
+
+		public function deserialize(data:Object):void
+		{
+			if (data is String) {
+				try {
+					var dataObject:Object = JSON.parse(data as String);
+				}
+				catch (e:Error) {
+					trace("Wrong data format.");
+					return;
+				}
+			}
+			else {
+				dataObject = data;
+			}
+
+			if (!dataObject.hasOwnProperty("hash")) return;
+			var hash:String = dataObject.hash;
+			delete dataObject["hash"];
+			if (MD5.hashBytes(getBytes(dataObject)) != hash) {
+				trace("Wrong signature.");
+				return;
+			}
+
+			_money = dataObject.money;
+			_tapsTotal = dataObject.tapsTotal;
+			moneyTotal = dataObject.moneyTotal;
+			tickCount = dataObject.tickCount;
+			level = dataObject.level;
+
+			_units.splice(0, _units.length);
+			for each (var unitData:Object in dataObject.units) {
+				var unit:Unit = new Unit(null, NaN, false);
+				injector.injectInto(unit);
+				unit.deserialize(unitData);
+				_units.push(unit);
+			}
+			sortUnitsByPrice();
+
+			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_LEVEL));
+			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+		}
+
+		private static function getBytes(dataObject:Object):ByteArray
+		{
+			var res:ByteArray = new ByteArray();
+			res.writeFloat(dataObject.money);
+			res.writeFloat(dataObject.moneyTotal);
+			res.writeUnsignedInt(dataObject.tapsTotal);
+			res.writeUnsignedInt(dataObject.tickCount);
+			res.writeUnsignedInt(dataObject.level);
+			res.writeUTFBytes(ApplicationConfig.APP_NAME);
+			res.position = 0;
+			return res;
 		}
 
 		public function set callbackId(value:uint):void
@@ -99,6 +190,18 @@ package models
 				}
 			}
 			return src;
+		}
+
+		public function sortUnitsByPrice():void
+		{
+			_units.sort(sortByPrice);
+		}
+
+		private static function sortByPrice(a:Unit, b:Unit):int
+		{
+			if (a.buyPrice < b.buyPrice) return 1;
+			else if (a.buyPrice > b.buyPrice) return -1;
+			return 0;
 		}
 	}
 }

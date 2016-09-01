@@ -35,7 +35,7 @@ package commands
 
 				injector.injectInto(unit);
 				gameModel.units.push(unit);
-				gameModel.units.sort(sortByPrice);
+				gameModel.sortUnitsByPrice();
 
 				if (unit.info.profit) {
 					calcProfit(unit.info.profit);
@@ -50,13 +50,6 @@ package commands
 				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
 				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
 			}
-		}
-
-		private static function sortByPrice(a:Unit, b:Unit):int
-		{
-			if (a.buyPrice < b.buyPrice) return 1;
-			else if (a.buyPrice > b.buyPrice) return -1;
-			return 0;
 		}
 	}
 }

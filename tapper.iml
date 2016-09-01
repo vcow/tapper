@@ -21,6 +21,9 @@
           <sdk name="FeathersSDK3.0.1" />
         </dependencies>
         <compiler-options>
+          <map>
+            <entry key="compiler.debug.swf" value="true" />
+          </map>
           <option name="additionalOptions" value="-preloader=" />
         </compiler-options>
         <packaging-air-desktop />

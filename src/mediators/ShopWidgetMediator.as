@@ -40,6 +40,8 @@ package mediators
 			addViewListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 
 			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
+
+			_lastMoney = gameModel.money;
 		}
 
 		private function onRemovedFromStage(event:Event):void
@@ -76,7 +78,7 @@ package mediators
 			_availableUnits = availableUnits;
 
 			if (newAvailable.length > 0) {
-				newAvailable.sortOn("price");
+				newAvailable.sortOn("price", Array.NUMERIC);
 				ShopWidget(view).data = newAvailable[newAvailable.length - 1];
 			}
 		}

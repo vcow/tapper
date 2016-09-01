@@ -10,11 +10,36 @@ package models
 		[Inject]
 		public var eventDispatcher:IEventDispatcher;
 
+		[Inject]
+		public var unitsModel:UnitsModel;
+
 		private var _info:UnitInfo;
 		private var _taps:uint;
 		private var _ticks:uint;
 		private var _buyPrice:Number;
 		private var _active:Boolean;
+
+		public function serialize(asString:Boolean):Object
+		{
+			var dataObject:Object = {
+				unit: info.id,
+				taps: taps,
+				ticks: ticks,
+				buyPrice: buyPrice,
+				active: active
+			};
+			return asString ? JSON.stringify(dataObject) : dataObject;
+		}
+
+		public function deserialize(data:Object):void
+		{
+			var dataObject:Object = data is String ? JSON.parse(data as String) : data;
+			_info = unitsModel.getUnitById(dataObject.unit);
+			_taps = dataObject.taps;
+			_ticks = dataObject.ticks;
+			_buyPrice = dataObject.buyPrice;
+			_active = dataObject.active;
+		}
 
 		public function Unit(info:UnitInfo, buyPrice:Number, active:Boolean)
 		{
