@@ -45,10 +45,6 @@ package mediators
 			}
 		}
 
-		override public function postDestroy():void
-		{
-		}
-
 		private function onDataChange(event:Event):void
 		{
 			onCountChanged();

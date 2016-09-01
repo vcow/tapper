@@ -28,17 +28,14 @@ package commands
 
 		override public function execute():void
 		{
-			var price:Number = event.unit.price;
-			if (gameModel.money >= price) {
-				var unit:Unit = new Unit(event.unit, price, event.unit.perClickProfit || event.unit.perSecondProfit);
-				gameModel.money -= price;
+			if (gameModel.money >= event.unit.price) {
+				var unit:Unit = new Unit(event.unit, event.unit.price,
+						event.unit.perClickProfit || event.unit.perSecondProfit);
+				gameModel.money -= event.unit.price;
 
 				injector.injectInto(unit);
 				gameModel.units.push(unit);
 				gameModel.units.sort(sortByPrice);
-
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
 
 				if (unit.info.profit) {
 					calcProfit(unit.info.profit);
@@ -49,6 +46,9 @@ package commands
 				}
 
 				triggerBroadcaster.broadcast(TriggerBroadcaster.BUY, event.unit);
+
+				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
 			}
 		}
 

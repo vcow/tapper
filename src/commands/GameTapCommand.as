@@ -24,9 +24,10 @@ package commands
 					if (unit.info.perClickProfit) profitList.push(unit.info.perClickProfit);
 				}
 			}
-			calcProfitList(profitList, 1);
 
-			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+			if (calcProfitList(profitList, 1)) {
+				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+			}
 		}
 	}
 }

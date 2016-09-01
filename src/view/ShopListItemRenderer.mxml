@@ -49,7 +49,7 @@
 
         public function set price(value:Number):void
         {
-            priceLabel = isNaN(value) ? LocaleManager.getInstance().getString("common", "na.label") : value.toString();
+            priceLabel = value < 0 ? LocaleManager.getInstance().getString("common", "na.label") : value.toString();
         }
 
         override public function set data(value:Object):void

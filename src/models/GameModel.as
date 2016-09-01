@@ -5,7 +5,7 @@ package models
 	public class GameModel
 	{
 		private var _callbackId:uint;
-		private var _money:Number = 0;
+		private var _money:Number = 1000;
 		private var _tapsTotal:uint;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
 

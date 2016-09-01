@@ -23,6 +23,7 @@ package config
 	import mediators.GameScreenMediator;
 	import mediators.ShopListItemMediator;
 	import mediators.ShopScreenMediator;
+	import mediators.ShopWidgetMediator;
 	import mediators.StartScreenMediator;
 	import mediators.UnitListItemMediator;
 
@@ -43,6 +44,7 @@ package config
 	import view.GameScreen;
 	import view.ShopListItemRenderer;
 	import view.ShopScreen;
+	import view.ShopWidget;
 
 	import view.StartScreen;
 	import view.UnitListItemRenderer;
@@ -76,6 +78,7 @@ package config
 			mediatorMap.map(ShopScreen).toMediator(ShopScreenMediator);
 			mediatorMap.map(ShopListItemRenderer).toMediator(ShopListItemMediator);
 			mediatorMap.map(UnitListItemRenderer).toMediator(UnitListItemMediator);
+			mediatorMap.map(ShopWidget).toMediator(ShopWidgetMediator);
 
 			eventCommandMap.map(GameStateEvent.START_GAME, GameStateEvent).toCommand(StartGameCommand);
 			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);

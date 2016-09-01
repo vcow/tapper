@@ -73,7 +73,7 @@ package robotlegs.starling.extensions.mediatorMap.impl
 
 			// Watch Display Object for removal
 			if (displayObject && mapping.autoRemoveEnabled)
-				displayObject.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+				displayObject.addEventListener(Event.REMOVED, onRemovedFromStage);
 
 			// Synchronize with item life-cycle
 			if (itemInitialized(item))
@@ -98,7 +98,7 @@ package robotlegs.starling.extensions.mediatorMap.impl
 		public function removeMediator(mediator:Object, item:Object, mapping:IMediatorMapping):void
 		{
 			if (item is DisplayObject)
-				DisplayObject(item).removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+				DisplayObject(item).removeEventListener(Event.REMOVED, onRemovedFromStage);
 
 			if (itemInitialized(item))
 				destroyMediator(mediator);

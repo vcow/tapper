@@ -1,5 +1,7 @@
 package models
 {
+	import gears.TriggerBroadcaster;
+
 	import resources.locale.LocaleManager;
 
 	public class UnitInfo
@@ -8,6 +10,7 @@ package models
 		private var _name:String;
 		private var _description:String;
 		private var _price:Number;
+		private var _calcPrice:Number;
 		private var _priceGrowth:RelValue;
 		private var _maxCount:int;
 		private var _perSecondProfit:ProfitInfo;
@@ -17,6 +20,22 @@ package models
 
 		[Inject]
 		public var gameModel:GameModel;
+
+		[Inject]
+		public var triggerBroadcaster:TriggerBroadcaster;
+
+		[PostConstruct]
+		public function postConstruct():void
+		{
+			triggerBroadcaster.subscribe(onTrigger);
+		}
+
+		private function onTrigger(trigger:String, value:*, ...args):void
+		{
+			if (trigger == TriggerBroadcaster.BUY) {
+				_calcPrice = NaN;
+			}
+		}
 
 		public function UnitInfo(src:XML)
 		{
@@ -57,14 +76,21 @@ package models
 
 		public function get price():Number
 		{
-			var increase:Number = 0;
-			var numUnits:Number = gameModel.getUnitsCount(this);
-			if (_maxCount > 0 && numUnits >= maxCount) return NaN;
-			if (_priceGrowth) {
-				if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
-				else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
+			if (isNaN(_calcPrice)) {
+				var numUnits:Number = gameModel.getUnitsCount(this);
+				if (_maxCount > 0 && numUnits >= maxCount) {
+					_calcPrice = -1;
+				}
+				else {
+					var increase:Number = 0;
+					if (_priceGrowth) {
+						if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
+						else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
+					}
+					_calcPrice = Math.round(_price + increase);
+				}
 			}
-			return Math.round(_price + increase);
+			return _calcPrice;
 		}
 
 		public function get maxCount():int

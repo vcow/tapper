@@ -15,7 +15,7 @@ package commands
 			throw Error("Override this in child.");
 		}
 
-		protected function calcProfitList(list:Vector.<ProfitInfo>, initValue:Number = 0):void
+		protected function calcProfitList(list:Vector.<ProfitInfo>, initValue:Number = 0):Boolean
 		{
 			var inc:Number = initValue;
 			var percent:Number = 0;
@@ -29,17 +29,23 @@ package commands
 			if (inc != 0) {
 				gameModel.money += inc;
 				gameModel.moneyTotal += inc;
+				return true;
 			}
+			return false;
 		}
 
-		protected function calcProfit(profit:ProfitInfo):void
+		protected function calcProfit(profit:ProfitInfo):Boolean
 		{
 			var inc:Number = 0;
 			if (profit.value.percentValue) inc = gameModel.money * profit.value.percentValue;
 			else inc = profit.value.value;
 
-			gameModel.money += inc;
-			gameModel.moneyTotal += inc;
+			if (inc != 0) {
+				gameModel.money += inc;
+				gameModel.moneyTotal += inc;
+				return true;
+			}
+			return false;
 		}
 	}
 }

@@ -32,10 +32,6 @@ package mediators
 			onUpdateMoney();
 		}
 
-		override public function postDestroy():void
-		{
-		}
-
 		private function onDataChange(event:Event):void
 		{
 			onUpdateMoney();
@@ -45,10 +41,9 @@ package mediators
 		{
 			var data:UnitInfo = ShopListItemRenderer(view).data as UnitInfo;
 			if (data) {
-				var price:Number = data.price;
-				ShopListItemRenderer(view).price = price;
+				ShopListItemRenderer(view).price = data.price;
 				ShopListItemRenderer(view).title = data.nameWithCounter;
-				ShopListItemRenderer(view).available = (!isNaN(price) && data.price <= gameModel.money);
+				ShopListItemRenderer(view).available = (data.price >= 0 && data.price <= gameModel.money);
 			}
 		}
 	}

@@ -1,52 +1,67 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*">
     <f:layout>
-        <f:VerticalLayout gap="5" horizontalAlign="center"/>
+        <f:AnchorLayout/>
     </f:layout>
 
     <f:LayoutGroup>
         <f:layout>
-            <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
+            <f:VerticalLayout gap="5" horizontalAlign="center"/>
         </f:layout>
         <f:layoutData>
-            <f:VerticalLayoutData percentWidth="100"/>
+            <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
         </f:layoutData>
 
-        <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
-
-        <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+        <f:LayoutGroup>
+            <f:layout>
+                <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
+            </f:layout>
             <f:layoutData>
-                <f:HorizontalLayoutData percentWidth="100"/>
+                <f:VerticalLayoutData percentWidth="100"/>
             </f:layoutData>
-        </f:Label>
 
-        <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}" triggered="{dispatchEventWith(SHOP)}"/>
+            <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
+
+            <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+                <f:layoutData>
+                    <f:HorizontalLayoutData percentWidth="100"/>
+                </f:layoutData>
+            </f:Label>
+
+            <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}" triggered="{dispatchEventWith(SHOP)}"/>
+        </f:LayoutGroup>
+
+        <f:LayoutGroup height="70">
+            <f:layout>
+                <f:AnchorLayout/>
+            </f:layout>
+
+            <f:Label text="{levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
+                <f:layoutData>
+                    <f:AnchorLayoutData verticalCenter="0"/>
+                </f:layoutData>
+            </f:Label>
+        </f:LayoutGroup>
+
+        <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
+                  styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
+
+        <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+                itemRendererType="view.UnitListItemRenderer" isSelectable="false">
+            <f:layout>
+                <f:TiledRowsLayout gap="2" padding="5" paddingTop="10"/>
+            </f:layout>
+            <f:layoutData>
+                <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+            </f:layoutData>
+        </f:List>
     </f:LayoutGroup>
 
-    <f:LayoutGroup height="70">
-        <f:layout>
-            <f:AnchorLayout/>
-        </f:layout>
-
-        <f:Label text="{levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
-            <f:layoutData>
-                <f:AnchorLayoutData verticalCenter="0"/>
-            </f:layoutData>
-        </f:Label>
-    </f:LayoutGroup>
-
-    <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
-              styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
-
-    <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
-            itemRendererType="view.UnitListItemRenderer" isSelectable="false">
-        <f:layout>
-            <f:TiledRowsLayout gap="2" padding="5" paddingTop="10"/>
-        </f:layout>
-        <f:layoutData>
-            <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
-        </f:layoutData>
-    </f:List>
+    <view:ShopWidget id="sv">
+        <view:layoutData>
+            <f:AnchorLayoutData top="50" right="0"/>
+        </view:layoutData>
+    </view:ShopWidget>
 
     <fx:Script><![CDATA[
         import feathers.data.ListCollection;

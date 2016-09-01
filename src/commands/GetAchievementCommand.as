@@ -3,6 +3,7 @@ package commands
 	import events.AchievementEvent;
 	import events.ActionEvent;
 	import events.PopUpEvent;
+	import events.UIEvent;
 
 	import flash.events.IEventDispatcher;
 
@@ -29,7 +30,9 @@ package commands
 					eventDispatcher.dispatchEvent(new ActionEvent(action.id));
 				}
 				else if (reward is ProfitReward) {
-					calcProfit(ProfitReward(reward));
+					if (calcProfit(ProfitReward(reward))) {
+						eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
+					}
 				}
 				else if (reward is PopUpReward) {
 					var popup:PopUpReward = PopUpReward(reward);

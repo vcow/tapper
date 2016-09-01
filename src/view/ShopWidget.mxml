@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               initialize="onInitialize()">
+
+    <f:LayoutGroup id="slider" includeInLayout="false" resize="onSliderResize(event)"
+                   backgroundSkin="{new Quad(10, 10, 0x000000)}" visible="{data != null}">
+        <f:layout>
+            <f:VerticalLayout padding="10" horizontalAlign="center"/>
+        </f:layout>
+
+        <f:Label text="{LocaleManager.getInstance().getString('common', 'shop.widget.title')}"
+                 styleProvider="{StylesLibrary.popupDescriptionStyleProvider}"/>
+
+        <f:Label id="unitNameLabel" styleProvider="{StylesLibrary.popupDescriptionStyleProvider}"/>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="goToShop", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import feathers.utils.touch.TapToTrigger;
+
+        import models.UnitInfo;
+
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.animation.Transitions;
+
+        import starling.animation.Tween;
+
+        import starling.core.Starling;
+
+        import starling.display.Quad;
+        import starling.events.Event;
+
+        public static const GO_TO_SHOP:String = "goToShop";
+
+        private var _isActive:Boolean;
+        private var _trigger:TapToTrigger;
+        private var _data:UnitInfo;
+
+        private function onSliderResize(event:starling.events.Event):void
+        {
+            setSize(slider.width, slider.height);
+            slider.x = slider.width;
+        }
+
+        private function onInitialize():void
+        {
+            _trigger = new TapToTrigger(slider);
+            updateData();
+        }
+
+        [Bindable(event="dataChanged")]
+        public function get data():UnitInfo
+        {
+            return _data;
+        }
+
+        public function set data(value:UnitInfo):void
+        {
+            if (value == _data) return;
+
+            _data = value;
+            if (isInitialized) updateData();
+            dispatchEventWith("dataChanged");
+        }
+
+        private function updateData():void
+        {
+            if (_data) {
+                unitNameLabel.text = _data.name;
+                releaseSlider();
+                var tween:Tween = new Tween(slider, 0.5, Transitions.EASE_OUT);
+                tween.moveTo(0, 0);
+                tween.onComplete = onTweenComplete;
+                slider.x = slider.width;
+                Starling.juggler.add(tween);
+            }
+        }
+
+        private function releaseSlider():void
+        {
+            Starling.juggler.removeTweens(slider);
+            Starling.juggler.removeDelayedCalls(goBackSlider);
+            if (_isActive) {
+                slider.removeEventListener(starling.events.Event.TRIGGERED, onSliderTriggered);
+                _isActive = false;
+            }
+        }
+
+        private function goBackSlider():void
+        {
+            releaseSlider();
+            var tween:Tween = new Tween(slider, 0.5, Transitions.EASE_IN);
+            tween.moveTo(slider.width, 0);
+            Starling.juggler.add(tween);
+        }
+
+        private function onTweenComplete():void
+        {
+            slider.addEventListener(starling.events.Event.TRIGGERED, onSliderTriggered);
+            Starling.juggler.delayCall(goBackSlider, 1.5);
+            _isActive = true;
+        }
+
+        private function onSliderTriggered(event:starling.events.Event):void
+        {
+            dispatchEventWith(GO_TO_SHOP);
+        }
+
+        override public function dispose():void
+        {
+            releaseSlider();
+            super.dispose();
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>
