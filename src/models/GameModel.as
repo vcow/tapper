@@ -41,7 +41,16 @@ package models
 		public function serialize(asString:Boolean):Object
 		{
 			var unitsList:Array = [];
-			for (var i:int = 0, l:int = units.length; i < l; i++) unitsList.push(units[i].serialize(false));
+			for (var i:int = 0, l:int = _units.length; i < l; i++) {
+				unitsList.push(_units[i].serialize(false));
+			}
+
+			var achievementsModel:AchievementsModel = injector.getInstance(AchievementsModel);
+			var achievementsList:Array = [];
+			for (i = 0, l = achievementsModel.achievements.length; i < l; i++) {
+				var achievement:AchievementInfo = achievementsModel.achievements[i];
+				if (achievement.isReceived) achievementsList.push(achievement.serialize(false));
+			}
 
 			var dataObject:Object = {
 				money: money,
@@ -49,7 +58,9 @@ package models
 				moneyTotal: moneyTotal,
 				tickCount: tickCount,
 				level: level,
-				units: unitsList
+				units: unitsList,
+				achievements: achievementsList,
+				timestamp: new Date().time
 			};
 			dataObject.hash = MD5.hashBytes(getBytes(dataObject));
 			return asString ? JSON.stringify(dataObject) : dataObject;
@@ -85,13 +96,23 @@ package models
 			level = dataObject.level;
 
 			_units.splice(0, _units.length);
-			for each (var unitData:Object in dataObject.units) {
+			for each (var listData:Object in dataObject.units) {
 				var unit:Unit = new Unit(null, NaN, false);
 				injector.injectInto(unit);
-				unit.deserialize(unitData);
+				unit.deserialize(listData);
 				_units.push(unit);
 			}
 			sortUnitsByPrice();
+
+			var achievementsModel:AchievementsModel = injector.getInstance(AchievementsModel);
+			var achievementMap:Object = {};
+			for each (listData in dataObject.achievements) {
+				achievementMap[listData.achievement] = listData.received;
+			}
+			for (var i:int = 0, l:int = achievementsModel.achievements.length; i < l; i++) {
+				var achievement:AchievementInfo = achievementsModel.achievements[i];
+				achievement.receive(achievementMap[achievement.id]);
+			}
 
 			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_LEVEL));
 			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
@@ -101,12 +122,16 @@ package models
 		private static function getBytes(dataObject:Object):ByteArray
 		{
 			var res:ByteArray = new ByteArray();
+			res.writeUTFBytes(ApplicationConfig.APP_VERSION);
 			res.writeFloat(dataObject.money);
 			res.writeFloat(dataObject.moneyTotal);
 			res.writeUnsignedInt(dataObject.tapsTotal);
 			res.writeUnsignedInt(dataObject.tickCount);
 			res.writeUnsignedInt(dataObject.level);
+//			res.writeUTFBytes(MD5.hash(JSON.stringify(dataObject.units)));
+//			res.writeUTFBytes(MD5.hash(JSON.stringify(dataObject.achievements)));
 			res.writeUTFBytes(ApplicationConfig.APP_NAME);
+			res.writeFloat(dataObject.timestamp);
 			res.position = 0;
 			return res;
 		}

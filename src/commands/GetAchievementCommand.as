@@ -8,7 +8,6 @@ package commands
 	import flash.events.IEventDispatcher;
 
 	import models.ActionReward;
-
 	import models.IReward;
 	import models.PopUpReward;
 	import models.ProfitReward;
@@ -42,6 +41,7 @@ package commands
 					throw Error("Unsupported reward.");
 				}
 			}
+			event.achievement.receive(new Date().time);
 		}
 	}
 }

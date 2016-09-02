@@ -18,6 +18,7 @@ package models
 		private var _rewards:Vector.<IReward>;
 		private var _conditions:Vector.<ConditionBase>;
 		private var _isMedal:Boolean;
+		private var _receivedTime:Number;
 
 		[Inject]
 		public var triggerBroadcaster:TriggerBroadcaster;
@@ -34,7 +35,7 @@ package models
 		[PostConstruct]
 		public function postConstruct():void
 		{
-			if (_conditions.length > 0) triggerBroadcaster.subscribe(onTrigger);
+			if (!isReceived && _conditions.length > 0) triggerBroadcaster.subscribe(onTrigger);
 			for each (var reward:IReward in _rewards) injector.injectInto(reward);
 		}
 
@@ -63,7 +64,6 @@ package models
 				}
 			}
 			if (result == _conditions.length) {
-				triggerBroadcaster.unsubscribe(onTrigger);
 				eventDispatcher.dispatchEvent(new AchievementEvent(AchievementEvent.ACHIEVE, this));
 			}
 		}
@@ -143,6 +143,37 @@ package models
 		public function get isMedal():Boolean
 		{
 			return _isMedal;
+		}
+
+		public function get receivedTime():Number
+		{
+			return _receivedTime;
+		}
+
+		public function get isReceived():Boolean
+		{
+			return !isNaN(_receivedTime);
+		}
+
+		public function serialize(asString:Boolean):Object
+		{
+			var dataObject:Object = {
+				achievement: _id,
+				received: isNaN(_receivedTime) ? -1 : _receivedTime
+			};
+			return asString ? JSON.stringify(dataObject) : dataObject;
+		}
+
+		public function receive(timestamp:Number):void
+		{
+			if (isNaN(timestamp) || timestamp < 0) {
+				_receivedTime = NaN;
+				if (_conditions.length > 0) triggerBroadcaster.subscribe(onTrigger);
+			}
+			else {
+				_receivedTime = timestamp;
+				triggerBroadcaster.unsubscribe(onTrigger);
+			}
 		}
 	}
 }

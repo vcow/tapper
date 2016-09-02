@@ -5,7 +5,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="500"/>
+			<money min="1"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup2">
@@ -13,7 +13,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="1000"/>
+			<money min="2"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup3">
@@ -21,7 +21,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="5000"/>
+			<money min="3"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup4">
@@ -29,7 +29,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="10000"/>
+			<money min="4"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup5">
