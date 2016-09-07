@@ -26,7 +26,7 @@ package commands
 			for each (var reward:IReward in rewards) {
 				if (reward is ActionReward) {
 					var action:ActionReward = ActionReward(reward);
-					eventDispatcher.dispatchEvent(new ActionEvent(action.id));
+					eventDispatcher.dispatchEvent(new ActionEvent(action.id, action.data));
 				}
 				else if (reward is ProfitReward) {
 					if (calcProfit(ProfitReward(reward))) {

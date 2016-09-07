@@ -42,7 +42,7 @@ package commands
 				}
 
 				if (unit.info.action) {
-					eventDispatcher.dispatchEvent(new ActionEvent(unit.info.action.id));
+					eventDispatcher.dispatchEvent(new ActionEvent(unit.info.action.id, unit.info.action.data));
 				}
 
 				triggerBroadcaster.broadcast(TriggerBroadcaster.BUY, event.unit);

@@ -19,28 +19,6 @@ package models
 		private var _buyPrice:Number;
 		private var _active:Boolean;
 
-		public function serialize(asString:Boolean):Object
-		{
-			var dataObject:Object = {
-				unit: info.id,
-				taps: taps,
-				ticks: ticks,
-				buyPrice: buyPrice,
-				active: active
-			};
-			return asString ? JSON.stringify(dataObject) : dataObject;
-		}
-
-		public function deserialize(data:Object):void
-		{
-			var dataObject:Object = data is String ? JSON.parse(data as String) : data;
-			_info = unitsModel.getUnitById(dataObject.unit);
-			_taps = dataObject.taps;
-			_ticks = dataObject.ticks;
-			_buyPrice = dataObject.buyPrice;
-			_active = dataObject.active;
-		}
-
 		public function Unit(info:UnitInfo, buyPrice:Number, active:Boolean)
 		{
 			_info = info;
@@ -53,14 +31,29 @@ package models
 			return _info;
 		}
 
+		public function set info(value:UnitInfo):void
+		{
+			_info = value;
+		}
+
 		public function get buyPrice():Number
 		{
 			return _buyPrice;
 		}
 
+		public function set buyPrice(value:Number):void
+		{
+			_buyPrice = value;
+		}
+
 		public function get active():Boolean
 		{
 			return _active;
+		}
+
+		public function set active(value:Boolean):void
+		{
+			_active = value;
 		}
 
 		public function tap():void
@@ -95,9 +88,19 @@ package models
 			return _taps;
 		}
 
+		public function set taps(value:uint):void
+		{
+			_taps = value;
+		}
+
 		public function get ticks():uint
 		{
 			return _ticks;
+		}
+
+		public function set ticks(value:uint):void
+		{
+			_ticks = value;
 		}
 	}
 }

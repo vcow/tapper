@@ -1,6 +1,7 @@
 package commands
 {
-	import events.UIEvent;
+import events.ActionEvent;
+import events.UIEvent;
 
 	import flash.events.IEventDispatcher;
 
@@ -11,6 +12,9 @@ package commands
 	public class LevelUpCommand implements ICommand
 	{
 		[Inject]
+		public var event:ActionEvent;
+
+		[Inject]
 		public var gameModel:GameModel;
 
 		[Inject]
@@ -18,7 +22,10 @@ package commands
 
 		public function execute():void
 		{
-			gameModel.level++;
+			var level:int;
+			if (event.data) level = int(event.data);
+
+			gameModel.level = level ? level : gameModel.level + 1;
 			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_LEVEL));
 		}
 	}

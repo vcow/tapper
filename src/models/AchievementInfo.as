@@ -155,15 +155,6 @@ package models
 			return !isNaN(_receivedTime);
 		}
 
-		public function serialize(asString:Boolean):Object
-		{
-			var dataObject:Object = {
-				achievement: _id,
-				received: isNaN(_receivedTime) ? -1 : _receivedTime
-			};
-			return asString ? JSON.stringify(dataObject) : dataObject;
-		}
-
 		public function receive(timestamp:Number):void
 		{
 			if (isNaN(timestamp) || timestamp < 0) {

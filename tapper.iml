@@ -3,29 +3,24 @@
   <component name="FlexBuildConfigurationManager" active="tapper">
     <configurations>
       <configuration name="tapper" target-platform="Mobile" main-class="Main" output-file="tapper.swf" output-folder="$MODULE_DIR$/build">
-        <dependencies target-player="22.0">
+        <dependencies target-player="21.0">
           <entries>
-            <entry library-id="63b6c1cc-8624-4ca6-9dbe-e15d487cff93">
+            <entry library-id="b339af57-c745-4389-893a-81a2b3f2fb3b">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="ece11624-032c-4bb3-88f1-b75c3b0cfacc">
+            <entry library-id="5880edfa-c088-4766-8def-beca96869953">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="b389fef9-5fd6-48fd-9a74-5e0233e22511">
+            <entry library-id="a49de646-b312-43b7-a675-c4a8a7041299">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="d849fbaa-4951-4135-bfe8-3e41f8dfb5ed">
+            <entry library-id="a3e97535-cfd5-47c0-b382-2f42d7892c84">
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="FeathersSDK3.0.1" />
+          <sdk name="Feathers.3.0.3" />
         </dependencies>
-        <compiler-options>
-          <map>
-            <entry key="compiler.debug.swf" value="true" />
-          </map>
-          <option name="additionalOptions" value="-preloader=" />
-        </compiler-options>
+        <compiler-options />
         <packaging-air-desktop />
         <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/qtap-app.xml" package-file-name="tapper" />
         <packaging-ios package-file-name="tapper" />
@@ -38,50 +33,50 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="FeathersSDK3.0.1" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="Feathers.3.0.3" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="63b6c1cc-8624-4ca6-9dbe-e15d487cff93" />
-        <CLASSES>
-          <root url="file://C:/FeathersSDK3.0.1/frameworks/libs" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/FeathersSDK3.0.1/frameworks/libs" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="ece11624-032c-4bb3-88f1-b75c3b0cfacc" />
-        <CLASSES>
-          <root url="file://C:/FeathersSDK3.0.1/frameworks/libs/air" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/FeathersSDK3.0.1/frameworks/libs/air" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="b389fef9-5fd6-48fd-9a74-5e0233e22511" />
-        <CLASSES>
-          <root url="file://C:/FeathersSDK3.0.1/frameworks/libs/player/22.0" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/FeathersSDK3.0.1/frameworks/libs/player/22.0" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="d849fbaa-4951-4135-bfe8-3e41f8dfb5ed" />
+        <properties id="b339af57-c745-4389-893a-81a2b3f2fb3b" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="5880edfa-c088-4766-8def-beca96869953" />
+        <CLASSES>
+          <root url="file://C:/Feathers.3.0.3/frameworks/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://C:/Feathers.3.0.3/frameworks/libs" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="a49de646-b312-43b7-a675-c4a8a7041299" />
+        <CLASSES>
+          <root url="file://C:/Feathers.3.0.3/frameworks/libs/air" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://C:/Feathers.3.0.3/frameworks/libs/air" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="a3e97535-cfd5-47c0-b382-2f42d7892c84" />
+        <CLASSES>
+          <root url="file://C:/Feathers.3.0.3/frameworks/libs/player/21.0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://C:/Feathers.3.0.3/frameworks/libs/player/21.0" recursive="false" />
       </library>
     </orderEntry>
   </component>
