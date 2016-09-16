@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+               creationComplete="updateScroller()">
     <f:layout>
         <f:VerticalLayout gap="5" horizontalAlign="center"/>
     </f:layout>
@@ -23,7 +24,7 @@
         <f:LayoutGroup width="50"/>
     </f:LayoutGroup>
 
-    <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+    <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
             itemRendererType="view.ShopListItemRenderer" isSelectable="false"
             triggered="{dispatchEventWith(SELECT_UNIT, false, event.data)}">
         <f:layout>
@@ -42,6 +43,8 @@
 
         import resources.StylesLibrary;
 
+        import starling.display.DisplayObject;
+
         import starling.events.Event;
 
         public static const BACK:String = "back";
@@ -53,6 +56,37 @@
 
         [Bindable]
         public var unitsList:ListCollection;
+
+        public function updateScroller():void
+        {
+            if (isInitialized && unitsList && !isNaN(money) && unitsList.length > 0) {
+                var lastAvailableUnit:UnitInfo;
+                for (var i:int = 0, l:int = unitsList.length; i < l; i++) {
+                    var unit:UnitInfo = unitsList.getItemAt(i) as UnitInfo;
+                    if (unit) {
+                        var price:Number = unit.price;
+                        if (price >= 0 && price <= money) lastAvailableUnit = unit;
+                    }
+                }
+
+                if (lastAvailableUnit && listView.viewPort is starling.display.DisplayObjectContainer) {
+                    listView.validate();
+                    var lastAvailableItemView:starling.display.DisplayObject;
+                    for (i = 0, l = starling.display.DisplayObjectContainer(listView.viewPort).numChildren; i < l; i++) {
+                        var itemView:ShopListItemRenderer =
+                                starling.display.DisplayObjectContainer(listView.viewPort).getChildAt(i) as ShopListItemRenderer;
+                        if (itemView && itemView.data == lastAvailableUnit) {
+                            lastAvailableItemView = itemView;
+                            break;
+                        }
+                    }
+                    if (lastAvailableItemView) {
+                        listView.verticalScrollPosition = Math.max(0,
+                                lastAvailableItemView.y - listView.height + lastAvailableItemView.height);
+                    }
+                }
+            }
+        }
 
         public function buyUnit(unit:UnitInfo, available:Boolean):void
         {
