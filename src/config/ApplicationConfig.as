@@ -7,6 +7,7 @@ package config
 	import commands.GameTickCommand;
 	import commands.GetAchievementCommand;
 	import commands.LevelUpCommand;
+	import commands.SetSkinBronzeCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 
@@ -94,6 +95,7 @@ package config
 			eventCommandMap.map(BuyUnitEvent.BUY, BuyUnitEvent).toCommand(BuyUnitCommand);
 			eventCommandMap.map(AchievementEvent.ACHIEVE, AchievementEvent).toCommand(GetAchievementCommand);
 			eventCommandMap.map(ActionEvent.LEVEL_UP, ActionEvent).toCommand(LevelUpCommand);
+			eventCommandMap.map(ActionEvent.SET_SKIN_BRONZE, ActionEvent).toCommand(SetSkinBronzeCommand);
 		}
 	}
 }

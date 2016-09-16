@@ -44,6 +44,7 @@ public class DeactivateCommand extends SerializationCommandBase
 			moneyTotal: gameModel.moneyTotal,
 			tickCount: gameModel.tickCount,
 			level: gameModel.level,
+			skin: gameModel.currentSkin,
 			units: unitsList,
 			achievements: achievementsList,
 			timestamp: new Date().time

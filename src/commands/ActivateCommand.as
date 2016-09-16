@@ -74,6 +74,7 @@ public class ActivateCommand extends SerializationCommandBase
 		gameModel.moneyTotal = dataObject.moneyTotal;
 		gameModel.tickCount = dataObject.tickCount;
 		gameModel.level = dataObject.level;
+		gameModel.currentSkin = dataObject.skin;
 
 		gameModel.units.splice(0, gameModel.units.length);
 		for each (var listData:Object in dataObject.units) {

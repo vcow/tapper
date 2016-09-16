@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*">
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
+               implements="view.IGameScreen" backgroundSkin="{new Quad(10, 10, 0xff0000)}">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
+    <f:layoutData>
+        <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
+    </f:layoutData>
 
     <f:LayoutGroup>
         <f:layout>
@@ -20,15 +24,17 @@
                 <f:VerticalLayoutData percentWidth="100"/>
             </f:layoutData>
 
-            <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
+            <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}"
+                      triggered="{dispatchEventWith(GameScreen.BACK, true)}"/>
 
-            <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+            <f:Label text="{_money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
                 <f:layoutData>
                     <f:HorizontalLayoutData percentWidth="100"/>
                 </f:layoutData>
             </f:Label>
 
-            <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}" triggered="{dispatchEventWith(SHOP)}"/>
+            <f:Button styleProvider="{StylesLibrary.shopButtonStyleProvider}"
+                      triggered="{dispatchEventWith(GameScreen.SHOP, true)}"/>
         </f:LayoutGroup>
 
         <f:LayoutGroup height="70">
@@ -36,7 +42,7 @@
                 <f:AnchorLayout/>
             </f:layout>
 
-            <f:Label text="{levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
+            <f:Label text="{_levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
                 <f:layoutData>
                     <f:AnchorLayoutData verticalCenter="0"/>
                 </f:layoutData>
@@ -44,9 +50,10 @@
         </f:LayoutGroup>
 
         <f:Button label="{LocaleManager.getInstance().getString('common', 'tap.bn.label')}"
-                  styleProvider="{StylesLibrary.tapButton1StyleProvider}" triggered="{dispatchEventWith(TAP)}"/>
+                  styleProvider="{StylesLibrary.tapButton1StyleProvider}"
+                  triggered="{dispatchEventWith(GameScreen.TAP, true)}"/>
 
-        <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+        <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{_unitsList}"
                 itemRendererType="view.UnitListItemRenderer" isSelectable="false">
             <f:layout>
                 <f:TiledRowsLayout gap="2" padding="5" paddingTop="10"/>
@@ -69,17 +76,30 @@
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
-        public static const BACK:String = "back";
-        public static const SHOP:String = "shop";
-        public static const TAP:String = "tap";
+        import starling.display.Quad;
 
         [Bindable]
-        public var money:Number = 0;
+        private var _money:Number = 0;
 
         [Bindable]
-        public var unitsList:ListCollection;
+        private var _unitsList:ListCollection;
 
         [Bindable]
-        public var levelDescription:String;
+        private var _levelDescription:String;
+
+        public function set money(value:Number):void
+        {
+            _money = value;
+        }
+
+        public function set unitsList(value:ListCollection):void
+        {
+            _unitsList = value;
+        }
+
+        public function set levelDescription(value:String):void
+        {
+            _levelDescription = value;
+        }
         ]]></fx:Script>
 </f:LayoutGroup>

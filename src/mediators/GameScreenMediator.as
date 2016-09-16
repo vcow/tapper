@@ -1,5 +1,6 @@
 package mediators
 {
+	import events.ActionEvent;
 	import events.GameEvent;
 	import events.GameStateEvent;
 	import events.SwitchScreenEvent;
@@ -12,6 +13,7 @@ package mediators
 	import models.GameModel;
 	import models.LevelInfo;
 	import models.LevelsModel;
+	import models.SkinType;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
@@ -47,12 +49,19 @@ package mediators
 			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
 			addContextListener(UIEvent.UPDATE_UNITS_LIST, onUpdateUnitsList);
 			addContextListener(UIEvent.UPDATE_LEVEL, onUpdateLevel);
+			addContextListener(ActionEvent.SET_SKIN_BRONZE, onSetSkinBronze);
 
 			onUpdateMoney();
 			onUpdateUnitsList();
 			onUpdateLevel();
 
+			GameScreen(view).setSkin(gameModel.currentSkin);
 			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
+		}
+
+		private function onSetSkinBronze(event:ActionEvent):void
+		{
+			GameScreen(view).setSkin(SkinType.BRONZE);
 		}
 
 		private function onUpdateMoney(Event:UIEvent = null):void

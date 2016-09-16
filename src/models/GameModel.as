@@ -1,8 +1,8 @@
 package models
 {
-import gears.TriggerBroadcaster;
+	import gears.TriggerBroadcaster;
 
-public class GameModel
+	public class GameModel
 {
 	private var _callbackId:uint;
 	private var _money:Number = 0;
@@ -12,12 +12,14 @@ public class GameModel
 	public var tickCount:uint;
 	public var moneyTotal:Number = 0;
 	public var level:uint;
+	public var currentSkin:String;
 
 	[Inject]
 	public var triggerBroadcaster:TriggerBroadcaster;
 
 	public function GameModel()
 	{
+		currentSkin = SkinType.WOOD;
 	}
 
 	public function set callbackId(value:uint):void
