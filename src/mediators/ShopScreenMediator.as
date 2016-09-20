@@ -37,18 +37,20 @@ package mediators
 			addViewListener(ShopScreen.BACK, onBack);
 			addViewListener(ShopScreen.SELECT_UNIT, onSelectUnit);
 			addViewListener(ShopScreen.BUY_UNIT, onBuyUnit);
-			addViewListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
 			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
 
 			onUpdateMoney();
 			ShopScreen(view).unitsList = new ListCollection(unitsModel.units);
-			ShopScreen(view).updateScroller();
 		}
 
-		private function onUpdateMoney(Event:UIEvent = null):void
+		private function onUpdateMoney(event:UIEvent = null):void
 		{
 			ShopScreen(view).money = Math.round(gameModel.money);
+
+			if (event) {
+				ShopScreen(view).scrollToLastAvailable();
+			}
 		}
 
 		private function onBuyUnit(event:Event):void
@@ -57,11 +59,6 @@ package mediators
 			if (unit) {
 				dispatch(new BuyUnitEvent(BuyUnitEvent.BUY, unit));
 			}
-		}
-
-		private function onAddedToStage(event:Event):void
-		{
-			ShopScreen(view).updateScroller();
 		}
 
 		private function onSelectUnit(event:Event):void

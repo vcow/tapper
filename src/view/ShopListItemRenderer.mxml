@@ -52,6 +52,12 @@
             priceLabel = value < 0 ? LocaleManager.getInstance().getString("common", "na.label") : value.toString();
         }
 
+        public function get unitId():String
+        {
+            var unit:UnitInfo = data as UnitInfo;
+            return unit ? unit.id : "";
+        }
+
         override public function set data(value:Object):void
         {
             super.data = value as UnitInfo;

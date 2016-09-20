@@ -28,7 +28,7 @@
             itemRendererType="view.ShopListItemRenderer" isSelectable="false"
             triggered="{dispatchEventWith(SELECT_UNIT, false, event.data)}">
         <f:layout>
-            <f:VerticalLayout gap="2"/>
+            <f:VerticalLayout id="listViewLayout" gap="2"/>
         </f:layout>
         <f:layoutData>
             <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
@@ -51,41 +51,70 @@
         public static const SELECT_UNIT:String = "selectUnit";
         public static const BUY_UNIT:String = "buyUnit";
 
+        private var _unitsList:ListCollection;
+
         [Bindable]
         public var money:Number;
 
-        [Bindable]
-        public var unitsList:ListCollection;
-
-        public function updateScroller():void
+        [Bindable(event="unitsListChanged")]
+        public function get unitsList():ListCollection
         {
-            if (isInitialized && unitsList && !isNaN(money) && unitsList.length > 0) {
-                var lastAvailableUnit:UnitInfo;
+            return _unitsList;
+        }
+
+        public function set unitsList(value:ListCollection):void
+        {
+            if (value != _unitsList) {
+                _unitsList = value;
+                dispatchEventWith("unitsListChanged");
+            }
+            updateScroller();
+        }
+
+        public function scrollToLastAvailable():void
+        {
+            var lastAvailable:int = getLastAvailable();
+            var h:int = getListItemHeight();
+            if (h > 0 && lastAvailable >= 0) {
+                var itemHeight:int = h + listViewLayout.gap;
+                listView.scrollToPosition(0, Math.max(0, itemHeight * lastAvailable - listView.height + h));
+            }
+        }
+
+        private function updateScroller():void
+        {
+            var lastAvailable:int = getLastAvailable();
+            var h:int = getListItemHeight();
+            if (h > 0 && lastAvailable >= 0) {
+                var itemHeight:int = h + listViewLayout.gap;
+                listView.verticalScrollPosition = Math.max(0, itemHeight * lastAvailable - listView.height + h);
+            }
+        }
+
+        private function getListItemHeight():int
+        {
+            var h:int = 0;
+            if (isInitialized && listView.viewPort is starling.display.DisplayObjectContainer &&
+                    starling.display.DisplayObjectContainer(listView.viewPort).numChildren > 0) {
+                listView.validate();
+                h = starling.display.DisplayObjectContainer(listView.viewPort).getChildAt(0).height;
+            }
+            return h;
+        }
+
+        private function getLastAvailable():int
+        {
+            var lastAvailable:int = -1;
+            if (unitsList && !isNaN(money) && unitsList.length > 0) {
                 for (var i:int = 0, l:int = unitsList.length; i < l; i++) {
                     var unit:UnitInfo = unitsList.getItemAt(i) as UnitInfo;
                     if (unit) {
                         var price:Number = unit.price;
-                        if (price >= 0 && price <= money) lastAvailableUnit = unit;
-                    }
-                }
-
-                if (lastAvailableUnit && listView.viewPort is starling.display.DisplayObjectContainer) {
-                    listView.validate();
-                    var lastAvailableItemView:starling.display.DisplayObject;
-                    for (i = 0, l = starling.display.DisplayObjectContainer(listView.viewPort).numChildren; i < l; i++) {
-                        var itemView:ShopListItemRenderer =
-                                starling.display.DisplayObjectContainer(listView.viewPort).getChildAt(i) as ShopListItemRenderer;
-                        if (itemView && itemView.data == lastAvailableUnit) {
-                            lastAvailableItemView = itemView;
-                            break;
-                        }
-                    }
-                    if (lastAvailableItemView) {
-                        listView.verticalScrollPosition = Math.max(0,
-                                lastAvailableItemView.y - listView.height + lastAvailableItemView.height);
+                        if (price >= 0 && price <= money) lastAvailable = i;
                     }
                 }
             }
+            return lastAvailable;
         }
 
         public function buyUnit(unit:UnitInfo, available:Boolean):void
