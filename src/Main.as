@@ -1,32 +1,30 @@
 package
 {
-	import config.ApplicationConfig;
+import config.ApplicationConfig;
 
-	import events.GameEvent;
+import events.GameEvent;
 
-	import feathers.utils.ScreenDensityScaleFactorManager;
+import feathers.utils.ScreenDensityScaleFactorManager;
 
-	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import flash.events.Event;
-	import flash.events.IEventDispatcher;
-	import flash.events.IEventDispatcher;
+import flash.display.Sprite;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
+import flash.events.Event;
+import flash.events.IEventDispatcher;
 
-	import resources.LocalesLibrary;
+import resources.LocalesLibrary;
+import resources.locale.LocaleManager;
 
-	import resources.locale.LocaleManager;
+import robotlegs.bender.framework.impl.Context;
+import robotlegs.starling.bundles.mvcs.StarlingBundle;
+import robotlegs.starling.extensions.contextView.ContextView;
+import robotlegs.starling.extensions.viewProcessorMap.ViewProcessorMapExtension;
 
-	import robotlegs.bender.framework.impl.Context;
-	import robotlegs.starling.bundles.mvcs.StarlingBundle;
-	import robotlegs.starling.extensions.viewProcessorMap.ViewProcessorMapExtension;
-	import robotlegs.starling.extensions.contextView.ContextView;
+import starling.core.Starling;
 
-	import starling.core.Starling;
+import view.MainScreen;
 
-	import view.MainScreen;
-
-	[SWF(frameRate="60", backgroundColor="#14485e")]
+[SWF(frameRate="60", backgroundColor="#14485e")]
 	public class Main extends Sprite
 	{
 		private var _starling:Starling;
