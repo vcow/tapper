@@ -8,7 +8,9 @@ package view
 
 	import starling.display.DisplayObject;
 
-	public class GameScreen extends LayoutGroup implements IGameScreen
+import view.wooden.GameScreenWooden;
+
+public class GameScreen extends LayoutGroup implements IGameScreen
 	{
 		private var _view:IGameScreen;
 		private var _money:Number;

@@ -60,7 +60,7 @@ import view.MainScreen;
 
 			_starling = new Starling(MainScreen, stage);
 
-			new ScreenDensityScaleFactorManager(_starling);
+//			new ScreenDensityScaleFactorManager(_starling);
 
 			_context = new Context();
 			_context.install(StarlingBundle, ViewProcessorMapExtension)

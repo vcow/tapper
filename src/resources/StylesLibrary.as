@@ -11,19 +11,18 @@ package resources
 	import resources.skin.PopupDescriptionStyleProvider;
 	import resources.skin.PopupTitleStyleProvider;
 	import resources.skin.ScrollerStyleProviderBase;
-	import resources.skin.ShopButtonStyleProvider;
+	import resources.skin.WoodenShopButtonStyleNormalProvider;
 	import resources.skin.ShopItemDescriptionLabelStyleProvider;
 	import resources.skin.ShopItemTitleLabelStyleProvider;
 	import resources.skin.ShopScrollerStyleProvider;
-	import resources.skin.TapButton1StyleProvider;
 	import resources.skin.UnavailablePriceLabelStyleProvider;
 
 	public class StylesLibrary
 	{
 		public static const commonButtonStyleProvider:ButtonStyleProviderBase = new CommonButtonStyleProvider();
 		public static const backButtonStyleProvider:ButtonStyleProviderBase = new BackButtonStyleProvider();
-		public static const shopButtonStyleProvider:ButtonStyleProviderBase = new ShopButtonStyleProvider();
-		public static const tapButton1StyleProvider:ButtonStyleProviderBase = new TapButton1StyleProvider();
+
+		public static const woodenShopButtonStyleNormalProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleNormalProvider();
 
 		public static const moneyLabelStyleProvider:LabelStyleProviderBase = new MoneyLabelStyleProvider();
 		public static const popupTitleStyleProvider:LabelStyleProviderBase = new PopupTitleStyleProvider();

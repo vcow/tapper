@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<mxml:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:mxml="library://ns.feathersui.com/mxml"
+                  backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('indicator'))}">
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+
+        import starling.display.Image;
+        ]]></fx:Script>
+</mxml:LayoutGroup>
