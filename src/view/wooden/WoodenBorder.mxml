@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<mxml:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:mxml="library://ns.feathersui.com/mxml">
-    <mxml:layout>
-        <mxml:AnchorLayout/>
-    </mxml:layout>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
 
-    <mxml:LayoutGroup width="443" height="332" backgroundSkin="{new Quad(10, 10, 0xa0a0a0)}">
-        <mxml:layoutData>
-            <mxml:AnchorLayoutData horizontalCenter="-5" verticalCenter="-6"/>
-        </mxml:layoutData>
-    </mxml:LayoutGroup>
+    <f:LayoutGroup width="443" height="332" backgroundSkin="{new Quad(10, 10, 0xa0a0a0)}">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-5" verticalCenter="-6"/>
+        </f:layoutData>
+    </f:LayoutGroup>
 
-    <mxml:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('img_border'))}"
+    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('img_border'))}"
                       touchable="false"/>
     <fx:Script><![CDATA[
         import resources.AtlasLibrary;
@@ -18,4 +18,4 @@
         import starling.display.Image;
         import starling.display.Quad;
         ]]></fx:Script>
-</mxml:LayoutGroup>
+</f:LayoutGroup>

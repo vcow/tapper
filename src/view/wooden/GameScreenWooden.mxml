@@ -17,7 +17,7 @@
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
-        <wooden:WoodenIndicator>
+        <wooden:WoodenIndicator id="indicatorView" value="{_money}">
             <wooden:layoutData>
                 <f:AnchorLayoutData right="16" top="17"/>
             </wooden:layoutData>
@@ -71,7 +71,7 @@
             <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
         </f:layoutData>
 
-        <f:LayoutGroup>
+        <!--f:LayoutGroup>
             <f:layout>
                 <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
             </f:layout>
@@ -84,7 +84,7 @@
                     <f:HorizontalLayoutData percentWidth="100"/>
                 </f:layoutData>
             </f:Label>
-        </f:LayoutGroup>
+        </f:LayoutGroup-->
 
         <f:LayoutGroup height="70">
             <f:layout>
@@ -118,8 +118,7 @@
 
         import view.*;
 
-        [Bindable]
-        private var _money:Number = 0;
+        public var _money:Number = 0;
 
         [Bindable]
         private var _unitsList:ListCollection;
@@ -133,6 +132,7 @@
         public function set money(value:Number):void
         {
             _money = value;
+            if (isInitialized) indicatorView.value = _money;
         }
 
         public function set unitsList(value:ListCollection):void
