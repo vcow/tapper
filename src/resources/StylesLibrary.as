@@ -11,7 +11,8 @@ package resources
 	import resources.skin.PopupDescriptionStyleProvider;
 	import resources.skin.PopupTitleStyleProvider;
 	import resources.skin.ScrollerStyleProviderBase;
-	import resources.skin.WoodenShopButtonStyleNormalProvider;
+import resources.skin.WoodenScrollerStyleProvider;
+import resources.skin.WoodenShopButtonStyleNormalProvider;
 	import resources.skin.ShopItemDescriptionLabelStyleProvider;
 	import resources.skin.ShopItemTitleLabelStyleProvider;
 	import resources.skin.ShopScrollerStyleProvider;
@@ -35,6 +36,7 @@ package resources
 		public static const counterLabelStyleProvider:LabelStyleProviderBase = new CounterLabelStyleProvider();
 
 		public static const shopScrollerStyleProvider:ScrollerStyleProviderBase = new ShopScrollerStyleProvider();
+		public static const woodenScrollerStyleProvider:ScrollerStyleProviderBase = new WoodenScrollerStyleProvider();
 
 		public function StylesLibrary()
 		{

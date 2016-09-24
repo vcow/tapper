@@ -51,6 +51,16 @@
             </f:layoutData>
         </f:Button>
 
+        <f:List styleProvider="{StylesLibrary.woodenScrollerStyleProvider}" dataProvider="{_unitsList}"
+                itemRendererType="view.UnitListItemRenderer" isSelectable="false" width="536" height="326">
+            <f:layout>
+                <f:TiledRowsLayout gap="4" paddingTop="10" paddingBottom="10" paddingLeft="25" paddingRight="25"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="0" bottom="42"/>
+            </f:layoutData>
+        </f:List>
+
     </f:LayoutGroup>
 
     <f:LayoutGroup touchable="false">
@@ -87,16 +97,6 @@
                 </f:layoutData>
             </f:Label>
         </f:LayoutGroup>
-
-        <f:List styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{_unitsList}"
-                itemRendererType="view.UnitListItemRenderer" isSelectable="false">
-            <f:layout>
-                <f:TiledRowsLayout gap="2" padding="5" paddingTop="10"/>
-            </f:layout>
-            <f:layoutData>
-                <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
-            </f:layoutData>
-        </f:List>
     </f:LayoutGroup>
 
     <view:ShopWidget id="sv">

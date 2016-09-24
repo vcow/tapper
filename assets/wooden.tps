@@ -204,12 +204,14 @@
             <key type="filename">graphics/skin/wooden/back.png</key>
             <key type="filename">graphics/skin/wooden/back_bn_down.png</key>
             <key type="filename">graphics/skin/wooden/back_bn_up.png</key>
+            <key type="filename">graphics/skin/wooden/bar.png</key>
             <key type="filename">graphics/skin/wooden/img_border.png</key>
             <key type="filename">graphics/skin/wooden/indicator.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_highlight_down.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_highlight_up.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_normal_down.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_normal_up.png</key>
+            <key type="filename">graphics/skin/wooden/thumb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
