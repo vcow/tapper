@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+               implements="starling.animation.IAnimatable">
+
+    <fx:Declarations>
+        <f:Label id="titleLabel" text="{LocaleManager.getInstance().getString('common', 'shop.widget.title')}"
+                 styleProvider="{StylesLibrary.popupDescriptionStyleProvider}"/>
+
+        <f:Label id="unitNameLabel" styleProvider="{StylesLibrary.popupDescriptionStyleProvider}"/>
+    </fx:Declarations>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+        import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.core.Starling;
+
+        import starling.display.Image;
+        import starling.textures.RenderTexture;
+        import starling.textures.Texture;
+
+        private var _border:Image;
+        private var _noise:Image;
+        private var _batch:RenderTexture;
+
+        private var _noiseTextures:Vector.<Texture>;
+
+        private var _text:String;
+
+        private var _currentTime:Number = 0;
+        private var _currentFrame:int = 0;
+        private const _timeStep:Number = 1.0 / NOISE_FPS;
+
+        private static const PADDING_HORIZONTAL:Number = 50;
+        private static const PADDING_VERTICAL:Number = 50;
+        private static const GAP:Number = 5;
+
+        private static const NOISE_FPS:Number = 18;
+
+        public function advanceTime(time:Number):void
+        {
+            _currentTime += time;
+            if (_currentTime >= _timeStep) {
+                var delta:int = Math.floor(_currentTime / _timeStep);
+                _currentTime = 0;
+                _currentFrame = (_currentFrame + delta) % _noiseTextures.length;
+                _noise.texture = _noiseTextures[_currentFrame];
+                if (_batch) _batch.drawBundled(drawBundled);
+            }
+        }
+
+        public function set text(value:String):void
+        {
+            if (value == _text) return;
+            _text = value;
+
+            if (isInitialized) {
+                if (_text) {
+                    unitNameLabel.text = _text;
+                    measureWidget();
+                }
+                else {
+                    if (_batch) {
+                        _batch.dispose();
+                        _batch = null;
+                    }
+                    this.backgroundSkin = null;
+                }
+            }
+        }
+
+        private function measureWidget():void
+        {
+            unitNameLabel.validate();
+
+            var w:Number = Math.max(titleLabel.width, unitNameLabel.width) + PADDING_HORIZONTAL * 2;
+            var h:Number = titleLabel.height + unitNameLabel.height + GAP + PADDING_VERTICAL * 2;
+
+            _border.width = _noise.width = w;
+            _border.height = _noise.height = h;
+
+            titleLabel.x = Math.floor((w - titleLabel.width) / 2.0);
+            titleLabel.y = PADDING_VERTICAL;
+            unitNameLabel.x = Math.floor((w - unitNameLabel.width) / 2.0);
+            unitNameLabel.y = PADDING_VERTICAL + GAP + titleLabel.height;
+
+            var backSkin:RenderTexture = new RenderTexture(w, h, false);
+            this.backgroundSkin = new Image(backSkin);
+
+            if (_batch) _batch.dispose();
+            _batch = backSkin;
+
+            backSkin.drawBundled(drawBundled);
+        }
+
+        private function drawBundled():void
+        {
+            _batch.draw(_border);
+            _batch.draw(titleLabel);
+            _batch.draw(unitNameLabel);
+            _batch.draw(_noise);
+        }
+
+        override public function dispose():void
+        {
+            if (_batch) _batch.dispose();
+            super.dispose();
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            _noiseTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("noise");
+
+            _border = new Image(AtlasLibrary.getInstance().wooden.getTexture("shop_widget_border"));
+            _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
+            _noise = new Image(_noiseTextures[0]);
+            _noise.blendMode = starling.display.BlendMode.MASK;
+
+            titleLabel.validate();
+
+            if (_text) {
+                unitNameLabel.text = _text;
+                measureWidget();
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

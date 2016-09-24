@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.2.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/wooden.tps</string>
+        <string>C:/Work/tapper/assets/noise_anim.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -141,7 +141,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../src/resources/graphics/wooden.xml</filename>
+                <filename>../src/resources/graphics/noise_anim.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -158,7 +158,7 @@
             <string></string>
         </struct>
         <key>autoAliasEnabled</key>
-        <false/>
+        <true/>
         <key>trimSpriteNames</key>
         <false/>
         <key>prependSmartFolderName</key>
@@ -188,31 +188,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">graphics/digits/electron/0.png</key>
-            <key type="filename">graphics/digits/electron/1.png</key>
-            <key type="filename">graphics/digits/electron/2.png</key>
-            <key type="filename">graphics/digits/electron/3.png</key>
-            <key type="filename">graphics/digits/electron/4.png</key>
-            <key type="filename">graphics/digits/electron/5.png</key>
-            <key type="filename">graphics/digits/electron/6.png</key>
-            <key type="filename">graphics/digits/electron/7.png</key>
-            <key type="filename">graphics/digits/electron/8.png</key>
-            <key type="filename">graphics/digits/electron/9.png</key>
-            <key type="filename">graphics/digits/electron/space.png</key>
-            <key type="filename">graphics/skin/wooden/action_bn_down.png</key>
-            <key type="filename">graphics/skin/wooden/action_bn_up.png</key>
-            <key type="filename">graphics/skin/wooden/back.png</key>
-            <key type="filename">graphics/skin/wooden/back_bn_down.png</key>
-            <key type="filename">graphics/skin/wooden/back_bn_up.png</key>
-            <key type="filename">graphics/skin/wooden/bar.png</key>
-            <key type="filename">graphics/skin/wooden/img_border.png</key>
-            <key type="filename">graphics/skin/wooden/indicator.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_highlight_down.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_highlight_up.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_normal_down.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_normal_up.png</key>
-            <key type="filename">graphics/skin/wooden/shop_widget_border.png</key>
-            <key type="filename">graphics/skin/wooden/thumb.png</key>
+            <key type="filename">animations/nooise/noise0000.png</key>
+            <key type="filename">animations/nooise/noise0001.png</key>
+            <key type="filename">animations/nooise/noise0002.png</key>
+            <key type="filename">animations/nooise/noise0003.png</key>
+            <key type="filename">animations/nooise/noise0004.png</key>
+            <key type="filename">animations/nooise/noise0005.png</key>
+            <key type="filename">animations/nooise/noise0006.png</key>
+            <key type="filename">animations/nooise/noise0007.png</key>
+            <key type="filename">animations/nooise/noise0008.png</key>
+            <key type="filename">animations/nooise/noise0009.png</key>
+            <key type="filename">animations/nooise/noise0010.png</key>
+            <key type="filename">animations/nooise/noise0011.png</key>
+            <key type="filename">animations/nooise/noise0012.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -220,8 +208,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>graphics/skin/wooden</filename>
-            <filename>graphics/digits/electron</filename>
+            <filename>animations/nooise</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
