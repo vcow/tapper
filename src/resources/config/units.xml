@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <units>
-	<unit id="goy" name="name.goy" price="1" priceGrowth="10%">
+	<unit id="goy" name="name.goy" price="50" priceGrowth="10%">
 		<pps value="1"/>
 	</unit>
 	<unit id="jew" name="name.jew" price="300" priceGrowth="10%">

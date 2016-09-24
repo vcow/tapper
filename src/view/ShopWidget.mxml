@@ -16,6 +16,7 @@
 
     <fx:Metadata>
         [Event(name="goToShop", type="starling.events.Event")]
+        [Event(name="dataChanged", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[

@@ -37,7 +37,9 @@
             </f:layoutData>
         </f:Button>
 
-        <f:Button styleProvider="{_shopButtonStyleProvider}" triggered="{dispatchEventWith(GameScreen.SHOP, true)}">
+        <f:Button styleProvider="{_shopButtonStyleProvider}"
+                  triggered="{dispatchEventWith(GameScreen.SHOP, true);
+                  _shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}">
             <f:layoutData>
                 <f:AnchorLayoutData top="509" right="16"/>
             </f:layoutData>
@@ -99,7 +101,7 @@
         </f:LayoutGroup>
     </f:LayoutGroup>
 
-    <view:ShopWidget id="sv">
+    <view:ShopWidget dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}">
         <view:layoutData>
             <f:AnchorLayoutData top="50" right="0"/>
         </view:layoutData>
