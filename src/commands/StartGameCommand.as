@@ -21,7 +21,7 @@ package commands
 		public function execute():void
 		{
 			if (!gameModel.isActive) {
-				gameModel.callbackId = Starling.current.juggler.repeatCall(onTick, 1.0);
+				gameModel.callbackId = Starling.juggler.repeatCall(onTick, 1.0);
 			}
 		}
 

@@ -25,8 +25,17 @@
         private var _batch:RenderTexture;
 
         private var _noiseTextures:Vector.<Texture>;
+        private var _idleTextures:Vector.<Texture>;
+
+        private static const IN:int = 0;
+        private static const IDLE:int = 1;
+        private static const OUT:int = 2;
+
+        private var _currentAnimation:Vector.<Texture>;
+        private var _step:int = IN;
 
         private var _text:String;
+        private var _timeout:Number;
 
         private var _currentTime:Number = 0;
         private var _currentFrame:int = 0;
@@ -38,16 +47,67 @@
 
         private static const NOISE_FPS:Number = 18;
 
+        private var _isAnimated:Boolean;
+
         public function advanceTime(time:Number):void
         {
+            if (!_isAnimated) beginNoise();
+
             _currentTime += time;
             if (_currentTime >= _timeStep) {
                 var delta:int = Math.floor(_currentTime / _timeStep);
                 _currentTime = 0;
-                _currentFrame = (_currentFrame + delta) % _noiseTextures.length;
-                _noise.texture = _noiseTextures[_currentFrame];
+                _currentFrame = _currentFrame + delta;
+                if (_currentFrame >= _currentAnimation.length) {
+                    switch (_step) {
+                        case IN:
+                            _currentAnimation = _idleTextures;
+                        case IDLE:
+                            _currentFrame %= _currentAnimation.length;
+                            break;
+                        case OUT:
+                            completeNoise();
+                            return;
+                    }
+                }
+                _noise.texture = _currentAnimation[_currentFrame];
                 if (_batch) _batch.drawBundled(drawBundled);
             }
+        }
+
+        private function completeNoise():void
+        {
+            if (_isAnimated) {
+                Starling.juggler.remove(this);
+                _isAnimated = false;
+            }
+        }
+
+        private function beginNoise():void
+        {
+            if (!_isAnimated) {
+                _currentAnimation = _noiseTextures;
+                _currentTime = 0;
+                _currentFrame = 0;
+                _step = IN;
+
+                if (_timeout) {
+                    Starling.juggler.delayCall(function ():void
+                    {
+                        if (_isAnimated) {
+                            _currentFrame = 0;
+                            _currentAnimation = _noiseTextures;
+                            _step = OUT;
+                        }
+                    }, _timeout);
+                }
+                _isAnimated = true;
+            }
+        }
+        
+        public function set timeout(value:Number):void
+        {
+            _timeout = value;
         }
 
         public function set text(value:String):void
@@ -67,6 +127,10 @@
                     }
                     this.backgroundSkin = null;
                 }
+            }
+
+            if (!Starling.juggler.contains(this)) {
+                Starling.juggler.add(this);
             }
         }
 
@@ -113,6 +177,7 @@
             super.initialize();
 
             _noiseTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("noise");
+            _idleTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("idle");
 
             _border = new Image(AtlasLibrary.getInstance().wooden.getTexture("shop_widget_border"));
             _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);

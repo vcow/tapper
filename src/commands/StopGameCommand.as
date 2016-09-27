@@ -14,7 +14,7 @@ package commands
 		public function execute():void
 		{
 			if (gameModel.isActive) {
-				Starling.current.juggler.removeByID(gameModel.callbackId);
+				Starling.juggler.removeByID(gameModel.callbackId);
 				gameModel.callbackId = 0;
 			}
 		}

@@ -188,6 +188,12 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">animations/nooise/idle0000.png</key>
+            <key type="filename">animations/nooise/idle0001.png</key>
+            <key type="filename">animations/nooise/idle0002.png</key>
+            <key type="filename">animations/nooise/idle0003.png</key>
+            <key type="filename">animations/nooise/idle0004.png</key>
+            <key type="filename">animations/nooise/idle0005.png</key>
             <key type="filename">animations/nooise/noise0000.png</key>
             <key type="filename">animations/nooise/noise0001.png</key>
             <key type="filename">animations/nooise/noise0002.png</key>
