@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:c391e8cfd4ad234177c5a40275ae5f6c:1ae9ff2dec7fd304cf4018c015d524f4:1cc5fdc1f9162fc7493e41e42713b02a$ -->
+<!-- $TexturePacker:SmartUpdate:f31c3d52ef46e367b40d508bf2d6df2a:2fc9d8575d35fa3adea3a092bf1fdc85:1cc5fdc1f9162fc7493e41e42713b02a$ -->
 <TextureAtlas imagePath="wooden.atf" width="1024" height="2048">
     <SubTexture name="0" x="945" y="634" rotated="true" width="46" height="31"/>
     <SubTexture name="1" x="945" y="667" rotated="true" width="46" height="31"/>

@@ -24,9 +24,17 @@ package resources
 		[Embed(source="fonts/arial_26.fnt", mimeType="application/octet-stream")]
 		private static const arial26Description:Class;
 
+		[Embed(source="fonts/shop_message/shop_message.atf", mimeType="application/octet-stream")]
+		private static const shopMessageAsset:Class;
+
+		[Embed(source="fonts/shop_message/shop_message.fnt", mimeType="application/octet-stream")]
+		private static const shopMessageDescription:Class;
+
 		private static const ARIAL_16:String = "arial16";
 		private static const ARIAL_30:String = "arial30";
 		private static const ARIAL_26:String = "arial26";
+
+		private static const SHOP_MESSAGE:String = "shopMessage";
 
 		private var _arial16Texture:Texture;
 		private var _arial16Font:BitmapFont;
@@ -34,6 +42,9 @@ package resources
 		private var _arial30Font:BitmapFont;
 		private var _arial26Texture:Texture;
 		private var _arial26Font:BitmapFont;
+
+		private var _shopMessageTexture:Texture;
+		private var _shopMessageFont:BitmapFont;
 
 		private static var _instance:FontLibrary;
 
@@ -81,6 +92,17 @@ package resources
 			return ARIAL_26;
 		}
 
+		public function get shopMessage():String
+		{
+			if (!_shopMessageFont) {
+				_shopMessageTexture = Texture.fromEmbeddedAsset(shopMessageAsset);
+				_shopMessageTexture.root.onRestore = onShopMessageRestore;
+				_shopMessageFont = new BitmapFont(_shopMessageTexture, new XML(new shopMessageDescription()));
+				TextField.registerBitmapFont(_shopMessageFont, SHOP_MESSAGE);
+			}
+			return SHOP_MESSAGE;
+		}
+
 		private function onArial16Restore():void
 		{
 			_arial16Texture.root.uploadAtfData(new arial16Asset());
@@ -94,6 +116,11 @@ package resources
 		private function onarial26Restore():void
 		{
 			_arial16Texture.root.uploadAtfData(new arial26Asset());
+		}
+
+		private function onShopMessageRestore():void
+		{
+			_arial16Texture.root.uploadAtfData(new shopMessageAsset());
 		}
 	}
 }
