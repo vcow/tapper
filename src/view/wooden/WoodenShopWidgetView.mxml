@@ -3,11 +3,9 @@
                implements="starling.animation.IAnimatable">
 
     <fx:Declarations>
-        <f:Label id="titleLabel" text="{LocaleManager.getInstance().getString('common', 'shop.widget.title')}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage)}}"/>
-
-        <f:Label id="unitNameLabel"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage)}}"/>
+        <f:Label id="unitNameLabel" x="{PADDING_HORIZONTAL}" y="{PADDING_VERTICAL}"
+                 textRendererProperties="{{wordWrap: true,
+                  textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage, NaN, 0xffffff, TextFormatAlign.CENTER)}}"/>
     </fx:Declarations>
 
     <fx:Script><![CDATA[
@@ -46,11 +44,12 @@
 
         private static const PADDING_HORIZONTAL:Number = 25;
         private static const PADDING_VERTICAL:Number = 15;
-        private static const GAP:Number = 0;
 
         private static const NOISE_FPS:Number = 18;
 
         private var _isAnimated:Boolean;
+
+        public var color:uint = 0xffffff;
 
         public function advanceTime(time:Number):void
         {
@@ -120,7 +119,7 @@
 
             if (isInitialized) {
                 if (_text) {
-                    unitNameLabel.text = _text;
+                    unitNameLabel.text = text;
                     measureWidget();
                 }
                 else {
@@ -137,23 +136,25 @@
             }
         }
 
+        public function get text():String
+        {
+            return LocaleManager.getInstance().getString("common", "shop.widget.title", [_text]);
+        }
+
         private function measureWidget():void
         {
             unitNameLabel.validate();
 
-            var w:Number = Math.max(titleLabel.width, unitNameLabel.width) + PADDING_HORIZONTAL * 2;
-            var h:Number = titleLabel.height + unitNameLabel.height + GAP + PADDING_VERTICAL * 2;
+            var w:Number = unitNameLabel.width + PADDING_HORIZONTAL * 2;
+            var h:Number = unitNameLabel.height + PADDING_VERTICAL * 2;
 
             _border.width = _noise.width = w;
             _border.height = _noise.height = h;
 
-            titleLabel.x = Math.floor((w - titleLabel.width) / 2.0);
-            titleLabel.y = PADDING_VERTICAL;
-            unitNameLabel.x = Math.floor((w - unitNameLabel.width) / 2.0);
-            unitNameLabel.y = PADDING_VERTICAL + GAP + titleLabel.height;
-
             var backSkin:RenderTexture = new RenderTexture(w, h, false);
-            this.backgroundSkin = new Image(backSkin);
+            var skin:Image = new Image(backSkin);
+            skin.color = color;
+            this.backgroundSkin = skin;
 
             if (_batch) _batch.dispose();
             _batch = backSkin;
@@ -164,7 +165,6 @@
         private function drawBundled():void
         {
             _batch.draw(_border);
-            _batch.draw(titleLabel);
             _batch.draw(unitNameLabel);
             _batch.draw(_noise);
         }
@@ -187,10 +187,8 @@
             _noise = new Image(_noiseTextures[0]);
             _noise.blendMode = starling.display.BlendMode.MASK;
 
-            titleLabel.validate();
-
             if (_text) {
-                unitNameLabel.text = _text;
+                unitNameLabel.text = text;
                 measureWidget();
             }
         }
