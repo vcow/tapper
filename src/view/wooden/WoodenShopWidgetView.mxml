@@ -3,9 +3,15 @@
                implements="starling.animation.IAnimatable">
 
     <fx:Declarations>
-        <f:Label id="unitNameLabel" x="{PADDING_HORIZONTAL}" y="{PADDING_VERTICAL}"
-                 textRendererProperties="{{wordWrap: true,
+        <f:LayoutGroup id="borderGroup" backgroundSkin="{border}">
+            <f:layout>
+                <f:HorizontalLayout paddingLeft="25" paddingRight="25" paddingTop="15" paddingBottom="15"/>
+            </f:layout>
+
+            <f:Label id="unitNameLabel"
+                     textRendererProperties="{{wordWrap: true,
                   textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage, NaN, 0xffffff, TextFormatAlign.CENTER)}}"/>
+        </f:LayoutGroup>
     </fx:Declarations>
 
     <fx:Script><![CDATA[
@@ -21,7 +27,7 @@
         import starling.textures.RenderTexture;
         import starling.textures.Texture;
 
-        private var _border:Image;
+//        private var _border:Image;
         private var _noise:Image;
         private var _batch:RenderTexture;
 
@@ -42,14 +48,22 @@
         private var _currentFrame:int = 0;
         private const _timeStep:Number = 1.0 / NOISE_FPS;
 
-        private static const PADDING_HORIZONTAL:Number = 25;
-        private static const PADDING_VERTICAL:Number = 15;
-
         private static const NOISE_FPS:Number = 18;
 
         private var _isAnimated:Boolean;
 
+        private var _border:Image;
+
         public var color:uint = 0xffffff;
+
+        private function get border():Image
+        {
+            if (!_border) {
+                _border = new Image(AtlasLibrary.getInstance().wooden.getTexture("shop_widget_border"));
+                _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
+            }
+            return _border;
+        }
 
         public function advanceTime(time:Number):void
         {
@@ -144,12 +158,13 @@
         private function measureWidget():void
         {
             unitNameLabel.validate();
+            borderGroup.validate();
 
-            var w:Number = unitNameLabel.width + PADDING_HORIZONTAL * 2;
-            var h:Number = unitNameLabel.height + PADDING_VERTICAL * 2;
+            var w:Number = borderGroup.width;
+            var h:Number = borderGroup.height;
 
-            _border.width = _noise.width = w;
-            _border.height = _noise.height = h;
+            _noise.width = w;
+            _noise.height = h;
 
             var backSkin:RenderTexture = new RenderTexture(w, h, false);
             var skin:Image = new Image(backSkin);
@@ -164,8 +179,7 @@
 
         private function drawBundled():void
         {
-            _batch.draw(_border);
-            _batch.draw(unitNameLabel);
+            _batch.draw(borderGroup);
             _batch.draw(_noise);
         }
 
@@ -182,8 +196,6 @@
             _noiseTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("noise");
             _idleTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("idle");
 
-            _border = new Image(AtlasLibrary.getInstance().wooden.getTexture("shop_widget_border"));
-            _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
             _noise = new Image(_noiseTextures[0]);
             _noise.blendMode = starling.display.BlendMode.MASK;
 
