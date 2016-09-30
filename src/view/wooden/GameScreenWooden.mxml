@@ -115,7 +115,6 @@
         import resources.AtlasLibrary;
 
         import resources.StylesLibrary;
-        import resources.locale.LocaleManager;
         import resources.skin.ButtonStyleProviderBase;
 
         import starling.display.Image;
