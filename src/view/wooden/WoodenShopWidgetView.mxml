@@ -14,6 +14,10 @@
         </f:LayoutGroup>
     </fx:Declarations>
 
+    <fx:Metadata>
+        [Event(name="complete", type="starling.events.Event")]
+    </fx:Metadata>
+
     <fx:Script><![CDATA[
         import feathers.text.BitmapFontTextFormat;
 
@@ -24,10 +28,11 @@
         import starling.core.Starling;
 
         import starling.display.Image;
+        import starling.events.Event;
         import starling.textures.RenderTexture;
         import starling.textures.Texture;
 
-//        private var _border:Image;
+        private var _border:Image;
         private var _noise:Image;
         private var _batch:RenderTexture;
 
@@ -51,8 +56,6 @@
         private static const NOISE_FPS:Number = 18;
 
         private var _isAnimated:Boolean;
-
-        private var _border:Image;
 
         public var color:uint = 0xffffff;
 
@@ -96,6 +99,7 @@
             if (_isAnimated) {
                 Starling.juggler.remove(this);
                 _isAnimated = false;
+                dispatchEventWith(starling.events.Event.COMPLETE);
             }
         }
 
@@ -145,8 +149,11 @@
                 }
             }
 
-            if (!Starling.juggler.contains(this)) {
+            if (_text && !Starling.juggler.contains(this)) {
                 Starling.juggler.add(this);
+            }
+            else if (!_text && Starling.juggler.contains(this)) {
+                Starling.juggler.remove(this);
             }
         }
 
@@ -163,18 +170,25 @@
             var w:Number = borderGroup.width;
             var h:Number = borderGroup.height;
 
-            _noise.width = w;
-            _noise.height = h;
+            if (w && h) {
+                _noise.width = w;
+                _noise.height = h;
 
-            var backSkin:RenderTexture = new RenderTexture(w, h, false);
-            var skin:Image = new Image(backSkin);
-            skin.color = color;
-            this.backgroundSkin = skin;
+                var backSkin:RenderTexture = new RenderTexture(w, h, false);
+                var skin:Image = new Image(backSkin);
+                skin.color = color;
+                this.backgroundSkin = skin;
 
-            if (_batch) _batch.dispose();
-            _batch = backSkin;
+                if (_batch) _batch.dispose();
+                _batch = backSkin;
 
-            backSkin.drawBundled(drawBundled);
+                backSkin.drawBundled(drawBundled);
+            }
+            else {
+                this.backgroundSkin = null;
+                if (_batch) _batch.dispose();
+                _batch = null;
+            }
         }
 
         private function drawBundled():void

@@ -37,13 +37,15 @@
             </f:layoutData>
         </f:Button>
 
-        <f:Button styleProvider="{_shopButtonStyleProvider}"
-                  triggered="{dispatchEventWith(GameScreen.SHOP, true);
-                  _shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}">
-            <f:layoutData>
+        <wooden:WoodenShopWidget dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}">
+            <wooden:layoutData>
                 <f:AnchorLayoutData top="509" right="16"/>
-            </f:layoutData>
-        </f:Button>
+            </wooden:layoutData>
+
+            <f:Button styleProvider="{_shopButtonStyleProvider}"
+                      triggered="{dispatchEventWith(GameScreen.SHOP, true);
+                  _shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}"/>
+        </wooden:WoodenShopWidget>
 
         <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('action_bn_up'))}"
                   downSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('action_bn_down'))}"
@@ -101,11 +103,11 @@
         </f:LayoutGroup>
     </f:LayoutGroup>
 
-    <view:ShopWidget dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}">
+    <!--view:ShopWidget dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}">
         <view:layoutData>
             <f:AnchorLayoutData top="50" right="0"/>
         </view:layoutData>
-    </view:ShopWidget>
+    </view:ShopWidget-->
 
     <fx:Script><![CDATA[
         import feathers.data.ListCollection;

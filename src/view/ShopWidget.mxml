@@ -1,18 +1,5 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-               initialize="onInitialize()">
-
-    <f:LayoutGroup id="slider" includeInLayout="false" resize="onSliderResize(event)"
-                   backgroundSkin="{new Quad(10, 10, 0x000000)}" visible="{data != null}">
-        <f:layout>
-            <f:VerticalLayout padding="10" horizontalAlign="center"/>
-        </f:layout>
-
-        <f:Label text="{LocaleManager.getInstance().getString('common', 'shop.widget.title')}"
-                 styleProvider="{StylesLibrary.popupDescriptionStyleProvider}"/>
-
-        <f:Label id="unitNameLabel" styleProvider="{StylesLibrary.popupDescriptionStyleProvider}"/>
-    </f:LayoutGroup>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
 
     <fx:Metadata>
         [Event(name="goToShop", type="starling.events.Event")]
@@ -24,33 +11,25 @@
 
         import models.UnitInfo;
 
-        import resources.StylesLibrary;
-        import resources.locale.LocaleManager;
+        import starling.display.DisplayObject;
 
-        import starling.animation.Transitions;
-
-        import starling.animation.Tween;
-
-        import starling.core.Starling;
-
-        import starling.display.Quad;
         import starling.events.Event;
 
         public static const GO_TO_SHOP:String = "goToShop";
 
-        private var _isActive:Boolean;
-        private var _trigger:TapToTrigger;
-        private var _data:UnitInfo;
+        protected var _isActive:Boolean;
+        protected var _trigger:TapToTrigger;
+        protected var _data:UnitInfo;
 
-        private function onSliderResize(event:starling.events.Event):void
+        protected function get slider():starling.display.DisplayObject
         {
-            setSize(slider.width, slider.height);
-            slider.x = slider.width;
+            throw Error("Abstract");
         }
 
         private function onInitialize():void
         {
             _trigger = new TapToTrigger(slider);
+            slider.addEventListener(starling.events.Event.TRIGGERED, onSliderTriggered);
             updateData();
         }
 
@@ -69,56 +48,19 @@
             dispatchEventWith("dataChanged");
         }
 
-        private function updateData():void
+        protected function updateData():void
         {
-            if (_data) {
-                unitNameLabel.text = _data.name;
-                releaseSlider();
-                var tween:Tween = new Tween(slider, 0.5, Transitions.EASE_OUT);
-                tween.moveTo(0, 0);
-                tween.onComplete = onTweenComplete;
-                slider.x = slider.width;
-                Starling.juggler.add(tween);
-            }
-        }
-
-        private function releaseSlider():void
-        {
-            Starling.juggler.removeTweens(slider);
-            Starling.juggler.removeDelayedCalls(goBackSlider);
-            if (_isActive) {
-                slider.removeEventListener(starling.events.Event.TRIGGERED, onSliderTriggered);
-                _isActive = false;
-            }
-        }
-
-        private function goBackSlider():void
-        {
-            releaseSlider();
-            var tween:Tween = new Tween(slider, 0.5, Transitions.EASE_IN);
-            tween.onComplete = function ():void
-            {
-                data = null;
-            };
-            tween.moveTo(slider.width, 0);
-            Starling.juggler.add(tween);
-        }
-
-        private function onTweenComplete():void
-        {
-            slider.addEventListener(starling.events.Event.TRIGGERED, onSliderTriggered);
-            Starling.juggler.delayCall(goBackSlider, 1.5);
-            _isActive = true;
+            throw Error("Abstract");
         }
 
         private function onSliderTriggered(event:starling.events.Event):void
         {
-            dispatchEventWith(GO_TO_SHOP);
+            if (_isActive) dispatchEventWith(GO_TO_SHOP);
         }
 
         override public function dispose():void
         {
-            releaseSlider();
+            slider.removeEventListener(starling.events.Event.TRIGGERED, onSliderTriggered);
             super.dispose();
         }
         ]]></fx:Script>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<view:ShopWidget xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                 xmlns:view="view.*" xmlns:wooden="view.wooden.*">
+
+    <fx:Declarations>
+        <wooden:WoodenShopWidgetView id="view" includeInLayout="false" complete="hideView()"/>
+    </fx:Declarations>
+
+    <fx:Script><![CDATA[
+        import starling.display.DisplayObject;
+
+        override protected function updateData():void
+        {
+            view.text = _data.name;
+            showView();
+        }
+
+        private function hideView():void
+        {
+            if (_isActive) {
+                view.removeFromParent();
+                _isActive = false;
+            }
+        }
+
+        public function showView():void
+        {
+            view.x = view.width - width;
+            view.y = -view.height;
+
+            if (!_isActive) {
+                addChild(view);
+                _isActive = true;
+            }
+        }
+
+        override protected function get slider():starling.display.DisplayObject
+        {
+            return view;
+        }
+
+        override public function dispose():void
+        {
+            view.dispose();
+            super.dispose();
+        }
+        ]]></fx:Script>
+</view:ShopWidget>
