@@ -37,7 +37,9 @@
             </f:layoutData>
         </f:Button>
 
-        <wooden:WoodenShopWidget dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}">
+        <wooden:WoodenShopWidget
+                dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}"
+                goToShop="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}">
             <wooden:layoutData>
                 <f:AnchorLayoutData top="509" right="16"/>
             </wooden:layoutData>

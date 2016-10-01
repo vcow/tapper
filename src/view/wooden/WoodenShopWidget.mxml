@@ -20,8 +20,10 @@
             widgetView.alpha = 1.0;
             widgetView.scale = 1.0;
 
-            widgetView.text = _data.name;
-            showView();
+            if (_data) {
+                widgetView.text = _data.name;
+                showView();
+            }
         }
 
         private function hideView():void
