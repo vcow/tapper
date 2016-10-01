@@ -5,7 +5,7 @@
     <fx:Declarations>
         <wooden:WoodenShopWidgetView id="widgetView" includeInLayout="false" close="hideView()"
                                      complete="{Starling.juggler.removeTweens(widgetView); widgetView.removeFromParent()}"
-                                     timeout="2.5"/>
+                                     timeout="2.5" glowColor="#77cc00" color="#f2ffdf"/>
     </fx:Declarations>
 
     <fx:Script><![CDATA[
@@ -34,8 +34,8 @@
                 Starling.juggler.removeTweens(widgetView);
                 widgetView.alpha = 1.0;
                 var tween:Tween = new Tween(widgetView, scaleTime, Transitions.EASE_OUT);
-                tween.animate("x", widgetView.x + ((widgetView.width - widgetView.width * scaleFactor) / 2.0));
-                tween.animate("y", widgetView.y + ((widgetView.height - widgetView.height * scaleFactor) / 2.0));
+                tween.animate("x", (width - widgetView.width * scaleFactor) / 2.0);
+                tween.animate("y", 0);
                 tween.fadeTo(0.5);
                 tween.scaleTo(scaleFactor);
                 tween.delay = 0.7;
@@ -46,8 +46,19 @@
         public function showView():void
         {
             widgetView.validate();
-            widgetView.x = width - widgetView.width;
-            widgetView.y = -widgetView.height;
+
+            const scaleFactor:Number = 0.3;
+            const scaleTime:Number = 0.3;
+            var destX:Number = width - widgetView.width;
+            var destY:Number = -widgetView.height;
+            widgetView.x = (width - widgetView.width * scaleFactor) / 2.0;
+            widgetView.y = 0;
+            widgetView.scale = scaleFactor;
+            var tween:Tween = new Tween(widgetView, scaleTime, Transitions.EASE_OUT_ELASTIC);
+            tween.animate("x", destX);
+            tween.animate("y", destY);
+            tween.scaleTo(1.0);
+            Starling.juggler.add(tween);
 
             if (!_isActive) {
                 addChild(widgetView);

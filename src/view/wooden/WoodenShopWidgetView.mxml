@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               implements="starling.animation.IAnimatable">
+               implements="starling.animation.IAnimatable" filter="{new GlowFilter(glowColor)}">
 
     <fx:Declarations>
         <f:LayoutGroup id="borderGroup" backgroundSkin="{border}">
@@ -30,6 +30,7 @@
 
         import starling.display.Image;
         import starling.events.Event;
+        import starling.filters.GlowFilter;
         import starling.textures.RenderTexture;
         import starling.textures.Texture;
 
@@ -61,6 +62,9 @@
 
         public var color:uint = 0xffffff;
 
+        [Bindable]
+        public var glowColor:uint = 0xffffff;
+
         private function get border():Image
         {
             if (!_border) {
@@ -83,6 +87,9 @@
                     switch (_step) {
                         case IN:
                             _currentAnimation = _idleTextures;
+                            _currentFrame = 0;
+                            _step = IDLE;
+                            break;
                         case IDLE:
                             _currentFrame %= _currentAnimation.length;
                             break;
@@ -143,7 +150,7 @@
             _timeout = value;
             if (_isActive) {
                 Starling.juggler.removeDelayedCalls(outCallback);
-                Starling.juggler.delayCall(outCallback, _timeout);
+                if (_timeout) Starling.juggler.delayCall(outCallback, _timeout);
             }
         }
 
@@ -222,6 +229,7 @@
 
         private function drawBundled():void
         {
+            if (filter) filter.cache();
             _batch.draw(borderGroup);
             _batch.draw(_noise);
         }
