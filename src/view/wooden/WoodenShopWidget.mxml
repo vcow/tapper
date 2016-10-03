@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <view:ShopWidget xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-                 xmlns:view="view.*" xmlns:wooden="view.wooden.*">
+                 xmlns:view="view.*" xmlns:wooden="view.wooden.*" removedFromStage="onRemovedFromStage()">
 
     <fx:Declarations>
         <wooden:WoodenShopWidgetView id="widgetView" includeInLayout="false" close="hideView()"
-                                     complete="{Starling.juggler.removeTweens(widgetView); widgetView.removeFromParent()}"
-                                     timeout="2.5" glowColor="#77cc00" color="#f2ffdf"/>
+                                     complete="onRemovedFromStage()" timeout="2.5"
+                                     glowColor="#77cc00" color="#f2ffdf"/>
     </fx:Declarations>
 
     <fx:Script><![CDATA[
@@ -77,6 +77,13 @@
         {
             widgetView.dispose();
             super.dispose();
+        }
+
+        private function onRemovedFromStage():void
+        {
+            Starling.juggler.removeTweens(widgetView);
+            widgetView.removeFromParent();
+            _isActive = false;
         }
         ]]></fx:Script>
 </view:ShopWidget>

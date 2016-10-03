@@ -42,8 +42,6 @@
 
         public function set data(value:UnitInfo):void
         {
-            if (value == _data) return;
-
             _data = value;
             if (isInitialized) updateData();
             dispatchEventWith("dataChanged");

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               implements="starling.animation.IAnimatable" filter="{new GlowFilter(glowColor)}">
+               implements="starling.animation.IAnimatable" filter="{new GlowFilter(glowColor)}"
+               removedFromStage="onRemovedFromStage()">
 
     <fx:Declarations>
         <f:LayoutGroup id="borderGroup" backgroundSkin="{border}">
@@ -110,6 +111,7 @@
             if (_isAnimated) {
                 Starling.juggler.remove(this);
                 _isAnimated = false;
+                _text = null;
                 dispatchEventWith(starling.events.Event.COMPLETE);
             }
         }
@@ -253,6 +255,16 @@
             if (_text) {
                 unitNameLabel.text = text;
                 measureWidget();
+            }
+        }
+
+        private function onRemovedFromStage():void
+        {
+            if (_isAnimated) {
+                Starling.juggler.removeDelayedCalls(outCallback);
+                Starling.juggler.remove(this);
+                _isActive = false;
+                _text = null;
             }
         }
         ]]></fx:Script>
