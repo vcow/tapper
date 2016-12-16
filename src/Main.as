@@ -4,8 +4,6 @@ import config.ApplicationConfig;
 
 import events.GameEvent;
 
-import feathers.utils.ScreenDensityScaleFactorManager;
-
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
@@ -60,7 +58,7 @@ import view.MainScreen;
 
 			_starling = new Starling(MainScreen, stage);
 
-//			new ScreenDensityScaleFactorManager(_starling);
+			new ScreenDensityScaleFactorManagerEx(_starling, 576, 1024);
 
 			_context = new Context();
 			_context.install(StarlingBundle, ViewProcessorMapExtension)
