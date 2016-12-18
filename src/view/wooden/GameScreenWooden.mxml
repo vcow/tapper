@@ -17,7 +17,7 @@
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
-        <wooden:WoodenIndicator id="indicatorView" value="{_money}">
+        <wooden:WoodenIndicator id="indicatorView" value="{money}">
             <wooden:layoutData>
                 <f:AnchorLayoutData right="16" top="17"/>
             </wooden:layoutData>
@@ -60,7 +60,8 @@
         <f:List styleProvider="{StylesLibrary.woodenScrollerStyleProvider}" dataProvider="{_unitsList}"
                 itemRendererType="view.UnitListItemRenderer" isSelectable="false" width="536" height="326">
             <f:layout>
-                <f:TiledRowsLayout gap="4" paddingTop="10" paddingBottom="10" paddingLeft="25" paddingRight="25"/>
+                <f:TiledRowsLayout useSquareTiles="false" verticalGap="10" horizontalGap="10" paddingTop="10"
+                                   paddingBottom="10" paddingLeft="25" paddingRight="25"/>
             </f:layout>
             <f:layoutData>
                 <f:AnchorLayoutData horizontalCenter="0" bottom="42"/>
@@ -134,10 +135,17 @@
         [Bindable]
         private var _shopButtonStyleProvider:ButtonStyleProviderBase = StylesLibrary.woodenShopButtonStyleNormalProvider;
 
+        [Bindable(event="moneyChanged")]
+        public function get money():Number
+        {
+            return _money;
+        }
+
         public function set money(value:Number):void
         {
+            if (value == _money) return;
             _money = value;
-            if (isInitialized) indicatorView.value = _money;
+            dispatchEventWith("moneyChanged");
         }
 
         public function set unitsList(value:ListCollection):void

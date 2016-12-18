@@ -4,7 +4,7 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}"/>
+    <f:LayoutGroup backgroundSkin="{new Quad(120, 90, 0x909090)}"/>
 
     <f:Label text="{counter}" styleProvider="{StylesLibrary.counterLabelStyleProvider}">
         <f:layoutData>
