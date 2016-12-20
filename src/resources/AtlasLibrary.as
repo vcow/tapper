@@ -23,16 +23,33 @@ package resources
 		[Embed(source="graphics/noise_anim.xml", mimeType="application/octet-stream")]
 		private static const noiseAnimDescription:Class;
 
+		[Embed(source="graphics/units_big.atf", mimeType="application/octet-stream")]
+		private static const unitsBigAsset:Class;
+
+		[Embed(source="graphics/units_big.xml", mimeType="application/octet-stream")]
+		private static const unitsBigDescription:Class;
+
+		[Embed(source="graphics/units_small.atf", mimeType="application/octet-stream")]
+		private static const unitsSmallAsset:Class;
+
+		[Embed(source="graphics/units_small.xml", mimeType="application/octet-stream")]
+		private static const unitsSmallDescription:Class;
+
 		private var _commonTexture:Texture;
 		private var _woodenTexture:Texture;
 
 		private var _noiseAnimTexture:Texture;
+
+		private var _unitsBigTexture:Texture;
+		private var _unitsSmallTexture:Texture;
 
 		private static var _instance:AtlasLibrary;
 
 		private var _common:TextureAtlas;
 		private var _wooden:TextureAtlas;
 		private var _noiseAnim:TextureAtlas;
+		private var _unitsBig:TextureAtlas;
+		private var _unitsSmall:TextureAtlas;
 
 		public function AtlasLibrary()
 		{
@@ -46,10 +63,18 @@ package resources
 			_noiseAnimTexture = Texture.fromEmbeddedAsset(noiseAnimAsset);
 			_noiseAnimTexture.root.onRestore = onNoiseAnimRestore;
 
+			_unitsBigTexture = Texture.fromEmbeddedAsset(unitsBigAsset);
+			_unitsBigTexture.root.onRestore = onUnitsBigRestore;
+			_unitsSmallTexture = Texture.fromEmbeddedAsset(unitsSmallAsset);
+			_unitsSmallTexture.root.onRestore = onUnitsSmallRestore;
+
 			_common = new TextureAtlas(_commonTexture, new XML(new commonDescription()));
 			_wooden = new TextureAtlas(_woodenTexture, new XML(new woodenDescription()));
 
 			_noiseAnim = new TextureAtlas(_noiseAnimTexture, new XML(new noiseAnimDescription()));
+
+			_unitsBig = new TextureAtlas(_unitsBigTexture, new XML(new unitsBigDescription()));
+			_unitsSmall = new TextureAtlas(_unitsSmallTexture, new XML(new unitsSmallDescription()));
 		}
 
 		private function onCommonRestore():void
@@ -65,6 +90,16 @@ package resources
 		private function onNoiseAnimRestore():void
 		{
 			_noiseAnimTexture.root.uploadAtfData(new noiseAnimAsset());
+		}
+
+		private function onUnitsBigRestore():void
+		{
+			_unitsBigTexture.root.uploadAtfData(new unitsBigAsset());
+		}
+
+		private function onUnitsSmallRestore():void
+		{
+			_unitsSmallTexture.root.uploadAtfData(new unitsSmallAsset());
 		}
 
 		public static function getInstance():AtlasLibrary
@@ -86,6 +121,16 @@ package resources
 		public function get noiseAnim():TextureAtlas
 		{
 			return _noiseAnim;
+		}
+
+		public function get unitsBig():TextureAtlas
+		{
+			return _unitsBig;
+		}
+
+		public function get unitsSmall():TextureAtlas
+		{
+			return _unitsSmall;
 		}
 	}
 }
