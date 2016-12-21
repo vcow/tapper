@@ -1,32 +1,20 @@
 package commands
 {
-import events.ActionEvent;
-import events.UIEvent;
-
-	import flash.events.IEventDispatcher;
-
 	import models.GameModel;
 
-	import robotlegs.bender.extensions.commandCenter.api.ICommand;
+	import org.puremvc.as3.multicore.core.Model;
 
-	public class LevelUpCommand implements ICommand
+	import org.puremvc.as3.multicore.interfaces.INotification;
+	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
+
+	public class LevelUpCommand extends SimpleCommand
 	{
-		[Inject]
-		public var event:ActionEvent;
-
-		[Inject]
-		public var gameModel:GameModel;
-
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		public function execute():void
+		override public function execute(notification:INotification):void
 		{
-			var level:int;
-			if (event.data) level = int(event.data);
-
+			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
+			var level:int = int(notification.getBody());
 			gameModel.level = level ? level : gameModel.level + 1;
-			eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_LEVEL));
+			sendNotification(Const.UPDATE_LEVEL);
 		}
 	}
 }

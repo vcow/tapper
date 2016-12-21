@@ -1,64 +1,59 @@
 package commands
 {
-import config.ApplicationConfig;
+	import config.ApplicationConfig;
 
-import flash.utils.ByteArray;
+	import flash.utils.ByteArray;
 
-import models.AchievementsModel;
-import models.GameModel;
+	import org.puremvc.as3.multicore.interfaces.INotification;
 
-import robotlegs.bender.extensions.commandCenter.api.ICommand;
+	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
-public class SerializationCommandBase implements ICommand
-{
-	[Inject]
-	public var gameModel:GameModel;
-
-	[Inject]
-	public var achievementsModel:AchievementsModel;
-
-	public function execute():void
+	public class SerializationCommandBase extends SimpleCommand
 	{
-		throw Error("Override in child.");
-	}
-
-	protected static function getBytes(dataObject:Object):ByteArray
-	{
-		var res:ByteArray = new ByteArray();
-		try {
-			res.writeUTFBytes(ApplicationConfig.APP_VERSION);
-			res.writeFloat(dataObject.money);
-			res.writeFloat(dataObject.moneyTotal);
-			res.writeUnsignedInt(dataObject.tapsTotal);
-			res.writeUnsignedInt(dataObject.tickCount);
-			res.writeUnsignedInt(dataObject.level);
-			res.writeUTFBytes(dataObject.skin);
-			res.writeUTFBytes(stringifyUnits(dataObject.units));
-			res.writeUTFBytes(stringifyAchievements(dataObject.achievements));
-			res.writeUTFBytes(ApplicationConfig.APP_NAME);
-			res.writeFloat(dataObject.timestamp);
-			res.position = 0;
+		override public function execute(notification:INotification):void
+		{
+			throw Error("Abstract.");
 		}
-		catch (e:Error) {
-			res.clear();
+
+		protected static function getBytes(dataObject:Object):ByteArray
+		{
+			var res:ByteArray = new ByteArray();
+			try
+			{
+				res.writeUTFBytes(ApplicationConfig.APP_VERSION);
+				res.writeFloat(dataObject.money);
+				res.writeFloat(dataObject.moneyTotal);
+				res.writeUnsignedInt(dataObject.tapsTotal);
+				res.writeUnsignedInt(dataObject.tickCount);
+				res.writeUnsignedInt(dataObject.level);
+				res.writeUTFBytes(dataObject.skin);
+				res.writeUTFBytes(stringifyUnits(dataObject.units));
+				res.writeUTFBytes(stringifyAchievements(dataObject.achievements));
+				res.writeUTFBytes(ApplicationConfig.APP_NAME);
+				res.writeFloat(dataObject.timestamp);
+				res.position = 0;
+			}
+			catch (e:Error)
+			{
+				res.clear();
+			}
+			return res;
 		}
-		return res;
-	}
 
-	private static function stringifyUnits(units:Array):String
-	{
-		units.sortOn("unit");
-		var res:String = "";
-		for (var i:int = 0, l:int = units.length; i < l; i++) res += units[i].unit + ";";
-		return res;
-	}
+		private static function stringifyUnits(units:Array):String
+		{
+			units.sortOn("unit");
+			var res:String = "";
+			for (var i:int = 0, l:int = units.length; i < l; i++) res += units[i].unit + ";";
+			return res;
+		}
 
-	private static function stringifyAchievements(achievements:Array):String
-	{
-		achievements.sortOn("achievement");
-		var res:String = "";
-		for (var i:int = 0, l:int = achievements.length; i < l; i++) res += achievements[i].achievement + ";";
-		return res;
+		private static function stringifyAchievements(achievements:Array):String
+		{
+			achievements.sortOn("achievement");
+			var res:String = "";
+			for (var i:int = 0, l:int = achievements.length; i < l; i++) res += achievements[i].achievement + ";";
+			return res;
+		}
 	}
-}
 }

@@ -1,33 +1,27 @@
 package commands
 {
-	import events.GameEvent;
-
-	import flash.events.IEventDispatcher;
-
 	import models.GameModel;
 
-	import robotlegs.bender.extensions.commandCenter.api.ICommand;
+	import org.puremvc.as3.multicore.core.Model;
+
+	import org.puremvc.as3.multicore.interfaces.INotification;
+	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
 	import starling.core.Starling;
 
-	public class StartGameCommand implements ICommand
+	public class StartGameCommand extends SimpleCommand
 	{
-		[Inject]
-		public var gameModel:GameModel;
-
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		public function execute():void
+		override public function execute(notification:INotification):void
 		{
-			if (!gameModel.isActive) {
+			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
+
+			if (!gameModel.isActive)
 				gameModel.callbackId = Starling.juggler.repeatCall(onTick, 1.0);
-			}
 		}
 
 		private function onTick():void
 		{
-			eventDispatcher.dispatchEvent(new GameEvent(GameEvent.TICK));
+			sendNotification(Const.TICK);
 		}
 	}
 }

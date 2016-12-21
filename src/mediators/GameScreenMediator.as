@@ -1,10 +1,10 @@
 package mediators
 {
-	import events.ActionEvent;
-	import events.GameEvent;
-	import events.GameStateEvent;
-	import events.SwitchScreenEvent;
-	import events.UIEvent;
+	import dto.ActionEvent;
+	import dto.GameEvent;
+	import dto.GameStateEvent;
+	import dto.SwitchScreenEvent;
+	import dto.UIEvent;
 
 	import feathers.data.ListCollection;
 

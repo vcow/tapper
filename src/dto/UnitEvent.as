@@ -1,4 +1,4 @@
-package events
+package dto
 {
 	import flash.events.Event;
 

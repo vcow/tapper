@@ -1,6 +1,6 @@
 package mediators
 {
-	import events.UnitEvent;
+	import dto.UnitEvent;
 
 	import models.Unit;
 

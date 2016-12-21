@@ -11,14 +11,14 @@ package config
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 
-	import events.AchievementEvent;
-	import events.ActionEvent;
+	import dto.AchievementEvent;
+	import dto.ActionEvent;
 
-	import events.BuyUnitEvent;
+	import dto.BuyUnitEvent;
 
-	import events.GameEvent;
+	import dto.GameEvent;
 
-	import events.GameStateEvent;
+	import dto.GameStateEvent;
 
 	import gears.TriggerBroadcaster;
 
@@ -72,12 +72,6 @@ package config
 
 		public function configure():void
 		{
-			injector.map(UnitsModel).toSingleton(UnitsModel);
-			injector.map(GameModel).toSingleton(GameModel);
-			injector.map(LevelsModel).toSingleton(LevelsModel);
-			injector.map(AchievementsModel).toSingleton(AchievementsModel);
-			injector.map(TriggerBroadcaster).toSingleton(TriggerBroadcaster);
-
 			mediatorMap.map(MainScreen).toMediator(MainScreenMediator);
 			mediatorMap.map(StartScreen).toMediator(StartScreenMediator);
 			mediatorMap.map(GameScreen).toMediator(GameScreenMediator);
@@ -86,16 +80,6 @@ package config
 			mediatorMap.map(UnitListItemRenderer).toMediator(UnitListItemMediator);
 			mediatorMap.map(ShopWidget).toMediator(ShopWidgetMediator);
 
-			eventCommandMap.map(GameStateEvent.START_GAME, GameStateEvent).toCommand(StartGameCommand);
-			eventCommandMap.map(GameStateEvent.STOP_GAME, GameStateEvent).toCommand(StopGameCommand);
-			eventCommandMap.map(GameEvent.TICK, GameEvent).toCommand(GameTickCommand);
-			eventCommandMap.map(GameEvent.TAP, GameEvent).toCommand(GameTapCommand);
-			eventCommandMap.map(GameEvent.ACTIVATE, GameEvent).toCommand(ActivateCommand);
-			eventCommandMap.map(GameEvent.DEACTIVATE, GameEvent).toCommand(DeactivateCommand);
-			eventCommandMap.map(BuyUnitEvent.BUY, BuyUnitEvent).toCommand(BuyUnitCommand);
-			eventCommandMap.map(AchievementEvent.ACHIEVE, AchievementEvent).toCommand(GetAchievementCommand);
-			eventCommandMap.map(ActionEvent.LEVEL_UP, ActionEvent).toCommand(LevelUpCommand);
-			eventCommandMap.map(ActionEvent.SET_SKIN_BRONZE, ActionEvent).toCommand(SetSkinBronzeCommand);
 		}
 	}
 }

@@ -2,18 +2,21 @@ package commands
 {
 	import models.GameModel;
 
-	import robotlegs.bender.extensions.commandCenter.api.ICommand;
+	import org.puremvc.as3.multicore.core.Model;
+
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
 	import starling.core.Starling;
 
-	public class StopGameCommand implements ICommand
+	public class StopGameCommand extends SimpleCommand
 	{
-		[Inject]
-		public var gameModel:GameModel;
-
-		public function execute():void
+		override public function execute(notification:INotification):void
 		{
-			if (gameModel.isActive) {
+			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
+			if (gameModel.isActive)
+			{
 				Starling.juggler.removeByID(gameModel.callbackId);
 				gameModel.callbackId = 0;
 			}

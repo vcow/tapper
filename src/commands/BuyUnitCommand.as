@@ -1,54 +1,35 @@
 package commands
 {
-	import events.ActionEvent;
-	import events.BuyUnitEvent;
-	import events.UIEvent;
-
-	import flash.events.IEventDispatcher;
-
 	import gears.TriggerBroadcaster;
 
 	import models.Unit;
+	import models.UnitInfo;
 
-	import robotlegs.bender.framework.api.IInjector;
+	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	public class BuyUnitCommand extends CalcProfitCommandBase
 	{
-		[Inject]
-		public var event:BuyUnitEvent;
-
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		[Inject]
-		public var injector:IInjector;
-
-		[Inject]
-		public var triggerBroadcaster:TriggerBroadcaster;
-
-		override public function execute():void
+		override public function execute(notification:INotification):void
 		{
-			if (gameModel.money >= event.unit.price) {
-				var unit:Unit = new Unit(event.unit, event.unit.price,
-						event.unit.perClickProfit || event.unit.perSecondProfit);
-				gameModel.money -= event.unit.price;
+			var unitInfo:UnitInfo = notification.getBody() as UnitInfo;
 
-				injector.injectInto(unit);
+			if (gameModel.money >= unitInfo.price) {
+				var unit:Unit = new Unit(unitInfo, unitInfo.price, unitInfo.perClickProfit || unitInfo.perSecondProfit);
+				gameModel.money -= unitInfo.price;
+
 				gameModel.units.push(unit);
 				gameModel.sortUnitsByPrice();
 
-				if (unit.info.profit) {
+				if (unit.info.profit)
 					calcProfit(unit.info.profit);
-				}
 
-				if (unit.info.action) {
-					eventDispatcher.dispatchEvent(new ActionEvent(unit.info.action.id, unit.info.action.data));
-				}
+				if (unit.info.action)
+					sendNotification(unit.info.action.id, unit.info.action.data);
 
-				triggerBroadcaster.broadcast(TriggerBroadcaster.BUY, event.unit);
+				gameModel.triggerBroadcaster.broadcast(TriggerBroadcaster.BUY, unit);
 
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+				sendNotification(Const.UPDATE_MONEY);
+				sendNotification(Const.UPDATE_UNITS_LIST);
 			}
 		}
 	}

@@ -1,27 +1,24 @@
 package commands
 {
-	import events.SwitchScreenEvent;
-
-	import flash.events.IEventDispatcher;
-
 	import models.GameModel;
+
 	import models.SkinType;
 
-	import robotlegs.bender.extensions.commandCenter.api.ICommand;
+	import org.puremvc.as3.multicore.core.Model;
 
-	public class SetSkinBronzeCommand implements ICommand
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
+
+	public class SetSkinBronzeCommand extends SimpleCommand
 	{
-		[Inject]
-		public var gameModel:GameModel;
-
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		public function execute():void
+		override public function execute(notification:INotification):void
 		{
-			if (gameModel.currentSkin != SkinType.BRONZE) {
+			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
+			if (gameModel.currentSkin != SkinType.BRONZE)
+			{
 				gameModel.currentSkin = SkinType.BRONZE;
-				eventDispatcher.dispatchEvent(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_GAME));
+				sendNotification(Const.SWITCH_TO_GAME);
 			}
 		}
 	}

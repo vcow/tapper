@@ -1,7 +1,7 @@
 package mediators
 {
-	import events.SwitchScreenEvent;
-	import events.UIEvent;
+	import dto.SwitchScreenEvent;
+	import dto.UIEvent;
 
 	import flash.utils.Dictionary;
 

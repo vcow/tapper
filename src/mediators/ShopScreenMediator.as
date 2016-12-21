@@ -1,8 +1,8 @@
 package mediators
 {
-	import events.BuyUnitEvent;
-	import events.SwitchScreenEvent;
-	import events.UIEvent;
+	import dto.BuyUnitEvent;
+	import dto.SwitchScreenEvent;
+	import dto.UIEvent;
 
 	import feathers.data.ListCollection;
 

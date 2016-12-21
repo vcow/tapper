@@ -3,14 +3,23 @@ package commands
 	import models.GameModel;
 	import models.ProfitInfo;
 
-	import robotlegs.bender.extensions.commandCenter.api.ICommand;
+	import org.puremvc.as3.multicore.core.Model;
 
-	public class CalcProfitCommandBase implements ICommand
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
+
+	public class CalcProfitCommandBase extends SimpleCommand
 	{
-		[Inject]
-		public var gameModel:GameModel;
+		private var _gameModel:GameModel;
 
-		public function execute():void
+		protected function get gameModel():GameModel
+		{
+			if (!_gameModel) _gameModel = Model.getInstance(GameModel.NAME) as GameModel;
+			return _gameModel;
+		}
+
+		override public function execute(notification:INotification):void
 		{
 			throw Error("Override this in child.");
 		}

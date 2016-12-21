@@ -1,7 +1,7 @@
 package mediators
 {
-	import events.PopUpEvent;
-	import events.SwitchScreenEvent;
+	import dto.PopUpEvent;
+	import dto.SwitchScreenEvent;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 

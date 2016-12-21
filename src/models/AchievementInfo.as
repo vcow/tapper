@@ -1,6 +1,6 @@
 package models
 {
-	import events.AchievementEvent;
+	import dto.AchievementEvent;
 
 	import flash.events.IEventDispatcher;
 

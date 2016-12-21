@@ -1,6 +1,6 @@
 package mediators
 {
-	import events.UIEvent;
+	import dto.UIEvent;
 
 	import models.GameModel;
 

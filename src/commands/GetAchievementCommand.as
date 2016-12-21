@@ -1,47 +1,43 @@
 package commands
 {
-	import events.AchievementEvent;
-	import events.ActionEvent;
-	import events.PopUpEvent;
-	import events.UIEvent;
-
-	import flash.events.IEventDispatcher;
+	import models.AchievementInfo;
 
 	import models.ActionReward;
 	import models.IReward;
 	import models.PopUpReward;
 	import models.ProfitReward;
 
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
 	public class GetAchievementCommand extends CalcProfitCommandBase
 	{
-		[Inject]
-		public var event:AchievementEvent;
-
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		override public function execute():void
+		override public function execute(notification:INotification):void
 		{
-			var rewards:Vector.<IReward> = event.achievement.rewards;
-			for each (var reward:IReward in rewards) {
-				if (reward is ActionReward) {
+			var achievementInfo:AchievementInfo = notification.getBody() as AchievementInfo;
+
+			var rewards:Vector.<IReward> = achievementInfo.rewards;
+			for each (var reward:IReward in rewards)
+			{
+				if (reward is ActionReward)
+				{
 					var action:ActionReward = ActionReward(reward);
-					eventDispatcher.dispatchEvent(new ActionEvent(action.id, action.data));
+					sendNotification(action.id, action.data);
 				}
-				else if (reward is ProfitReward) {
-					if (calcProfit(ProfitReward(reward))) {
-						eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
-					}
+				else if (reward is ProfitReward)
+				{
+					if (calcProfit(ProfitReward(reward)))
+						sendNotification(Const.UPDATE_MONEY);
 				}
-				else if (reward is PopUpReward) {
-					var popup:PopUpReward = PopUpReward(reward);
-					eventDispatcher.dispatchEvent(new PopUpEvent(PopUpEvent.SHOW, popup.title, popup.description));
+				else if (reward is PopUpReward)
+				{
+					sendNotification(Const.SHOW, reward);
 				}
-				else {
+				else
+				{
 					throw Error("Unsupported reward.");
 				}
 			}
-			event.achievement.receive(new Date().time);
+			achievementInfo.receive(new Date().time);
 		}
 	}
 }

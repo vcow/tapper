@@ -1,32 +1,21 @@
 package models
 {
-	import gears.TriggerBroadcaster;
+	import org.puremvc.as3.multicore.core.Model;
 
 	import resources.ConfigsLibrary;
 
-	import robotlegs.bender.framework.api.IInjector;
-
-	public class AchievementsModel
+	public class AchievementsModel extends Model
 	{
+		public static const NAME:String = "achievementsModel";
+
 		private var _achievements:Vector.<AchievementInfo>;
 
-		[Inject]
-		public var injector:IInjector;
-
-		[Inject]
-		public var triggerBroadcaster:TriggerBroadcaster;
-
-		[Inject]
-		public var gameModel:GameModel;
-
-		[PostConstruct]
-		public function postConstruct():void
+		public function AchievementsModel(key:String)
 		{
-			for each (var achievement:AchievementInfo in achievements) injector.injectInto(achievement);
-			triggerBroadcaster.init(gameModel);
+			super(key);
 		}
 
-		public function AchievementsModel()
+		override protected function initializeModel():void
 		{
 			_achievements = new Vector.<AchievementInfo>();
 			var achievements:XMLList = ConfigsLibrary.achievements.achievement;

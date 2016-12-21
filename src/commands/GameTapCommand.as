@@ -1,33 +1,29 @@
 package commands
 {
-	import events.UIEvent;
-
-	import flash.events.IEventDispatcher;
-
 	import models.ProfitInfo;
 	import models.Unit;
 
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
 	public class GameTapCommand extends CalcProfitCommandBase
 	{
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		override public function execute():void
+		override public function execute(notification:INotification):void
 		{
 			gameModel.tapsTotal++;
 
 			var profitList:Vector.<ProfitInfo> = new Vector.<ProfitInfo>();
-			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++) {
+			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++)
+			{
 				var unit:Unit = gameModel.units[i];
-				if (unit.active) {
+				if (unit.active)
+				{
 					unit.tap();
 					if (unit.info.perClickProfit) profitList.push(unit.info.perClickProfit);
 				}
 			}
 
-			if (calcProfitList(profitList, 1)) {
-				eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_MONEY));
-			}
+			if (calcProfitList(profitList, 1))
+				sendNotification(Const.UPDATE_MONEY);
 		}
 	}
 }

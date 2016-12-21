@@ -1,7 +1,7 @@
 package models
 {
-	import events.UIEvent;
-	import events.UnitEvent;
+	import dto.UIEvent;
+	import dto.UnitEvent;
 
 	import flash.events.IEventDispatcher;
 

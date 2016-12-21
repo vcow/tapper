@@ -1,32 +1,32 @@
 package
 {
-import config.ApplicationConfig;
+	import facade.AppFacade;
 
-import events.GameEvent;
+	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
+	import flash.events.Event;
 
-import flash.display.Sprite;
-import flash.display.StageAlign;
-import flash.display.StageScaleMode;
-import flash.events.Event;
-import flash.events.IEventDispatcher;
+	import models.AchievementsModel;
 
-import resources.LocalesLibrary;
-import resources.locale.LocaleManager;
+	import models.GameModel;
+	import models.LevelsModel;
 
-import robotlegs.bender.framework.impl.Context;
-import robotlegs.starling.bundles.mvcs.StarlingBundle;
-import robotlegs.starling.extensions.contextView.ContextView;
-import robotlegs.starling.extensions.viewProcessorMap.ViewProcessorMapExtension;
+	import models.UnitsModel;
 
-import starling.core.Starling;
+	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
-import view.MainScreen;
+	import resources.LocalesLibrary;
+	import resources.locale.LocaleManager;
 
-[SWF(frameRate="60", backgroundColor="#14485e")]
+	import starling.core.Starling;
+
+	import view.MainScreen;
+
+	[SWF(frameRate="60", backgroundColor="#14485e")]
 	public class Main extends Sprite
 	{
 		private var _starling:Starling;
-		private var _context:Context;
 
 		public function Main()
 		{
@@ -60,25 +60,26 @@ import view.MainScreen;
 
 			new ScreenDensityScaleFactorManagerEx(_starling, 576, 1024);
 
-			_context = new Context();
-			_context.install(StarlingBundle, ViewProcessorMapExtension)
-					.configure(ApplicationConfig, new ContextView(_starling))
-					.initialize(onInitialized);
-		}
+			initialize();
 
-		private function onInitialized():void
-		{
 			_starling.start();
 			stage.addEventListener(Event.DEACTIVATE, onStageDeactivate);
 
-			var eventDispatcher:IEventDispatcher = _context.injector.getInstance(IEventDispatcher);
-			if (eventDispatcher) eventDispatcher.dispatchEvent(new GameEvent(GameEvent.ACTIVATE));
+			Facade.getInstance(AppFacade.NAME).sendNotification(Const.ACTIVATE);
+		}
+
+		protected function initialize():void
+		{
+			new AppFacade(AppFacade.NAME);
+			new UnitsModel(UnitsModel.NAME);
+			new LevelsModel(LevelsModel.NAME);
+			new AchievementsModel(AchievementsModel.NAME);
+			new GameModel(GameModel.NAME);
 		}
 
 		protected function onStageDeactivate(event:Event):void
 		{
-			var eventDispatcher:IEventDispatcher = _context.injector.getInstance(IEventDispatcher);
-			if (eventDispatcher) eventDispatcher.dispatchEvent(new GameEvent(GameEvent.DEACTIVATE));
+			Facade.getInstance(AppFacade.NAME).sendNotification(Const.DEACTIVATE);
 
 			_starling.stop();
 			stage.addEventListener(Event.ACTIVATE, onStageActivate);
@@ -89,8 +90,7 @@ import view.MainScreen;
 			stage.removeEventListener(Event.ACTIVATE, onStageActivate);
 			_starling.start();
 
-			var eventDispatcher:IEventDispatcher = _context.injector.getInstance(IEventDispatcher);
-			if (eventDispatcher) eventDispatcher.dispatchEvent(new GameEvent(GameEvent.ACTIVATE));
+			Facade.getInstance(AppFacade.NAME).sendNotification(Const.ACTIVATE);
 		}
 	}
 }

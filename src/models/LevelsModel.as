@@ -1,12 +1,21 @@
 package models
 {
+	import org.puremvc.as3.multicore.core.Model;
+
 	import resources.ConfigsLibrary;
 
-	public class LevelsModel
+	public class LevelsModel extends Model
 	{
+		public static const NAME:String = "levelsModel";
+
 		private var _levels:Vector.<LevelInfo>;
 
-		public function LevelsModel()
+		public function LevelsModel(key:String)
+		{
+			super(key);
+		}
+
+		override protected function initializeModel():void
 		{
 			_levels = new Vector.<LevelInfo>();
 			var levels:XMLList = ConfigsLibrary.levels.level;
