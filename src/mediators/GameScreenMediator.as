@@ -8,11 +8,11 @@ package mediators
 
 	import feathers.data.ListCollection;
 
-	import models.AchievementsModel;
+	import proxy.AchievementsProxy;
 
 	import models.GameModel;
 	import models.LevelInfo;
-	import models.LevelsModel;
+	import proxy.LevelsProxy;
 	import models.SkinType;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
@@ -30,10 +30,10 @@ package mediators
 		public var view:GameScreen;
 
 		[Inject]
-		public var achievementsModel:AchievementsModel;
+		public var achievementsModel:AchievementsProxy;
 
 		[Inject]
-		public var levelsModel:LevelsModel;
+		public var levelsModel:LevelsProxy;
 
 		public function GameScreenMediator()
 		{

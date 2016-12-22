@@ -4,12 +4,17 @@ package commands
 
 	import config.ApplicationConfig;
 
+	import facade.AppFacade;
+
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 
 	import models.AchievementInfo;
-	import models.AchievementsModel;
+
+	import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+	import proxy.AchievementsProxy;
 	import models.GameModel;
 	import models.Unit;
 
@@ -34,7 +39,8 @@ package commands
 		private function serializeGameModel():String
 		{
 			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
-			var achievementsModel:AchievementsModel = Model.getInstance(AchievementsModel.NAME) as AchievementsModel;
+			var achievementsProxy:AchievementsProxy = Facade.getInstance(AppFacade.NAME).
+					retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
 
 			var unitsList:Array = [];
 			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++)
@@ -43,9 +49,9 @@ package commands
 			}
 
 			var achievementsList:Array = [];
-			for (i = 0, l = achievementsModel.achievements.length; i < l; i++)
+			for (i = 0, l = achievementsProxy.achievements.length; i < l; i++)
 			{
-				var achievement:AchievementInfo = achievementsModel.achievements[i];
+				var achievement:AchievementInfo = achievementsProxy.achievements[i];
 				if (achievement.isReceived) achievementsList.push(serializeAchievement(achievement));
 			}
 

@@ -4,15 +4,20 @@ package commands
 
 	import config.ApplicationConfig;
 
+	import facade.AppFacade;
+
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 
 	import models.AchievementInfo;
-	import models.AchievementsModel;
+
+	import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+	import proxy.AchievementsProxy;
 	import models.GameModel;
 	import models.Unit;
-	import models.UnitsModel;
+	import proxy.UnitsProxy;
 
 	import org.puremvc.as3.multicore.core.Model;
 
@@ -20,11 +25,12 @@ package commands
 
 	public class ActivateCommand extends SerializationCommandBase
 	{
-		private var _unitsModel:UnitsModel;
+		private var _unitsModel:UnitsProxy;
 
-		private function get unitsModel():UnitsModel
+		private function get unitsModel():UnitsProxy
 		{
-			if (!_unitsModel) _unitsModel = Model.getInstance(UnitsModel.NAME) as UnitsModel;
+			if (!_unitsModel)
+				_unitsModel = Facade.getInstance(AppFacade.NAME).retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
 			return _unitsModel;
 		}
 
@@ -63,7 +69,8 @@ package commands
 				return;
 			}
 
-			var achievementsModel:AchievementsModel = Model.getInstance(AchievementsModel.NAME) as AchievementsModel;
+			var achievementsProxy:AchievementsProxy = Facade.getInstance(AppFacade.NAME).
+					retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
 			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
 
 			var achievementMap:Object = {};
@@ -71,9 +78,9 @@ package commands
 			{
 				achievementMap[listData.achievement] = listData.received;
 			}
-			for (var i:int = 0, l:int = achievementsModel.achievements.length; i < l; i++)
+			for (var i:int = 0, l:int = achievementsProxy.achievements.length; i < l; i++)
 			{
-				var achievement:AchievementInfo = achievementsModel.achievements[i];
+				var achievement:AchievementInfo = achievementsProxy.achievements[i];
 				achievement.receive(achievementMap[achievement.id]);
 			}
 

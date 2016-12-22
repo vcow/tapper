@@ -7,12 +7,9 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
-	import models.AchievementsModel;
+	import proxy.AchievementsProxy;
 
 	import models.GameModel;
-	import models.LevelsModel;
-
-	import models.UnitsModel;
 
 	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
@@ -71,9 +68,6 @@ package
 		protected function initialize():void
 		{
 			new AppFacade(AppFacade.NAME);
-			new UnitsModel(UnitsModel.NAME);
-			new LevelsModel(LevelsModel.NAME);
-			new AchievementsModel(AchievementsModel.NAME);
 			new GameModel(GameModel.NAME);
 		}
 

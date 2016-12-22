@@ -30,11 +30,11 @@ package config
 	import mediators.StartScreenMediator;
 	import mediators.UnitListItemMediator;
 
-	import models.AchievementsModel;
+	import proxy.AchievementsProxy;
 
 	import models.GameModel;
-	import models.LevelsModel;
-	import models.UnitsModel;
+	import proxy.LevelsProxy;
+	import proxy.UnitsProxy;
 
 	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
 

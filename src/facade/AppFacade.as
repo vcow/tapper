@@ -11,11 +11,26 @@ package facade
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 
+	import proxy.AchievementsProxy;
+
+	import proxy.LevelsProxy;
+
+	import proxy.UnitsProxy;
+
 	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
 	public class AppFacade extends Facade
 	{
 		public static const NAME:String = "APP_FACADE";
+
+		[Embed(source="config/units.xml", mimeType="application/octet-stream")]
+		private static const unitsConfig:Class;
+
+		[Embed(source="config/levels.xml", mimeType="application/octet-stream")]
+		private static const levelsConfig:Class;
+
+		[Embed(source="config/achievements.xml", mimeType="application/octet-stream")]
+		private static const achievementsConfig:Class;
 
 		public function AppFacade(key:String)
 		{
@@ -42,7 +57,9 @@ package facade
 		{
 			super.initializeModel();
 
-			// register proxies
+			registerProxy(new UnitsProxy(XML(new unitsConfig())));
+			registerProxy(new LevelsProxy(XML(new levelsConfig())));
+			registerProxy(new AchievementsProxy(XML(new achievementsConfig())));
 		}
 
 		override protected function initializeView():void

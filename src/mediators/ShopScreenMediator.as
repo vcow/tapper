@@ -8,7 +8,7 @@ package mediators
 
 	import models.GameModel;
 	import models.UnitInfo;
-	import models.UnitsModel;
+	import proxy.UnitsProxy;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 
@@ -22,7 +22,7 @@ package mediators
 		public var gameModel:GameModel;
 
 		[Inject]
-		public var unitsModel:UnitsModel;
+		public var unitsModel:UnitsProxy;
 
 		[Inject]
 		public var view:ShopScreen;

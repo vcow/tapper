@@ -5,13 +5,15 @@ package models
 
 	import flash.events.IEventDispatcher;
 
+	import proxy.UnitsProxy;
+
 	public class Unit
 	{
 		[Inject]
 		public var eventDispatcher:IEventDispatcher;
 
 		[Inject]
-		public var unitsModel:UnitsModel;
+		public var unitsModel:UnitsProxy;
 
 		private var _info:UnitInfo;
 		private var _taps:uint;
