@@ -1,11 +1,8 @@
 package commands
 {
-	import config.ApplicationConfig;
-
 	import flash.utils.ByteArray;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
-
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
 	public class SerializationCommandBase extends SimpleCommand
@@ -20,7 +17,7 @@ package commands
 			var res:ByteArray = new ByteArray();
 			try
 			{
-				res.writeUTFBytes(ApplicationConfig.APP_VERSION);
+				res.writeUTFBytes(Const.APP_VERSION);
 				res.writeFloat(dataObject.money);
 				res.writeFloat(dataObject.moneyTotal);
 				res.writeUnsignedInt(dataObject.tapsTotal);
@@ -29,7 +26,7 @@ package commands
 				res.writeUTFBytes(dataObject.skin);
 				res.writeUTFBytes(stringifyUnits(dataObject.units));
 				res.writeUTFBytes(stringifyAchievements(dataObject.achievements));
-				res.writeUTFBytes(ApplicationConfig.APP_NAME);
+				res.writeUTFBytes(Const.APP_NAME);
 				res.writeFloat(dataObject.timestamp);
 				res.position = 0;
 			}

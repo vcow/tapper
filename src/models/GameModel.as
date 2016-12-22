@@ -4,10 +4,10 @@ package models
 
 	import org.puremvc.as3.multicore.core.Model;
 
+	import vo.Unit;
+
 	public class GameModel extends Model
 	{
-		public static const NAME:String = "gameModel";
-
 		private var _callbackId:uint;
 		private var _money:Number = 0;
 		private var _tapsTotal:uint;

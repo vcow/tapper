@@ -1,6 +1,6 @@
 package
 {
-	import facade.AppFacade;
+	import app.AppFacade;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -24,6 +24,9 @@ package
 	public class Main extends Sprite
 	{
 		private var _starling:Starling;
+
+		private var _facade:AppFacade;
+		private var _model:GameModel;
 
 		public function Main()
 		{
@@ -57,23 +60,17 @@ package
 
 			new ScreenDensityScaleFactorManagerEx(_starling, 576, 1024);
 
-			initialize();
+			_facade = new AppFacade(AppFacade.NAME);
 
 			_starling.start();
 			stage.addEventListener(Event.DEACTIVATE, onStageDeactivate);
 
-			Facade.getInstance(AppFacade.NAME).sendNotification(Const.ACTIVATE);
-		}
-
-		protected function initialize():void
-		{
-			new AppFacade(AppFacade.NAME);
-			new GameModel(GameModel.NAME);
+			_facade.sendNotification(Const.ACTIVATE);
 		}
 
 		protected function onStageDeactivate(event:Event):void
 		{
-			Facade.getInstance(AppFacade.NAME).sendNotification(Const.DEACTIVATE);
+			_facade.sendNotification(Const.DEACTIVATE);
 
 			_starling.stop();
 			stage.addEventListener(Event.ACTIVATE, onStageActivate);
@@ -84,7 +81,7 @@ package
 			stage.removeEventListener(Event.ACTIVATE, onStageActivate);
 			_starling.start();
 
-			Facade.getInstance(AppFacade.NAME).sendNotification(Const.ACTIVATE);
+			_facade.sendNotification(Const.ACTIVATE);
 		}
 	}
 }

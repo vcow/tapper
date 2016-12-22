@@ -1,20 +1,11 @@
-package models
+package vo
 {
-	import dto.UIEvent;
-	import dto.UnitEvent;
+	import models.*;
 
-	import flash.events.IEventDispatcher;
+	import org.puremvc.as3.multicore.patterns.observer.Notifier;
 
-	import proxy.UnitsProxy;
-
-	public class Unit
+	public class Unit extends Notifier
 	{
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-
-		[Inject]
-		public var unitsModel:UnitsProxy;
-
 		private var _info:UnitInfo;
 		private var _taps:uint;
 		private var _ticks:uint;
@@ -23,6 +14,8 @@ package models
 
 		public function Unit(info:UnitInfo, buyPrice:Number, active:Boolean)
 		{
+			super();
+
 			_info = info;
 			_buyPrice = buyPrice;
 			_active = active;
@@ -65,10 +58,9 @@ package models
 				if (_taps >= _info.perClickProfit.maxCount)
 				{
 					_active = false;
-					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+					sendNotification(Const.UPDATE_UNITS_LIST);
 				}
-				eventDispatcher.dispatchEvent(new UnitEvent(UnitEvent.COUNT_CHANGED, this,
-						_info.perClickProfit.maxCount - _taps));
+				sendNotification(Const.COUNT_CHANGED, {unit: this, count: _info.perClickProfit.maxCount - _taps});
 			}
 		}
 
@@ -78,10 +70,9 @@ package models
 			if (_info.perSecondProfit && _info.perSecondProfit.maxCount) {
 				if (_ticks >= _info.perSecondProfit.maxCount) {
 					_active = false;
-					eventDispatcher.dispatchEvent(new UIEvent(UIEvent.UPDATE_UNITS_LIST));
+					sendNotification(Const.UPDATE_UNITS_LIST);
 				}
-				eventDispatcher.dispatchEvent(new UnitEvent(UnitEvent.COUNT_CHANGED, this,
-						_info.perSecondProfit.maxCount - _ticks));
+				sendNotification(Const.COUNT_CHANGED, {unit: this, count: _info.perSecondProfit.maxCount - _ticks});
 			}
 		}
 

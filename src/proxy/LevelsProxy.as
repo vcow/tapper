@@ -9,7 +9,7 @@ package proxy
 
 		private var _levels:Vector.<LevelInfo>;
 
-		public function LevelsProxy(data:Object)
+		public function LevelsProxy(data:Object = null)
 		{
 			super(NAME, data);
 		}

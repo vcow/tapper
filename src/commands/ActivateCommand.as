@@ -2,26 +2,21 @@ package commands
 {
 	import com.adobe.crypto.MD5;
 
-	import config.ApplicationConfig;
-
-	import facade.AppFacade;
+	import app.AppFacade;
 
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 
-	import models.AchievementInfo;
-
-	import org.puremvc.as3.multicore.patterns.facade.Facade;
-
-	import proxy.AchievementsProxy;
 	import models.GameModel;
-	import models.Unit;
-	import proxy.UnitsProxy;
-
-	import org.puremvc.as3.multicore.core.Model;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import proxy.AchievementsProxy;
+	import proxy.UnitsProxy;
+
+	import vo.AchievementInfo;
+	import vo.Unit;
 
 	public class ActivateCommand extends SerializationCommandBase
 	{
@@ -30,14 +25,14 @@ package commands
 		private function get unitsModel():UnitsProxy
 		{
 			if (!_unitsModel)
-				_unitsModel = Facade.getInstance(AppFacade.NAME).retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
+				_unitsModel = facade.retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
 			return _unitsModel;
 		}
 
 		override public function execute(notification:INotification):void
 		{
 			var file:File = File.applicationStorageDirectory;
-			file = file.resolvePath(ApplicationConfig.APP_NAME + ".state");
+			file = file.resolvePath(Const.APP_NAME + ".state");
 			if (file.exists && !file.isDirectory)
 			{
 				var stream:FileStream = new FileStream();
@@ -69,9 +64,8 @@ package commands
 				return;
 			}
 
-			var achievementsProxy:AchievementsProxy = Facade.getInstance(AppFacade.NAME).
-					retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
-			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
+			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 
 			var achievementMap:Object = {};
 			for each (listData in dataObject.achievements)
@@ -95,6 +89,7 @@ package commands
 			for each (var listData:Object in dataObject.units)
 			{
 				var unit:Unit = new Unit(null, NaN, false);
+				unit.initializeNotifier(multitonKey);
 				deserializeUnit(unit, listData);
 				gameModel.units.push(unit);
 			}

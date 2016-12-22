@@ -1,27 +1,5 @@
 package config
 {
-	import commands.ActivateCommand;
-	import commands.BuyUnitCommand;
-	import commands.DeactivateCommand;
-	import commands.GameTapCommand;
-	import commands.GameTickCommand;
-	import commands.GetAchievementCommand;
-	import commands.LevelUpCommand;
-	import commands.SetSkinBronzeCommand;
-	import commands.StartGameCommand;
-	import commands.StopGameCommand;
-
-	import dto.AchievementEvent;
-	import dto.ActionEvent;
-
-	import dto.BuyUnitEvent;
-
-	import dto.GameEvent;
-
-	import dto.GameStateEvent;
-
-	import gears.TriggerBroadcaster;
-
 	import mediators.MainScreenMediator;
 	import mediators.GameScreenMediator;
 	import mediators.ShopListItemMediator;
@@ -29,18 +7,6 @@ package config
 	import mediators.ShopWidgetMediator;
 	import mediators.StartScreenMediator;
 	import mediators.UnitListItemMediator;
-
-	import proxy.AchievementsProxy;
-
-	import models.GameModel;
-	import proxy.LevelsProxy;
-	import proxy.UnitsProxy;
-
-	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
-
-	import robotlegs.bender.framework.api.IConfig;
-	import robotlegs.bender.framework.api.IInjector;
-	import robotlegs.starling.extensions.mediatorMap.api.IMediatorMap;
 
 	import view.MainScreen;
 
@@ -54,18 +20,6 @@ package config
 
 	public class ApplicationConfig implements IConfig
 	{
-		public static const APP_NAME:String = "simjew";
-		public static const APP_VERSION:String = "1.0.0.0";
-
-		[Inject]
-		public var injector:IInjector;
-
-		[Inject]
-		public var mediatorMap:IMediatorMap;
-
-		[Inject]
-		public var eventCommandMap:IEventCommandMap;
-
 		public function ApplicationConfig()
 		{
 		}

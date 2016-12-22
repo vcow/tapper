@@ -2,25 +2,20 @@ package commands
 {
 	import com.adobe.crypto.MD5;
 
-	import config.ApplicationConfig;
-
-	import facade.AppFacade;
+	import app.AppFacade;
 
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 
-	import models.AchievementInfo;
-
-	import org.puremvc.as3.multicore.patterns.facade.Facade;
-
-	import proxy.AchievementsProxy;
 	import models.GameModel;
-	import models.Unit;
-
-	import org.puremvc.as3.multicore.core.Model;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import proxy.AchievementsProxy;
+
+	import vo.AchievementInfo;
+	import vo.Unit;
 
 	public class DeactivateCommand extends SerializationCommandBase
 	{
@@ -29,7 +24,7 @@ package commands
 			var data:String = serializeGameModel();
 			data.replace(/\n/g, File.lineEnding);
 			var file:File = File.applicationStorageDirectory;
-			file = file.resolvePath(ApplicationConfig.APP_NAME + ".state");
+			file = file.resolvePath(Const.APP_NAME + ".state");
 			var stream:FileStream = new FileStream();
 			stream.open(file, FileMode.WRITE);
 			stream.writeUTFBytes(data);
@@ -38,9 +33,8 @@ package commands
 
 		private function serializeGameModel():String
 		{
-			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
-			var achievementsProxy:AchievementsProxy = Facade.getInstance(AppFacade.NAME).
-					retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
 
 			var unitsList:Array = [];
 			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++)

@@ -1,4 +1,4 @@
-package facade
+package app
 {
 	import commands.ActivateCommand;
 	import commands.BuyUnitCommand;
@@ -11,6 +11,8 @@ package facade
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 
+	import models.GameModel;
+
 	import proxy.AchievementsProxy;
 
 	import proxy.LevelsProxy;
@@ -21,7 +23,7 @@ package facade
 
 	public class AppFacade extends Facade
 	{
-		public static const NAME:String = "APP_FACADE";
+		public static const NAME:String = "appFacade";
 
 		[Embed(source="config/units.xml", mimeType="application/octet-stream")]
 		private static const unitsConfig:Class;
@@ -32,9 +34,22 @@ package facade
 		[Embed(source="config/achievements.xml", mimeType="application/octet-stream")]
 		private static const achievementsConfig:Class;
 
+		private var _gameModel:GameModel;
+
 		public function AppFacade(key:String)
 		{
 			super(key);
+		}
+
+		override protected function initializeFacade():void
+		{
+			_gameModel = new GameModel(multitonKey);
+			super.initializeFacade();
+		}
+
+		public function get gameModel():GameModel
+		{
+			return _gameModel;
 		}
 
 		override protected function initializeController():void
@@ -57,9 +72,17 @@ package facade
 		{
 			super.initializeModel();
 
-			registerProxy(new UnitsProxy(XML(new unitsConfig())));
-			registerProxy(new LevelsProxy(XML(new levelsConfig())));
-			registerProxy(new AchievementsProxy(XML(new achievementsConfig())));
+			var unitsProxy:UnitsProxy = new UnitsProxy();
+			var levelsProxy:LevelsProxy = new LevelsProxy();
+			var achievementsProxy:AchievementsProxy = new AchievementsProxy();
+
+			registerProxy(unitsProxy);
+			registerProxy(levelsProxy);
+			registerProxy(achievementsProxy);
+
+			unitsProxy.setData(XML(new unitsConfig()));
+			levelsProxy.setData(XML(new levelsConfig()));
+			achievementsProxy.setData(XML(new achievementsConfig()));
 		}
 
 		override protected function initializeView():void

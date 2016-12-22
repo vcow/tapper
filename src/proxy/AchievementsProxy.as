@@ -3,13 +3,15 @@ package proxy
 	import models.*;
 	import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 
+	import vo.AchievementInfo;
+
 	public class AchievementsProxy extends Proxy
 	{
 		public static const NAME:String = "achievementsProxy";
 
 		private var _achievements:Vector.<AchievementInfo>;
 
-		public function AchievementsProxy(data:Object)
+		public function AchievementsProxy(data:Object = null)
 		{
 			super(NAME, data);
 		}
@@ -24,7 +26,11 @@ package proxy
 			{
 				var achievements:XMLList = src.achievement;
 				for (var i:int = 0, l:int = achievements.length(); i < l; i++)
-					_achievements.push(new AchievementInfo(achievements[i]));
+				{
+					var achievementInfo:AchievementInfo = new AchievementInfo(achievements[i]);
+					achievementInfo.initializeNotifier(multitonKey);
+					_achievements.push(achievementInfo);
+				}
 			}
 		}
 

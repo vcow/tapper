@@ -1,6 +1,6 @@
 package commands
 {
-	import models.AchievementInfo;
+	import vo.AchievementInfo;
 
 	import models.ActionReward;
 	import models.IReward;

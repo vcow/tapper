@@ -1,8 +1,6 @@
 package commands
 {
-	import models.GameModel;
-
-	import org.puremvc.as3.multicore.core.Model;
+	import app.AppFacade;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -14,11 +12,10 @@ package commands
 	{
 		override public function execute(notification:INotification):void
 		{
-			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
-			if (gameModel.isActive)
+			if (AppFacade(facade).gameModel.isActive)
 			{
-				Starling.juggler.removeByID(gameModel.callbackId);
-				gameModel.callbackId = 0;
+				Starling.juggler.removeByID(AppFacade(facade).gameModel.callbackId);
+				AppFacade(facade).gameModel.callbackId = 0;
 			}
 		}
 	}

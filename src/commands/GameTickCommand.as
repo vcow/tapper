@@ -1,7 +1,10 @@
 package commands
 {
+	import app.AppFacade;
+
+	import models.GameModel;
 	import models.ProfitInfo;
-	import models.Unit;
+	import vo.Unit;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -9,6 +12,7 @@ package commands
 	{
 		override public function execute(notification:INotification):void
 		{
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 			gameModel.tickCount++;
 
 			var profitList:Vector.<ProfitInfo> = new Vector.<ProfitInfo>();

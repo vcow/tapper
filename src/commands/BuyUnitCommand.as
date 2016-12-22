@@ -1,8 +1,13 @@
 package commands
 {
+	import app.AppFacade;
+
 	import gears.TriggerBroadcaster;
 
-	import models.Unit;
+	import models.GameModel;
+
+	import vo.Unit;
+
 	import models.UnitInfo;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -12,9 +17,12 @@ package commands
 		override public function execute(notification:INotification):void
 		{
 			var unitInfo:UnitInfo = notification.getBody() as UnitInfo;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 
-			if (gameModel.money >= unitInfo.price) {
+			if (gameModel.money >= unitInfo.price)
+			{
 				var unit:Unit = new Unit(unitInfo, unitInfo.price, unitInfo.perClickProfit || unitInfo.perSecondProfit);
+				unit.initializeNotifier(multitonKey);
 				gameModel.money -= unitInfo.price;
 
 				gameModel.units.push(unit);

@@ -1,10 +1,8 @@
 package commands
 {
-	import models.GameModel;
+	import app.AppFacade;
 
 	import models.SkinType;
-
-	import org.puremvc.as3.multicore.core.Model;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -14,10 +12,9 @@ package commands
 	{
 		override public function execute(notification:INotification):void
 		{
-			var gameModel:GameModel = Model.getInstance(GameModel.NAME) as GameModel;
-			if (gameModel.currentSkin != SkinType.BRONZE)
+			if (AppFacade(facade).gameModel.currentSkin != SkinType.BRONZE)
 			{
-				gameModel.currentSkin = SkinType.BRONZE;
+				AppFacade(facade).gameModel.currentSkin = SkinType.BRONZE;
 				sendNotification(Const.SWITCH_TO_GAME);
 			}
 		}

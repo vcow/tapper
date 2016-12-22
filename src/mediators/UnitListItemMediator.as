@@ -2,7 +2,7 @@ package mediators
 {
 	import dto.UnitEvent;
 
-	import models.Unit;
+	import vo.Unit;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 

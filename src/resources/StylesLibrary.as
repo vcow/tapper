@@ -11,9 +11,9 @@ package resources
 	import resources.skin.PopupDescriptionStyleProvider;
 	import resources.skin.PopupTitleStyleProvider;
 	import resources.skin.ScrollerStyleProviderBase;
-import resources.skin.WoodenScrollerStyleProvider;
-import resources.skin.WoodenShopButtonStyleHighlightedProvider;
-import resources.skin.WoodenShopButtonStyleNormalProvider;
+	import resources.skin.WoodenScrollerStyleProvider;
+	import resources.skin.WoodenShopButtonStyleHighlightedProvider;
+	import resources.skin.WoodenShopButtonStyleNormalProvider;
 	import resources.skin.ShopItemDescriptionLabelStyleProvider;
 	import resources.skin.ShopItemTitleLabelStyleProvider;
 	import resources.skin.ShopScrollerStyleProvider;

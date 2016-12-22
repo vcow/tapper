@@ -33,6 +33,8 @@ package
 		public static const SWITCH_TO_GAME:String = "switchToGame";
 		public static const SWITCH_TO_SHOP:String = "switchToShop";
 
+		public static const COUNT_CHANGED:String = "counterChanged";
+
 		public function Const()
 		{
 			throw Error("Const is a static class.");

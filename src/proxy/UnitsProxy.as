@@ -9,7 +9,7 @@ package proxy
 
 		private var _units:Vector.<UnitInfo>;
 
-		public function UnitsProxy(data:Object)
+		public function UnitsProxy(data:Object = null)
 		{
 			super(NAME, data);
 		}
