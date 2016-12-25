@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:fb353ffda32574ef18324a600fb8be72:e47e6738ed85c729e6ce154e03645c83:41201d13b3dce36d097714bf2eed41d9$ -->
+<TextureAtlas imagePath="shop.atf" width="1024" height="2048">
+    <SubTexture name="back" x="1" y="1" width="576" height="1024"/>
+    <SubTexture name="back_bn_down" x="922" y="385" width="101" height="97"/>
+    <SubTexture name="back_bn_normal" x="915" y="484" width="101" height="97"/>
+    <SubTexture name="item_back" x="761" y="659" rotated="true" width="126" height="505" frameX="-1" frameY="0" frameWidth="507" frameHeight="126"/>
+    <SubTexture name="item_limit_back" x="876" y="467" rotated="true" width="37" height="190"/>
+    <SubTexture name="message_back" x="579" y="128" rotated="true" width="295" height="479"/>
+    <SubTexture name="message_cancel_bn_down" x="876" y="128" rotated="true" width="57" height="109"/>
+    <SubTexture name="message_cancel_bn_normal" x="876" y="239" rotated="true" width="57" height="109"/>
+    <SubTexture name="message_ok_bn_down" x="940" y="1" rotated="true" width="71" height="190"/>
+    <SubTexture name="message_ok_bn_normal" x="935" y="193" rotated="true" width="71" height="190"/>
+    <SubTexture name="offer_back" x="579" y="609" width="180" height="115"/>
+    <SubTexture name="price_marker_green" x="915" y="583" rotated="true" width="32" height="197"/>
+    <SubTexture name="price_marker_red" x="949" y="583" rotated="true" width="31" height="191" frameX="-3" frameY="0" frameWidth="197" frameHeight="32"/>
+    <SubTexture name="scotch" x="876" y="350" rotated="true" width="44" height="115"/>
+    <SubTexture name="unavailable_back" x="579" y="1" width="359" height="125"/>
+</TextureAtlas>

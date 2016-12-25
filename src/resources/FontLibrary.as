@@ -30,9 +30,37 @@ package resources
 		[Embed(source="fonts/shop_message/shop_message.fnt", mimeType="application/octet-stream")]
 		private static const shopMessageDescription:Class;
 
+		[Embed(source="fonts/shop_price_20.atf", mimeType="application/octet-stream")]
+		private static const shopPrice20Asset:Class;
+
+		[Embed(source="fonts/shop_price_20.fnt", mimeType="application/octet-stream")]
+		private static const shopPrice20Description:Class;
+
+		[Embed(source="fonts/shop_price_31.atf", mimeType="application/octet-stream")]
+		private static const shopPrice31Asset:Class;
+
+		[Embed(source="fonts/shop_price_31.fnt", mimeType="application/octet-stream")]
+		private static const shopPrice31Description:Class;
+
+		[Embed(source="fonts/shop_price_52.atf", mimeType="application/octet-stream")]
+		private static const shopPrice52Asset:Class;
+
+		[Embed(source="fonts/shop_price_52.fnt", mimeType="application/octet-stream")]
+		private static const shopPrice52Description:Class;
+
+		[Embed(source="fonts/shop_title_23.atf", mimeType="application/octet-stream")]
+		private static const shopTitle23Asset:Class;
+
+		[Embed(source="fonts/shop_title_23.fnt", mimeType="application/octet-stream")]
+		private static const shopTitle23Description:Class;
+
 		private static const ARIAL_16:String = "arial16";
 		private static const ARIAL_30:String = "arial30";
 		private static const ARIAL_26:String = "arial26";
+		private static const SHOP_PRICE_20:String = "shopPrice20";
+		private static const SHOP_PRICE_31:String = "shopPrice31";
+		private static const SHOP_PRICE_52:String = "shopPrice52";
+		private static const SHOP_TITLE_23:String = "shopTitle23";
 
 		private static const SHOP_MESSAGE:String = "shopMessage";
 
@@ -45,6 +73,15 @@ package resources
 
 		private var _shopMessageTexture:Texture;
 		private var _shopMessageFont:BitmapFont;
+
+		private var _shopPrice20Texture:Texture;
+		private var _shopPrice20Font:BitmapFont;
+		private var _shopPrice31Texture:Texture;
+		private var _shopPrice31Font:BitmapFont;
+		private var _shopPrice52Texture:Texture;
+		private var _shopPrice52Font:BitmapFont;
+		private var _shopTitle23Texture:Texture;
+		private var _shopTitle23Font:BitmapFont;
 
 		private static var _instance:FontLibrary;
 
@@ -103,6 +140,50 @@ package resources
 			return SHOP_MESSAGE;
 		}
 
+		public function get shopPrice20():String
+		{
+			if (!_shopPrice20Font) {
+				_shopPrice20Texture = Texture.fromEmbeddedAsset(shopPrice20Asset);
+				_shopPrice20Texture.root.onRestore = onShopPrice20Restore;
+				_shopPrice20Font = new BitmapFont(_shopPrice20Texture, new XML(new shopPrice20Description()));
+				TextField.registerBitmapFont(_shopPrice20Font, SHOP_PRICE_20);
+			}
+			return SHOP_PRICE_20;
+		}
+
+		public function get shopPrice31():String
+		{
+			if (!_shopPrice31Font) {
+				_shopPrice31Texture = Texture.fromEmbeddedAsset(shopPrice31Asset);
+				_shopPrice31Texture.root.onRestore = onShopPrice31Restore;
+				_shopPrice31Font = new BitmapFont(_shopPrice31Texture, new XML(new shopPrice31Description()));
+				TextField.registerBitmapFont(_shopPrice31Font, SHOP_PRICE_31);
+			}
+			return SHOP_PRICE_31;
+		}
+
+		public function get shopPrice52():String
+		{
+			if (!_shopPrice52Font) {
+				_shopPrice52Texture = Texture.fromEmbeddedAsset(shopPrice52Asset);
+				_shopPrice52Texture.root.onRestore = onShopPrice52Restore;
+				_shopPrice52Font = new BitmapFont(_shopPrice52Texture, new XML(new shopPrice52Description()));
+				TextField.registerBitmapFont(_shopPrice52Font, SHOP_PRICE_52);
+			}
+			return SHOP_PRICE_52;
+		}
+
+		public function get shopTitle23():String
+		{
+			if (!_shopTitle23Font) {
+				_shopTitle23Texture = Texture.fromEmbeddedAsset(shopTitle23Asset);
+				_shopTitle23Texture.root.onRestore = onShopTitle23Restore;
+				_shopTitle23Font = new BitmapFont(_shopTitle23Texture, new XML(new shopTitle23Description()));
+				TextField.registerBitmapFont(_shopTitle23Font, SHOP_TITLE_23);
+			}
+			return SHOP_TITLE_23;
+		}
+
 		private function onArial16Restore():void
 		{
 			_arial16Texture.root.uploadAtfData(new arial16Asset());
@@ -121,6 +202,26 @@ package resources
 		private function onShopMessageRestore():void
 		{
 			_arial16Texture.root.uploadAtfData(new shopMessageAsset());
+		}
+
+		private function onShopPrice20Restore():void
+		{
+			_shopPrice20Texture.root.uploadAtfData(new shopPrice20Asset());
+		}
+
+		private function onShopPrice31Restore():void
+		{
+			_shopPrice31Texture.root.uploadAtfData(new shopPrice31Asset());
+		}
+
+		private function onShopPrice52Restore():void
+		{
+			_shopPrice52Texture.root.uploadAtfData(new shopPrice52Asset());
+		}
+
+		private function onShopTitle23Restore():void
+		{
+			_shopTitle23Texture.root.uploadAtfData(new shopTitle23Asset());
 		}
 	}
 }

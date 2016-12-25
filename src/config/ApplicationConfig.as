@@ -55,7 +55,7 @@ package config
 	public class ApplicationConfig implements IConfig
 	{
 		public static const APP_NAME:String = "simjew";
-		public static const APP_VERSION:String = "1.0.0.0";
+		public static const APP_VERSION:String = "1.0.0.1";
 
 		[Inject]
 		public var injector:IInjector;

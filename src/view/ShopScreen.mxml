@@ -2,38 +2,54 @@
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
                creationComplete="updateScroller()">
     <f:layout>
-        <f:VerticalLayout gap="5" horizontalAlign="center"/>
+        <f:AnchorLayout/>
     </f:layout>
+    <f:layoutData>
+        <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
+    </f:layoutData>
 
-    <f:LayoutGroup>
-        <f:layout>
-            <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
-        </f:layout>
+    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back'))}">
+        <!--f:layout>
+            <f:AnchorLayout/>
+        </f:layout-->
         <f:layoutData>
-            <f:VerticalLayoutData percentWidth="100"/>
+            <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
-        <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
+        <f:layout>
+            <f:VerticalLayout gap="5" horizontalAlign="center"/>
+        </f:layout>
 
-        <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+        <f:LayoutGroup>
+            <f:layout>
+                <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
+            </f:layout>
             <f:layoutData>
-                <f:HorizontalLayoutData percentWidth="100"/>
+                <f:VerticalLayoutData percentWidth="100"/>
             </f:layoutData>
-        </f:Label>
 
-        <f:LayoutGroup width="50"/>
+            <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
+
+            <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+                <f:layoutData>
+                    <f:HorizontalLayoutData percentWidth="100"/>
+                </f:layoutData>
+            </f:Label>
+
+            <f:LayoutGroup width="50"/>
+        </f:LayoutGroup>
+
+        <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+                itemRendererType="view.ShopListItemRenderer" isSelectable="false"
+                triggered="{dispatchEventWith(SELECT_UNIT, false, event.data)}">
+            <f:layout>
+                <f:VerticalLayout id="listViewLayout" gap="2"/>
+            </f:layout>
+            <f:layoutData>
+                <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+            </f:layoutData>
+        </f:List>
     </f:LayoutGroup>
-
-    <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
-            itemRendererType="view.ShopListItemRenderer" isSelectable="false"
-            triggered="{dispatchEventWith(SELECT_UNIT, false, event.data)}">
-        <f:layout>
-            <f:VerticalLayout id="listViewLayout" gap="2"/>
-        </f:layout>
-        <f:layoutData>
-            <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
-        </f:layoutData>
-    </f:List>
 
     <fx:Script><![CDATA[
         import feathers.core.PopUpManager;
@@ -41,9 +57,11 @@
 
         import models.UnitInfo;
 
+        import resources.AtlasLibrary;
+
         import resources.StylesLibrary;
 
-        import starling.display.DisplayObject;
+        import starling.display.Image;
 
         import starling.events.Event;
 
@@ -64,7 +82,8 @@
 
         public function set unitsList(value:ListCollection):void
         {
-            if (value != _unitsList) {
+            if (value != _unitsList)
+            {
                 _unitsList = value;
                 dispatchEventWith("unitsListChanged");
             }
@@ -75,7 +94,8 @@
         {
             var lastAvailable:int = getLastAvailable();
             var h:int = getListItemHeight();
-            if (h > 0 && lastAvailable >= 0) {
+            if (h > 0 && lastAvailable >= 0)
+            {
                 var itemHeight:int = h + listViewLayout.gap;
                 listView.scrollToPosition(0, Math.max(0, itemHeight * lastAvailable - listView.height + h));
             }
@@ -85,7 +105,8 @@
         {
             var lastAvailable:int = getLastAvailable();
             var h:int = getListItemHeight();
-            if (h > 0 && lastAvailable >= 0) {
+            if (h > 0 && lastAvailable >= 0)
+            {
                 var itemHeight:int = h + listViewLayout.gap;
                 listView.verticalScrollPosition = Math.max(0, itemHeight * lastAvailable - listView.height + h);
             }
@@ -95,7 +116,8 @@
         {
             var h:int = 0;
             if (isInitialized && listView.viewPort is starling.display.DisplayObjectContainer &&
-                    starling.display.DisplayObjectContainer(listView.viewPort).numChildren > 0) {
+                    starling.display.DisplayObjectContainer(listView.viewPort).numChildren > 0)
+            {
                 listView.validate();
                 h = starling.display.DisplayObjectContainer(listView.viewPort).getChildAt(0).height;
             }
@@ -105,10 +127,13 @@
         private function getLastAvailable():int
         {
             var lastAvailable:int = -1;
-            if (unitsList && !isNaN(money) && unitsList.length > 0) {
-                for (var i:int = 0, l:int = unitsList.length; i < l; i++) {
+            if (unitsList && !isNaN(money) && unitsList.length > 0)
+            {
+                for (var i:int = 0, l:int = unitsList.length; i < l; i++)
+                {
                     var unit:UnitInfo = unitsList.getItemAt(i) as UnitInfo;
-                    if (unit) {
+                    if (unit)
+                    {
                         var price:Number = unit.price;
                         if (price >= 0 && price <= money) lastAvailable = i;
                     }
@@ -134,7 +159,8 @@
             popup.removeEventListener(starling.events.Event.CANCEL, onClosePopup);
             PopUpManager.removePopUp(popup);
 
-            if (event.type == starling.events.Event.CLOSE) {
+            if (event.type == starling.events.Event.CLOSE)
+            {
                 dispatchEventWith(BUY_UNIT, false, popup.data);
             }
         }

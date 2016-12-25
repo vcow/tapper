@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-<f:LayoutGroupListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+<f:LayoutGroupListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+                               backgroundSkin="{new Image(icon)}">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
-
-    <f:LayoutGroup backgroundSkin="{new Quad(120, 90, 0x909090)}"/>
 
     <f:Label text="{counter}" styleProvider="{StylesLibrary.counterLabelStyleProvider}">
         <f:layoutData>
@@ -13,12 +12,28 @@
     </f:Label>
 
     <fx:Script><![CDATA[
+        import models.Unit;
+
+        import resources.AtlasLibrary;
+
         import resources.StylesLibrary;
 
-        import starling.display.Quad;
+        import starling.display.Image;
+
+        import starling.textures.Texture;
 
         [Bindable]
         public var counter:String;
 
+        [Bindable]
+        public var icon:Texture;
+
+        override public function set data(value:Object):void
+        {
+            super.data = value;
+
+            var unit:Unit = data as Unit;
+            if (unit) icon = AtlasLibrary.getInstance().unitsSmall.getTexture(unit.info.id);
+        }
         ]]></fx:Script>
 </f:LayoutGroupListItemRenderer>
