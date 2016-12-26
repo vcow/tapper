@@ -1,6 +1,6 @@
 package models
 {
-	public interface IReward
+	public interface IReward extends IPopUpData
 	{
 	}
 }

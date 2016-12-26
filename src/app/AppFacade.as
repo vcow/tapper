@@ -11,6 +11,8 @@ package app
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 
+	import mediators.MainScreenMediator;
+
 	import models.GameModel;
 
 	import proxy.AchievementsProxy;
@@ -83,13 +85,6 @@ package app
 			unitsProxy.setData(XML(new unitsConfig()));
 			levelsProxy.setData(XML(new levelsConfig()));
 			achievementsProxy.setData(XML(new achievementsConfig()));
-		}
-
-		override protected function initializeView():void
-		{
-			super.initializeView();
-
-			// register mediators
 		}
 	}
 }

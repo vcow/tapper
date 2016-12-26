@@ -26,8 +26,6 @@ package config
 
 		public function configure():void
 		{
-			mediatorMap.map(MainScreen).toMediator(MainScreenMediator);
-			mediatorMap.map(StartScreen).toMediator(StartScreenMediator);
 			mediatorMap.map(GameScreen).toMediator(GameScreenMediator);
 			mediatorMap.map(ShopScreen).toMediator(ShopScreenMediator);
 			mediatorMap.map(ShopListItemRenderer).toMediator(ShopListItemMediator);
