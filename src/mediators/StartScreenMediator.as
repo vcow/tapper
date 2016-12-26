@@ -1,8 +1,6 @@
 package mediators
 {
-	import dto.SwitchScreenEvent;
-
-	import robotlegs.starling.bundles.mvcs.Mediator;
+	import org.puremvc.as3.multicore.patterns.mediator.Mediator;
 
 	import view.StartScreen;
 
@@ -10,19 +8,32 @@ package mediators
 
 	public class StartScreenMediator extends Mediator
 	{
-		public function StartScreenMediator()
+		private var _view:StartScreen;
+
+		public function StartScreenMediator(mediatorName:String, viewComponent:Object)
 		{
-			super();
+			super(mediatorName, viewComponent);
 		}
 
-		override public function initialize():void
+		override public function setViewComponent(viewComponent:Object):void
 		{
-			addViewListener(StartScreen.START, onStart);
+			super.setViewComponent(viewComponent);
+			_view = viewComponent as StartScreen;
+		}
+
+		override public function onRegister():void
+		{
+			_view.addEventListener(StartScreen.START, onStart);
+		}
+
+		override public function onRemove():void
+		{
+			_view.removeEventListener(StartScreen.START, onStart);
 		}
 
 		private function onStart(event:Event):void
 		{
-			dispatch(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_GAME));
+			sendNotification(Const.SWITCH_TO_GAME);
 		}
 	}
 }
