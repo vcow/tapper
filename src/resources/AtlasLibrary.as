@@ -35,7 +35,14 @@ package resources
 		[Embed(source="graphics/units_small.xml", mimeType="application/octet-stream")]
 		private static const unitsSmallDescription:Class;
 
+		[Embed(source="graphics/shop.atf", mimeType="application/octet-stream")]
+		private static const shopAsset:Class;
+
+		[Embed(source="graphics/shop.xml", mimeType="application/octet-stream")]
+		private static const shopDescription:Class;
+
 		private var _commonTexture:Texture;
+		private var _shopTexture:Texture;
 		private var _woodenTexture:Texture;
 
 		private var _noiseAnimTexture:Texture;
@@ -46,6 +53,7 @@ package resources
 		private static var _instance:AtlasLibrary;
 
 		private var _common:TextureAtlas;
+		private var _shop:TextureAtlas;
 		private var _wooden:TextureAtlas;
 		private var _noiseAnim:TextureAtlas;
 		private var _unitsBig:TextureAtlas;
@@ -57,6 +65,8 @@ package resources
 
 			_commonTexture = Texture.fromEmbeddedAsset(commonAsset);
 			_commonTexture.root.onRestore = onCommonRestore;
+			_shopTexture = Texture.fromEmbeddedAsset(shopAsset);
+			_shopTexture.root.onRestore = onShopRestore;
 			_woodenTexture = Texture.fromEmbeddedAsset(woodenAsset);
 			_woodenTexture.root.onRestore = onWoodenRestore;
 
@@ -69,6 +79,7 @@ package resources
 			_unitsSmallTexture.root.onRestore = onUnitsSmallRestore;
 
 			_common = new TextureAtlas(_commonTexture, new XML(new commonDescription()));
+			_shop = new TextureAtlas(_shopTexture, new XML(new shopDescription()));
 			_wooden = new TextureAtlas(_woodenTexture, new XML(new woodenDescription()));
 
 			_noiseAnim = new TextureAtlas(_noiseAnimTexture, new XML(new noiseAnimDescription()));
@@ -80,6 +91,11 @@ package resources
 		private function onCommonRestore():void
 		{
 			_commonTexture.root.uploadAtfData(new commonAsset());
+		}
+
+		private function onShopRestore():void
+		{
+			_shopTexture.root.uploadAtfData(new shopAsset());
 		}
 
 		private function onWoodenRestore():void
@@ -111,6 +127,11 @@ package resources
 		public function get common():TextureAtlas
 		{
 			return _common;
+		}
+
+		public function get shop():TextureAtlas
+		{
+			return _shop;
 		}
 
 		public function get wooden():TextureAtlas
