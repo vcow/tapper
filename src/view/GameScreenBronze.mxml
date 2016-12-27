@@ -77,7 +77,7 @@
 
         import starling.display.Quad;
 
-        public static const MEDIATOR_NAME:String = "gameScreenBronzeMediator";
+        public static const MEDIATOR_NAME:String = "gameScreenMediator";
 
         [Bindable]
         private var _mediator:GameScreenMediator;
@@ -90,13 +90,14 @@
             if (facade.hasMediator(MEDIATOR_NAME))
             {
                 _mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
+                facade.removeMediator(MEDIATOR_NAME);
                 _mediator.setViewComponent(this);
             }
             else
             {
                 _mediator = new GameScreenMediator(MEDIATOR_NAME, this);
-                facade.registerMediator(_mediator);
             }
+            facade.registerMediator(_mediator);
         }
 
         override public function dispose():void
