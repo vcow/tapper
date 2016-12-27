@@ -30,7 +30,7 @@
         [Bindable]
         private var _mediator:MainScreenMediator;
 
-        public static function showPopUp(title:String, description:String):void
+        public function showPopUp(title:String, description:String):void
         {
             var popup:PopUp = new PopUp();
             popup.title = title;
@@ -54,6 +54,7 @@
             if (facade.hasMediator(MEDIATOR_NAME))
             {
                 _mediator = facade.retrieveMediator(MEDIATOR_NAME) as MainScreenMediator;
+                _mediator.setViewComponent(this);
             }
             else
             {

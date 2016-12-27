@@ -3,11 +3,10 @@ package mediators
 	import models.IPopUpData;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
-	import org.puremvc.as3.multicore.patterns.mediator.Mediator;
 
 	import view.MainScreen;
 
-	public class MainScreenMediator extends Mediator
+	public class MainScreenMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.POP, Const.POP_TO_ROOT,
 			Const.SWITCH_TO_GAME, Const.SWITCH_TO_SHOP, Const.SHOW];

@@ -1,21 +1,17 @@
 package view
 {
 	import feathers.controls.LayoutGroup;
-	import feathers.data.ListCollection;
 	import feathers.layout.AnchorLayout;
 
 	import models.SkinType;
 
 	import starling.display.DisplayObject;
 
-import view.wooden.GameScreenWooden;
+	import view.wooden.GameScreenWooden;
 
-public class GameScreen extends LayoutGroup implements IGameScreen
+	public class GameScreen extends LayoutGroup
 	{
-		private var _view:IGameScreen;
-		private var _money:Number;
-		private var _unitsList:ListCollection;
-		private var _levelDescription:String;
+		private var _view:DisplayObject;
 		private var _currentSkin:String;
 
 		public static const BACK:String = "back";
@@ -42,44 +38,23 @@ public class GameScreen extends LayoutGroup implements IGameScreen
 		{
 			if (skin == _currentSkin) return;
 
-			switch (skin) {
-				case SkinType.WOOD: _view = new GameScreenWooden(); break;
-				case SkinType.BRONZE: _view = new GameScreenBronze(); break;
-				default: return;
+			switch (skin)
+			{
+				case SkinType.WOOD:
+					_view = new GameScreenWooden();
+					break;
+				case SkinType.BRONZE:
+					_view = new GameScreenBronze();
+					break;
+				default:
+					return;
 			}
 
-			_view.money = _money;
-			_view.unitsList = _unitsList;
-			_view.levelDescription = _levelDescription;
-
-			if (isInitialized) {
-				removeChildren();
+			if (isInitialized)
+			{
+				removeChildren(0, -1, true);
 				addChild(DisplayObject(_view));
 			}
-		}
-
-		public function set money(value:Number):void
-		{
-			if (value == _money) return;
-
-			_money = value;
-			_view.money = value;
-		}
-
-		public function set unitsList(value:ListCollection):void
-		{
-			if (value == _unitsList) return;
-
-			_unitsList = value;
-			_view.unitsList = value;
-		}
-
-		public function set levelDescription(value:String):void
-		{
-			if (value == _levelDescription) return;
-
-			_levelDescription = value;
-			_view.levelDescription = value;
 		}
 	}
 }

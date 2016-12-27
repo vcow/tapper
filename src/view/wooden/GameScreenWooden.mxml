@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
-               xmlns:wooden="view.wooden.*"
-               implements="view.IGameScreen">
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+               xmlns:wooden="view.wooden.*">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
@@ -17,7 +16,7 @@
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
-        <wooden:WoodenIndicator id="indicatorView" value="{money}">
+        <wooden:WoodenIndicator id="indicatorView" value="{_mediator.money}">
             <wooden:layoutData>
                 <f:AnchorLayoutData right="16" top="17"/>
             </wooden:layoutData>
@@ -57,7 +56,7 @@
             </f:layoutData>
         </f:Button>
 
-        <f:List styleProvider="{StylesLibrary.woodenScrollerStyleProvider}" dataProvider="{_unitsList}"
+        <f:List styleProvider="{StylesLibrary.woodenScrollerStyleProvider}" dataProvider="{_mediator.unitsList}"
                 itemRendererType="view.UnitListItemRenderer" isSelectable="false" width="536" height="326">
             <f:layout>
                 <f:TiledRowsLayout useSquareTiles="false" verticalGap="10" horizontalGap="10" paddingTop="10"
@@ -98,7 +97,7 @@
                 <f:AnchorLayout/>
             </f:layout>
 
-            <f:Label text="{_levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
+            <f:Label text="{_mediator.levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
                 <f:layoutData>
                     <f:AnchorLayoutData verticalCenter="0"/>
                 </f:layoutData>
@@ -113,49 +112,53 @@
     </view:ShopWidget-->
 
     <fx:Script><![CDATA[
-        import feathers.data.ListCollection;
+        import app.AppFacade;
+
+        import mediators.GameScreenMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
-
         import resources.StylesLibrary;
         import resources.skin.ButtonStyleProviderBase;
 
         import starling.display.Image;
 
-        import view.*;
+        import view.GameScreen;
 
-        public var _money:Number = 0;
-
-        [Bindable]
-        private var _unitsList:ListCollection;
-
-        [Bindable]
-        private var _levelDescription:String;
+        public static const MEDIATOR_NAME:String = "gameScreenWoodenMediator";
 
         [Bindable]
         private var _shopButtonStyleProvider:ButtonStyleProviderBase = StylesLibrary.woodenShopButtonStyleNormalProvider;
 
-        [Bindable(event="moneyChanged")]
-        public function get money():Number
+        [Bindable]
+        private var _mediator:GameScreenMediator;
+
+        override protected function initialize():void
         {
-            return _money;
+            super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                _mediator = new GameScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(_mediator);
+            }
         }
 
-        public function set money(value:Number):void
+        override public function dispose():void
         {
-            if (value == _money) return;
-            _money = value;
-            dispatchEventWith("moneyChanged");
-        }
-
-        public function set unitsList(value:ListCollection):void
-        {
-            _unitsList = value;
-        }
-
-        public function set levelDescription(value:String):void
-        {
-            _levelDescription = value;
+            if (_mediator)
+            {
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+            }
+            super.dispose();
         }
         ]]></fx:Script>
 </f:LayoutGroup>

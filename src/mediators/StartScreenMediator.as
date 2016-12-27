@@ -1,12 +1,10 @@
 package mediators
 {
-	import org.puremvc.as3.multicore.patterns.mediator.Mediator;
+	import starling.events.Event;
 
 	import view.StartScreen;
 
-	import starling.events.Event;
-
-	public class StartScreenMediator extends Mediator
+	public class StartScreenMediator extends BindableMediator
 	{
 		private var _view:StartScreen;
 

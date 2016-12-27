@@ -1,108 +1,141 @@
 package mediators
 {
-	import dto.ActionEvent;
-	import dto.GameEvent;
-	import dto.GameStateEvent;
-	import dto.SwitchScreenEvent;
-	import dto.UIEvent;
+	import app.AppFacade;
 
 	import feathers.data.ListCollection;
 
-	import proxy.AchievementsProxy;
-
 	import models.GameModel;
 	import models.LevelInfo;
-	import proxy.LevelsProxy;
 	import models.SkinType;
 
-	import robotlegs.starling.bundles.mvcs.Mediator;
+	import org.puremvc.as3.multicore.interfaces.INotification;
 
-	import view.GameScreen;
+	import proxy.LevelsProxy;
 
 	import starling.events.Event;
 
-	public class GameScreenMediator extends Mediator
+	import view.GameScreen;
+
+	public class GameScreenMediator extends BindableMediator
 	{
-		[Inject]
-		public var gameModel:GameModel;
+		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST,
+			Const.UPDATE_LEVEL, Const.SET_SKIN_BRONZE];
 
-		[Inject]
-		public var view:GameScreen;
+		private var _view:GameScreen;
 
-		[Inject]
-		public var achievementsModel:AchievementsProxy;
+		private var _money:Number = 0;
+		private var _unitsList:ListCollection;
+		private var _levelDescription:String;
 
-		[Inject]
-		public var levelsModel:LevelsProxy;
-
-		public function GameScreenMediator()
+		public function GameScreenMediator(mediatorName:String, viewComponent:Object)
 		{
-			super();
+			super(mediatorName, viewComponent);
 		}
 
-		override public function initialize():void
+		override public function setViewComponent(viewComponent:Object):void
 		{
-			addViewListener(GameScreen.BACK, onBack);
-			addViewListener(GameScreen.SHOP, onShop);
-			addViewListener(GameScreen.TAP, onTap);
-
-			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
-			addContextListener(UIEvent.UPDATE_UNITS_LIST, onUpdateUnitsList);
-			addContextListener(UIEvent.UPDATE_LEVEL, onUpdateLevel);
-			addContextListener(ActionEvent.SET_SKIN_BRONZE, onSetSkinBronze);
-
-			onUpdateMoney();
-			onUpdateUnitsList();
-			onUpdateLevel();
-
-			GameScreen(view).setSkin(gameModel.currentSkin);
-			dispatch(new GameStateEvent(GameStateEvent.START_GAME));
+			super.setViewComponent(viewComponent);
+			_view = viewComponent as GameScreen;
 		}
 
-		private function onSetSkinBronze(event:ActionEvent):void
+		override public function listNotificationInterests():Array
 		{
-			GameScreen(view).setSkin(SkinType.BRONZE);
+			return _interests;
 		}
 
-		private function onUpdateMoney(Event:UIEvent = null):void
+		override public function onRegister():void
 		{
-			GameScreen(view).money = Math.round(gameModel.money);
+			_view.addEventListener(GameScreen.BACK, onBack);
+			_view.addEventListener(GameScreen.SHOP, onShop);
+			_view.addEventListener(GameScreen.TAP, onTap);
+
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+
+			_money = Math.round(gameModel.money);
+			dispatchEventWith("moneyChanged");
+
+			_unitsList = new ListCollection(gameModel.activeUnits);
+			dispatchEventWith("unitsListChanged");
+
+			_levelDescription = getLevelDescription();
+			dispatchEventWith("levelDescriptionChanged");
+
+			_view.setSkin(gameModel.currentSkin);
+			sendNotification(Const.START_GAME);
 		}
 
-		private function onUpdateUnitsList(Event:UIEvent = null):void
+		override public function onRemove():void
 		{
-			GameScreen(view).unitsList = new ListCollection(gameModel.activeUnits);
+			_view.removeEventListener(GameScreen.BACK, onBack);
+			_view.removeEventListener(GameScreen.SHOP, onShop);
+			_view.removeEventListener(GameScreen.TAP, onTap);
+
+			sendNotification(Const.STOP_GAME);
 		}
 
-		private function onUpdateLevel(Event:UIEvent = null):void
+		override public function handleNotification(notification:INotification):void
 		{
-			var level:LevelInfo = levelsModel.getLevelById(gameModel.level.toString());
-			if (level) {
-				GameScreen(view).levelDescription = level.description || "";
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			switch (notification.getName())
+			{
+				case Const.UPDATE_MONEY:
+					_money = Math.round(gameModel.money);
+					dispatchEventWith("moneyChanged");
+					break;
+				case Const.UPDATE_UNITS_LIST:
+					_unitsList = new ListCollection(gameModel.activeUnits);
+					dispatchEventWith("unitsListChanged");
+					break;
+				case Const.UPDATE_LEVEL:
+					_levelDescription = getLevelDescription();
+					dispatchEventWith("levelDescriptionChanged");
+					break;
+				case Const.SET_SKIN_BRONZE:
+					_view.setSkin(SkinType.BRONZE);
+					break;
 			}
-			else {
-				GameScreen(view).levelDescription = "";
-			}
+		}
+
+		[Bindable(event="moneyChanged")]
+		public function get money():Number
+		{
+			return _money;
+		}
+
+		[Bindable(event="unitsListChanged")]
+		public function get unitsList():ListCollection
+		{
+			return _unitsList;
+		}
+
+		[Bindable(event="levelDescriptionChanged")]
+		public function get levelDescription():String
+		{
+			return _levelDescription;
+		}
+
+		private function getLevelDescription():String
+		{
+			var levelsProxy:LevelsProxy = facade.retrieveProxy(LevelsProxy.NAME) as LevelsProxy;
+			var level:LevelInfo = levelsProxy.getLevelById(AppFacade(facade).gameModel.level.toString());
+			if (level)
+				return level.description || "";
+			return "";
 		}
 
 		private function onShop(event:Event):void
 		{
-			dispatch(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_SHOP));
+			sendNotification(Const.SWITCH_TO_SHOP);
 		}
 
 		private function onTap(event:Event):void
 		{
-			dispatch(new GameEvent(GameEvent.TAP));
+			sendNotification(Const.TAP);
 		}
 
 		private function onBack(event:Event):void
 		{
-			dispatch(new SwitchScreenEvent(SwitchScreenEvent.POP));
-		}
-
-		override public function destroy():void
-		{
-			dispatch(new GameStateEvent(GameStateEvent.STOP_GAME));
+			sendNotification(Const.POP);
 		}
 	}
 }
