@@ -6,7 +6,6 @@ package mediators
 
 	import models.GameModel;
 	import models.LevelInfo;
-	import models.SkinType;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -18,8 +17,7 @@ package mediators
 
 	public class GameScreenMediator extends BindableMediator
 	{
-		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST,
-			Const.UPDATE_LEVEL, Const.SET_SKIN_BRONZE];
+		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST, Const.UPDATE_LEVEL];
 
 		private var _money:Number = 0;
 		private var _unitsList:ListCollection;
@@ -54,9 +52,6 @@ package mediators
 
 				_levelDescription = getLevelDescription();
 				dispatchEventWith("levelDescriptionChanged");
-
-				gameScreen.setSkin(gameModel.currentSkin);
-				sendNotification(Const.START_GAME);
 			}
 		}
 
@@ -68,8 +63,6 @@ package mediators
 				gameScreen.removeEventListener(GameScreen.BACK, onBack);
 				gameScreen.removeEventListener(GameScreen.SHOP, onShop);
 				gameScreen.removeEventListener(GameScreen.TAP, onTap);
-
-				sendNotification(Const.STOP_GAME);
 			}
 		}
 
@@ -89,10 +82,6 @@ package mediators
 				case Const.UPDATE_LEVEL:
 					_levelDescription = getLevelDescription();
 					dispatchEventWith("levelDescriptionChanged");
-					break;
-				case Const.SET_SKIN_BRONZE:
-					var gameScreen:GameScreen = getViewComponent() as GameScreen;
-					gameScreen.setSkin(SkinType.BRONZE);
 					break;
 			}
 		}

@@ -8,7 +8,7 @@
     </f:StackScreenNavigatorItem>
 
     <f:StackScreenNavigatorItem id="gameScreenItem">
-        <screen:GameScreen/>
+        <screen:GameScreenLayer/>
     </f:StackScreenNavigatorItem>
 
     <f:StackScreenNavigatorItem id="shopScreenItem">

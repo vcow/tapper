@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
+<view:GameScreen xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
                backgroundSkin="{new Quad(10, 10, 0xff0000)}">
-    <f:layout>
+    <view:layout>
         <f:AnchorLayout/>
-    </f:layout>
-    <f:layoutData>
+    </view:layout>
+    <view:layoutData>
         <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-    </f:layoutData>
+    </view:layoutData>
 
     <f:LayoutGroup>
         <f:layout>
@@ -25,7 +25,7 @@
             </f:layoutData>
 
             <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}"
-                      triggered="{dispatchEventWith(GameScreen.BACK, true)}"/>
+                      triggered="{dispatchEventWith(BACK, true)}"/>
 
             <f:Label text="{_mediator.money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
                 <f:layoutData>
@@ -34,7 +34,7 @@
             </f:Label>
 
             <f:Button styleProvider="{StylesLibrary.woodenShopButtonStyleNormalProvider}"
-                      triggered="{dispatchEventWith(GameScreen.SHOP, true)}"/>
+                      triggered="{dispatchEventWith(SHOP, true)}"/>
         </f:LayoutGroup>
 
         <f:LayoutGroup height="70">
@@ -67,47 +67,8 @@
     </view:ShopWidget>
 
     <fx:Script><![CDATA[
-        import app.AppFacade;
-
-        import mediators.GameScreenMediator;
-
-        import org.puremvc.as3.multicore.patterns.facade.Facade;
-
         import resources.StylesLibrary;
 
         import starling.display.Quad;
-
-        public static const MEDIATOR_NAME:String = "gameScreenMediator";
-
-        [Bindable]
-        private var _mediator:GameScreenMediator;
-
-        override protected function initialize():void
-        {
-            super.initialize();
-
-            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
-            if (facade.hasMediator(MEDIATOR_NAME))
-            {
-                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
-                facade.removeMediator(MEDIATOR_NAME);
-                _mediator.setViewComponent(this);
-            }
-            else
-            {
-                _mediator = new GameScreenMediator(MEDIATOR_NAME, this);
-            }
-            facade.registerMediator(_mediator);
-        }
-
-        override public function dispose():void
-        {
-            if (_mediator)
-            {
-                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
-                facade.removeMediator(_mediator.getMediatorName());
-            }
-            super.dispose();
-        }
         ]]></fx:Script>
-</f:LayoutGroup>
+</view:GameScreen>

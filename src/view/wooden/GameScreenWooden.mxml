@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               xmlns:wooden="view.wooden.*">
-    <f:layout>
+<view:GameScreen xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+                 xmlns:wooden="view.wooden.*" xmlns:view="view.*">
+    <view:layout>
         <f:AnchorLayout/>
-    </f:layout>
-    <f:layoutData>
+    </view:layout>
+    <view:layoutData>
         <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-    </f:layoutData>
+    </view:layoutData>
 
     <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('back'))}">
         <f:layout>
@@ -30,7 +30,7 @@
 
         <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('back_bn_up'))}"
                   downSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('back_bn_down'))}"
-                  triggered="{dispatchEventWith(GameScreen.BACK, true)}">
+                  triggered="{dispatchEventWith(BACK, true)}">
             <f:layoutData>
                 <f:AnchorLayoutData left="23" top="12"/>
             </f:layoutData>
@@ -44,13 +44,13 @@
             </wooden:layoutData>
 
             <f:Button styleProvider="{_shopButtonStyleProvider}"
-                      triggered="{dispatchEventWith(GameScreen.SHOP, true);
+                      triggered="{dispatchEventWith(SHOP, true);
                   _shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}"/>
         </wooden:WoodenShopWidget>
 
         <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('action_bn_up'))}"
                   downSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('action_bn_down'))}"
-                  triggered="{dispatchEventWith(GameScreen.TAP, true)}">
+                  triggered="{dispatchEventWith(TAP, true)}">
             <f:layoutData>
                 <f:AnchorLayoutData top="542" left="38"/>
             </f:layoutData>
@@ -105,61 +105,14 @@
         </f:LayoutGroup>
     </f:LayoutGroup>
 
-    <!--view:ShopWidget dataChanged="{_shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleHighlightedProvider}">
-        <view:layoutData>
-            <f:AnchorLayoutData top="50" right="0"/>
-        </view:layoutData>
-    </view:ShopWidget-->
-
     <fx:Script><![CDATA[
-        import app.AppFacade;
-
-        import mediators.GameScreenMediator;
-
-        import org.puremvc.as3.multicore.patterns.facade.Facade;
-
         import resources.AtlasLibrary;
         import resources.StylesLibrary;
         import resources.skin.ButtonStyleProviderBase;
 
         import starling.display.Image;
 
-        import view.GameScreen;
-
-        public static const MEDIATOR_NAME:String = "gameScreenMediator";
-
         [Bindable]
         private var _shopButtonStyleProvider:ButtonStyleProviderBase = StylesLibrary.woodenShopButtonStyleNormalProvider;
-
-        [Bindable]
-        private var _mediator:GameScreenMediator;
-
-        override protected function initialize():void
-        {
-            super.initialize();
-
-            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
-            if (facade.hasMediator(MEDIATOR_NAME))
-            {
-                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
-                facade.removeMediator(MEDIATOR_NAME);
-                _mediator.setViewComponent(this);
-            }
-            else
-            {
-                _mediator = new GameScreenMediator(MEDIATOR_NAME, this);
-            }
-            facade.registerMediator(_mediator);
-        }
-
-        override public function dispose():void
-        {
-            if (_mediator)
-            {
-                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
-                facade.removeMediator(_mediator.getMediatorName());
-            }
-            super.dispose();
-        }
         ]]></fx:Script>
-</f:LayoutGroup>
+</view:GameScreen>

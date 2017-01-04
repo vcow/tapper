@@ -1,60 +1,59 @@
 package view
 {
+	import app.AppFacade;
+
 	import feathers.controls.LayoutGroup;
-	import feathers.layout.AnchorLayout;
 
-	import models.SkinType;
+	import mediators.GameScreenMediator;
 
-	import starling.display.DisplayObject;
+	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
-	import view.wooden.GameScreenWooden;
+	[Event(name="back", type="starling.events.Event")]
+	[Event(name="shop", type="starling.events.Event")]
+	[Event(name="tap", type="starling.events.Event")]
 
 	public class GameScreen extends LayoutGroup
 	{
-		private var _view:DisplayObject;
-		private var _currentSkin:String;
-
 		public static const BACK:String = "back";
 		public static const SHOP:String = "shop";
 		public static const TAP:String = "tap";
 
+		public static const MEDIATOR_NAME:String = "gameScreenMediator";
+
+		[Bindable]
+		protected var _mediator:GameScreenMediator;
+
 		public function GameScreen()
 		{
 			super();
-
-			layout = new AnchorLayout();
-
-			_view = new GameScreenWooden();
-			_currentSkin = SkinType.WOOD;
 		}
 
 		override protected function initialize():void
 		{
 			super.initialize();
-			addChild(DisplayObject(_view));
+
+			var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+			if (facade.hasMediator(MEDIATOR_NAME))
+			{
+				_mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
+				facade.removeMediator(MEDIATOR_NAME);
+				_mediator.setViewComponent(this);
+			}
+			else
+			{
+				_mediator = new GameScreenMediator(MEDIATOR_NAME, this);
+			}
+			facade.registerMediator(_mediator);
 		}
 
-		public function setSkin(skin:String):void
+		override public function dispose():void
 		{
-			if (skin == _currentSkin) return;
-
-			switch (skin)
+			if (_mediator)
 			{
-				case SkinType.WOOD:
-					_view = new GameScreenWooden();
-					break;
-				case SkinType.BRONZE:
-					_view = new GameScreenBronze();
-					break;
-				default:
-					return;
+				var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+				facade.removeMediator(_mediator.getMediatorName());
 			}
-
-			if (isInitialized)
-			{
-				removeChildren(0, -1, true);
-				addChild(DisplayObject(_view));
-			}
+			super.dispose();
 		}
 	}
 }

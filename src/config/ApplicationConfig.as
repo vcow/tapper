@@ -10,7 +10,7 @@ package config
 
 	import view.MainScreen;
 
-	import view.GameScreen;
+	import view.GameScreenLayer;
 	import view.ShopListItemRenderer;
 	import view.ShopScreen;
 	import view.ShopWidget;
