@@ -20,7 +20,7 @@
 
         public static const START:String = "startGame";
 
-        public static const MEDIATOR_NAME:String = "mainScreenMediator";
+        public static const MEDIATOR_NAME:String = "startScreenMediator";
 
         [Bindable]
         private var _mediator:StartScreenMediator;

@@ -12,15 +12,13 @@
     </f:Label>
 
     <fx:Script><![CDATA[
-        import models.Unit;
-
         import resources.AtlasLibrary;
-
         import resources.StylesLibrary;
 
         import starling.display.Image;
-
         import starling.textures.Texture;
+
+        import vo.Unit;
 
         [Bindable]
         public var counter:String;

@@ -6,5 +6,15 @@ package models
 		{
 			super(src);
 		}
+
+		public function get title():String
+		{
+			return "";
+		}
+
+		public function get description():String
+		{
+			return "";
+		}
 	}
 }

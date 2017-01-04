@@ -38,5 +38,10 @@ package models
 		{
 			return _data;
 		}
+
+		public function get title():String
+		{
+			return _name;
+		}
 	}
 }
