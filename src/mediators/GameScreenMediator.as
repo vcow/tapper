@@ -21,8 +21,6 @@ package mediators
 		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST,
 			Const.UPDATE_LEVEL, Const.SET_SKIN_BRONZE];
 
-		private var _view:GameScreen;
-
 		private var _money:Number = 0;
 		private var _unitsList:ListCollection;
 		private var _levelDescription:String;
@@ -32,12 +30,6 @@ package mediators
 			super(mediatorName, viewComponent);
 		}
 
-		override public function setViewComponent(viewComponent:Object):void
-		{
-			super.setViewComponent(viewComponent);
-			_view = viewComponent as GameScreen;
-		}
-
 		override public function listNotificationInterests():Array
 		{
 			return _interests;
@@ -45,32 +37,40 @@ package mediators
 
 		override public function onRegister():void
 		{
-			_view.addEventListener(GameScreen.BACK, onBack);
-			_view.addEventListener(GameScreen.SHOP, onShop);
-			_view.addEventListener(GameScreen.TAP, onTap);
+			var gameScreen:GameScreen = getViewComponent() as GameScreen;
+			if (gameScreen)
+			{
+				gameScreen.addEventListener(GameScreen.BACK, onBack);
+				gameScreen.addEventListener(GameScreen.SHOP, onShop);
+				gameScreen.addEventListener(GameScreen.TAP, onTap);
 
-			var gameModel:GameModel = AppFacade(facade).gameModel;
+				var gameModel:GameModel = AppFacade(facade).gameModel;
 
-			_money = Math.round(gameModel.money);
-			dispatchEventWith("moneyChanged");
+				_money = Math.round(gameModel.money);
+				dispatchEventWith("moneyChanged");
 
-			_unitsList = new ListCollection(gameModel.activeUnits);
-			dispatchEventWith("unitsListChanged");
+				_unitsList = new ListCollection(gameModel.activeUnits);
+				dispatchEventWith("unitsListChanged");
 
-			_levelDescription = getLevelDescription();
-			dispatchEventWith("levelDescriptionChanged");
+				_levelDescription = getLevelDescription();
+				dispatchEventWith("levelDescriptionChanged");
 
-			_view.setSkin(gameModel.currentSkin);
-			sendNotification(Const.START_GAME);
+				gameScreen.setSkin(gameModel.currentSkin);
+				sendNotification(Const.START_GAME);
+			}
 		}
 
 		override public function onRemove():void
 		{
-			_view.removeEventListener(GameScreen.BACK, onBack);
-			_view.removeEventListener(GameScreen.SHOP, onShop);
-			_view.removeEventListener(GameScreen.TAP, onTap);
+			var gameScreen:GameScreen = getViewComponent() as GameScreen;
+			if (gameScreen)
+			{
+				gameScreen.removeEventListener(GameScreen.BACK, onBack);
+				gameScreen.removeEventListener(GameScreen.SHOP, onShop);
+				gameScreen.removeEventListener(GameScreen.TAP, onTap);
 
-			sendNotification(Const.STOP_GAME);
+				sendNotification(Const.STOP_GAME);
+			}
 		}
 
 		override public function handleNotification(notification:INotification):void
@@ -91,7 +91,8 @@ package mediators
 					dispatchEventWith("levelDescriptionChanged");
 					break;
 				case Const.SET_SKIN_BRONZE:
-					_view.setSkin(SkinType.BRONZE);
+					var gameScreen:GameScreen = getViewComponent() as GameScreen;
+					gameScreen.setSkin(SkinType.BRONZE);
 					break;
 			}
 		}
