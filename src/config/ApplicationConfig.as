@@ -26,7 +26,6 @@ package config
 
 		public function configure():void
 		{
-			mediatorMap.map(ShopScreen).toMediator(ShopScreenMediator);
 			mediatorMap.map(ShopListItemRenderer).toMediator(ShopListItemMediator);
 			mediatorMap.map(UnitListItemRenderer).toMediator(UnitListItemMediator);
 			mediatorMap.map(ShopWidget).toMediator(ShopWidgetMediator);

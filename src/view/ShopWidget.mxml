@@ -10,7 +10,7 @@
     <fx:Script><![CDATA[
         import feathers.utils.touch.TapToTrigger;
 
-        import models.UnitInfo;
+        import vo.UnitInfo;
 
         import starling.display.DisplayObject;
 

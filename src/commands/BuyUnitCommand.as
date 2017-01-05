@@ -8,7 +8,7 @@ package commands
 
 	import vo.Unit;
 
-	import models.UnitInfo;
+	import vo.UnitInfo;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 

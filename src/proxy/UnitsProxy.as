@@ -3,6 +3,8 @@ package proxy
 	import models.*;
 	import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 
+	import vo.UnitInfo;
+
 	public class UnitsProxy extends Proxy
 	{
 		public static const NAME:String = "unitsProxy";
@@ -24,7 +26,11 @@ package proxy
 			{
 				var units:XMLList = src.unit;
 				for (var i:int = 0, l:int = units.length(); i < l; i++)
-					_units.push(new UnitInfo(units[i]));
+				{
+					var unitInfo:UnitInfo = new UnitInfo(units[i]);
+					unitInfo.initializeNotifier(multitonKey);
+					_units.push(unitInfo);
+				}
 			}
 		}
 

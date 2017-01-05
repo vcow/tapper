@@ -52,6 +52,7 @@ package view
 			{
 				var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
 				facade.removeMediator(_mediator.getMediatorName());
+				_mediator = null;
 			}
 			super.dispose();
 		}

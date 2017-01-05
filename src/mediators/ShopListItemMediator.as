@@ -4,7 +4,7 @@ package mediators
 
 	import models.GameModel;
 
-	import models.UnitInfo;
+	import vo.UnitInfo;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;
 

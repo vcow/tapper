@@ -26,7 +26,7 @@
     <fx:Script><![CDATA[
         import feathers.utils.touch.TapToTrigger;
 
-        import models.UnitInfo;
+        import vo.UnitInfo;
 
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
@@ -61,29 +61,34 @@
         override public function set data(value:Object):void
         {
             super.data = value as UnitInfo;
-            if (data) {
+            if (data)
+            {
                 title = data.nameWithCounter;
 
                 var locale:LocaleManager = LocaleManager.getInstance();
                 var desc:String = "";
-                if (data.perClickProfit) {
+                if (data.perClickProfit)
+                {
                     desc += locale.getString("common", "item.ppс.short") + " " +
                             (data.perClickProfit.value.value ?
-                            Math.round(data.perClickProfit.value.value).toString() :
+                                    Math.round(data.perClickProfit.value.value).toString() :
                             Math.round(data.perClickProfit.value.percentValue * 100.0) + "%");
                 }
-                if (data.perSecondProfit) {
+                if (data.perSecondProfit)
+                {
                     desc += (desc ? ", " : "") + locale.getString("common", "item.pps.short") + " " +
                             (data.perSecondProfit.value.value ?
-                            Math.round(data.perSecondProfit.value.value).toString() :
+                                    Math.round(data.perSecondProfit.value.value).toString() :
                             Math.round(data.perSecondProfit.value.percentValue * 100.0) + "%");
                 }
-                if (data.profit) {
+                if (data.profit)
+                {
                     desc += (desc ? ", " : "") + "+" + (data.profit.value.value ?
                                     Math.round(data.profit.value.value).toString() :
                             Math.round(data.profit.value.percentValue * 100.0) + "%");
                 }
-                if (data.action) {
+                if (data.action)
+                {
                     desc += (desc ? ", " : "") + data.action.description;
                 }
                 description = desc;

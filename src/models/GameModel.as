@@ -5,6 +5,7 @@ package models
 	import org.puremvc.as3.multicore.core.Model;
 
 	import vo.Unit;
+	import vo.UnitInfo;
 
 	public class GameModel extends Model
 	{

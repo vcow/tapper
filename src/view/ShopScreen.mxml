@@ -4,90 +4,131 @@
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
-    <f:layoutData>
-        <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-    </f:layoutData>
 
     <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back'))}">
-        <!--f:layout>
+        <f:layout>
             <f:AnchorLayout/>
-        </f:layout-->
+        </f:layout>
         <f:layoutData>
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
-        <f:layout>
-            <f:VerticalLayout gap="5" horizontalAlign="center"/>
-        </f:layout>
-
-        <f:LayoutGroup>
-            <f:layout>
-                <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
-            </f:layout>
+        <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back_bn_normal'))}"
+                  downSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back_bn_down'))}"
+                  triggered="{dispatchEventWith(BACK)}">
             <f:layoutData>
-                <f:VerticalLayoutData percentWidth="100"/>
+                <f:AnchorLayoutData left="25" top="21"/>
             </f:layoutData>
+        </f:Button>
 
-            <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
-
-            <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
-                <f:layoutData>
-                    <f:HorizontalLayoutData percentWidth="100"/>
-                </f:layoutData>
-            </f:Label>
-
-            <f:LayoutGroup width="50"/>
-        </f:LayoutGroup>
-
-        <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+        <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}"
+                dataProvider="{getUnitsList(_mediator.unitsList)}"
                 itemRendererType="view.ShopListItemRenderer" isSelectable="false"
-                triggered="{dispatchEventWith(SELECT_UNIT, false, event.data)}">
+                triggered="{onSelectUnit(event)}" maxHeight="600">
             <f:layout>
                 <f:VerticalLayout id="listViewLayout" gap="2"/>
             </f:layout>
             <f:layoutData>
-                <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+                <f:AnchorLayoutData left="0" right="0" top="300" bottom="100"/>
             </f:layoutData>
         </f:List>
+
+        <!--f:LayoutGroup>
+             <f:layout>
+                 <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
+             </f:layout>
+             <f:layoutData>
+                 <f:VerticalLayoutData percentWidth="100"/>
+             </f:layoutData>
+
+             <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
+
+             <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
+                 <f:layoutData>
+                     <f:HorizontalLayoutData percentWidth="100"/>
+                 </f:layoutData>
+             </f:Label>
+
+             <f:LayoutGroup width="50"/>
+         </f:LayoutGroup>
+
+         <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
+                 itemRendererType="view.ShopListItemRenderer" isSelectable="false"
+                 triggered="{onSelectUnit(event)}">
+             <f:layout>
+                 <f:VerticalLayout id="listViewLayout" gap="2"/>
+             </f:layout>
+             <f:layoutData>
+                 <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+             </f:layoutData>
+         </f:List-->
     </f:LayoutGroup>
 
     <fx:Script><![CDATA[
+        import app.AppFacade;
+
         import feathers.core.PopUpManager;
         import feathers.data.ListCollection;
 
-        import models.UnitInfo;
+        import mediators.ShopScreenMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
-
         import resources.StylesLibrary;
 
         import starling.display.Image;
-
         import starling.events.Event;
+        import starling.rendering.Painter;
+
+        import vo.UnitInfo;
 
         public static const BACK:String = "back";
-        public static const SELECT_UNIT:String = "selectUnit";
         public static const BUY_UNIT:String = "buyUnit";
 
-        private var _unitsList:ListCollection;
+        private static const INVALIDATION_FLAG_AUTOSCROLL:String = "autoscroll";
+
+        public static const MEDIATOR_NAME:String = "shopScreenMediator";
 
         [Bindable]
-        public var money:Number;
+        public var _mediator:ShopScreenMediator;
 
-        [Bindable(event="unitsListChanged")]
-        public function get unitsList():ListCollection
+        override protected function initialize():void
         {
-            return _unitsList;
+            super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as ShopScreenMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                _mediator = new ShopScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(_mediator);
+            }
         }
 
-        public function set unitsList(value:ListCollection):void
+        override public function dispose():void
         {
-            if (value != _unitsList)
+            if (_mediator)
             {
-                _unitsList = value;
-                dispatchEventWith("unitsListChanged");
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+                _mediator = null;
             }
-            updateScroller();
+            super.dispose();
+        }
+
+        override public function render(painter:Painter):void
+        {
+            if (isInvalid(INVALIDATION_FLAG_AUTOSCROLL))
+            {
+                scrollToLastAvailable();
+            }
+
+            super.render(painter);
         }
 
         public function scrollToLastAvailable():void
@@ -110,6 +151,8 @@
                 var itemHeight:int = h + listViewLayout.gap;
                 listView.verticalScrollPosition = Math.max(0, itemHeight * lastAvailable - listView.height + h);
             }
+
+            isInvalid(INVALIDATION_FLAG_AUTOSCROLL);
         }
 
         private function getListItemHeight():int
@@ -127,15 +170,15 @@
         private function getLastAvailable():int
         {
             var lastAvailable:int = -1;
-            if (unitsList && !isNaN(money) && unitsList.length > 0)
+            if (_mediator.unitsList && !isNaN(_mediator.money) && _mediator.unitsList.length > 0)
             {
-                for (var i:int = 0, l:int = unitsList.length; i < l; i++)
+                for (var i:int = 0, l:int = _mediator.unitsList.length; i < l; i++)
                 {
-                    var unit:UnitInfo = unitsList.getItemAt(i) as UnitInfo;
+                    var unit:UnitInfo = _mediator.unitsList.getItemAt(i) as UnitInfo;
                     if (unit)
                     {
                         var price:Number = unit.price;
-                        if (price >= 0 && price <= money) lastAvailable = i;
+                        if (price >= 0 && price <= _mediator.money) lastAvailable = i;
                     }
                 }
             }
@@ -163,6 +206,22 @@
             {
                 dispatchEventWith(BUY_UNIT, false, popup.data);
             }
+        }
+
+        private function onSelectUnit(event:starling.events.Event):void
+        {
+            var unit:UnitInfo = event.data as UnitInfo;
+            if (unit)
+            {
+                if (unit.price >= 0)
+                    buyUnit(unit, unit.price <= _mediator.money);
+            }
+        }
+
+        private function getUnitsList(unitsList:ListCollection):ListCollection
+        {
+            invalidate(INVALIDATION_FLAG_AUTOSCROLL);
+            return unitsList;
         }
         ]]></fx:Script>
 </f:LayoutGroup>

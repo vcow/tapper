@@ -50,7 +50,7 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
-        import models.UnitInfo;
+        import vo.UnitInfo;
 
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
@@ -80,11 +80,13 @@
 
         private function updateData():void
         {
-            if (_data) {
+            if (_data)
+            {
                 titleLabel.text = _data.name;
 
                 var locale:LocaleManager = LocaleManager.getInstance();
-                if (_data.perClickProfit) {
+                if (_data.perClickProfit)
+                {
                     var label:Label = new Label();
                     label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
                     label.text = locale.getString("common", "item.ppс.long") + ": " +
@@ -93,7 +95,8 @@
                             Math.round(_data.perClickProfit.value.percentValue * 100.0) + "%");
                     descriptionGroup.addChild(label);
                 }
-                if (_data.perSecondProfit) {
+                if (_data.perSecondProfit)
+                {
                     label = new Label();
                     label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
                     label.text = locale.getString("common", "item.pps.long") + ": " +
@@ -102,7 +105,8 @@
                             Math.round(_data.perSecondProfit.value.percentValue * 100.0) + "%");
                     descriptionGroup.addChild(label);
                 }
-                if (_data.profit) {
+                if (_data.profit)
+                {
                     label = new Label();
                     label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
                     label.text = locale.getString("common", "item.profit") + ": " +
@@ -111,7 +115,8 @@
                             Math.round(_data.profit.value.percentValue * 100.0) + "%");
                     descriptionGroup.addChild(label);
                 }
-                if (_data.action) {
+                if (_data.action)
+                {
                     label = new Label();
                     label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
                     label.text = _data.action.description;

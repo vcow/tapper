@@ -6,7 +6,7 @@ package mediators
 	import flash.utils.Dictionary;
 
 	import models.GameModel;
-	import models.UnitInfo;
+	import vo.UnitInfo;
 	import proxy.UnitsProxy;
 
 	import robotlegs.starling.bundles.mvcs.Mediator;

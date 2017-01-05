@@ -1,77 +1,107 @@
 package mediators
 {
-	import dto.BuyUnitEvent;
-	import dto.SwitchScreenEvent;
-	import dto.UIEvent;
+	import app.AppFacade;
 
 	import feathers.data.ListCollection;
 
 	import models.GameModel;
-	import models.UnitInfo;
-	import proxy.UnitsProxy;
+	import vo.UnitInfo;
 
-	import robotlegs.starling.bundles.mvcs.Mediator;
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import proxy.UnitsProxy;
 
 	import starling.events.Event;
 
 	import view.ShopScreen;
 
-	public class ShopScreenMediator extends Mediator
+	public class ShopScreenMediator extends BindableMediator
 	{
-		[Inject]
-		public var gameModel:GameModel;
+		private static var _interests:Array = [Const.UPDATE_MONEY];
 
-		[Inject]
-		public var unitsModel:UnitsProxy;
+		private var _money:Number = 0;
+		private var _unitsList:ListCollection;
 
-		[Inject]
-		public var view:ShopScreen;
-
-		public function ShopScreenMediator()
+		public function ShopScreenMediator(mediatorName:String, viewComponent:Object)
 		{
-			super();
+			super(mediatorName, viewComponent);
 		}
 
-		override public function initialize():void
+		override public function listNotificationInterests():Array
 		{
-			addViewListener(ShopScreen.BACK, onBack);
-			addViewListener(ShopScreen.SELECT_UNIT, onSelectUnit);
-			addViewListener(ShopScreen.BUY_UNIT, onBuyUnit);
-
-			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
-
-			onUpdateMoney();
-			ShopScreen(view).unitsList = new ListCollection(unitsModel.units);
+			return _interests;
 		}
 
-		private function onUpdateMoney(event:UIEvent = null):void
+		override public function onRegister():void
 		{
-			ShopScreen(view).money = Math.round(gameModel.money);
+			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
+			if (shopScreen)
+			{
+				shopScreen.addEventListener(ShopScreen.BACK, onBack);
+				shopScreen.addEventListener(ShopScreen.BUY_UNIT, onBuyUnit);
 
-			if (event) {
-				ShopScreen(view).scrollToLastAvailable();
+				var gameModel:GameModel = AppFacade(facade).gameModel;
+
+				_money = Math.round(gameModel.money);
+				dispatchEventWith("moneyChanged");
+
+				var unitsProxy:UnitsProxy = facade.retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
+				_unitsList = new ListCollection(unitsProxy.units);
+				dispatchEventWith("unitsListChanged");
 			}
+		}
+
+		override public function onRemove():void
+		{
+			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
+			if (shopScreen)
+			{
+				shopScreen.removeEventListener(ShopScreen.BACK, onBack);
+				shopScreen.removeEventListener(ShopScreen.BUY_UNIT, onBuyUnit);
+			}
+		}
+
+		override public function handleNotification(notification:INotification):void
+		{
+			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			switch (notification.getName())
+			{
+				case Const.UPDATE_MONEY:
+					_money = Math.round(gameModel.money);
+					dispatchEventWith("moneyChanged");
+					break;
+			}
+		}
+
+		[Bindable(event="moneyChanged")]
+		public function get money():Number
+		{
+			return _money;
+		}
+
+		[Bindable(event="unitsListChanged")]
+		public function get unitsList():ListCollection
+		{
+			return _unitsList;
 		}
 
 		private function onBuyUnit(event:Event):void
 		{
 			var unit:UnitInfo = event.data as UnitInfo;
-			if (unit) {
-				dispatch(new BuyUnitEvent(BuyUnitEvent.BUY, unit));
-			}
-		}
-
-		private function onSelectUnit(event:Event):void
-		{
-			var unit:UnitInfo = event.data as UnitInfo;
-			if (unit) {
-				if (unit.price >= 0) ShopScreen(view).buyUnit(unit, unit.price <= gameModel.money);
+			if (unit)
+			{
+				var gameModel:GameModel = AppFacade(facade).gameModel;
+				if (unit.price <= gameModel.money)
+				{
+					sendNotification(Const.BUY, unit);
+				}
 			}
 		}
 
 		private function onBack(event:Event):void
 		{
-			dispatch(new SwitchScreenEvent(SwitchScreenEvent.POP));
+			sendNotification(Const.POP);
 		}
 	}
 }
