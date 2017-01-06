@@ -26,10 +26,10 @@
                 itemRendererType="view.ShopListItemRenderer" isSelectable="false"
                 triggered="{onSelectUnit(event)}" maxHeight="600">
             <f:layout>
-                <f:VerticalLayout id="listViewLayout" gap="2"/>
+                <f:VerticalLayout id="listViewLayout" gap="3"/>
             </f:layout>
             <f:layoutData>
-                <f:AnchorLayoutData left="0" right="0" top="300" bottom="100"/>
+                <f:AnchorLayoutData left="19" right="0" top="226" bottom="153"/>
             </f:layoutData>
         </f:List>
 

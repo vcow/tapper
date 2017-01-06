@@ -4,7 +4,7 @@
   <pages>
     <page id="0" file="shop_price_31.png"/>
   </pages>
-  <chars count="14">
+  <chars count="17">
     <char id="49" x="2" y="2" width="12" height="22" xoffset="0" yoffset="0" xadvance="14" page="0" chnl="15"/>
     <char id="50" x="16" y="2" width="16" height="22" xoffset="1" yoffset="0" xadvance="18" page="0" chnl="15"/>
     <char id="51" x="34" y="2" width="16" height="23" xoffset="1" yoffset="0" xadvance="18" page="0" chnl="15"/>
@@ -19,6 +19,9 @@
     <char id="46" x="52" y="2" width="6" height="6" xoffset="1" yoffset="17" xadvance="8" page="0" chnl="15"/>
     <char id="44" x="52" y="10" width="5" height="10" xoffset="1" yoffset="17" xadvance="8" page="0" chnl="15"/>
     <char id="39" x="21" y="76" width="4" height="7" xoffset="1" yoffset="0" xadvance="7" page="0" chnl="15"/>
-    <char id="32" x="0" y="0" width="0" height="0" xoffset="1" yoffset="0" xadvance="7" page="0" chnl="15"/>
+    <char id="37" x="27" y="76" width="27" height="23" xoffset="1" yoffset="0" xadvance="28" page="0" chnl="15"/>
+    <char id="43" x="21" y="101" width="15" height="15" xoffset="1" yoffset="5" xadvance="16" page="0" chnl="15"/>
+    <char id="45" x="21" y="118" width="9" height="4" xoffset="2" yoffset="12" xadvance="12" page="0" chnl="15"/>
+    <char id="32" x="0" y="0" width="0" height="0" xoffset="2" yoffset="12" xadvance="7" page="0" chnl="15"/>
   </chars>
 </font>

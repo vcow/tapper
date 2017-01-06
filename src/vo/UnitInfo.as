@@ -2,15 +2,17 @@ package vo
 {
 	import app.AppFacade;
 
-	import models.*;
-
 	import gears.TriggerBroadcaster;
 
-	import org.puremvc.as3.multicore.patterns.observer.Notifier;
+	import models.*;
+
+	import resources.AtlasLibrary;
 
 	import resources.locale.LocaleManager;
 
-	public class UnitInfo extends Notifier
+	import starling.textures.Texture;
+
+	public class UnitInfo extends BindableNotifier
 	{
 		private var _src:XML;
 
@@ -25,6 +27,11 @@ package vo
 		private var _perClickProfit:ProfitInfo;
 		private var _profit:ProfitInfo;
 		private var _action:ActionReward;
+
+		private var _ppcLabel:String;
+		private var _ppsLabel:String;
+		private var _profitLabel:String;
+		private var _actionLabel:String;
 
 		public function UnitInfo(src:XML)
 		{
@@ -50,6 +57,38 @@ package vo
 			for each (p in _src.action) _action = new ActionReward(p);
 
 			AppFacade(facade).gameModel.triggerBroadcaster.subscribe(onTrigger);
+
+			if (_perClickProfit)
+			{
+				_ppcLabel = (_perClickProfit.value.value ? cropValue(_perClickProfit.value.value) :
+						Math.round(_perClickProfit.value.percentValue * 100.0) + "%");
+			}
+
+			if (_perSecondProfit)
+			{
+				_ppsLabel = (_perSecondProfit.value.value ? cropValue(_perSecondProfit.value.value) :
+						Math.round(_perSecondProfit.value.percentValue * 100.0) + "%");
+			}
+
+			if (_profit)
+			{
+				_profitLabel = "+" + (_profit.value.value ? cropValue(_profit.value.value) :
+						Math.round(_profit.value.percentValue * 100.0) + "%");
+			}
+
+			if (_action)
+			{
+				_actionLabel = _action.description;
+			}
+
+			dispatchEventWith("dataChanged");
+		}
+
+		private static function cropValue(value:Number):String
+		{
+			value = Math.round(value);
+			if (value >= 10000.0) return Math.floor(value / 1000.0) + "K";
+			return value.toString();
 		}
 
 		private function onTrigger(trigger:String, value:*, ...args):void
@@ -57,6 +96,7 @@ package vo
 			if (trigger == TriggerBroadcaster.BUY)
 			{
 				_calcPrice = NaN;
+				dispatchEventWith("priceChanged");
 			}
 		}
 
@@ -65,11 +105,19 @@ package vo
 			return _id;
 		}
 
+		[Bindable(event="dataChanged")]
 		public function get name():String
 		{
 			return _name;
 		}
 
+		[Bindable(event="dataChanged")]
+		public function get icon():Texture
+		{
+			return _id ? AtlasLibrary.getInstance().unitsSmall.getTexture(_id) : null;
+		}
+
+		[Bindable(event="dataChanged")]
 		public function get description():String
 		{
 			return _description;
@@ -82,6 +130,7 @@ package vo
 			return res;
 		}
 
+		[Bindable(event="priceChanged")]
 		public function get price():Number
 		{
 			if (isNaN(_calcPrice))
@@ -103,6 +152,30 @@ package vo
 				}
 			}
 			return _calcPrice;
+		}
+
+		[Bindable(event="dataChanged")]
+		public function get ppcLabel():String
+		{
+			return _ppcLabel;
+		}
+
+		[Bindable(event="dataChanged")]
+		public function get ppsLabel():String
+		{
+			return _ppsLabel;
+		}
+
+		[Bindable(event="dataChanged")]
+		public function get profitLabel():String
+		{
+			return _profitLabel;
+		}
+
+		[Bindable(event="dataChanged")]
+		public function get actionLabel():String
+		{
+			return _actionLabel;
 		}
 
 		public function get maxCount():int

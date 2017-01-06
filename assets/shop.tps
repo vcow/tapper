@@ -304,6 +304,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">graphics/skin/shop/ppc_label.png</key>
+            <key type="filename">graphics/skin/shop/pps_label.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,3,22,7</rect>
+                <key>scale9Paddings</key>
+                <rect>11,3,22,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/shop/price_marker_green.png</key>
             <key type="filename">graphics/skin/shop/price_marker_red.png</key>
             <struct type="IndividualSpriteSettings">

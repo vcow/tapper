@@ -1,99 +1,100 @@
 <?xml version="1.0"?>
 <f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-               backgroundSkin="{new Quad(20, 20, 0x1a5f7c)}" initialize="{_trigger = new TapToTrigger(this)}">
+                               backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('item_back'))}"
+                               initialize="{_trigger = new TapToTrigger(this)}">
     <f:layout>
-        <f:HorizontalLayout gap="4" padding="5" verticalAlign="middle"/>
+        <f:AnchorLayout/>
     </f:layout>
-    <f:layoutData>
-        <f:VerticalLayoutData percentWidth="100"/>
-    </f:layoutData>
 
-    <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}" touchable="false"/>
+    <!-- Иконка -->
+    <f:ImageLoader source="{_unitInfoData.icon}">
+        <f:layoutData>
+            <f:AnchorLayoutData left="20" top="14"/>
+        </f:layoutData>
+    </f:ImageLoader>
 
-    <f:LayoutGroup touchable="false">
+    <!-- Название товара -->
+    <f:Label text="{_unitInfoData.name ? _unitInfoData.name.toUpperCase() : ''}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopTitle23)}}">
+        <f:layoutData>
+            <f:AnchorLayoutData left="160" top="13"/>
+        </f:layoutData>
+    </f:Label>
+
+    <!-- Награда за использование -->
+    <f:LayoutGroup>
         <f:layout>
-            <f:VerticalLayout gap="10"/>
+            <f:VerticalLayout gap="-2"/>
         </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="162" top="56"/>
+        </f:layoutData>
 
-        <f:Label text="{title}" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}"/>
+        <f:LayoutGroup includeInLayout="{Boolean(_unitInfoData.ppcLabel || _unitInfoData.ppsLabel)}"
+                       visible="{Boolean(_unitInfoData.ppcLabel || _unitInfoData.ppsLabel)}">
+            <f:layout>
+                <f:VerticalLayout gap="-2"/>
+            </f:layout>
 
-        <f:Label text="{description}" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}"/>
+            <!-- PPC -->
+            <f:LayoutGroup includeInLayout="{Boolean(_unitInfoData.ppcLabel)}"
+                           visible="{Boolean(_unitInfoData.ppcLabel)}">
+                <f:layout>
+                    <f:HorizontalLayout gap="10"/>
+                </f:layout>
 
-        <f:Label text="{priceLabel}" styleProvider="{available ? StylesLibrary.availablePriceLabelStyleProvider :
-                        StylesLibrary.unavailablePriceLabelStyleProvider}"/>
+                <f:ImageLoader source="{AtlasLibrary.getInstance().shop.getTexture('ppc_label')}"/>
+
+                <f:Label text="{_unitInfoData.ppcLabel}"
+                         textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20)}}"/>
+            </f:LayoutGroup>
+
+            <!-- PPS -->
+            <f:LayoutGroup includeInLayout="{Boolean(_unitInfoData.ppsLabel)}"
+                           visible="{Boolean(_unitInfoData.ppsLabel)}">
+                <f:layout>
+                    <f:HorizontalLayout gap="10"/>
+                </f:layout>
+
+                <f:ImageLoader source="{AtlasLibrary.getInstance().shop.getTexture('pps_label')}"/>
+
+                <f:Label text="{_unitInfoData.ppsLabel}"
+                         textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20)}}"/>
+            </f:LayoutGroup>
+        </f:LayoutGroup>
+
+        <!-- Одноразовый профит -->
+        <f:Label text="{_unitInfoData.profitLabel}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20)}}"
+                 includeInLayout="{Boolean(_unitInfoData.profitLabel)}" visible="{Boolean(_unitInfoData.profitLabel)}"/>
+
+        <!-- Действие -->
+        <f:Label text="{_unitInfoData.actionLabel}" wordWrap="true" maxWidth="116"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20, NaN, 0xffffff, TextFormatAlign.LEFT, -7)}}"
+                 includeInLayout="{Boolean(_unitInfoData.actionLabel)}" visible="{Boolean(_unitInfoData.actionLabel)}"/>
     </f:LayoutGroup>
 
     <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
         import feathers.utils.touch.TapToTrigger;
 
-        import vo.UnitInfo;
+        import resources.AtlasLibrary;
+        import resources.FontLibrary;
 
-        import resources.StylesLibrary;
-        import resources.locale.LocaleManager;
-
+        import starling.display.Image;
         import starling.display.Quad;
+
+        import vo.UnitInfo;
 
         private var _trigger:TapToTrigger;
 
         [Bindable]
-        private var priceLabel:String;
-
-        [Bindable]
-        private var description:String;
-
-        [Bindable]
-        public var title:String;
-
-        [Bindable]
-        public var available:Boolean;
-
-        public function set price(value:Number):void
-        {
-            priceLabel = value < 0 ? LocaleManager.getInstance().getString("common", "na.label") : value.toString();
-        }
-
-        public function get unitId():String
-        {
-            var unit:UnitInfo = data as UnitInfo;
-            return unit ? unit.id : "";
-        }
+        private var _unitInfoData:UnitInfo;
 
         override public function set data(value:Object):void
         {
-            super.data = value as UnitInfo;
-            if (data)
-            {
-                title = data.nameWithCounter;
-
-                var locale:LocaleManager = LocaleManager.getInstance();
-                var desc:String = "";
-                if (data.perClickProfit)
-                {
-                    desc += locale.getString("common", "item.ppс.short") + " " +
-                            (data.perClickProfit.value.value ?
-                                    Math.round(data.perClickProfit.value.value).toString() :
-                            Math.round(data.perClickProfit.value.percentValue * 100.0) + "%");
-                }
-                if (data.perSecondProfit)
-                {
-                    desc += (desc ? ", " : "") + locale.getString("common", "item.pps.short") + " " +
-                            (data.perSecondProfit.value.value ?
-                                    Math.round(data.perSecondProfit.value.value).toString() :
-                            Math.round(data.perSecondProfit.value.percentValue * 100.0) + "%");
-                }
-                if (data.profit)
-                {
-                    desc += (desc ? ", " : "") + "+" + (data.profit.value.value ?
-                                    Math.round(data.profit.value.value).toString() :
-                            Math.round(data.profit.value.percentValue * 100.0) + "%");
-                }
-                if (data.action)
-                {
-                    desc += (desc ? ", " : "") + data.action.description;
-                }
-                description = desc;
-                price = data.price;
-            }
+            super.data = value;
+            _unitInfoData = data as UnitInfo;
         }
         ]]></fx:Script>
 </f:LayoutGroupListItemRenderer>

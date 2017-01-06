@@ -27,7 +27,7 @@ package app
 	{
 		public static const NAME:String = "appFacade";
 
-		[Embed(source="config/units.xml", mimeType="application/octet-stream")]
+		[Embed(source="config/units_prod.xml", mimeType="application/octet-stream")]
 		private static const unitsConfig:Class;
 
 		[Embed(source="config/levels.xml", mimeType="application/octet-stream")]
