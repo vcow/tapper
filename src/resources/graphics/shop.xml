@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:9a445c93c7195bebb3f3b022f12abb0d:874a0b585edc2765bdebc2b1b92ff266:41201d13b3dce36d097714bf2eed41d9$ -->
+<!-- $TexturePacker:SmartUpdate:fcebbfd4979aab8a7748e96dfba1a43c:45d4827463ca086e20d582fcfce1a7cb:41201d13b3dce36d097714bf2eed41d9$ -->
 <TextureAtlas imagePath="shop.atf" width="1024" height="2048">
     <SubTexture name="back" x="1" y="1" width="576" height="1024"/>
     <SubTexture name="back_bn_down" x="922" y="385" width="101" height="97"/>
@@ -15,8 +15,8 @@
     <SubTexture name="offer_back" x="579" y="609" width="180" height="115"/>
     <SubTexture name="ppc_label" x="1008" y="238" rotated="true" width="13" height="37" frameX="0" frameY="-6" frameWidth="43" frameHeight="24"/>
     <SubTexture name="pps_label" x="1008" y="193" rotated="true" width="13" height="43" frameX="0" frameY="-6" frameWidth="43" frameHeight="24"/>
-    <SubTexture name="price_marker_green" x="915" y="583" rotated="true" width="32" height="197"/>
-    <SubTexture name="price_marker_red" x="949" y="583" rotated="true" width="31" height="191" frameX="-3" frameY="0" frameWidth="197" frameHeight="32"/>
+    <SubTexture name="price_marker_green" x="915" y="583" rotated="true" width="33" height="197" frameX="0" frameY="0" frameWidth="197" frameHeight="42"/>
+    <SubTexture name="price_marker_red" x="950" y="583" rotated="true" width="31" height="191" frameX="-3" frameY="0" frameWidth="197" frameHeight="42"/>
     <SubTexture name="scotch" x="876" y="350" rotated="true" width="44" height="115"/>
     <SubTexture name="unavailable_back" x="579" y="1" width="359" height="125"/>
 </TextureAtlas>

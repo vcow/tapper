@@ -4,10 +4,12 @@ package vo
 
 	import gears.TriggerBroadcaster;
 
-	import models.*;
+	import models.ActionReward;
+	import models.GameModel;
+	import models.ProfitInfo;
+	import models.RelValue;
 
 	import resources.AtlasLibrary;
-
 	import resources.locale.LocaleManager;
 
 	import starling.textures.Texture;
@@ -23,6 +25,7 @@ package vo
 		private var _calcPrice:Number;
 		private var _priceGrowth:RelValue;
 		private var _maxCount:int;
+		private var _rest:int = -1;
 		private var _perSecondProfit:ProfitInfo;
 		private var _perClickProfit:ProfitInfo;
 		private var _profit:ProfitInfo;
@@ -32,6 +35,8 @@ package vo
 		private var _ppsLabel:String;
 		private var _profitLabel:String;
 		private var _actionLabel:String;
+
+		private var _available:Boolean;
 
 		public function UnitInfo(src:XML)
 		{
@@ -60,19 +65,19 @@ package vo
 
 			if (_perClickProfit)
 			{
-				_ppcLabel = (_perClickProfit.value.value ? cropValue(_perClickProfit.value.value) :
+				_ppcLabel = (_perClickProfit.value.value ? cropValueK(_perClickProfit.value.value) :
 						Math.round(_perClickProfit.value.percentValue * 100.0) + "%");
 			}
 
 			if (_perSecondProfit)
 			{
-				_ppsLabel = (_perSecondProfit.value.value ? cropValue(_perSecondProfit.value.value) :
+				_ppsLabel = (_perSecondProfit.value.value ? cropValueK(_perSecondProfit.value.value) :
 						Math.round(_perSecondProfit.value.percentValue * 100.0) + "%");
 			}
 
 			if (_profit)
 			{
-				_profitLabel = "+" + (_profit.value.value ? cropValue(_profit.value.value) :
+				_profitLabel = "+" + (_profit.value.value ? cropValueK(_profit.value.value) :
 						Math.round(_profit.value.percentValue * 100.0) + "%");
 			}
 
@@ -81,22 +86,110 @@ package vo
 				_actionLabel = _action.description;
 			}
 
+			calculatePrice();
+			calculateRest();
 			dispatchEventWith("dataChanged");
 		}
 
-		private static function cropValue(value:Number):String
+		private static function cropValueK(value:Number):String
 		{
 			value = Math.round(value);
-			if (value >= 10000.0) return Math.floor(value / 1000.0) + "K";
+			if (value >= 10000.0) return Math.floor(value / 1000.0) + "к";
+			return value.toString();
+		}
+
+		private static function cropValueM(value:Number):String
+		{
+			value = Math.round(value);
+			if (value >= 9000000.0)
+			{
+				value = Math.floor(value / 1000.0);
+				if (value >= 9000000.0)
+					return Math.floor(value / 1000.0) + "м";
+				return value + "к";
+			}
 			return value.toString();
 		}
 
 		private function onTrigger(trigger:String, value:*, ...args):void
 		{
-			if (trigger == TriggerBroadcaster.BUY)
+			if (trigger == TriggerBroadcaster.MONEY)
 			{
 				_calcPrice = NaN;
+				calculatePrice();
+			}
+			else if (_maxCount && trigger == TriggerBroadcaster.BUY)
+			{
+				var unit:Unit = value as Unit;
+				if (unit && unit.info == this)
+				{
+					calculateRest();
+				}
+			}
+		}
+
+		private function calculatePrice():void
+		{
+			var calcPrice:Number;
+			var available:Boolean;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			if (_maxCount > 0 && numUnits >= maxCount)
+			{
+				calcPrice = -1;
+				available = false;
+			}
+			else
+			{
+				var increase:Number = 0;
+				if (_priceGrowth)
+				{
+					var numUnits:int = gameModel.getUnitsCount(this);
+					if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
+					else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
+				}
+				calcPrice = Math.round(_price + increase);
+				available = calcPrice <= gameModel.money && (!_maxCount || gameModel.getUnitsCount(this) < _maxCount);
+			}
+
+			if (calcPrice != _calcPrice)
+			{
+				_calcPrice = calcPrice;
 				dispatchEventWith("priceChanged");
+			}
+
+			if (available != _available)
+			{
+				_available = available;
+				dispatchEventWith("availableChanged");
+			}
+		}
+
+		private function calculateRest():void
+		{
+			var rest:int;
+			var available:Boolean;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			if (_maxCount)
+			{
+				rest = Math.max(0, _maxCount - gameModel.getUnitsCount(this));
+				available = _calcPrice <= gameModel.money && rest > 0;
+			}
+			else
+			{
+				rest = -1;
+				available = _calcPrice <= gameModel.money
+			}
+
+			if (rest != _rest)
+			{
+				_rest = rest;
+				dispatchEventWith("restChanged");
+			}
+
+			if (available != _available)
+			{
+				_available = available;
+				dispatchEventWith("availableChanged");
 			}
 		}
 
@@ -123,35 +216,28 @@ package vo
 			return _description;
 		}
 
-		public function get nameWithCounter():String
-		{
-			var res:String = _name;
-			if (_maxCount > 0) res += " (" + AppFacade(facade).gameModel.getUnitsCount(this) + "/" + _maxCount + ")";
-			return res;
-		}
-
 		[Bindable(event="priceChanged")]
 		public function get price():Number
 		{
-			if (isNaN(_calcPrice))
-			{
-				var numUnits:Number = AppFacade(facade).gameModel.getUnitsCount(this);
-				if (_maxCount > 0 && numUnits >= maxCount)
-				{
-					_calcPrice = -1;
-				}
-				else
-				{
-					var increase:Number = 0;
-					if (_priceGrowth)
-					{
-						if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
-						else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
-					}
-					_calcPrice = Math.round(_price + increase);
-				}
-			}
 			return _calcPrice;
+		}
+
+		[Bindable(event="priceChanged")]
+		public function get priceLabel():String
+		{
+			return cropValueM(_calcPrice);
+		}
+
+		[Bindable(event="availableChanged")]
+		public function get available():Boolean
+		{
+			return _available;
+		}
+
+		[Bindable(event="restChanged")]
+		public function get rest():int
+		{
+			return _rest;
 		}
 
 		[Bindable(event="dataChanged")]
@@ -178,6 +264,7 @@ package vo
 			return _actionLabel;
 		}
 
+		[Bindable(event="dataChanged")]
 		public function get maxCount():int
 		{
 			return _maxCount;

@@ -74,15 +74,44 @@
                  includeInLayout="{Boolean(_unitInfoData.actionLabel)}" visible="{Boolean(_unitInfoData.actionLabel)}"/>
     </f:LayoutGroup>
 
+    <!-- Цена -->
+    <f:LayoutGroup backgroundSkin="{getPriceBack(_unitInfoData.available)}" minWidth="197">
+        <f:layout>
+            <f:VerticalLayout horizontalAlign="right" verticalAlign="middle"
+                              paddingTop="5" paddingLeft="18" paddingRight="18"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData top="58" left="298"/>
+        </f:layoutData>
+
+        <f:Label text="{_unitInfoData.priceLabel}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice31)}}"/>
+    </f:LayoutGroup>
+
+    <!-- Лимит -->
+    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('item_limit_back'))}"
+                   maxHeight="37" visible="{_unitInfoData.rest >= 0}" includeInLayout="{_unitInfoData.rest >= 0}">
+        <f:layout>
+            <f:HorizontalLayout horizontalAlign="center" paddingLeft="5" paddingRight="5"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData right="15" bottom="0"/>
+        </f:layoutData>
+
+        <f:Label text="{LocaleManager.getInstance().getString('common', 'item.limit.label', [_unitInfoData.rest])}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
+                 scale="0.5"/>
+    </f:LayoutGroup>
+
     <fx:Script><![CDATA[
         import feathers.text.BitmapFontTextFormat;
         import feathers.utils.touch.TapToTrigger;
 
         import resources.AtlasLibrary;
         import resources.FontLibrary;
+        import resources.locale.LocaleManager;
 
         import starling.display.Image;
-        import starling.display.Quad;
 
         import vo.UnitInfo;
 
@@ -95,6 +124,11 @@
         {
             super.data = value;
             _unitInfoData = data as UnitInfo;
+        }
+
+        private function getPriceBack(available:Boolean):Image
+        {
+            return available ? null : new Image(AtlasLibrary.getInstance().shop.getTexture("price_marker_red"));
         }
         ]]></fx:Script>
 </f:LayoutGroupListItemRenderer>
