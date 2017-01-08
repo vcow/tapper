@@ -7,14 +7,14 @@
     </f:layout>
 
     <!-- Иконка -->
-    <f:ImageLoader source="{_unitInfoData.icon}">
+    <f:ImageLoader source="{_unitInfoData.icon}" touchable="false">
         <f:layoutData>
             <f:AnchorLayoutData left="20" top="14"/>
         </f:layoutData>
     </f:ImageLoader>
 
     <!-- Название товара -->
-    <f:Label text="{_unitInfoData.name ? _unitInfoData.name.toUpperCase() : ''}"
+    <f:Label text="{_unitInfoData.name ? _unitInfoData.name.toUpperCase() : ''}" touchable="false"
              textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopTitle23)}}">
         <f:layoutData>
             <f:AnchorLayoutData left="160" top="13"/>
@@ -22,7 +22,7 @@
     </f:Label>
 
     <!-- Награда за использование -->
-    <f:LayoutGroup>
+    <f:LayoutGroup touchable="false">
         <f:layout>
             <f:VerticalLayout gap="-2"/>
         </f:layout>
@@ -75,7 +75,7 @@
     </f:LayoutGroup>
 
     <!-- Цена -->
-    <f:LayoutGroup backgroundSkin="{getPriceBack(_unitInfoData.available)}" minWidth="197">
+    <f:LayoutGroup backgroundSkin="{getPriceBack(_unitInfoData.available)}" minWidth="197" touchable="false">
         <f:layout>
             <f:VerticalLayout horizontalAlign="right" verticalAlign="middle"
                               paddingTop="5" paddingLeft="18" paddingRight="18"/>
@@ -90,7 +90,8 @@
 
     <!-- Лимит -->
     <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('item_limit_back'))}"
-                   maxHeight="37" visible="{_unitInfoData.rest >= 0}" includeInLayout="{_unitInfoData.rest >= 0}">
+                   maxHeight="37" visible="{_unitInfoData.rest >= 0}" includeInLayout="{_unitInfoData.rest >= 0}"
+                   touchable="false">
         <f:layout>
             <f:HorizontalLayout horizontalAlign="center" paddingLeft="5" paddingRight="5"/>
         </f:layout>
@@ -99,6 +100,22 @@
         </f:layoutData>
 
         <f:Label text="{LocaleManager.getInstance().getString('common', 'item.limit.label', [_unitInfoData.rest])}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
+                 scale="0.5"/>
+    </f:LayoutGroup>
+
+    <!-- Количество исользований -->
+    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('item_limit_back'))}"
+                   maxHeight="37" visible="{_unitInfoData.profitLimit > 0}" includeInLayout="{_unitInfoData.profitLimit > 0}"
+                   touchable="false">
+        <f:layout>
+            <f:HorizontalLayout horizontalAlign="center" paddingLeft="5" paddingRight="5"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="25" bottom="0"/>
+        </f:layoutData>
+
+        <f:Label text="{LocaleManager.getInstance().getString('common', 'item.profit.limit.label', [_unitInfoData.profitLimit])}"
                  textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
                  scale="0.5"/>
     </f:LayoutGroup>

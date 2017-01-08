@@ -33,6 +33,23 @@
             </f:layoutData>
         </f:List>
 
+        <!-- Счет -->
+        <f:LayoutGroup touchable="false" rotation="{Math.PI / 180.0 * 2.5}" minWidth="450">
+            <f:layout>
+                <f:HorizontalLayout gap="14" horizontalAlign="center"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData left="42" top="155"/>
+            </f:layoutData>
+
+            <f:Label text="{LocaleManager.getInstance().getString('common', 'shop.money.label')}"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
+                     scale="0.73" paddingTop="15"/>
+
+            <f:Label text="{_mediator.money}"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"/>
+        </f:LayoutGroup>
+
         <!--f:LayoutGroup>
              <f:layout>
                  <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
@@ -69,13 +86,16 @@
 
         import feathers.core.PopUpManager;
         import feathers.data.ListCollection;
+        import feathers.text.BitmapFontTextFormat;
 
         import mediators.ShopScreenMediator;
 
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
+        import resources.FontLibrary;
         import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
 
         import starling.display.Image;
         import starling.events.Event;

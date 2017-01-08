@@ -345,6 +345,46 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">graphics/skin/shop/scroll_bar.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,4,5,9</rect>
+                <key>scale9Paddings</key>
+                <rect>2,4,5,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/shop/scroll_thumb_bottom.png</key>
+            <key type="filename">graphics/skin/shop/scroll_thumb_top.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,5,5,11</rect>
+                <key>scale9Paddings</key>
+                <rect>2,5,5,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/shop/scroll_thumb_center.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/shop/unavailable_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -36,6 +36,9 @@ package vo
 		private var _profitLabel:String;
 		private var _actionLabel:String;
 
+		private var _profitLimit:int;
+		private var _money:Number;
+
 		private var _available:Boolean;
 
 		public function UnitInfo(src:XML)
@@ -61,18 +64,26 @@ package vo
 			for each (p in _src.p) _profit = new ProfitInfo(p);
 			for each (p in _src.action) _action = new ActionReward(p);
 
-			AppFacade(facade).gameModel.triggerBroadcaster.subscribe(onTrigger);
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			gameModel.triggerBroadcaster.subscribe(onTrigger);
+			if (gameModel.money != _money)
+			{
+				_money = gameModel.money;
+				dispatchEventWith("moneyChanged");
+			}
 
 			if (_perClickProfit)
 			{
 				_ppcLabel = (_perClickProfit.value.value ? cropValueK(_perClickProfit.value.value) :
-						Math.round(_perClickProfit.value.percentValue * 100.0) + "%");
+				Math.round(_perClickProfit.value.percentValue * 100.0) + "%");
+				_profitLimit = Math.max(_profitLimit, _perClickProfit.maxCount);
 			}
 
 			if (_perSecondProfit)
 			{
 				_ppsLabel = (_perSecondProfit.value.value ? cropValueK(_perSecondProfit.value.value) :
-						Math.round(_perSecondProfit.value.percentValue * 100.0) + "%");
+				Math.round(_perSecondProfit.value.percentValue * 100.0) + "%");
+				_profitLimit = Math.max(_profitLimit, _perSecondProfit.maxCount);
 			}
 
 			if (_profit)
@@ -88,6 +99,7 @@ package vo
 
 			calculatePrice();
 			calculateRest();
+
 			dispatchEventWith("dataChanged");
 		}
 
@@ -113,18 +125,33 @@ package vo
 
 		private function onTrigger(trigger:String, value:*, ...args):void
 		{
-			if (trigger == TriggerBroadcaster.MONEY)
+			switch (trigger)
 			{
-				_calcPrice = NaN;
-				calculatePrice();
-			}
-			else if (_maxCount && trigger == TriggerBroadcaster.BUY)
-			{
-				var unit:Unit = value as Unit;
-				if (unit && unit.info == this)
-				{
-					calculateRest();
-				}
+				case TriggerBroadcaster.MONEY:
+					_calcPrice = NaN;
+					calculatePrice();
+
+					var money:Number = value as Number;
+					if (money != _money)
+					{
+						_money = money;
+						dispatchEventWith("moneyChanged");
+					}
+					break;
+
+				case TriggerBroadcaster.BUY:
+					var unit:Unit = value as Unit;
+					if (unit && unit.info == this)
+					{
+						_calcPrice = NaN;
+						calculatePrice();
+
+						if (_maxCount)
+						{
+							calculateRest();
+						}
+					}
+					break;
 			}
 		}
 
@@ -268,6 +295,18 @@ package vo
 		public function get maxCount():int
 		{
 			return _maxCount;
+		}
+
+		[Bindable(event="dataChanged")]
+		public function get profitLimit():int
+		{
+			return _profitLimit;
+		}
+
+		[Bindable(event="moneyChanged")]
+		public function get money():int
+		{
+			return _money;
 		}
 
 		public function get perSecondProfit():ProfitInfo
