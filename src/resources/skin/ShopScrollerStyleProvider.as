@@ -32,7 +32,7 @@ package resources.skin
 			scrollBar.thumbFactory = thumbFactory;
 			scrollBar.maximumTrackFactory = trackFactory;
 			scrollBar.minimumTrackFactory = trackFactory;
-			scrollBar.paddingTop = scrollBar.paddingBottom = 5;
+			scrollBar.paddingTop = scrollBar.paddingBottom = 3;
 			return scrollBar;
 		}
 
@@ -47,7 +47,6 @@ package resources.skin
 
 		private static function thumbFactory():Button
 		{
-			const rc:Rectangle = new flash.geom.Rectangle(0, 3, 7, 2);
 			var atlas:TextureAtlas = AtlasLibrary.getInstance().shop;
 			var skin:LayoutGroup = new LayoutGroup();
 			skin.layout = new VerticalLayout();

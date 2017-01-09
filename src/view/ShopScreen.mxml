@@ -31,7 +31,7 @@
                 <f:VerticalLayout id="listViewLayout" gap="3"/>
             </f:layout>
             <f:layoutData>
-                <f:AnchorLayoutData left="19" right="20" top="226" bottom="153"/>
+                <f:AnchorLayoutData left="19" right="17" top="226" bottom="153"/>
             </f:layoutData>
         </f:List>
 
