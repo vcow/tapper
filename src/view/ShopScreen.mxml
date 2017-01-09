@@ -13,6 +13,7 @@
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
+        <!-- Кнопка возврата -->
         <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back_bn_normal'))}"
                   downSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back_bn_down'))}"
                   triggered="{dispatchEventWith(BACK)}">
@@ -21,6 +22,7 @@
             </f:layoutData>
         </f:Button>
 
+        <!-- Список товаров -->
         <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}"
                 dataProvider="{getUnitsList(_mediator.unitsList)}"
                 itemRendererType="view.ShopListItemRenderer" isSelectable="false"
@@ -29,7 +31,7 @@
                 <f:VerticalLayout id="listViewLayout" gap="3"/>
             </f:layout>
             <f:layoutData>
-                <f:AnchorLayoutData left="19" right="0" top="226" bottom="153"/>
+                <f:AnchorLayoutData left="19" right="20" top="226" bottom="153"/>
             </f:layoutData>
         </f:List>
 
@@ -49,36 +51,6 @@
             <f:Label text="{_mediator.money}"
                      textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"/>
         </f:LayoutGroup>
-
-        <!--f:LayoutGroup>
-             <f:layout>
-                 <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
-             </f:layout>
-             <f:layoutData>
-                 <f:VerticalLayoutData percentWidth="100"/>
-             </f:layoutData>
-
-             <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}" triggered="{dispatchEventWith(BACK)}"/>
-
-             <f:Label text="{money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
-                 <f:layoutData>
-                     <f:HorizontalLayoutData percentWidth="100"/>
-                 </f:layoutData>
-             </f:Label>
-
-             <f:LayoutGroup width="50"/>
-         </f:LayoutGroup>
-
-         <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}" dataProvider="{unitsList}"
-                 itemRendererType="view.ShopListItemRenderer" isSelectable="false"
-                 triggered="{onSelectUnit(event)}">
-             <f:layout>
-                 <f:VerticalLayout id="listViewLayout" gap="2"/>
-             </f:layout>
-             <f:layoutData>
-                 <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
-             </f:layoutData>
-         </f:List-->
     </f:LayoutGroup>
 
     <fx:Script><![CDATA[
