@@ -17,7 +17,7 @@
     <fx:Script><![CDATA[
         import app.AppFacade;
 
-        import feathers.core.PopUpManager;
+        import gears.WindowManager;
 
         import mediators.MainScreenMediator;
 
@@ -30,20 +30,19 @@
         [Bindable]
         private var _mediator:MainScreenMediator;
 
-        public function showPopUp(title:String, description:String):void
+        public function messageBox(title:String, description:String):void
         {
             var popup:PopUp = new PopUp();
             popup.title = title;
             popup.description = description;
             popup.addEventListener(starling.events.Event.CLOSE, onClosePopUp);
-            PopUpManager.addPopUp(popup);
+            WindowManager.getInstance().openWindow(popup, true);
         }
 
         private static function onClosePopUp(event:starling.events.Event):void
         {
             var popup:PopUp = PopUp(event.target);
             popup.removeEventListener(starling.events.Event.CLOSE, onClosePopUp);
-            PopUpManager.removePopUp(popup);
         }
 
         override protected function initialize():void

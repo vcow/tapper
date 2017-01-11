@@ -56,9 +56,10 @@
     <fx:Script><![CDATA[
         import app.AppFacade;
 
-        import feathers.core.PopUpManager;
         import feathers.data.ListCollection;
         import feathers.text.BitmapFontTextFormat;
+
+        import gears.WindowManager;
 
         import mediators.ShopScreenMediator;
 
@@ -183,18 +184,15 @@
             popup.data = unit;
             popup.available = available;
             popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
-            popup.addEventListener(starling.events.Event.CANCEL, onClosePopup);
-            PopUpManager.addPopUp(popup);
+            WindowManager.getInstance().openWindow(popup, true);
         }
 
         private function onClosePopup(event:starling.events.Event):void
         {
             var popup:BuyUnitPopUp = BuyUnitPopUp(event.target);
             popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
-            popup.removeEventListener(starling.events.Event.CANCEL, onClosePopup);
-            PopUpManager.removePopUp(popup);
 
-            if (event.type == starling.events.Event.CLOSE)
+            if (event.data == Const.ON_OK)
             {
                 dispatchEventWith(BUY_UNIT, false, popup.data);
             }

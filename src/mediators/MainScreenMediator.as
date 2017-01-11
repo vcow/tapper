@@ -2,6 +2,8 @@ package mediators
 {
 	import app.AppFacade;
 
+	import feathers.motion.Fade;
+
 	import models.IPopUpData;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -47,7 +49,7 @@ package mediators
 						break;
 					case Const.SHOW_POPUP:
 						var data:IPopUpData = notification.getBody() as IPopUpData;
-						mainScreen.showPopUp(data.title, data.description);
+						mainScreen.messageBox(data.title, data.description);
 						break;
 					default:
 						throw Error("Not supported yet.");
@@ -61,13 +63,13 @@ package mediators
 			switch (newState)
 			{
 				case Const.STATE_START:
-					mainScreen.showScreen("startScreenItem");
+					mainScreen.showScreen("startScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				case Const.STATE_GAME:
-					mainScreen.showScreen("gameScreenItem");
+					mainScreen.showScreen("gameScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				case Const.STATE_SHOP:
-					mainScreen.showScreen("shopScreenItem");
+					mainScreen.showScreen("shopScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				default:
 					throw Error("Unsupported state " + newState + ".");

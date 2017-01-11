@@ -5,6 +5,11 @@ package
 		public static const APP_NAME:String = "simjew";
 		public static const APP_VERSION:String = "1.0.0.0";
 
+		public static const ON_OK:uint = 1;
+		public static const ON_CANCEL:uint = 2;
+		public static const ON_YES:uint = 4;
+		public static const ON_NO:uint = 8;
+
 		public static const STATE_START:String = "stateStart";
 		public static const STATE_GAME:String = "stateGame";
 		public static const STATE_SHOP:String = "stateShop";
