@@ -15,7 +15,7 @@ package commands
 			if (AppFacade(facade).gameModel.currentSkin != SkinType.BRONZE)
 			{
 				AppFacade(facade).gameModel.currentSkin = SkinType.BRONZE;
-				sendNotification(Const.SWITCH_TO_GAME);
+				sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 			}
 		}
 	}

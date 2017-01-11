@@ -30,7 +30,7 @@ package commands
 				}
 				else if (reward is PopUpReward)
 				{
-					sendNotification(Const.SHOW, reward);
+					sendNotification(Const.SHOW_POPUP, reward);
 				}
 				else
 				{

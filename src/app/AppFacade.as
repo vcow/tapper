@@ -7,11 +7,11 @@ package app
 	import commands.GameTickCommand;
 	import commands.GetAchievementCommand;
 	import commands.LevelUpCommand;
+	import commands.PopCommand;
 	import commands.SetSkinBronzeCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
-
-	import mediators.MainScreenMediator;
+	import commands.SwitchToCommand;
 
 	import models.GameModel;
 
@@ -68,6 +68,9 @@ package app
 			registerCommand(Const.ACHIEVE, GetAchievementCommand);
 			registerCommand(Const.LEVEL_UP, LevelUpCommand);
 			registerCommand(Const.SET_SKIN_BRONZE, SetSkinBronzeCommand);
+			registerCommand(Const.POP, PopCommand);
+			registerCommand(Const.SWITCH_TO, SwitchToCommand);
+			registerCommand(Const.POP_TO_ROOT, PopCommand);
 		}
 
 		override protected function initializeModel():void

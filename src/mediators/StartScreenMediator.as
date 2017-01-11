@@ -31,7 +31,7 @@ package mediators
 
 		private function onStart(event:Event):void
 		{
-			sendNotification(Const.SWITCH_TO_GAME);
+			sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 		}
 	}
 }

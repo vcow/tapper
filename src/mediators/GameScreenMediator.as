@@ -115,7 +115,7 @@ package mediators
 
 		private function onShop(event:Event):void
 		{
-			sendNotification(Const.SWITCH_TO_SHOP);
+			sendNotification(Const.SWITCH_TO, Const.STATE_SHOP);
 		}
 
 		private function onTap(event:Event):void

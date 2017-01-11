@@ -17,9 +17,10 @@ package models
 		private const _triggerBroadcaster:TriggerBroadcaster = new TriggerBroadcaster();
 
 		public var tickCount:uint;
-		public var moneyTotal:Number = 0;
+		public var moneyTotal:Number;
 		public var level:uint;
 		public var currentSkin:String;
+		public var currentState:String;
 
 		public function GameModel(key:String)
 		{
@@ -29,6 +30,9 @@ package models
 		override protected function initializeModel():void
 		{
 			currentSkin = SkinType.WOOD;
+			currentState = Const.STATE_START;
+			moneyTotal = 0;
+
 			_triggerBroadcaster.init(this);
 		}
 

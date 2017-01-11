@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
-<f:StackScreenNavigator xmlns:f="library://ns.feathersui.com/mxml"
-                        xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:screen="view.*"
-                        rootScreenID="startScreenItem">
+<f:ScreenNavigator xmlns:f="library://ns.feathersui.com/mxml"
+                        xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:screen="view.*">
 
-    <f:StackScreenNavigatorItem id="startScreenItem">
+    <f:ScreenNavigatorItem id="startScreenItem">
         <screen:StartScreen/>
-    </f:StackScreenNavigatorItem>
+    </f:ScreenNavigatorItem>
 
-    <f:StackScreenNavigatorItem id="gameScreenItem">
+    <f:ScreenNavigatorItem id="gameScreenItem">
         <screen:GameScreenLayer/>
-    </f:StackScreenNavigatorItem>
+    </f:ScreenNavigatorItem>
 
-    <f:StackScreenNavigatorItem id="shopScreenItem">
+    <f:ScreenNavigatorItem id="shopScreenItem">
         <screen:ShopScreen/>
-    </f:StackScreenNavigatorItem>
+    </f:ScreenNavigatorItem>
+
     <fx:Script><![CDATA[
         import app.AppFacade;
 
@@ -74,4 +74,4 @@
             super.dispose();
         }
         ]]></fx:Script>
-</f:StackScreenNavigator>
+</f:ScreenNavigator>

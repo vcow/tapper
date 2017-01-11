@@ -33,16 +33,6 @@ package mediators
 				var gameModel:GameModel = AppFacade(facade).gameModel;
 
 				gameScreenLayer.setSkin(gameModel.currentSkin);
-				sendNotification(Const.START_GAME);
-			}
-		}
-
-		override public function onRemove():void
-		{
-			var gameScreenLayer:GameScreenLayer = getViewComponent() as GameScreenLayer;
-			if (gameScreenLayer)
-			{
-				sendNotification(Const.STOP_GAME);
 			}
 		}
 

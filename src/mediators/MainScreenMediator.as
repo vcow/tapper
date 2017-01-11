@@ -1,5 +1,7 @@
 package mediators
 {
+	import app.AppFacade;
+
 	import models.IPopUpData;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -8,8 +10,7 @@ package mediators
 
 	public class MainScreenMediator extends BindableMediator
 	{
-		private static var _interests:Array = [Const.POP, Const.POP_TO_ROOT,
-			Const.SWITCH_TO_GAME, Const.SWITCH_TO_SHOP, Const.SHOW];
+		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_POPUP];
 
 		public function MainScreenMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -21,6 +22,15 @@ package mediators
 			return _interests;
 		}
 
+		override public function onRegister():void
+		{
+			var mainScreen:MainScreen = getViewComponent() as MainScreen;
+			if (mainScreen)
+			{
+				switchToState(AppFacade(facade).gameModel.currentState);
+			}
+		}
+
 		override public function handleNotification(notification:INotification):void
 		{
 			var mainScreen:MainScreen = getViewComponent() as MainScreen;
@@ -28,19 +38,14 @@ package mediators
 			{
 				switch (notification.getName())
 				{
-					case Const.POP:
-						mainScreen.popScreen();
+					case Const.SWITCH_TO:
+						var newState:String = notification.getBody() as String;
+						if (newState != AppFacade(facade).gameModel.currentState)
+						{
+							switchToState(newState);
+						}
 						break;
-					case Const.POP_TO_ROOT:
-						mainScreen.popToRootScreen();
-						break;
-					case Const.SWITCH_TO_GAME:
-						mainScreen.pushScreen("gameScreenItem");
-						break;
-					case Const.SWITCH_TO_SHOP:
-						mainScreen.pushScreen("shopScreenItem");
-						break;
-					case Const.SHOW:
+					case Const.SHOW_POPUP:
 						var data:IPopUpData = notification.getBody() as IPopUpData;
 						mainScreen.showPopUp(data.title, data.description);
 						break;
@@ -48,6 +53,26 @@ package mediators
 						throw Error("Not supported yet.");
 				}
 			}
+		}
+
+		private function switchToState(newState:String):void
+		{
+			var mainScreen:MainScreen = getViewComponent() as MainScreen;
+			switch (newState)
+			{
+				case Const.STATE_START:
+					mainScreen.showScreen("startScreenItem");
+					break;
+				case Const.STATE_GAME:
+					mainScreen.showScreen("gameScreenItem");
+					break;
+				case Const.STATE_SHOP:
+					mainScreen.showScreen("shopScreenItem");
+					break;
+				default:
+					throw Error("Unsupported state " + newState + ".");
+			}
+			AppFacade(facade).gameModel.currentState = newState;
 		}
 	}
 }
