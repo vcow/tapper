@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:ec1d6f99e6085d522a934ceb198f67ae:f8b896d9c1aec5985eb8592d69e92aa9:41201d13b3dce36d097714bf2eed41d9$ -->
+<!-- $TexturePacker:SmartUpdate:0975d2c24253229ec518c117bc8a8782:b0b3605a3847e63dfefe09f19f1ad95d:41201d13b3dce36d097714bf2eed41d9$ -->
 <TextureAtlas imagePath="shop.atf" width="1024" height="2048">
     <SubTexture name="back" x="1" y="1" width="576" height="1024"/>
     <SubTexture name="back_bn_down" x="922" y="385" width="101" height="97"/>
@@ -18,9 +18,8 @@
     <SubTexture name="price_marker_green" x="915" y="583" rotated="true" width="33" height="197" frameX="0" frameY="0" frameWidth="197" frameHeight="42"/>
     <SubTexture name="price_marker_red" x="950" y="583" rotated="true" width="31" height="191" frameX="-3" frameY="0" frameWidth="197" frameHeight="42"/>
     <SubTexture name="scotch" x="876" y="350" rotated="true" width="44" height="115"/>
-    <SubTexture name="scroll_bar" x="1013" y="58" width="5" height="17" frameX="-2" frameY="0" frameWidth="9" frameHeight="17"/>
-    <SubTexture name="scroll_thumb_bottom" x="1013" y="1" width="9" height="21"/>
-    <SubTexture name="scroll_thumb_center" x="1013" y="47" width="9" height="9"/>
-    <SubTexture name="scroll_thumb_top" x="1013" y="24" width="9" height="21"/>
+    <SubTexture name="scroll_bar" x="1013" y="56" width="5" height="17" frameX="-2" frameY="0" frameWidth="9" frameHeight="17"/>
+    <SubTexture name="scroll_thumb" x="1013" y="1" width="9" height="38"/>
+    <SubTexture name="scroll_thumb_center" x="1013" y="41" width="9" height="13"/>
     <SubTexture name="unavailable_back" x="579" y="1" width="359" height="125"/>
 </TextureAtlas>

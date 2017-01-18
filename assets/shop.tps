@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.3.1</string>
+        <string>4.3.3</string>
         <key>fileName</key>
         <string>C:/Work/tapper/assets/shop.tps</string>
         <key>autoSDSettings</key>
@@ -358,17 +358,16 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/scroll_thumb_bottom.png</key>
-            <key type="filename">graphics/skin/shop/scroll_thumb_top.png</key>
+            <key type="filename">graphics/skin/shop/scroll_thumb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,5,5,11</rect>
+                <rect>2,10,5,19</rect>
                 <key>scale9Paddings</key>
-                <rect>2,5,5,11</rect>
+                <rect>2,10,5,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

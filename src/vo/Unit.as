@@ -1,5 +1,9 @@
 package vo
 {
+	import resources.AtlasLibrary;
+
+	import starling.textures.Texture;
+
 	public class Unit extends BindableNotifier
 	{
 		private var _info:UnitInfo;
@@ -12,13 +16,22 @@ package vo
 		private var _ticksLeft:int = -1;
 		private var _count:int = -1;
 
+		private var _icon:Texture;
+
 		public function Unit(info:UnitInfo, buyPrice:Number, active:Boolean)
 		{
 			super();
 
-			_info = info;
-			_buyPrice = buyPrice;
-			_active = active;
+			this.info = info;
+			this.buyPrice = buyPrice;
+			this.active = active;
+		}
+
+		[Bindable(event="iconChanged")]
+		public function get icon():Texture
+		{
+			if (!_icon && _info) _icon = AtlasLibrary.getInstance().unitsSmall.getTexture(_info.id);
+			return _icon;
 		}
 
 		[Bindable(event="countChanged")]
@@ -34,7 +47,10 @@ package vo
 
 		public function set info(value:UnitInfo):void
 		{
+			if (value == _info) return;
 			_info = value;
+			_icon = null;
+			dispatchEventWith("iconChanged");
 		}
 
 		public function get buyPrice():Number

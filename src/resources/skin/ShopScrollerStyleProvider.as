@@ -6,6 +6,8 @@ package resources.skin
 	import feathers.controls.ScrollBar;
 	import feathers.controls.ScrollPolicy;
 	import feathers.controls.Scroller;
+	import feathers.layout.AnchorLayout;
+	import feathers.layout.AnchorLayoutData;
 	import feathers.layout.VerticalLayout;
 	import feathers.layout.VerticalLayoutData;
 
@@ -49,25 +51,15 @@ package resources.skin
 		{
 			var atlas:TextureAtlas = AtlasLibrary.getInstance().shop;
 			var skin:LayoutGroup = new LayoutGroup();
-			skin.layout = new VerticalLayout();
+			skin.layout = new AnchorLayout();
 
-			var partImg:Image = new Image(atlas.getTexture("scroll_thumb_top"));
-			partImg.scale9Grid = new flash.geom.Rectangle(0, 15, 9, 4);
-			var part:LayoutGroup = new LayoutGroup();
-			part.layoutData = new VerticalLayoutData(NaN, 50);
-			part.backgroundSkin = partImg;
-			skin.addChild(part);
+			var partImg:Image = new Image(atlas.getTexture("scroll_thumb"));
+			partImg.scale9Grid = new flash.geom.Rectangle(0, 16, 9, 6);
+			skin.backgroundSkin = partImg;
 
 			partImg = new Image(atlas.getTexture("scroll_thumb_center"));
-			part = new LayoutGroup();
-			part.layoutData = new VerticalLayoutData();
-			part.backgroundSkin = partImg;
-			skin.addChild(part);
-
-			partImg = new Image(atlas.getTexture("scroll_thumb_bottom"));
-			partImg.scale9Grid = new flash.geom.Rectangle(0, 2, 9, 4);
-			part = new LayoutGroup();
-			part.layoutData = new VerticalLayoutData(NaN, 50);
+			var part:LayoutGroup = new LayoutGroup();
+			part.layoutData = new AnchorLayoutData(NaN, NaN, NaN, NaN, 0, 0);
 			part.backgroundSkin = partImg;
 			skin.addChild(part);
 

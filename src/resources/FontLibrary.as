@@ -54,6 +54,12 @@ package resources
 		[Embed(source="fonts/shop_title_23.fnt", mimeType="application/octet-stream")]
 		private static const shopTitle23Description:Class;
 
+		[Embed(source="fonts/unit_count_22.atf", mimeType="application/octet-stream")]
+		private static const unitCount22Asset:Class;
+
+		[Embed(source="fonts/unit_count_22.fnt", mimeType="application/octet-stream")]
+		private static const unitCount22Description:Class;
+
 		private static const ARIAL_16:String = "arial16";
 		private static const ARIAL_30:String = "arial30";
 		private static const ARIAL_26:String = "arial26";
@@ -61,6 +67,7 @@ package resources
 		private static const SHOP_PRICE_31:String = "shopPrice31";
 		private static const SHOP_PRICE_52:String = "shopPrice52";
 		private static const SHOP_TITLE_23:String = "shopTitle23";
+		private static const UNIT_COUNT_22:String = "unitCount22";
 
 		private static const SHOP_MESSAGE:String = "shopMessage";
 
@@ -82,6 +89,8 @@ package resources
 		private var _shopPrice52Font:BitmapFont;
 		private var _shopTitle23Texture:Texture;
 		private var _shopTitle23Font:BitmapFont;
+		private var _unitCount22Texture:Texture;
+		private var _unitCount22Font:BitmapFont;
 
 		private static var _instance:FontLibrary;
 
@@ -184,6 +193,17 @@ package resources
 			return SHOP_TITLE_23;
 		}
 
+		public function get unitCount22():String
+		{
+			if (!_unitCount22Font) {
+				_unitCount22Texture = Texture.fromEmbeddedAsset(unitCount22Asset);
+				_unitCount22Texture.root.onRestore = onUnitCount22Restore;
+				_unitCount22Font = new BitmapFont(_unitCount22Texture, new XML(new unitCount22Description()));
+				TextField.registerBitmapFont(_unitCount22Font, UNIT_COUNT_22);
+			}
+			return UNIT_COUNT_22;
+		}
+
 		private function onArial16Restore():void
 		{
 			_arial16Texture.root.uploadAtfData(new arial16Asset());
@@ -222,6 +242,11 @@ package resources
 		private function onShopTitle23Restore():void
 		{
 			_shopTitle23Texture.root.uploadAtfData(new shopTitle23Asset());
+		}
+
+		private function onUnitCount22Restore():void
+		{
+			_unitCount22Texture.root.uploadAtfData(new unitCount22Asset());
 		}
 	}
 }
