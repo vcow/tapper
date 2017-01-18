@@ -8,8 +8,6 @@ package resources.skin
 	import feathers.controls.Scroller;
 	import feathers.layout.AnchorLayout;
 	import feathers.layout.AnchorLayoutData;
-	import feathers.layout.VerticalLayout;
-	import feathers.layout.VerticalLayoutData;
 
 	import flash.geom.Rectangle;
 
