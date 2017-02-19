@@ -5,6 +5,18 @@ package resources
 
 	public class AtlasLibrary
 	{
+		[Embed(source="graphics/title.atf", mimeType="application/octet-stream")]
+		private static const titleAsset:Class;
+
+		[Embed(source="graphics/title.xml", mimeType="application/octet-stream")]
+		private static const titleDescription:Class;
+
+		[Embed(source="graphics/globe.atf", mimeType="application/octet-stream")]
+		private static const globeAsset:Class;
+
+		[Embed(source="graphics/globe.xml", mimeType="application/octet-stream")]
+		private static const globeDescription:Class;
+
 		[Embed(source="graphics/common.atf", mimeType="application/octet-stream")]
 		private static const commonAsset:Class;
 
@@ -41,6 +53,8 @@ package resources
 		[Embed(source="graphics/shop.xml", mimeType="application/octet-stream")]
 		private static const shopDescription:Class;
 
+		private var _titleTexture:Texture;
+		private var _globeTexture:Texture;
 		private var _commonTexture:Texture;
 		private var _shopTexture:Texture;
 		private var _woodenTexture:Texture;
@@ -52,6 +66,8 @@ package resources
 
 		private static var _instance:AtlasLibrary;
 
+		private var _title:TextureAtlas;
+		private var _globe:TextureAtlas;
 		private var _common:TextureAtlas;
 		private var _shop:TextureAtlas;
 		private var _wooden:TextureAtlas;
@@ -63,6 +79,10 @@ package resources
 		{
 			if (_instance) throw Error("AtlasLibrary is a static class. Use getInstance() method.");
 
+			_titleTexture = Texture.fromEmbeddedAsset(titleAsset);
+			_titleTexture.root.onRestore = onTitleRestore;
+			_globeTexture = Texture.fromEmbeddedAsset(globeAsset);
+			_globeTexture.root.onRestore = onGlobeRestore;
 			_commonTexture = Texture.fromEmbeddedAsset(commonAsset);
 			_commonTexture.root.onRestore = onCommonRestore;
 			_shopTexture = Texture.fromEmbeddedAsset(shopAsset);
@@ -78,6 +98,8 @@ package resources
 			_unitsSmallTexture = Texture.fromEmbeddedAsset(unitsSmallAsset);
 			_unitsSmallTexture.root.onRestore = onUnitsSmallRestore;
 
+			_title = new TextureAtlas(_titleTexture, new XML(new titleDescription()));
+			_globe = new TextureAtlas(_globeTexture, new XML(new globeDescription()));
 			_common = new TextureAtlas(_commonTexture, new XML(new commonDescription()));
 			_shop = new TextureAtlas(_shopTexture, new XML(new shopDescription()));
 			_wooden = new TextureAtlas(_woodenTexture, new XML(new woodenDescription()));
@@ -86,6 +108,16 @@ package resources
 
 			_unitsBig = new TextureAtlas(_unitsBigTexture, new XML(new unitsBigDescription()));
 			_unitsSmall = new TextureAtlas(_unitsSmallTexture, new XML(new unitsSmallDescription()));
+		}
+
+		private function onTitleRestore():void
+		{
+			_titleTexture.root.uploadAtfData(new titleAsset());
+		}
+
+		private function onGlobeRestore():void
+		{
+			_globeTexture.root.uploadAtfData(new globeAsset());
 		}
 
 		private function onCommonRestore():void
@@ -122,6 +154,16 @@ package resources
 		{
 			if (!_instance) _instance = new AtlasLibrary();
 			return _instance;
+		}
+
+		public function get title():TextureAtlas
+		{
+			return _title;
+		}
+
+		public function get globe():TextureAtlas
+		{
+			return _globe;
 		}
 
 		public function get common():TextureAtlas
