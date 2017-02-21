@@ -34,6 +34,7 @@
         import starling.filters.GlowFilter;
         import starling.textures.RenderTexture;
         import starling.textures.Texture;
+        import starling.textures.TextureAtlas;
 
         private var _border:Image;
         private var _noise:Image;
@@ -66,10 +67,20 @@
         [Bindable]
         public var glowColor:uint = 0xffffff;
 
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _atlas;
+        }
+
         private function get border():Image
         {
             if (!_border) {
-                _border = new Image(AtlasLibrary.getInstance().wooden.getTexture("shop_widget_border"));
+                _border = new Image(atlas.getTexture("shop_widget_border"));
                 _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
             }
             return _border;
@@ -246,8 +257,8 @@
         {
             super.initialize();
 
-            _noiseTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("noise");
-            _idleTextures = AtlasLibrary.getInstance().noiseAnim.getTextures("idle");
+            _noiseTextures = atlas.getTextures("noise");
+            _idleTextures = atlas.getTextures("idle");
 
             _noise = new Image(_noiseTextures[0]);
             _noise.blendMode = starling.display.BlendMode.MASK;

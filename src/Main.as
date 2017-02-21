@@ -7,12 +7,6 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
-	import proxy.AchievementsProxy;
-
-	import models.GameModel;
-
-	import org.puremvc.as3.multicore.patterns.facade.Facade;
-
 	import resources.LocalesLibrary;
 	import resources.locale.LocaleManager;
 
@@ -20,25 +14,29 @@ package
 
 	import view.MainScreen;
 
-	[SWF(frameRate="60", backgroundColor="#14485e")]
+	[Frame(factoryClass="Preloader")]
+	[SWF(frameRate="60", backgroundColor="#000000")]
 	public class Main extends Sprite
 	{
 		private var _starling:Starling;
 
 		private var _facade:AppFacade;
-		private var _model:GameModel;
 
 		public function Main()
 		{
 			super();
 
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
-			loaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
+			if (stage) init();
+			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
-		protected function onLoadComplete(event:Event):void
+		protected function init(event:Event = null):void
 		{
+			if (event) removeEventListener(Event.ADDED_TO_STAGE, init);
+
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+
 			var bundles:Array = []
 					.concat(LocalesLibrary.commonBundle)
 					.concat(LocalesLibrary.unitsBundle)

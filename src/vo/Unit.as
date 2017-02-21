@@ -3,6 +3,7 @@ package vo
 	import resources.AtlasLibrary;
 
 	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 
 	public class Unit extends BindableNotifier
 	{
@@ -27,10 +28,20 @@ package vo
 			this.active = active;
 		}
 
+		private static var _atlas:TextureAtlas;
+		private static function get atlas():TextureAtlas
+		{
+			if (!_atlas)
+			{
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("units_small");
+			}
+			return _atlas;
+		}
+
 		[Bindable(event="iconChanged")]
 		public function get icon():Texture
 		{
-			if (!_icon && _info) _icon = AtlasLibrary.getInstance().unitsSmall.getTexture(_info.id);
+			if (!_icon && _info) _icon = atlas.getTexture(_info.id);
 			return _icon;
 		}
 

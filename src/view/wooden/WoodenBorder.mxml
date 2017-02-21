@@ -10,12 +10,23 @@
         </f:layoutData>
     </f:LayoutGroup>
 
-    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('img_border'))}"
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('img_border'))}"
                       touchable="false"/>
     <fx:Script><![CDATA[
         import resources.AtlasLibrary;
 
         import starling.display.Image;
         import starling.display.Quad;
+        import starling.textures.TextureAtlas;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _atlas;
+        }
         ]]></fx:Script>
 </f:LayoutGroup>

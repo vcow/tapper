@@ -6,14 +6,6 @@
         <screen:StartScreen/>
     </f:ScreenNavigatorItem>
 
-    <f:ScreenNavigatorItem id="gameScreenItem">
-        <screen:GameScreenLayer/>
-    </f:ScreenNavigatorItem>
-
-    <f:ScreenNavigatorItem id="shopScreenItem">
-        <screen:ShopScreen/>
-    </f:ScreenNavigatorItem>
-
     <fx:Script><![CDATA[
         import app.AppFacade;
 
@@ -22,6 +14,8 @@
         import mediators.MainScreenMediator;
 
         import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+        import resources.AtlasLibrary;
 
         import starling.events.Event;
 
@@ -60,6 +54,32 @@
                 _mediator = new MainScreenMediator(MEDIATOR_NAME, this);
                 facade.registerMediator(_mediator);
             }
+
+            var assets:Array = ["noise_anim", "shop", "units_big", "units_small", "wooden"];
+            for each (var asset:String in assets)
+            {
+                for each (var ext:String in [".atf", ".xml"])
+                {
+                    var file:File = File.applicationDirectory.resolvePath("assets" + File.separator + asset + ext);
+                    if (!file.exists) throw Error(file.nativePath + " asset isn't exists.");
+                    AtlasLibrary.getInstance().manager.enqueue(file);
+                }
+            }
+            AtlasLibrary.getInstance().manager.loadQueue(onLoadAssets);
+        }
+
+        private function onLoadAssets(ratio:Number):void
+        {
+            trace ("--- draw progress", ratio);
+            if (ratio >= 1.0) startGame();
+        }
+
+        private function startGame():void
+        {
+            trace ("start game");
+
+            addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreenLayer()));
+            addScreen("shopScreenItem", new ScreenNavigatorItem(new ShopScreen()));
         }
 
         override public function dispose():void

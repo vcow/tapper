@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('indicator'))}"
+               backgroundSkin="{new Image(atlas.getTexture('indicator'))}"
                initialize="updateDigits()">
     <f:layout>
         <f:HorizontalLayout gap="2" paddingTop="13" paddingLeft="14"/>
@@ -15,11 +15,21 @@
         private var _digits:Vector.<Image> = new Vector.<Image>(12, true);
         private var _value:Number;
 
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _atlas;
+        }
+
         override protected function initialize():void
         {
             super.initialize();
 
-            var texture:Texture = AtlasLibrary.getInstance().wooden.getTexture("space");
+            var texture:Texture = atlas.getTexture("space");
             for (var i:int = 0; i < 12; i++) {
                 var image:Image = new Image(texture);
                 _digits[i] = image;
@@ -38,7 +48,6 @@
         private function updateDigits():void
         {
             var digits:Array = isNaN(_value) ? [] : _value.toString().split("");
-            var atlas:TextureAtlas = AtlasLibrary.getInstance().wooden;
             for (var i:int = 11, j:int = digits.length - 1; i >= 0; i--, j--) {
                 var texture:Texture = j < 0 ? atlas.getTexture("space") : atlas.getTexture(digits[j]);
                 if (texture) _digits[i].texture = texture;

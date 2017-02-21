@@ -36,10 +36,20 @@ package resources.skin
 			return scrollBar;
 		}
 
+		private static var _atlas:TextureAtlas;
+		private static function get atlas():TextureAtlas
+		{
+			if (!_atlas)
+			{
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+			}
+			return _atlas;
+		}
+
 		private static function trackFactory():BasicButton
 		{
 			var track:BasicButton = new BasicButton();
-			var img:Image = new Image(AtlasLibrary.getInstance().shop.getTexture("scroll_bar"));
+			var img:Image = new Image(atlas.getTexture("scroll_bar"));
 			img.scale9Grid = new flash.geom.Rectangle(0, 5, 9, 7);
 			track.defaultSkin = img;
 			return track;
@@ -47,7 +57,6 @@ package resources.skin
 
 		private static function thumbFactory():Button
 		{
-			var atlas:TextureAtlas = AtlasLibrary.getInstance().shop;
 			var skin:LayoutGroup = new LayoutGroup();
 			skin.layout = new AnchorLayout();
 

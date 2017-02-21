@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/shop.tps</string>
+        <string>C:/Work/research/mobile/tapper/assets/shop.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../src/resources/graphics/shop.xml</filename>
+                <filename>../src/resources/graphics/assets/shop.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>

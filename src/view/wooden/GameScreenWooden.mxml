@@ -8,7 +8,7 @@
         <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
     </view:layoutData>
 
-    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('back'))}">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}">
         <f:layout>
             <f:AnchorLayout/>
         </f:layout>
@@ -28,8 +28,8 @@
             </wooden:layoutData>
         </wooden:WoodenBorder>
 
-        <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('back_bn_up'))}"
-                  downSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('back_bn_down'))}"
+        <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_up'))}"
+                  downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
                   triggered="{dispatchEventWith(BACK, true)}">
             <f:layoutData>
                 <f:AnchorLayoutData left="23" top="12"/>
@@ -48,8 +48,8 @@
                   _shopButtonStyleProvider = StylesLibrary.woodenShopButtonStyleNormalProvider}"/>
         </wooden:WoodenShopWidget>
 
-        <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('action_bn_up'))}"
-                  downSkin="{new Image(AtlasLibrary.getInstance().wooden.getTexture('action_bn_down'))}"
+        <f:Button defaultSkin="{new Image(atlas.getTexture('action_bn_up'))}"
+                  downSkin="{new Image(atlas.getTexture('action_bn_down'))}"
                   triggered="{dispatchEventWith(TAP, true)}">
             <f:layoutData>
                 <f:AnchorLayoutData top="542" left="38"/>
@@ -111,8 +111,19 @@
         import resources.skin.ButtonStyleProviderBase;
 
         import starling.display.Image;
+        import starling.textures.TextureAtlas;
 
         [Bindable]
         private var _shopButtonStyleProvider:ButtonStyleProviderBase = StylesLibrary.woodenShopButtonStyleNormalProvider;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _atlas;
+        }
         ]]></fx:Script>
 </view:GameScreen>

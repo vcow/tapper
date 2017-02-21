@@ -5,7 +5,7 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back'))}">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}">
         <f:layout>
             <f:AnchorLayout/>
         </f:layout>
@@ -14,8 +14,8 @@
         </f:layoutData>
 
         <!-- Кнопка возврата -->
-        <f:Button defaultSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back_bn_normal'))}"
-                  downSkin="{new Image(AtlasLibrary.getInstance().shop.getTexture('back_bn_down'))}"
+        <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
                   triggered="{dispatchEventWith(BACK)}">
             <f:layoutData>
                 <f:AnchorLayoutData left="25" top="21"/>
@@ -73,6 +73,7 @@
         import starling.display.Image;
         import starling.events.Event;
         import starling.rendering.Painter;
+        import starling.textures.TextureAtlas;
 
         import vo.UnitInfo;
 
@@ -85,6 +86,16 @@
 
         [Bindable]
         public var _mediator:ShopScreenMediator;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+            }
+            return _atlas;
+        }
 
         override protected function initialize():void
         {

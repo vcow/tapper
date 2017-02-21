@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.2.3</string>
+        <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/wooden.tps</string>
+        <string>C:/Work/research/mobile/tapper/assets/wooden.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -47,6 +47,8 @@
         <uint>32768</uint>
         <key>etc1CompressionQuality</key>
         <enum type="SettingsBase::Etc1CompressionQuality">ETC1_QUALITY_LOW_PERCEPTUAL</enum>
+        <key>etc2CompressionQuality</key>
+        <enum type="SettingsBase::Etc2CompressionQuality">ETC2_QUALITY_LOW_PERCEPTUAL</enum>
         <key>dxtCompressionMode</key>
         <enum type="SettingsBase::DxtCompressionMode">DXT_PERCEPTUAL</enum>
         <key>jxrColorFormat</key>
@@ -78,6 +80,8 @@
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
+        <string></string>
+        <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">atf</enum>
@@ -119,6 +123,11 @@
                 <key>order</key>
                 <enum type="AlgorithmBasicSettings::Order">Ascending</enum>
             </struct>
+            <key>polygon</key>
+            <struct type="AlgorithmPolygonSettings">
+                <key>alignToGrid</key>
+                <uint>1</uint>
+            </struct>
         </struct>
         <key>andEngine</key>
         <struct type="AndEngine">
@@ -141,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../src/resources/graphics/wooden.xml</filename>
+                <filename>../src/resources/graphics/assets/wooden.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -199,23 +208,139 @@
             <key type="filename">graphics/digits/electron/8.png</key>
             <key type="filename">graphics/digits/electron/9.png</key>
             <key type="filename">graphics/digits/electron/space.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,12,16,23</rect>
+                <key>scale9Paddings</key>
+                <rect>8,12,16,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/action_bn_down.png</key>
             <key type="filename">graphics/skin/wooden/action_bn_up.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>91,23,182,45</rect>
+                <key>scale9Paddings</key>
+                <rect>91,23,182,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>144,256,288,512</rect>
+                <key>scale9Paddings</key>
+                <rect>144,256,288,512</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/back_bn_down.png</key>
             <key type="filename">graphics/skin/wooden/back_bn_up.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,24,47,48</rect>
+                <key>scale9Paddings</key>
+                <rect>24,24,47,48</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/bar.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,82,14,163</rect>
+                <key>scale9Paddings</key>
+                <rect>7,82,14,163</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/img_border.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>136,109,273,217</rect>
+                <key>scale9Paddings</key>
+                <rect>136,109,273,217</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/indicator.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>108,21,216,42</rect>
+                <key>scale9Paddings</key>
+                <rect>108,21,216,42</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/shop_bn_highlight_down.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_highlight_up.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_normal_down.png</key>
             <key type="filename">graphics/skin/wooden/shop_bn_normal_up.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,37,75,75</rect>
+                <key>scale9Paddings</key>
+                <rect>37,37,75,75</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/shop_widget_border.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,23,45,45</rect>
+                <key>scale9Paddings</key>
+                <rect>23,23,45,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/wooden/thumb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,14,15</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,14,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
             </struct>
         </map>
         <key>fileList</key>
@@ -243,5 +368,7 @@
         <string></string>
         <key>normalMapSheetFileName</key>
         <filename></filename>
+        <key>exporterProperties</key>
+        <map type="ExporterProperties"/>
     </struct>
 </data>

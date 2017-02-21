@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.3.1</string>
+        <string>4.3.3</string>
         <key>fileName</key>
         <string>C:/Work/research/mobile/tapper/assets/units_big.tps</string>
         <key>autoSDSettings</key>
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../src/resources/graphics/units_big.xml</filename>
+                <filename>../src/resources/graphics/assets/units_big.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>

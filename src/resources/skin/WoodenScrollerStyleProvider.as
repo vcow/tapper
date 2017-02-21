@@ -1,18 +1,19 @@
 package resources.skin
 {
-import feathers.controls.BasicButton;
-import feathers.controls.Button;
-import feathers.controls.ScrollBar;
-import feathers.controls.ScrollPolicy;
-import feathers.controls.Scroller;
+	import feathers.controls.BasicButton;
+	import feathers.controls.Button;
+	import feathers.controls.ScrollBar;
+	import feathers.controls.ScrollPolicy;
+	import feathers.controls.Scroller;
 
-import flash.geom.Rectangle;
+	import flash.geom.Rectangle;
 
-import resources.AtlasLibrary;
+	import resources.AtlasLibrary;
 
-import starling.display.Image;
+	import starling.display.Image;
+	import starling.textures.TextureAtlas;
 
-public class WoodenScrollerStyleProvider extends ScrollerStyleProviderBase
+	public class WoodenScrollerStyleProvider extends ScrollerStyleProviderBase
 	{
 		override protected function onSkinScroller(scroller:Scroller):void
 		{
@@ -20,6 +21,16 @@ public class WoodenScrollerStyleProvider extends ScrollerStyleProviderBase
 			scroller.horizontalScrollPolicy = ScrollPolicy.OFF;
 
 			scroller.verticalScrollBarFactory = scrollBarFactory;
+		}
+
+		private static var _atlas:TextureAtlas;
+		private static function get atlas():TextureAtlas
+		{
+			if (!_atlas)
+			{
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+			}
+			return _atlas;
 		}
 
 		private static function scrollBarFactory():ScrollBar
@@ -34,7 +45,7 @@ public class WoodenScrollerStyleProvider extends ScrollerStyleProviderBase
 		private static function trackFactory():BasicButton
 		{
 			var track:BasicButton = new BasicButton();
-			var img:Image = new Image(AtlasLibrary.getInstance().wooden.getTexture("bar"));
+			var img:Image = new Image(atlas.getTexture("bar"));
 			img.scale9Grid = new flash.geom.Rectangle(0, 28, 28, 270);
 			track.defaultSkin = img;
 			return track;
@@ -43,7 +54,7 @@ public class WoodenScrollerStyleProvider extends ScrollerStyleProviderBase
 		private static function thumbFactory():Button
 		{
 			var thumb:Button = new Button();
-			thumb.defaultSkin = new Image(AtlasLibrary.getInstance().wooden.getTexture("thumb"));
+			thumb.defaultSkin = new Image(atlas.getTexture("thumb"));
 			return thumb;
 		}
 	}

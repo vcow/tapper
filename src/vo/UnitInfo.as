@@ -13,6 +13,7 @@ package vo
 	import resources.locale.LocaleManager;
 
 	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 
 	public class UnitInfo extends BindableNotifier
 	{
@@ -121,6 +122,16 @@ package vo
 				return value + "к";
 			}
 			return value.toString();
+		}
+
+		private static var _atlas:TextureAtlas;
+		private static function get atlas():TextureAtlas
+		{
+			if (!_atlas)
+			{
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("units_small");
+			}
+			return _atlas;
 		}
 
 		private function onTrigger(trigger:String, value:*, ...args):void
@@ -234,7 +245,7 @@ package vo
 		[Bindable(event="dataChanged")]
 		public function get icon():Texture
 		{
-			return _id ? AtlasLibrary.getInstance().unitsSmall.getTexture(_id) : null;
+			return _id ? atlas.getTexture(_id) : null;
 		}
 
 		[Bindable(event="dataChanged")]
