@@ -5,7 +5,7 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}" minWidth="576" minHeight="1024">
         <f:layout>
             <f:AnchorLayout/>
         </f:layout>

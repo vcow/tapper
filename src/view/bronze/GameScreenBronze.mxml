@@ -4,9 +4,6 @@
     <view:layout>
         <f:AnchorLayout/>
     </view:layout>
-    <view:layoutData>
-        <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-    </view:layoutData>
 
     <f:LayoutGroup>
         <f:layout>

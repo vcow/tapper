@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/title.tps</string>
+        <string>C:/Work/research/mobile/tapper/assets/title.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -210,32 +210,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/title/glow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>122,122,244,244</rect>
-                <key>scale9Paddings</key>
-                <rect>122,122,244,244</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">graphics/skin/title/hand.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>19,25,39,51</rect>
-                <key>scale9Paddings</key>
-                <rect>19,25,39,51</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">graphics/skin/title/letters/Layer 1-letters_000.png</key>
             <key type="filename">graphics/skin/title/letters/Layer 1-letters_001.png</key>
             <key type="filename">graphics/skin/title/letters/Layer 1-letters_002.png</key>
@@ -299,8 +273,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>graphics/skin/title/glow.png</filename>
-            <filename>graphics/skin/title/hand.png</filename>
             <filename>graphics/skin/title/back.png</filename>
             <filename>graphics/skin/title/letters</filename>
         </array>

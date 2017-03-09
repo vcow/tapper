@@ -1,34 +1,37 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:view="view.*"
-               backgroundSkin="{new Image(AtlasLibrary.getInstance().title.getTexture('back'))}"
                addedToStage="startAnimation()" removedFromStage="stopAnimation()">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup>
+    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().title.getTexture('back'))}"
+                   minWidth="576" minHeight="1024">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
         <f:layoutData>
-            <f:AnchorLayoutData horizontalCenter="-10" top="132"/>
+            <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
         </f:layoutData>
 
-        <f:ImageLoader source="{AtlasLibrary.getInstance().title.getTexture('glow')}" pivotX="122" pivotY="122"
-                       x="145" y="145" scale="{GLOW_SCALE_FROM}" id="glow" includeInLayout="false"/>
+        <f:LayoutGroup>
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="-10" top="132"/>
+            </f:layoutData>
 
-        <view:Globe id="globe"/>
+            <view:Globe id="globe"/>
+        </f:LayoutGroup>
+
+        <view:Title id="title" filter="{new GlowFilter(0xff3838)}">
+            <view:layoutData>
+                <f:AnchorLayoutData horizontalCenter="0" top="14"/>
+            </view:layoutData>
+        </view:Title>
+
+        <f:Button label="{LocaleManager.getInstance().getString('common', 'start.bn.label')}"
+                  styleProvider="{StylesLibrary.commonButtonStyleProvider}"
+                  triggered="{dispatchEventWith(START)}"/>
     </f:LayoutGroup>
-
-    <f:ImageLoader source="{AtlasLibrary.getInstance().title.getTexture('hand')}"
-                   x="409" y="322" includeInLayout="false"/>
-
-    <view:Title id="title" filter="{new GlowFilter(0xff3838)}">
-        <view:layoutData>
-            <f:AnchorLayoutData horizontalCenter="0" top="14"/>
-        </view:layoutData>
-    </view:Title>
-
-    <f:Button label="{LocaleManager.getInstance().getString('common', 'start.bn.label')}"
-              styleProvider="{StylesLibrary.commonButtonStyleProvider}"
-              triggered="{dispatchEventWith(START)}"/>
 
     <fx:Script><![CDATA[
         import app.AppFacade;
@@ -42,9 +45,6 @@
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
-        import starling.animation.Transitions;
-
-        import starling.animation.Tween;
         import starling.core.Starling;
 
         import starling.display.Image;
@@ -53,9 +53,6 @@
         public static const START:String = "startGame";
 
         public static const MEDIATOR_NAME:String = "startScreenMediator";
-
-        private static const GLOW_SCALE_FROM:Number = 1.5;
-        private static const GLOW_SCALE_TO:Number = 1.7;
 
         [Bindable]
         private var _mediator:StartScreenMediator;
@@ -81,26 +78,14 @@
 
         private function startAnimation():void
         {
-            animateGlow();
             Starling.juggler.add(globe);
             Starling.juggler.add(title);
         }
 
         private function stopAnimation():void
         {
-//            Starling.juggler.removeTweens(glow);
             Starling.juggler.remove(globe);
             Starling.juggler.remove(title);
-        }
-
-        internal function animateGlow():void
-        {
-//            var tween:Tween = new Tween(glow, 3, Transitions.EASE_OUT);
-//            tween.scaleTo(GLOW_SCALE_TO);
-//            tween.nextTween = new Tween(glow, 3, Transitions.EASE_IN);
-//            tween.nextTween.scaleTo(GLOW_SCALE_FROM);
-//            tween.nextTween.onComplete = animateGlow;
-//            Starling.juggler.add(tween);
         }
 
         override public function dispose():void

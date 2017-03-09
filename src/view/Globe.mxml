@@ -25,7 +25,7 @@
         public function advanceTime(time:Number):void
         {
             _totalTimes += time;
-            _globe.rotate(0, _totalTimes * 4.0, 0);
+            _globe.rotate(0, _totalTimes * 5.0, 0);
         }
         ]]></fx:Script>
 </f:LayoutGroup>

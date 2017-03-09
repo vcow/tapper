@@ -1,20 +1,14 @@
 <?xml version="1.0"?>
 <view:GameScreen xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-                 xmlns:wooden="view.wooden.*" xmlns:view="view.*">
-    <view:layout>
-        <f:AnchorLayout/>
-    </view:layout>
-    <view:layoutData>
-        <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-    </view:layoutData>
-
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}">
-        <f:layout>
+                 xmlns:wooden="view.wooden.*" xmlns:view="view.*"
+                 backgroundSkin="{new Image(atlas.getTexture('back'))}"
+                 minWidth="576" minHeight="1024">
+        <view:layout>
             <f:AnchorLayout/>
-        </f:layout>
-        <f:layoutData>
+        </view:layout>
+        <view:layoutData>
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
-        </f:layoutData>
+        </view:layoutData>
 
         <wooden:WoodenIndicator id="indicatorView" value="{_mediator.money}">
             <wooden:layoutData>
@@ -66,8 +60,6 @@
                 <f:AnchorLayoutData horizontalCenter="0" bottom="42"/>
             </f:layoutData>
         </f:List>
-
-    </f:LayoutGroup>
 
     <f:LayoutGroup touchable="false">
         <f:layout>
