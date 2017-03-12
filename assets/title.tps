@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/research/mobile/tapper/assets/title.tps</string>
+        <string>C:/Work/tapper/assets/title.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -270,11 +270,59 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">graphics/skin/title/menu_bn_disabled.png</key>
+            <key type="filename">graphics/skin/title/menu_bn_down.png</key>
+            <key type="filename">graphics/skin/title/menu_bn_normal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>75,18,150,35</rect>
+                <key>scale9Paddings</key>
+                <rect>75,18,150,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/title/progress_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>99,93,198,185</rect>
+                <key>scale9Paddings</key>
+                <rect>99,93,198,185</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/title/progress_border.png</key>
+            <key type="filename">graphics/skin/title/progress_border_mask.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>99,9,198,18</rect>
+                <key>scale9Paddings</key>
+                <rect>99,9,198,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
             <filename>graphics/skin/title/back.png</filename>
             <filename>graphics/skin/title/letters</filename>
+            <filename>graphics/skin/title/menu_bn_disabled.png</filename>
+            <filename>graphics/skin/title/menu_bn_down.png</filename>
+            <filename>graphics/skin/title/menu_bn_normal.png</filename>
+            <filename>graphics/skin/title/progress_back.png</filename>
+            <filename>graphics/skin/title/progress_border.png</filename>
+            <filename>graphics/skin/title/progress_border_mask.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
