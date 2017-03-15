@@ -22,16 +22,24 @@
             <view:Globe id="globe"/>
         </f:LayoutGroup>
 
-        <view:Title id="title" filter="{new GlowFilter(0xff3838)}">
+        <view:StartScreenTitle id="title" filter="{new GlowFilter(0xff3838)}">
             <view:layoutData>
                 <f:AnchorLayoutData horizontalCenter="0" top="14"/>
             </view:layoutData>
-        </view:Title>
+        </view:StartScreenTitle>
 
         <f:Button label="{LocaleManager.getInstance().getString('common', 'start.bn.label')}"
                   styleProvider="{StylesLibrary.commonButtonStyleProvider}"
                   triggered="{dispatchEventWith(START)}"/>
     </f:LayoutGroup>
+
+    <fx:Declarations>
+        <view:StartScreenProgress id="ssp">
+            <view:layoutData>
+                <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
+            </view:layoutData>
+        </view:StartScreenProgress>
+    </fx:Declarations>
 
     <fx:Script><![CDATA[
         import app.AppFacade;
@@ -74,6 +82,8 @@
             }
 
             if (stage) startAnimation();
+
+            Starling.juggler.delayCall(addChild, 1, ssp);
         }
 
         private function startAnimation():void

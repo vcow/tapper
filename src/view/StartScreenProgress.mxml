@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{backgroundImage}" width="396">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:LayoutGroup id="progressGroup" clipContent="false" includeInLayout="true" touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData bottom="0"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+
+        import starling.display.Image;
+
+        private static var _backgroundImage:Image;
+
+        private var _progress:Number = 1.0;
+
+        [Bindable(event="dataChanged")]
+        protected function get backgroundImage():Image
+        {
+            if (!_backgroundImage)
+            {
+                _backgroundImage = new Image(AtlasLibrary.getInstance().title.getTexture("progress_border"));
+                _backgroundImage.scale9Grid = new flash.geom.Rectangle(0, 15, 396, 5);
+            }
+            return _backgroundImage;
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            var progressBar:Image = new Image(AtlasLibrary.getInstance().title.getTexture("progress_bar"));
+            progressGroup.addChild(progressBar);
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

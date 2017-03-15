@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/title.tps</string>
+        <string>C:/Work/research/mobile/tapper/assets/title.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -298,8 +298,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">graphics/skin/title/progress_bar.png</key>
             <key type="filename">graphics/skin/title/progress_border.png</key>
-            <key type="filename">graphics/skin/title/progress_border_mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -322,7 +322,7 @@
             <filename>graphics/skin/title/menu_bn_normal.png</filename>
             <filename>graphics/skin/title/progress_back.png</filename>
             <filename>graphics/skin/title/progress_border.png</filename>
-            <filename>graphics/skin/title/progress_border_mask.png</filename>
+            <filename>graphics/skin/title/progress_bar.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
