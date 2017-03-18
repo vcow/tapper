@@ -1,7 +1,6 @@
 package resources
 {
 	import resources.skin.AvailablePriceLabelStyleProvider;
-	import resources.skin.BackButtonStyleProvider;
 	import resources.skin.ButtonStyleProviderBase;
 	import resources.skin.CommonButtonStyleProvider;
 	import resources.skin.CounterLabelStyleProvider;
@@ -21,8 +20,7 @@ package resources
 
 	public class StylesLibrary
 	{
-		public static const commonButtonStyleProvider:ButtonStyleProviderBase = new CommonButtonStyleProvider();
-		public static const backButtonStyleProvider:ButtonStyleProviderBase = new BackButtonStyleProvider();
+		public static const startScreenButtonStyleProvider:ButtonStyleProviderBase = new CommonButtonStyleProvider();
 
 		public static const woodenShopButtonStyleNormalProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleNormalProvider();
 		public static const woodenShopButtonStyleHighlightedProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleHighlightedProvider();

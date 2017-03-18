@@ -33,12 +33,12 @@
                 <f:HorizontalLayout gap="2"/>
             </f:layout>
 
-            <f:Button styleProvider="{StylesLibrary.commonButtonStyleProvider}"
+            <f:Button styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
                       label="{LocaleManager.getInstance().getString('common', 'ok.bn.label')}"
                       triggered="{dispatchEventWith(starling.events.Event.CLOSE)}"
                       isEnabled="{available}"/>
 
-            <f:Button styleProvider="{StylesLibrary.commonButtonStyleProvider}"
+            <f:Button styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
                       label="{LocaleManager.getInstance().getString('common', 'cancel.bn.label')}"
                       triggered="{dispatchEventWith(starling.events.Event.CANCEL)}"/>
         </f:LayoutGroup>

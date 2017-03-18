@@ -16,7 +16,7 @@ package mediators
 			var startScreen:StartScreen = getViewComponent() as StartScreen;
 			if (startScreen)
 			{
-				startScreen.addEventListener(StartScreen.START, onStart);
+				startScreen.addEventListener("continueGame", onStart);
 			}
 		}
 
@@ -25,7 +25,7 @@ package mediators
 			var startScreen:StartScreen = getViewComponent() as StartScreen;
 			if (startScreen)
 			{
-				startScreen.removeEventListener(StartScreen.START, onStart);
+				startScreen.removeEventListener("continueGame", onStart);
 			}
 		}
 

@@ -21,7 +21,7 @@
                 <f:VerticalLayoutData percentWidth="100"/>
             </f:layoutData>
 
-            <f:Button styleProvider="{StylesLibrary.backButtonStyleProvider}"
+            <f:Button styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
                       triggered="{dispatchEventWith(BACK, true)}"/>
 
             <f:Label text="{_mediator.money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">

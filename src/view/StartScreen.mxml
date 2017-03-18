@@ -28,16 +28,53 @@
             </view:layoutData>
         </view:StartScreenTitle>
 
-        <view:StartScreenProgress progress="{progress}">
-            <view:layoutData>
+        <f:LayoutGroup  minHeight="370">
+            <f:layout>
+                <f:AnchorLayout/>
+            </f:layout>
+            <f:layoutData>
                 <f:AnchorLayoutData horizontalCenter="0" bottom="53"/>
-            </view:layoutData>
-        </view:StartScreenProgress>
+            </f:layoutData>
 
-        <f:Button label="{LocaleManager.getInstance().getString('common', 'start.bn.label')}"
-                  styleProvider="{StylesLibrary.commonButtonStyleProvider}"
-                  triggered="{dispatchEventWith(START)}"/>
+            <view:StartScreenProgress progress="{progress}">
+                <view:layoutData>
+                    <f:AnchorLayoutData bottom="0"/>
+                </view:layoutData>
+            </view:StartScreenProgress>
+
+            <f:LayoutGroup id="buttonGroup" visible="{progress >= 1.0}">
+                <f:layout>
+                    <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5"/>
+                </f:layout>
+                <f:layoutData>
+                    <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
+                </f:layoutData>
+
+                <f:Button label="{LocaleManager.getInstance().getString('common', 'continue.bn.label')}"
+                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+                          triggered="{dispatchEventWith('continueGame')}"/>
+
+                <f:Button label="{LocaleManager.getInstance().getString('common', 'new.bn.label')}"
+                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+                          triggered="{dispatchEventWith('newGame')}"/>
+
+                <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
+                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+                          triggered="{dispatchEventWith('openShop')}"/>
+
+                <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
+                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="false"
+                          triggered="{dispatchEventWith('openRating')}"/>
+            </f:LayoutGroup>
+        </f:LayoutGroup>
     </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="continueGame", type="starling.events.Event")]
+        [Event(name="newGame", type="starling.events.Event")]
+        [Event(name="openShop", type="starling.events.Event")]
+        [Event(name="openRating", type="starling.events.Event")]
+    </fx:Metadata>
 
     <fx:Script><![CDATA[
         import app.AppFacade;
@@ -56,15 +93,32 @@
         import starling.display.Image;
         import starling.filters.GlowFilter;
 
-        public static const START:String = "startGame";
-
         public static const MEDIATOR_NAME:String = "startScreenMediator";
+
+        private var _progress:Number = 0;
 
         [Bindable]
         private var _mediator:StartScreenMediator;
 
-        [Bindable]
-        public var progress:Number = 0;
+        [Bindable(event="progressChanged")]
+        public function get progress():Number
+        {
+            return _progress;
+        }
+
+        public function set progress(value:Number):void
+        {
+            if (value == _progress) return;
+            if (_progress < 1.0 && value >= 1.0)
+                startButtonAnimation();
+            _progress = value;
+            dispatchEventWith("progressChanged");
+        }
+
+        private function startButtonAnimation():void
+        {
+
+        }
 
         override protected function initialize():void
         {
