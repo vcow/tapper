@@ -3,7 +3,7 @@
                         xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:screen="view.*">
 
     <f:ScreenNavigatorItem id="startScreenItem">
-        <screen:StartScreen/>
+        <screen:StartScreen id="startScreen"/>
     </f:ScreenNavigatorItem>
 
     <fx:Script><![CDATA[
@@ -70,7 +70,7 @@
 
         private function onLoadAssets(ratio:Number):void
         {
-            trace ("--- draw progress", ratio);
+            startScreen.progress = ratio;
             if (ratio >= 1.0) startGame();
         }
 

@@ -28,18 +28,16 @@
             </view:layoutData>
         </view:StartScreenTitle>
 
+        <view:StartScreenProgress progress="{progress}">
+            <view:layoutData>
+                <f:AnchorLayoutData horizontalCenter="0" bottom="53"/>
+            </view:layoutData>
+        </view:StartScreenProgress>
+
         <f:Button label="{LocaleManager.getInstance().getString('common', 'start.bn.label')}"
                   styleProvider="{StylesLibrary.commonButtonStyleProvider}"
                   triggered="{dispatchEventWith(START)}"/>
     </f:LayoutGroup>
-
-    <fx:Declarations>
-        <view:StartScreenProgress id="ssp">
-            <view:layoutData>
-                <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
-            </view:layoutData>
-        </view:StartScreenProgress>
-    </fx:Declarations>
 
     <fx:Script><![CDATA[
         import app.AppFacade;
@@ -65,6 +63,9 @@
         [Bindable]
         private var _mediator:StartScreenMediator;
 
+        [Bindable]
+        public var progress:Number = 0;
+
         override protected function initialize():void
         {
             super.initialize();
@@ -82,8 +83,6 @@
             }
 
             if (stage) startAnimation();
-
-            Starling.juggler.delayCall(addChild, 1, ssp);
         }
 
         private function startAnimation():void
