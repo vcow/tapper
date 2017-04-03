@@ -10,7 +10,7 @@ package resources.skin
 		override protected function onSkinLabel(label:Label):void
 		{
 			label.textRendererProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial16, 12)
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31, 12)
 			};
 		}
 	}

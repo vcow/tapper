@@ -6,28 +6,16 @@ package resources
 
 	public class FontLibrary
 	{
-		[Embed(source="fonts/arial_16.atf", mimeType="application/octet-stream")]
-		private static const arial16Asset:Class;
+		[Embed(source="fonts/title_button_31.atf", mimeType="application/octet-stream")]
+		private static const titleButton31Asset:Class;
 
-		[Embed(source="fonts/arial_16.fnt", mimeType="application/octet-stream")]
-		private static const arial16Description:Class;
+		[Embed(source="fonts/title_button_31.fnt", mimeType="application/octet-stream")]
+		private static const titleButton31Description:Class;
 
-		[Embed(source="fonts/arial_30.atf", mimeType="application/octet-stream")]
-		private static const arial30Asset:Class;
-
-		[Embed(source="fonts/arial_30.fnt", mimeType="application/octet-stream")]
-		private static const arial30Description:Class;
-
-		[Embed(source="fonts/arial_26.atf", mimeType="application/octet-stream")]
-		private static const arial26Asset:Class;
-
-		[Embed(source="fonts/arial_26.fnt", mimeType="application/octet-stream")]
-		private static const arial26Description:Class;
-
-		[Embed(source="fonts/shop_message/shop_message.atf", mimeType="application/octet-stream")]
+		[Embed(source="fonts/shop_message.atf", mimeType="application/octet-stream")]
 		private static const shopMessageAsset:Class;
 
-		[Embed(source="fonts/shop_message/shop_message.fnt", mimeType="application/octet-stream")]
+		[Embed(source="fonts/shop_message.fnt", mimeType="application/octet-stream")]
 		private static const shopMessageDescription:Class;
 
 		[Embed(source="fonts/shop_price_20.atf", mimeType="application/octet-stream")]
@@ -60,9 +48,8 @@ package resources
 		[Embed(source="fonts/unit_count_22.fnt", mimeType="application/octet-stream")]
 		private static const unitCount22Description:Class;
 
-		private static const ARIAL_16:String = "arial16";
-		private static const ARIAL_30:String = "arial30";
-		private static const ARIAL_26:String = "arial26";
+		private static const TITLE_BUTTON_31:String = "titleButton31";
+
 		private static const SHOP_PRICE_20:String = "shopPrice20";
 		private static const SHOP_PRICE_31:String = "shopPrice31";
 		private static const SHOP_PRICE_52:String = "shopPrice52";
@@ -71,12 +58,8 @@ package resources
 
 		private static const SHOP_MESSAGE:String = "shopMessage";
 
-		private var _arial16Texture:Texture;
-		private var _arial16Font:BitmapFont;
-		private var _arial30Texture:Texture;
-		private var _arial30Font:BitmapFont;
-		private var _arial26Texture:Texture;
-		private var _arial26Font:BitmapFont;
+		private var _titleButton31Texture:Texture;
+		private var _titleButton31Font:BitmapFont;
 
 		private var _shopMessageTexture:Texture;
 		private var _shopMessageFont:BitmapFont;
@@ -105,37 +88,15 @@ package resources
 			return _instance;
 		}
 
-		public function get arial16():String
+		public function get titleButton31():String
 		{
-			if (!_arial16Font) {
-				_arial16Texture = Texture.fromEmbeddedAsset(arial16Asset);
-				_arial16Texture.root.onRestore = onArial16Restore;
-				_arial16Font = new BitmapFont(_arial16Texture, new XML(new arial16Description()));
-				TextField.registerBitmapFont(_arial16Font, ARIAL_16);
+			if (!_titleButton31Font) {
+				_titleButton31Texture = Texture.fromEmbeddedAsset(titleButton31Asset);
+				_titleButton31Texture.root.onRestore = onTitleButton31Restore;
+				_titleButton31Font = new BitmapFont(_titleButton31Texture, new XML(new titleButton31Description()));
+				TextField.registerBitmapFont(_titleButton31Font, TITLE_BUTTON_31);
 			}
-			return ARIAL_16;
-		}
-
-		public function get arial30():String
-		{
-			if (!_arial30Font) {
-				_arial30Texture = Texture.fromEmbeddedAsset(arial30Asset);
-				_arial30Texture.root.onRestore = onArial30Restore;
-				_arial30Font = new BitmapFont(_arial30Texture, new XML(new arial30Description()));
-				TextField.registerBitmapFont(_arial30Font, ARIAL_30);
-			}
-			return ARIAL_30;
-		}
-
-		public function get arial26():String
-		{
-			if (!_arial26Font) {
-				_arial26Texture = Texture.fromEmbeddedAsset(arial26Asset);
-				_arial26Texture.root.onRestore = onarial26Restore;
-				_arial26Font = new BitmapFont(_arial26Texture, new XML(new arial26Description()));
-				TextField.registerBitmapFont(_arial26Font, ARIAL_26);
-			}
-			return ARIAL_26;
+			return TITLE_BUTTON_31;
 		}
 
 		public function get shopMessage():String
@@ -204,24 +165,14 @@ package resources
 			return UNIT_COUNT_22;
 		}
 
-		private function onArial16Restore():void
+		private function onTitleButton31Restore():void
 		{
-			_arial16Texture.root.uploadAtfData(new arial16Asset());
-		}
-
-		private function onArial30Restore():void
-		{
-			_arial16Texture.root.uploadAtfData(new arial30Asset());
-		}
-
-		private function onarial26Restore():void
-		{
-			_arial16Texture.root.uploadAtfData(new arial26Asset());
+			_titleButton31Texture.root.uploadAtfData(new titleButton31Asset());
 		}
 
 		private function onShopMessageRestore():void
 		{
-			_arial16Texture.root.uploadAtfData(new shopMessageAsset());
+			_shopMessageTexture.root.uploadAtfData(new shopMessageAsset());
 		}
 
 		private function onShopPrice20Restore():void
