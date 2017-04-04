@@ -11,7 +11,7 @@ package resources.skin
 		{
 			label.textRendererProperties = {
 				wordWrap: true,
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial30)
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31)
 			};
 		}
 	}

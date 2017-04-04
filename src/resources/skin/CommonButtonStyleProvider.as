@@ -27,10 +27,10 @@ package resources.skin
 			button.disabledSkin = new Image(atlas.getTexture("menu_bn_disabled"));
 
 			button.defaultLabelProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial30)
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31)
 			};
 			button.disabledLabelProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial30),
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31),
 				alpha: 0.3
 			};
 

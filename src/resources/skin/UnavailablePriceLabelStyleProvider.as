@@ -16,7 +16,7 @@ package resources.skin
 			label.backgroundSkin = new Quad(20, 20, 0x8c2500);
 			label.textRendererProperties = {
 				wordWrap: true,
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial26, NaN,
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31, NaN,
 						0xffcece, TextFormatAlign.CENTER)
 			};
 
