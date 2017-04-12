@@ -40,10 +40,16 @@ package commands
 				deserializeGameModel(stream.readUTFBytes(stream.bytesAvailable));
 				stream.close();
 			}
+			else
+			{
+				var gameModel:GameModel = AppFacade(facade).gameModel;
+				gameModel.hasCurrentGame = false;
+			}
 		}
 
 		private function deserializeGameModel(data:String):void
 		{
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 			try
 			{
 				var dataObject:Object = JSON.parse(data as String);
@@ -51,6 +57,7 @@ package commands
 			catch (e:Error)
 			{
 				trace("Wrong data format.");
+				gameModel.hasCurrentGame = false;
 				return;
 			}
 
@@ -61,11 +68,13 @@ package commands
 			if (MD5.hashBytes(getBytes(dataObject)) != hash)
 			{
 				trace("Wrong signature.");
+				gameModel.hasCurrentGame = false;
 				return;
 			}
 
+			gameModel.hasCurrentGame = true;
+
 			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
-			var gameModel:GameModel = AppFacade(facade).gameModel;
 
 			var achievementMap:Object = {};
 			for each (listData in dataObject.achievements)

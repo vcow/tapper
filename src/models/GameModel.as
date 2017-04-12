@@ -10,6 +10,7 @@ package models
 	public class GameModel extends Model
 	{
 		private var _callbackId:uint;
+		private var _hasCurrentGame:Boolean;
 		private var _money:Number = 0;
 		private var _tapsTotal:uint;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
@@ -55,6 +56,18 @@ package models
 		public function get isActive():Boolean
 		{
 			return _callbackId != 0;
+		}
+
+		public function get hasCurrentGame():Boolean
+		{
+			return _hasCurrentGame;
+		}
+
+		public function set hasCurrentGame(value:Boolean):void
+		{
+			if (value == _hasCurrentGame) return;
+			_hasCurrentGame = value;
+			triggerBroadcaster.broadcast(TriggerBroadcaster.GAME_STATE, _hasCurrentGame);
 		}
 
 		public function get money():Number

@@ -2,6 +2,7 @@ package resources.skin
 {
 	import feathers.controls.Button;
 	import feathers.events.FeathersEventType;
+	import feathers.layout.VerticalAlign;
 	import feathers.text.BitmapFontTextFormat;
 
 	import flash.geom.Rectangle;
@@ -26,8 +27,12 @@ package resources.skin
 			button.downSkin = new Image(atlas.getTexture("menu_bn_down"));
 			button.disabledSkin = new Image(atlas.getTexture("menu_bn_disabled"));
 
+			button.verticalAlign = VerticalAlign.TOP;
+			button.paddingTop = 10;
+
 			button.defaultLabelProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31)
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31),
+				alpha: 1.0
 			};
 			button.disabledLabelProperties = {
 				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31),

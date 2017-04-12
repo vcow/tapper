@@ -4,6 +4,7 @@ package gears
 
 	public class TriggerBroadcaster extends Broadcaster
 	{
+		public static const GAME_STATE:String = "gameState";
 		public static const MONEY:String = "money";
 		public static const TAP:String = "tap";
 		public static const BUY:String = "buy";

@@ -36,15 +36,15 @@
                 <f:AnchorLayoutData horizontalCenter="0" bottom="53"/>
             </f:layoutData>
 
-            <view:StartScreenProgress progress="{progress}">
+            <view:StartScreenProgress progress="{progress}" animationComplete="onAnimationComplete()">
                 <view:layoutData>
                     <f:AnchorLayoutData bottom="0"/>
                 </view:layoutData>
             </view:StartScreenProgress>
 
-            <f:LayoutGroup id="buttonGroup" visible="{progress >= 1.0}">
+            <f:LayoutGroup id="buttonGroup" visible="{progress >= 1.0}" touchable="false">
                 <f:layout>
-                    <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5"/>
+                    <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="10"/>
                 </f:layout>
                 <f:layoutData>
                     <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
@@ -52,19 +52,20 @@
 
                 <f:Button label="{LocaleManager.getInstance().getString('common', 'continue.bn.label')}"
                           styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                          triggered="{dispatchEventWith('continueGame')}"/>
+                          isEnabled="{_mediator.hasCurrentGame}"
+                          triggered="{dispatchEventWith('continueGame')}" alpha="0"/>
 
                 <f:Button label="{LocaleManager.getInstance().getString('common', 'new.bn.label')}"
                           styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                          triggered="{dispatchEventWith('newGame')}"/>
+                          triggered="{dispatchEventWith('newGame')}" alpha="0"/>
 
                 <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
                           styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                          triggered="{dispatchEventWith('openShop')}"/>
+                          triggered="{dispatchEventWith('openShop')}" alpha="0"/>
 
                 <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
                           styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="false"
-                          triggered="{dispatchEventWith('openRating')}"/>
+                          triggered="{dispatchEventWith('openRating')}" alpha="0"/>
             </f:LayoutGroup>
         </f:LayoutGroup>
     </f:LayoutGroup>
@@ -87,6 +88,8 @@
 
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
+
+        import starling.animation.Tween;
 
         import starling.core.Starling;
 
@@ -124,17 +127,19 @@
         {
             super.initialize();
 
+            var mediator:StartScreenMediator;
             var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
             if (facade.hasMediator(MEDIATOR_NAME))
             {
-                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as StartScreenMediator;
-                _mediator.setViewComponent(this);
+                mediator = facade.retrieveMediator(MEDIATOR_NAME) as StartScreenMediator;
+                mediator.setViewComponent(this);
             }
             else
             {
-                _mediator = new StartScreenMediator(MEDIATOR_NAME, this);
-                facade.registerMediator(_mediator);
+                mediator = new StartScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
             }
+            _mediator = mediator;
 
             if (stage) startAnimation();
         }
@@ -162,6 +167,31 @@
                 _mediator = null;
             }
             super.dispose();
+        }
+
+        private function onAnimationComplete():void
+        {
+            for (var i:int = 0, l:int = buttonGroup.numChildren; i < l; i++)
+            {
+                var bn:starling.display.DisplayObject = buttonGroup.getChildAt(i);
+                var tween:Tween = new Tween(bn, 0.5);
+                tween.fadeTo(1.0);
+                tween.delay = 0.1 * i;
+                Starling.juggler.add(tween);
+            }
+
+            if (tween)
+            {
+                tween.onCompleteArgs = [buttonGroup];
+                tween.onComplete = function (buttonGroup:starling.display.DisplayObject):void
+                {
+                    buttonGroup.touchable = true;
+                }
+            }
+            else
+            {
+                buttonGroup.touchable = true;
+            }
         }
         ]]></fx:Script>
 </f:LayoutGroup>
