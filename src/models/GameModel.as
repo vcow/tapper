@@ -15,7 +15,7 @@ package models
 		private var _tapsTotal:uint;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
 
-		private const _triggerBroadcaster:TriggerBroadcaster = new TriggerBroadcaster();
+		private static const _triggerBroadcaster:TriggerBroadcaster = new TriggerBroadcaster();
 
 		public var tickCount:uint;
 		public var moneyTotal:Number;
