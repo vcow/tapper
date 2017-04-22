@@ -4,9 +4,13 @@ package mediators
 
 	import gears.TriggerBroadcaster;
 
+	import resources.locale.LocaleManager;
+
 	import starling.events.Event;
 
 	import view.StartScreen;
+
+	import vo.MessageBoxData;
 
 	public class StartScreenMediator extends BindableMediator
 	{
@@ -29,6 +33,7 @@ package mediators
 			if (startScreen)
 			{
 				startScreen.addEventListener("continueGame", onStart);
+				startScreen.addEventListener("newGame", onNewGame);
 			}
 		}
 
@@ -40,12 +45,28 @@ package mediators
 			if (startScreen)
 			{
 				startScreen.removeEventListener("continueGame", onStart);
+				startScreen.removeEventListener("newGame", onNewGame);
 			}
 		}
 
 		private function onStart(event:Event):void
 		{
 			sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+		}
+
+		private function onNewGame(event:Event):void
+		{
+			sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+					LocaleManager.getInstance().getString("common", "message.new.game"),
+					onNewGameCallback, MessageBoxData.YES_BUTTON | MessageBoxData.NO_BUTTON));
+		}
+
+		private function onNewGameCallback(result:uint):void
+		{
+			if (result == MessageBoxData.YES_BUTTON)
+			{
+
+			}
 		}
 
 		private function onTrigger(trigger:String, value:*, ...args):void

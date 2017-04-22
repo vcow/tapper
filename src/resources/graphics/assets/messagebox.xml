@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e0f0e1aa53df008836fd7925a574588e:c412dabbacfe5443e29fdb18db87a5c8:d98e9bbbde08e70cd0baf1e47c14f1b2$ -->
+<TextureAtlas imagePath="messagebox.atf" width="512" height="512">
+    <SubTexture name="back" x="1" y="1" width="475" height="322"/>
+    <SubTexture name="border" x="113" y="325" rotated="true" width="78" height="81"/>
+    <SubTexture name="button_normal" x="1" y="325" rotated="true" width="54" height="144"/>
+    <SubTexture name="button_normal_down" x="57" y="325" rotated="true" width="54" height="144"/>
+</TextureAtlas>

@@ -19,6 +19,8 @@
 
         import starling.events.Event;
 
+        import view.messagebox.MessageBoxPopUp;
+
         public static const MEDIATOR_NAME:String = "mainScreenMediator";
 
         [Bindable]
@@ -55,7 +57,7 @@
                 facade.registerMediator(_mediator);
             }
 
-            var assets:Array = ["noise_anim", "shop", "units_big", "units_small", "wooden"];
+            var assets:Array = ["noise_anim", "shop", "units_big", "units_small", "wooden", "messagebox"];
             for each (var asset:String in assets)
             {
                 for each (var ext:String in [".atf", ".xml"])
@@ -76,7 +78,7 @@
 
         private function startGame():void
         {
-            trace ("start game");
+            trace("start game");
 
             addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreenLayer()));
             addScreen("shopScreenItem", new ScreenNavigatorItem(new ShopScreen()));
@@ -91,6 +93,13 @@
                 _mediator = null;
             }
             super.dispose();
+        }
+
+        public function showMessageBox(message:String, buttons:uint = 3):starling.events.EventDispatcher
+        {
+            var popup:MessageBoxPopUp = new MessageBoxPopUp();
+            WindowManager.getInstance().openWindow(popup, true);
+            return popup;
         }
         ]]></fx:Script>
 </f:ScreenNavigator>

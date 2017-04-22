@@ -48,6 +48,18 @@ package resources
 		[Embed(source="fonts/unit_count_22.fnt", mimeType="application/octet-stream")]
 		private static const unitCount22Description:Class;
 
+		[Embed(source="fonts/message_box.fnt", mimeType="application/octet-stream")]
+		private static const messageBoxDescription:Class;
+
+		[Embed(source="fonts/message_box.atf", mimeType="application/octet-stream")]
+		private static const messageBoxAsset:Class;
+
+		[Embed(source="fonts/message_box_button.fnt", mimeType="application/octet-stream")]
+		private static const messageBoxButtonDescription:Class;
+
+		[Embed(source="fonts/message_box_button.atf", mimeType="application/octet-stream")]
+		private static const messageBoxButtonAsset:Class;
+
 		private static const TITLE_BUTTON_31:String = "titleButton31";
 
 		private static const SHOP_PRICE_20:String = "shopPrice20";
@@ -57,6 +69,9 @@ package resources
 		private static const UNIT_COUNT_22:String = "unitCount22";
 
 		private static const SHOP_MESSAGE:String = "shopMessage";
+
+		private static const MESSAGE_BOX:String = "messageBox";
+		private static const MESSAGE_BOX_BUTTON:String = "messageBoxButton";
 
 		private var _titleButton31Texture:Texture;
 		private var _titleButton31Font:BitmapFont;
@@ -74,6 +89,11 @@ package resources
 		private var _shopTitle23Font:BitmapFont;
 		private var _unitCount22Texture:Texture;
 		private var _unitCount22Font:BitmapFont;
+
+		private var _messageBoxTexture:Texture;
+		private var _messageBoxFont:BitmapFont;
+		private var _messageBoxButtonTexture:Texture;
+		private var _messageBoxButtonFont:BitmapFont;
 
 		private static var _instance:FontLibrary;
 
@@ -165,6 +185,28 @@ package resources
 			return UNIT_COUNT_22;
 		}
 
+		public function get messageBox():String
+		{
+			if (!_messageBoxFont) {
+				_messageBoxTexture = Texture.fromEmbeddedAsset(messageBoxAsset);
+				_messageBoxTexture.root.onRestore = onMessageBoxRestore;
+				_messageBoxFont = new BitmapFont(_messageBoxTexture, new XML(new messageBoxDescription()));
+				TextField.registerBitmapFont(_messageBoxFont, MESSAGE_BOX);
+			}
+			return MESSAGE_BOX;
+		}
+
+		public function get messageBoxButton():String
+		{
+			if (!_messageBoxButtonFont) {
+				_messageBoxButtonTexture = Texture.fromEmbeddedAsset(messageBoxButtonAsset);
+				_messageBoxButtonTexture.root.onRestore = onMessageBoxButtonRestore;
+				_messageBoxButtonFont = new BitmapFont(_messageBoxButtonTexture, new XML(new messageBoxButtonDescription()));
+				TextField.registerBitmapFont(_messageBoxButtonFont, MESSAGE_BOX_BUTTON);
+			}
+			return MESSAGE_BOX_BUTTON;
+		}
+
 		private function onTitleButton31Restore():void
 		{
 			_titleButton31Texture.root.uploadAtfData(new titleButton31Asset());
@@ -198,6 +240,16 @@ package resources
 		private function onUnitCount22Restore():void
 		{
 			_unitCount22Texture.root.uploadAtfData(new unitCount22Asset());
+		}
+
+		private function onMessageBoxRestore():void
+		{
+			_messageBoxTexture.root.uploadAtfData(new messageBoxAsset());
+		}
+
+		private function onMessageBoxButtonRestore():void
+		{
+			_messageBoxButtonTexture.root.uploadAtfData(new messageBoxButtonAsset());
 		}
 	}
 }

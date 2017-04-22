@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
+
+    <f:ImageLoader source="{atlas.getTexture('back')}">
+        <f:layoutData>
+            <f:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
+        </f:layoutData>
+    </f:ImageLoader>
+
+    <f:LayoutGroup backgroundSkin="{borderImage}" touchable="false">
+        <f:layoutData>
+            <f:AnchorLayoutData left="6" right="6" top="6" bottom="6"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:VerticalLayout padding="20" gap="10" horizontalAlign="center"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
+        </f:layoutData>
+
+        <f:Label maxWidth="410" wordWrap="true" text="{message}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().messageBox, NaN, 0xffffff, TextFormatAlign.CENTER)}}">
+            <f:layoutData>
+                <f:VerticalLayoutData percentHeight="100"/>
+            </f:layoutData>
+        </f:Label>
+    </f:LayoutGroup>
+
+    <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
+
+        import flash.geom.Rectangle;
+
+        import resources.AtlasLibrary;
+        import resources.FontLibrary;
+
+        import starling.display.Image;
+
+        import starling.textures.TextureAtlas;
+
+        import vo.MessageBoxData;
+
+        [Bindable]
+        private var message:String;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("messagebox");
+            }
+            return _atlas;
+        }
+
+        private static var _borderImage:Image;
+        private function get borderImage():Image
+        {
+            if (!_borderImage)
+            {
+                _borderImage = new Image(atlas.getTexture("border"));
+                _borderImage.scale9Grid = new flash.geom.Rectangle(35, 35, 8, 8);
+            }
+            return _borderImage;
+        }
+
+        public function set data(value:MessageBoxData):void
+        {
+            if (value)
+            {
+                message = value.message;
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

@@ -4,15 +4,20 @@ package mediators
 
 	import feathers.motion.Fade;
 
+	import gears.WindowManager;
+
 	import models.IPopUpData;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import view.MainScreen;
+	import view.messagebox.MessageBoxPopUp;
+
+	import vo.MessageBoxData;
 
 	public class MainScreenMediator extends BindableMediator
 	{
-		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_POPUP];
+		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_POPUP, Const.SHOW_MESSAGE];
 
 		public function MainScreenMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -50,6 +55,11 @@ package mediators
 					case Const.SHOW_POPUP:
 						var data:IPopUpData = notification.getBody() as IPopUpData;
 						mainScreen.messageBox(data.title, data.description);
+						break;
+					case Const.SHOW_MESSAGE:
+						var messageBox:MessageBoxPopUp = new MessageBoxPopUp();
+						messageBox.data = notification.getBody() as MessageBoxData;
+						WindowManager.getInstance().openWindow(messageBox, true);
 						break;
 					default:
 						throw Error("Not supported yet.");

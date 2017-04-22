@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:c80e50e20b5d7360e2b9060adc316dfd:38e2f88937922303f298316b95b11383:3dc16ff0762cf207f8c762a4f18fae56$ -->
+<!-- $TexturePacker:SmartUpdate:52992c934e4c1456f34f7f45d4bc0440:38e2f88937922303f298316b95b11383:3dc16ff0762cf207f8c762a4f18fae56$ -->
 <TextureAtlas imagePath="noise_anim.atf" width="1024" height="1024">
     <SubTexture name="idle0000" x="1" y="1" width="298" height="169"/>
     <SubTexture name="idle0001" x="301" y="1" width="298" height="169"/>

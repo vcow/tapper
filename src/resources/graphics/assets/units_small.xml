@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:c7e4c86a8965b8cfb67f01082205bb2b:59a5deef2a132b2fb38182c8591b60b8:16b7096c9ca711f86b9a8e86d9d82a53$ -->
+<!-- $TexturePacker:SmartUpdate:8ac465b562e4fcaebac51d75417b81ef:59a5deef2a132b2fb38182c8591b60b8:16b7096c9ca711f86b9a8e86d9d82a53$ -->
 <TextureAtlas imagePath="units_small.atf" width="512" height="1024">
     <SubTexture name="booster" x="1" y="1" width="120" height="90"/>
     <SubTexture name="dead_planet" x="123" y="1" width="120" height="90"/>
