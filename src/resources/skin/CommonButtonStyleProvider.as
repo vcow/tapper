@@ -5,13 +5,10 @@ package resources.skin
 	import feathers.layout.VerticalAlign;
 	import feathers.text.BitmapFontTextFormat;
 
-	import flash.geom.Rectangle;
-
 	import resources.AtlasLibrary;
 	import resources.FontLibrary;
 
 	import starling.display.ButtonState;
-
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.textures.TextureAtlas;
@@ -21,7 +18,6 @@ package resources.skin
 		override protected function onSkinButton(button:Button):void
 		{
 			var atlas:TextureAtlas = AtlasLibrary.getInstance().title;
-			const rc:Rectangle = new flash.geom.Rectangle(10, 10, 40, 40);
 
 			button.defaultSkin = new Image(atlas.getTexture("menu_bn_normal"));
 			button.downSkin = new Image(atlas.getTexture("menu_bn_down"));

@@ -112,15 +112,8 @@
         public function set progress(value:Number):void
         {
             if (value == _progress) return;
-            if (_progress < 1.0 && value >= 1.0)
-                startButtonAnimation();
             _progress = value;
             dispatchEventWith("progressChanged");
-        }
-
-        private function startButtonAnimation():void
-        {
-
         }
 
         override protected function initialize():void

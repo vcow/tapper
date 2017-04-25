@@ -65,7 +65,8 @@ package mediators
 		{
 			if (result == MessageBoxData.YES_BUTTON)
 			{
-
+				sendNotification(Const.NEW_GAME);
+				sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 			}
 		}
 

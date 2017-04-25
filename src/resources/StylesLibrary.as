@@ -6,6 +6,7 @@ package resources
 	import resources.skin.CounterLabelStyleProvider;
 	import resources.skin.LabelStyleProviderBase;
 	import resources.skin.LevelDescriptionStyleProvider;
+	import resources.skin.MessageBoxButtonStyleProvider;
 	import resources.skin.MoneyLabelStyleProvider;
 	import resources.skin.PopupDescriptionStyleProvider;
 	import resources.skin.PopupTitleStyleProvider;
@@ -21,6 +22,8 @@ package resources
 	public class StylesLibrary
 	{
 		public static const startScreenButtonStyleProvider:ButtonStyleProviderBase = new CommonButtonStyleProvider();
+
+		public static const messageBoxButtonStyleProvider:ButtonStyleProviderBase = new MessageBoxButtonStyleProvider();
 
 		public static const woodenShopButtonStyleNormalProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleNormalProvider();
 		public static const woodenShopButtonStyleHighlightedProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleHighlightedProvider();

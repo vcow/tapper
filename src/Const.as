@@ -40,6 +40,8 @@ package
 		public static const POP_TO_ROOT:String = "notifyPopToRoot";
 		public static const SWITCH_TO:String = "notifySwitchTo";
 
+		public static const NEW_GAME:String = "notifyNewGame";
+
 		public function Const()
 		{
 			throw Error("Const is a static class.");
