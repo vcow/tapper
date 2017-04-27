@@ -9,7 +9,7 @@ package mediators
 
 	import org.puremvc.as3.multicore.patterns.mediator.Mediator;
 
-	import view.GameScreenLayer;
+	import view.GameScreen;
 
 	public class GameScreenLayerMediator extends Mediator
 	{
@@ -27,7 +27,7 @@ package mediators
 
 		override public function onRegister():void
 		{
-			var gameScreenLayer:GameScreenLayer = getViewComponent() as GameScreenLayer;
+			var gameScreenLayer:GameScreen = getViewComponent() as GameScreen;
 			if (gameScreenLayer)
 			{
 				var gameModel:GameModel = AppFacade(facade).gameModel;
@@ -42,7 +42,7 @@ package mediators
 			switch (notification.getName())
 			{
 				case Const.SET_SKIN_BRONZE:
-					var gameScreenLayer:GameScreenLayer = getViewComponent() as GameScreenLayer;
+					var gameScreenLayer:GameScreen = getViewComponent() as GameScreen;
 					gameScreenLayer.setSkin(SkinType.BRONZE);
 					break;
 			}

@@ -1,66 +1,78 @@
 package mediators
 {
-	import dto.SwitchScreenEvent;
-	import dto.UIEvent;
+	import app.AppFacade;
 
 	import flash.utils.Dictionary;
 
 	import models.GameModel;
-	import vo.UnitInfo;
-	import proxy.UnitsProxy;
 
-	import robotlegs.starling.bundles.mvcs.Mediator;
+	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import proxy.UnitsProxy;
 
 	import starling.events.Event;
 
-	import view.ShopWidget;
+	import view.ShopWidgetBase;
 
-	public class ShopWidgetMediator extends Mediator
+	import vo.UnitInfo;
+
+	public class ShopWidgetMediator extends BindableMediator
 	{
+		private static var _interests:Array = [Const.UPDATE_MONEY];
+
 		private var _availableUnits:Dictionary;
 		private var _lastMoney:Number = 0;
 
-		[Inject]
-		public var view:ShopWidget;
+		private var _data:UnitInfo;
 
-		[Inject]
-		public var unitsModel:UnitsProxy;
-
-		[Inject]
-		public var gameModel:GameModel;
-
-		public function ShopWidgetMediator()
+		public function ShopWidgetMediator(mediatorName:String, viewComponent:Object)
 		{
-			super();
+			super(mediatorName, viewComponent);
 		}
 
-		override public function initialize():void
+		[Bindable(event="dataChanged")]
+		public function get data():UnitInfo
 		{
-			addViewListener(ShopWidget.GO_TO_SHOP, onGoToShop);
-			addViewListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-
-			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
-
-			_lastMoney = gameModel.money;
+			return _data;
 		}
 
-		private function onRemovedFromStage(event:Event):void
+		override public function listNotificationInterests():Array
 		{
-			removeViewListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			addViewListener(Event.ADDED_TO_STAGE, onAddedToStage);
-
-			removeContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
+			return _interests;
 		}
 
-		private function onAddedToStage(event:Event):void
+		override public function onRegister():void
 		{
-			removeViewListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			addViewListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-
-			addContextListener(UIEvent.UPDATE_MONEY, onUpdateMoney);
+			var shopWidget:ShopWidgetBase = getViewComponent() as ShopWidgetBase;
+			if (shopWidget)
+			{
+				shopWidget.addEventListener("goToShop", onGoToShop);
+				_lastMoney = Math.round(AppFacade(facade).gameModel.money);
+			}
 		}
 
-		private function onUpdateMoney(event:UIEvent = null):void
+		override public function onRemove():void
+		{
+			var shopWidget:ShopWidgetBase = getViewComponent() as ShopWidgetBase;
+			if (shopWidget)
+			{
+				shopWidget.removeEventListener("goToShop", onGoToShop);
+			}
+		}
+
+		override public function handleNotification(notification:INotification):void
+		{
+			var shopWidget:ShopWidgetBase = getViewComponent() as ShopWidgetBase;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			switch (notification.getName())
+			{
+				case Const.UPDATE_MONEY:
+					if (shopWidget.stage) updateMoney(shopWidget, gameModel);
+					break;
+			}
+		}
+
+		private function updateMoney(view:ShopWidgetBase, gameModel:GameModel):void
 		{
 			if (_lastMoney > gameModel.money) _availableUnits = null;
 			_lastMoney = gameModel.money;
@@ -68,24 +80,33 @@ package mediators
 			var availableUnits:Dictionary = new Dictionary(true);
 			var newAvailable:Array = [];
 
-			for (var i:int = 0, l:int = unitsModel.units.length; i < l; i++) {
-				var unit:UnitInfo = unitsModel.units[i];
-				if (unit.price <= _lastMoney) {
+			var unitsProxy:UnitsProxy = facade.retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
+			for (var i:int = 0, l:int = unitsProxy.units.length; i < l; i++)
+			{
+				var unit:UnitInfo = unitsProxy.units[i];
+				if (unit.price <= _lastMoney)
+				{
 					availableUnits[unit] = true;
 					if (!_availableUnits || !_availableUnits[unit]) newAvailable.push(unit);
 				}
 			}
 			_availableUnits = availableUnits;
 
-			if (newAvailable.length > 0) {
+			if (newAvailable.length > 0)
+			{
 				newAvailable.sortOn("price", Array.NUMERIC);
-				ShopWidget(view).data = newAvailable[newAvailable.length - 1];
+				var newData:UnitInfo = newAvailable[newAvailable.length - 1];
+				if (newData != _data)
+				{
+					_data = newData;
+					dispatchEventWith("dataChanged");
+				}
 			}
 		}
 
 		private function onGoToShop(event:Event):void
 		{
-			dispatch(new SwitchScreenEvent(SwitchScreenEvent.SWITCH_TO_SHOP));
+			sendNotification(Const.SWITCH_TO, Const.STATE_SHOP);
 		}
 	}
 }

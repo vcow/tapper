@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<view:GameScreen xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
-               backgroundSkin="{new Quad(10, 10, 0xff0000)}">
+<view:GameScreenViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*"
+                         backgroundSkin="{new Quad(10, 10, 0xff0000)}">
     <view:layout>
         <f:AnchorLayout/>
     </view:layout>
@@ -57,15 +57,15 @@
         </f:List>
     </f:LayoutGroup>
 
-    <view:ShopWidget id="sv">
+    <view:ShopWidgetBase id="sv">
         <view:layoutData>
             <f:AnchorLayoutData top="50" right="0"/>
         </view:layoutData>
-    </view:ShopWidget>
+    </view:ShopWidgetBase>
 
     <fx:Script><![CDATA[
         import resources.StylesLibrary;
 
         import starling.display.Quad;
         ]]></fx:Script>
-</view:GameScreen>
+</view:GameScreenViewBase>

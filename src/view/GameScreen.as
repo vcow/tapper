@@ -3,29 +3,37 @@ package view
 	import app.AppFacade;
 
 	import feathers.controls.LayoutGroup;
+	import feathers.layout.AnchorLayout;
 
-	import mediators.GameScreenMediator;
+	import mediators.GameScreenLayerMediator;
+
+	import models.SkinType;
 
 	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
-	[Event(name="back", type="starling.events.Event")]
-	[Event(name="shop", type="starling.events.Event")]
-	[Event(name="tap", type="starling.events.Event")]
+	import starling.display.DisplayObject;
+
+	import view.bronze.GameScreenBronze;
+
+	import view.wooden.GameScreenWooden;
 
 	public class GameScreen extends LayoutGroup
 	{
-		public static const BACK:String = "back";
-		public static const SHOP:String = "shop";
-		public static const TAP:String = "tap";
+		private var _view:GameScreenViewBase;
+		private var _currentSkin:String;
 
-		public static const MEDIATOR_NAME:String = "gameScreenMediator";
+		protected var _mediator:GameScreenLayerMediator;
 
-		[Bindable]
-		protected var _mediator:GameScreenMediator;
+		public static const MEDIATOR_NAME:String = "gameScreenLayerMediator";
 
 		public function GameScreen()
 		{
 			super();
+
+			layout = new AnchorLayout();
+
+			_view = new GameScreenWooden();
+			_currentSkin = SkinType.WOOD;
 		}
 
 		override protected function initialize():void
@@ -35,15 +43,16 @@ package view
 			var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
 			if (facade.hasMediator(MEDIATOR_NAME))
 			{
-				_mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
-				facade.removeMediator(MEDIATOR_NAME);
+				_mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenLayerMediator;
 				_mediator.setViewComponent(this);
 			}
 			else
 			{
-				_mediator = new GameScreenMediator(MEDIATOR_NAME, this);
+				_mediator = new GameScreenLayerMediator(MEDIATOR_NAME, this);
+				facade.registerMediator(_mediator);
 			}
-			facade.registerMediator(_mediator);
+
+			addChild(DisplayObject(_view));
 		}
 
 		override public function dispose():void
@@ -55,6 +64,29 @@ package view
 				_mediator = null;
 			}
 			super.dispose();
+		}
+
+		public function setSkin(skin:String):void
+		{
+			if (skin == _currentSkin) return;
+
+			switch (skin)
+			{
+				case SkinType.WOOD:
+					_view = new GameScreenWooden();
+					break;
+				case SkinType.BRONZE:
+					_view = new GameScreenBronze();
+					break;
+				default:
+					return;
+			}
+
+			if (isInitialized)
+			{
+				removeChildren(0, -1, true);
+				addChild(DisplayObject(_view));
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@ package mediators
 
 	import starling.events.Event;
 
-	import view.GameScreen;
+	import view.GameScreenViewBase;
 
 	public class GameScreenMediator extends BindableMediator
 	{
@@ -35,12 +35,12 @@ package mediators
 
 		override public function onRegister():void
 		{
-			var gameScreen:GameScreen = getViewComponent() as GameScreen;
+			var gameScreen:GameScreenViewBase = getViewComponent() as GameScreenViewBase;
 			if (gameScreen)
 			{
-				gameScreen.addEventListener(GameScreen.BACK, onBack);
-				gameScreen.addEventListener(GameScreen.SHOP, onShop);
-				gameScreen.addEventListener(GameScreen.TAP, onTap);
+				gameScreen.addEventListener(GameScreenViewBase.BACK, onBack);
+				gameScreen.addEventListener(GameScreenViewBase.SHOP, onShop);
+				gameScreen.addEventListener(GameScreenViewBase.TAP, onTap);
 
 				var gameModel:GameModel = AppFacade(facade).gameModel;
 
@@ -57,12 +57,12 @@ package mediators
 
 		override public function onRemove():void
 		{
-			var gameScreen:GameScreen = getViewComponent() as GameScreen;
+			var gameScreen:GameScreenViewBase = getViewComponent() as GameScreenViewBase;
 			if (gameScreen)
 			{
-				gameScreen.removeEventListener(GameScreen.BACK, onBack);
-				gameScreen.removeEventListener(GameScreen.SHOP, onShop);
-				gameScreen.removeEventListener(GameScreen.TAP, onTap);
+				gameScreen.removeEventListener(GameScreenViewBase.BACK, onBack);
+				gameScreen.removeEventListener(GameScreenViewBase.SHOP, onShop);
+				gameScreen.removeEventListener(GameScreenViewBase.TAP, onTap);
 			}
 		}
 

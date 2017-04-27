@@ -80,7 +80,7 @@
         {
             trace("start game");
 
-            addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreenLayer()));
+            addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreen()));
             addScreen("shopScreenItem", new ScreenNavigatorItem(new ShopScreen()));
         }
 

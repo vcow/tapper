@@ -138,7 +138,7 @@
 
         private function onRemovedFromStage():void
         {
-            if (_data && _data.callback)
+            if (_data && _data.callback != null)
             {
                 _data.callback(_result);
             }

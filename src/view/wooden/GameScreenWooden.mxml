@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<view:GameScreen xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-                 xmlns:wooden="view.wooden.*" xmlns:view="view.*"
-                 backgroundSkin="{new Image(atlas.getTexture('back'))}"
-                 minWidth="576" minHeight="1024">
+<view:GameScreenViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
+                         xmlns:wooden="view.wooden.*" xmlns:view="view.*"
+                         backgroundSkin="{new Image(atlas.getTexture('back'))}"
+                         minWidth="576" minHeight="1024">
         <view:layout>
             <f:AnchorLayout/>
         </view:layout>
@@ -118,4 +118,4 @@
             return _atlas;
         }
         ]]></fx:Script>
-</view:GameScreen>
+</view:GameScreenViewBase>

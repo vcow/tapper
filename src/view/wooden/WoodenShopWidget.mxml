@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<view:ShopWidget xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-                 xmlns:view="view.*" xmlns:wooden="view.wooden.*" removedFromStage="onRemovedFromStage()">
+<view:ShopWidgetBase xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                     xmlns:view="view.*" xmlns:wooden="view.wooden.*" removedFromStage="onRemovedFromStage()">
 
     <fx:Declarations>
-        <wooden:WoodenShopWidgetView id="widgetView" includeInLayout="false" close="hideView()"
-                                     complete="onRemovedFromStage()" timeout="2.5"
+        <wooden:WoodenShopWidgetView id="widgetView" text="{updateData(_mediator.data)}" includeInLayout="false"
+                                     close="hideView()" complete="onRemovedFromStage()" timeout="2.5"
                                      glowColor="#77cc00" color="#f2ffdf"/>
     </fx:Declarations>
 
@@ -14,21 +14,27 @@
         import starling.core.Starling;
         import starling.display.DisplayObject;
 
-        override protected function updateData():void
+        import vo.UnitInfo;
+
+        protected function updateData(data:UnitInfo):String
         {
             Starling.juggler.removeTweens(widgetView);
             widgetView.alpha = 1.0;
             widgetView.scale = 1.0;
 
-            if (_data) {
-                widgetView.text = _data.name;
+            if (data)
+            {
                 showView();
+                return data.name;
             }
+
+            return "";
         }
 
         private function hideView():void
         {
-            if (_isActive) {
+            if (_isActive)
+            {
                 _isActive = false;
 
                 const scaleFactor:Number = 0.3;
@@ -62,7 +68,8 @@
             tween.scaleTo(1.0);
             Starling.juggler.add(tween);
 
-            if (!_isActive) {
+            if (!_isActive)
+            {
                 addChild(widgetView);
                 _isActive = true;
             }
@@ -71,6 +78,12 @@
         override protected function get slider():starling.display.DisplayObject
         {
             return widgetView;
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+            updateData(null);
         }
 
         override public function dispose():void
@@ -86,4 +99,4 @@
             _isActive = false;
         }
         ]]></fx:Script>
-</view:ShopWidget>
+</view:ShopWidgetBase>
