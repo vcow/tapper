@@ -1,71 +1,146 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               backgroundSkin="{new Quad(20, 10, 0x000000)}" filter="{new DropShadowFilter()}"
-               initialize="updateData()">
-    <f:layout>
-        <f:VerticalLayout horizontalAlign="center" gap="2" padding="2"/>
-    </f:layout>
+               initialize="updateData()" creationComplete="updateUnavailableReason()">
 
-    <f:Label text="{LocaleManager.getInstance().getString('common', 'buy.popup.title')}"
-             styleProvider="{StylesLibrary.popupTitleStyleProvider}"/>
-
-    <f:LayoutGroup backgroundSkin="{new Quad(20, 10, 0x195a75)}">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('message_back'))}" maxWidth="479" maxHeight="295">
         <f:layout>
-            <f:VerticalLayout gap="5" padding="15" horizontalAlign="center"/>
+            <f:AnchorLayout/>
         </f:layout>
 
-        <f:Label id="titleLabel" styleProvider="{StylesLibrary.shopItemTitleLabelStyleProvider}" paddingBottom="5"/>
+        <f:Label text="{title}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage)}}">
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="0" top="19"/>
+            </f:layoutData>
+        </f:Label>
 
-        <f:Label text="{price}" styleProvider="{available ? StylesLibrary.availablePriceLabelStyleProvider :
-                        StylesLibrary.unavailablePriceLabelStyleProvider}"/>
-
-        <f:LayoutGroup backgroundSkin="{new Quad(60, 60, 0x909090)}"/>
+        <f:ImageLoader source="{icon}" width="160" height="120" scaleContent="true" maintainAspectRatio="true"
+                       pivotX="80" pivotY="60" rotation="{-Math.PI / 180.0 * 2}"
+                       filter="{new DropShadowFilter(1, Math.PI / 180.0 * 45, 0x00000, 0.5, 0.1)}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="27" top="64"/>
+            </f:layoutData>
+        </f:ImageLoader>
 
         <f:LayoutGroup id="descriptionGroup">
             <f:layout>
-                <f:VerticalLayout paddingTop="5" gap="2"/>
+                <f:VerticalLayout gap="-2"/>
             </f:layout>
-
+            <f:layoutData>
+                <f:AnchorLayoutData left="208" top="56"/>
+            </f:layoutData>
         </f:LayoutGroup>
 
-        <f:LayoutGroup>
+        <f:Label text="{price}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}">
+            <f:layoutData>
+                <f:AnchorLayoutData right="65" top="144"/>
+            </f:layoutData>
+        </f:Label>
+
+        <f:Button defaultSkin="{new Image(atlas.getTexture('message_cancel_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('message_cancel_bn_down'))}"
+                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="49" bottom="32"/>
+            </f:layoutData>
+        </f:Button>
+
+        <f:Button defaultSkin="{new Image(atlas.getTexture('message_ok_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('message_ok_bn_down'))}"
+                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"
+                  isEnabled="{available}">
+            <f:layoutData>
+                <f:AnchorLayoutData right="26" bottom="17"/>
+            </f:layoutData>
+        </f:Button>
+    </f:LayoutGroup>
+
+    <f:LayoutGroup includeInLayout="false" visible="{!available}" touchable="false" x="160" y="228">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+
+        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('unavailable_back'))}"
+                       maxWidth="359" maxHeight="125">
             <f:layout>
-                <f:HorizontalLayout gap="2"/>
+                <f:VerticalLayout horizontalAlign="center" verticalAlign="middle"
+                                  paddingLeft="44" paddingRight="56" paddingBottom="32"/>
             </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData top="12"/>
+            </f:layoutData>
 
-            <f:Button styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                      label="{LocaleManager.getInstance().getString('common', 'ok.bn.label')}"
-                      triggered="{dispatchEventWith(starling.events.Event.CLOSE)}"
-                      isEnabled="{available}"/>
-
-            <f:Button styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                      label="{LocaleManager.getInstance().getString('common', 'cancel.bn.label')}"
-                      triggered="{dispatchEventWith(starling.events.Event.CANCEL)}"/>
+            <f:Label text="{unavailableReason}" scale="0.73"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52, NaN, 0xffffff, TextFormatAlign.LEFT, -14)}}"/>
         </f:LayoutGroup>
+
+        <f:ImageLoader source="{atlas.getTexture('scotch')}">
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="-9"/>
+            </f:layoutData>
+        </f:ImageLoader>
     </f:LayoutGroup>
 
     <fx:Metadata>
         [Event(name="close", type="starling.events.Event")]
-        [Event(name="cancel", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[
-        import vo.UnitInfo;
+        import feathers.text.BitmapFontTextFormat;
 
+        import resources.AtlasLibrary;
+        import resources.FontLibrary;
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
-        import starling.display.Quad;
+        import starling.display.Image;
         import starling.events.Event;
         import starling.filters.DropShadowFilter;
+        import starling.textures.Texture;
+        import starling.textures.TextureAtlas;
+
+        import vo.UnitInfo;
 
         private var _data:UnitInfo;
 
         [Bindable]
-        public var available:Boolean;
+        private var price:String;
 
         [Bindable]
-        private var price:Number;
+        private var title:String;
+
+        [Bindable]
+        private var icon:Texture;
+
+        [Bindable]
+        private var unavailableReason:String = "";
+
+        private var _available:Boolean;
+
+        [Bindable(event="availableChanged")]
+        public function get available():Boolean
+        {
+            return _available;
+        }
+
+        public function set available(value:Boolean):void
+        {
+            if (value == _available) return;
+            _available = value;
+            updateUnavailableReason();
+            dispatchEventWith("availableChanged");
+        }
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+            }
+            return _atlas;
+        }
 
         public function set data(value:UnitInfo):void
         {
@@ -82,7 +157,8 @@
         {
             if (_data)
             {
-                titleLabel.text = _data.name;
+                title = _data.name.toUpperCase();
+                icon = _data.iconBig;
 
                 var locale:LocaleManager = LocaleManager.getInstance();
                 if (_data.perClickProfit)
@@ -123,7 +199,22 @@
                     descriptionGroup.addChild(label);
                 }
 
-                price = Math.round(_data.price);
+                price = _data.priceLabel;
+            }
+        }
+
+        private function updateUnavailableReason():void
+        {
+            if (!available && _data)
+            {
+                if (_data.price < 0)
+                    unavailableReason = LocaleManager.getInstance().getString("common", "na.limit.reason");
+                else
+                    unavailableReason = LocaleManager.getInstance().getString("common", "na.price.reason");
+            }
+            else
+            {
+                unavailableReason = "";
             }
         }
         ]]></fx:Script>

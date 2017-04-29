@@ -9,6 +9,8 @@ package commands
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
+	import vo.MessageBoxData;
+
 	public class GetAchievementCommand extends CalcProfitCommandBase
 	{
 		override public function execute(notification:INotification):void
@@ -30,7 +32,8 @@ package commands
 				}
 				else if (reward is PopUpReward)
 				{
-					sendNotification(Const.SHOW_POPUP, reward);
+					sendNotification(Const.SHOW_MESSAGE,
+							new MessageBoxData(reward.description, null, MessageBoxData.OK_BUTTON));
 				}
 				else
 				{

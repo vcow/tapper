@@ -1,6 +1,9 @@
 package models
 {
-	public interface IReward extends IPopUpData
+	public interface IReward
 	{
+		function get title():String;
+
+		function get description():String;
 	}
 }

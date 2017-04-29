@@ -2,7 +2,7 @@ package models
 {
 	import resources.locale.LocaleManager;
 
-	public class PopUpReward implements IReward, IPopUpData
+	public class PopUpReward implements IReward
 	{
 		private var _title:String;
 		private var _description:String;

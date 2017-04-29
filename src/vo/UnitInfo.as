@@ -23,6 +23,7 @@ package vo
 		private var _name:String;
 		private var _description:String;
 		private var _price:Number;
+		private var _currentPrice:Number;
 		private var _calcPrice:Number;
 		private var _priceGrowth:RelValue;
 		private var _maxCount:int;
@@ -124,14 +125,24 @@ package vo
 			return value.toString();
 		}
 
-		private static var _atlas:TextureAtlas;
-		private static function get atlas():TextureAtlas
+		private static var _atlasIconSmall:TextureAtlas;
+		private static function get atlasIconSmall():TextureAtlas
 		{
-			if (!_atlas)
+			if (!_atlasIconSmall)
 			{
-				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("units_small");
+				_atlasIconSmall = AtlasLibrary.getInstance().manager.getTextureAtlas("units_small");
 			}
-			return _atlas;
+			return _atlasIconSmall;
+		}
+
+		private static var _atlasIconBig:TextureAtlas;
+		private static function get atlasIconBig():TextureAtlas
+		{
+			if (!_atlasIconBig)
+			{
+				_atlasIconBig = AtlasLibrary.getInstance().manager.getTextureAtlas("units_big");
+			}
+			return _atlasIconBig;
 		}
 
 		private function onTrigger(trigger:String, value:*, ...args):void
@@ -139,7 +150,7 @@ package vo
 			switch (trigger)
 			{
 				case TriggerBroadcaster.MONEY:
-					_calcPrice = NaN;
+					_currentPrice = NaN;
 					calculatePrice();
 
 					var money:Number = value as Number;
@@ -154,7 +165,7 @@ package vo
 					var unit:Unit = value as Unit;
 					if (unit && unit.info == this)
 					{
-						_calcPrice = NaN;
+						_currentPrice = NaN;
 						calculatePrice();
 
 						if (_maxCount)
@@ -168,30 +179,33 @@ package vo
 
 		private function calculatePrice():void
 		{
-			var calcPrice:Number;
+			var newPrice:Number;
 			var available:Boolean;
 			var gameModel:GameModel = AppFacade(facade).gameModel;
+
+			var numUnits:int = gameModel.getUnitsCount(this);
+			var increase:Number = 0;
+			if (_priceGrowth)
+			{
+				if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
+				else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
+			}
+			_calcPrice = Math.round(_price + increase);
+
 			if (_maxCount > 0 && numUnits >= maxCount)
 			{
-				calcPrice = -1;
+				newPrice = -1;
 				available = false;
 			}
 			else
 			{
-				var increase:Number = 0;
-				if (_priceGrowth)
-				{
-					var numUnits:int = gameModel.getUnitsCount(this);
-					if (!isNaN(_priceGrowth.value)) increase = numUnits * _priceGrowth.value;
-					else if (!isNaN(_priceGrowth.percentValue)) increase = _price * numUnits * _priceGrowth.percentValue;
-				}
-				calcPrice = Math.round(_price + increase);
-				available = calcPrice <= gameModel.money && (!_maxCount || gameModel.getUnitsCount(this) < _maxCount);
+				newPrice = _calcPrice;
+				available = newPrice <= gameModel.money && (!_maxCount || gameModel.getUnitsCount(this) < _maxCount);
 			}
 
-			if (calcPrice != _calcPrice)
+			if (newPrice != _currentPrice)
 			{
-				_calcPrice = calcPrice;
+				_currentPrice = newPrice;
 				dispatchEventWith("priceChanged");
 			}
 
@@ -210,12 +224,12 @@ package vo
 			if (_maxCount)
 			{
 				rest = Math.max(0, _maxCount - gameModel.getUnitsCount(this));
-				available = _calcPrice <= gameModel.money && rest > 0;
+				available = _currentPrice <= gameModel.money && rest > 0;
 			}
 			else
 			{
 				rest = -1;
-				available = _calcPrice <= gameModel.money
+				available = _currentPrice <= gameModel.money
 			}
 
 			if (rest != _rest)
@@ -243,9 +257,15 @@ package vo
 		}
 
 		[Bindable(event="dataChanged")]
-		public function get icon():Texture
+		public function get iconSmall():Texture
 		{
-			return _id ? atlas.getTexture(_id) : null;
+			return _id ? atlasIconSmall.getTexture(_id) : null;
+		}
+
+		[Bindable(event="dataChanged")]
+		public function get iconBig():Texture
+		{
+			return _id ? atlasIconBig.getTexture(_id) : null;
 		}
 
 		[Bindable(event="dataChanged")]
@@ -257,13 +277,13 @@ package vo
 		[Bindable(event="priceChanged")]
 		public function get price():Number
 		{
-			return _calcPrice;
+			return _currentPrice;
 		}
 
 		[Bindable(event="priceChanged")]
 		public function get priceLabel():String
 		{
-			return cropValueM(_calcPrice);
+			return cropValueM(_currentPrice < 0 ? _calcPrice : _currentPrice);
 		}
 
 		[Bindable(event="availableChanged")]

@@ -214,8 +214,7 @@
             var unit:UnitInfo = event.data as UnitInfo;
             if (unit)
             {
-                if (unit.price >= 0)
-                    buyUnit(unit, unit.price <= _mediator.money);
+                buyUnit(unit, unit.price >= 0 && unit.price <= _mediator.money);
             }
         }
 

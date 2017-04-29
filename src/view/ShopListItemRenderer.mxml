@@ -7,7 +7,7 @@
     </f:layout>
 
     <!-- Иконка -->
-    <f:ImageLoader source="{_unitInfoData.icon}" touchable="false">
+    <f:ImageLoader source="{_unitInfoData.iconSmall}" touchable="false">
         <f:layoutData>
             <f:AnchorLayoutData left="20" top="14"/>
         </f:layoutData>
@@ -154,7 +154,7 @@
             return _atlas;
         }
 
-        private function getPriceBack(available:Boolean):Image
+        private static function getPriceBack(available:Boolean):Image
         {
             return available ? null : new Image(atlas.getTexture("price_marker_red"));
         }

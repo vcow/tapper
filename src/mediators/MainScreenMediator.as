@@ -6,8 +6,6 @@ package mediators
 
 	import gears.WindowManager;
 
-	import models.IPopUpData;
-
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import view.MainScreen;
@@ -17,7 +15,7 @@ package mediators
 
 	public class MainScreenMediator extends BindableMediator
 	{
-		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_POPUP, Const.SHOW_MESSAGE];
+		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_MESSAGE];
 
 		public function MainScreenMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -51,10 +49,6 @@ package mediators
 						{
 							switchToState(newState);
 						}
-						break;
-					case Const.SHOW_POPUP:
-						var data:IPopUpData = notification.getBody() as IPopUpData;
-						mainScreen.messageBox(data.title, data.description);
 						break;
 					case Const.SHOW_MESSAGE:
 						var messageBox:MessageBoxPopUp = new MessageBoxPopUp();

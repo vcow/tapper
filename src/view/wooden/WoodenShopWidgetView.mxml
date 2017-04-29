@@ -79,7 +79,8 @@
 
         private function get border():Image
         {
-            if (!_border) {
+            if (!_border)
+            {
                 _border = new Image(atlas.getTexture("shop_widget_border"));
                 _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
             }
@@ -91,12 +92,15 @@
             if (!_isAnimated) beginNoise();
 
             _currentTime += time;
-            if (_currentTime >= _timeStep) {
+            if (_currentTime >= _timeStep)
+            {
                 var delta:int = Math.floor(_currentTime / _timeStep);
                 _currentTime = 0;
                 _currentFrame = _currentFrame + delta;
-                if (_currentFrame >= _currentAnimation.length) {
-                    switch (_step) {
+                if (_currentFrame >= _currentAnimation.length)
+                {
+                    switch (_step)
+                    {
                         case IN:
                             _currentAnimation = _idleTextures;
                             _currentFrame = 0;
@@ -119,7 +123,8 @@
         {
             _isActive = false;
 
-            if (_isAnimated) {
+            if (_isAnimated)
+            {
                 Starling.juggler.remove(this);
                 _isAnimated = false;
                 _text = null;
@@ -131,13 +136,15 @@
         {
             _isActive = true;
 
-            if (!_isAnimated || restart) {
+            if (!_isAnimated || restart)
+            {
                 _currentAnimation = _noiseTextures;
                 _currentTime = 0;
                 _currentFrame = 0;
                 _step = IN;
 
-                if (_timeout) {
+                if (_timeout)
+                {
                     Starling.juggler.delayCall(outCallback, _timeout);
                 }
                 _isAnimated = true;
@@ -146,13 +153,15 @@
 
         private function outCallback():void
         {
-            if (_isAnimated) {
+            if (_isAnimated)
+            {
                 _currentFrame = 0;
                 _currentAnimation = _noiseTextures;
                 _step = OUT;
             }
 
-            if (_isActive) {
+            if (_isActive)
+            {
                 _isActive = false;
                 dispatchEventWith(starling.events.Event.CLOSE);
             }
@@ -161,7 +170,8 @@
         public function set timeout(value:Number):void
         {
             _timeout = value;
-            if (_isActive) {
+            if (_isActive)
+            {
                 Starling.juggler.removeDelayedCalls(outCallback);
                 if (_timeout) Starling.juggler.delayCall(outCallback, _timeout);
             }
@@ -172,13 +182,20 @@
             if (value == _text) return;
             _text = value;
 
-            if (isInitialized) {
-                if (_text) {
+            if (isInitialized)
+            {
+                if (_text)
+                {
                     unitNameLabel.text = text;
                     measureWidget();
+
+                    if (!Starling.juggler.contains(this))
+                        Starling.juggler.add(this);
                 }
-                else {
-                    if (_batch) {
+                else
+                {
+                    if (_batch)
+                    {
                         _batch.dispose();
                         _batch = null;
                     }
@@ -188,21 +205,21 @@
                 Starling.juggler.remove(this);
                 Starling.juggler.removeDelayedCalls(outCallback);
 
-                if (_text) {
-                    if (_isActive) {
+                if (_text)
+                {
+                    if (_isActive)
+                    {
                         if (_timeout) Starling.juggler.delayCall(outCallback, _timeout);
                     }
-                    else {
+                    else
+                    {
                         beginNoise(true);
                     }
                 }
-                else if (!_text && _isActive) {
+                else if (!_text && _isActive)
+                {
                     outCallback();
                 }
-            }
-
-            if (text && !Starling.juggler.contains(this)) {
-                Starling.juggler.add(this);
             }
         }
 
@@ -219,7 +236,8 @@
             var w:Number = borderGroup.width;
             var h:Number = borderGroup.height;
 
-            if (w && h) {
+            if (w && h)
+            {
                 _noise.width = w;
                 _noise.height = h;
 
@@ -233,7 +251,8 @@
 
                 backSkin.drawBundled(drawBundled);
             }
-            else {
+            else
+            {
                 this.backgroundSkin = null;
                 if (_batch) _batch.dispose();
                 _batch = null;
@@ -257,13 +276,14 @@
         {
             super.initialize();
 
-            _noiseTextures = atlas.getTextures("noise");
-            _idleTextures = atlas.getTextures("idle");
+            _noiseTextures = atlas.getTextures("noise_");
+            _idleTextures = atlas.getTextures("idle_");
 
             _noise = new Image(_noiseTextures[0]);
             _noise.blendMode = starling.display.BlendMode.MASK;
 
-            if (_text) {
+            if (_text)
+            {
                 unitNameLabel.text = text;
                 measureWidget();
             }
@@ -271,7 +291,8 @@
 
         private function onRemovedFromStage():void
         {
-            if (_isAnimated) {
+            if (_isAnimated)
+            {
                 Starling.juggler.removeDelayedCalls(outCallback);
                 Starling.juggler.remove(this);
                 _isActive = false;

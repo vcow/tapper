@@ -6,7 +6,7 @@
 	<unit id="peon" name="name.peon" description="description.peon" price="100" priceGrowth="10%">
 		<ppc value="1"/>
 	</unit>
-	<unit id="worker" name="name.worker" description="description.worker" price="300" priceGrowth="10%">
+	<unit id="worker" name="name.worker" description="description.worker" price="300" priceGrowth="10%" maxCount="5">
 		<pps value="1"/>
 		<ppc value="1"/>
 	</unit>
