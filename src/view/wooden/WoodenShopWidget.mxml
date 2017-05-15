@@ -83,7 +83,6 @@
         override public function dispose():void
         {
             widgetView.dispose();
-
             super.dispose();
         }
 

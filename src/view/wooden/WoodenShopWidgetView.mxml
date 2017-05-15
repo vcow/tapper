@@ -9,9 +9,7 @@
                 <f:HorizontalLayout paddingLeft="25" paddingRight="25" paddingTop="15" paddingBottom="15"/>
             </f:layout>
 
-            <f:Label id="unitNameLabel"
-                     textRendererProperties="{{wordWrap: true,
-                  textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage, NaN, 0xffffff, TextFormatAlign.CENTER)}}"/>
+            <f:Label id="unitNameLabel" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
         </f:LayoutGroup>
     </fx:Declarations>
 
@@ -25,6 +23,7 @@
 
         import resources.AtlasLibrary;
         import resources.FontLibrary;
+        import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
         import starling.core.Starling;
@@ -67,21 +66,32 @@
         [Bindable]
         public var glowColor:uint = 0xffffff;
 
-        private static var _atlas:TextureAtlas;
-        private static function get atlas():TextureAtlas
+        private static var _noiseAtlas:TextureAtlas;
+        private static var _woodenAtlas:TextureAtlas;
+
+        private static function get noiseAtlas():TextureAtlas
         {
-            if (!_atlas)
+            if (!_noiseAtlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+                _noiseAtlas = AtlasLibrary.getInstance().manager.getTextureAtlas("noise_anim");
             }
-            return _atlas;
+            return _noiseAtlas;
+        }
+
+        private static function get woodenAtlas():TextureAtlas
+        {
+            if (!_woodenAtlas)
+            {
+                _woodenAtlas = AtlasLibrary.getInstance().manager.getTextureAtlas("wooden");
+            }
+            return _woodenAtlas;
         }
 
         private function get border():Image
         {
             if (!_border)
             {
-                _border = new Image(atlas.getTexture("shop_widget_border"));
+                _border = new Image(woodenAtlas.getTexture("shop_widget_border"));
                 _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
             }
             return _border;
@@ -188,9 +198,6 @@
                 {
                     unitNameLabel.text = text;
                     measureWidget();
-
-                    if (!Starling.juggler.contains(this))
-                        Starling.juggler.add(this);
                 }
                 else
                 {
@@ -220,6 +227,11 @@
                 {
                     outCallback();
                 }
+            }
+
+            if (text && !Starling.juggler.contains(this))
+            {
+                Starling.juggler.add(this);
             }
         }
 
@@ -276,8 +288,8 @@
         {
             super.initialize();
 
-            _noiseTextures = atlas.getTextures("noise_");
-            _idleTextures = atlas.getTextures("idle_");
+            _noiseTextures = noiseAtlas.getTextures("noise");
+            _idleTextures = noiseAtlas.getTextures("idle");
 
             _noise = new Image(_noiseTextures[0]);
             _noise.blendMode = starling.display.BlendMode.MASK;

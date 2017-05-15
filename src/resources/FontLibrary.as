@@ -6,6 +6,12 @@ package resources
 
 	public class FontLibrary
 	{
+		[Embed(source="fonts/arial_16.atf", mimeType="application/octet-stream")]
+		private static const arial16Asset:Class;
+
+		[Embed(source="fonts/arial_16.fnt", mimeType="application/octet-stream")]
+		private static const arial16Description:Class;
+
 		[Embed(source="fonts/title_button_31.atf", mimeType="application/octet-stream")]
 		private static const titleButton31Asset:Class;
 
@@ -60,6 +66,8 @@ package resources
 		[Embed(source="fonts/message_box_button.atf", mimeType="application/octet-stream")]
 		private static const messageBoxButtonAsset:Class;
 
+		private static const ARIAL_16:String = "arial16";
+
 		private static const TITLE_BUTTON_31:String = "titleButton31";
 
 		private static const SHOP_PRICE_20:String = "shopPrice20";
@@ -72,6 +80,9 @@ package resources
 
 		private static const MESSAGE_BOX:String = "messageBox";
 		private static const MESSAGE_BOX_BUTTON:String = "messageBoxButton";
+
+		private var _arial16Texture:Texture;
+		private var _arial16Font:BitmapFont;
 
 		private var _titleButton31Texture:Texture;
 		private var _titleButton31Font:BitmapFont;
@@ -106,6 +117,17 @@ package resources
 		{
 			if (!_instance) _instance = new FontLibrary();
 			return _instance;
+		}
+
+		public function get arial16():String
+		{
+			if (!_arial16Font) {
+				_arial16Texture = Texture.fromEmbeddedAsset(arial16Asset);
+				_arial16Texture.root.onRestore = onArial16Restore;
+				_arial16Font = new BitmapFont(_arial16Texture, new XML(new arial16Description()));
+				TextField.registerBitmapFont(_arial16Font, ARIAL_16);
+			}
+			return ARIAL_16;
 		}
 
 		public function get titleButton31():String
@@ -205,6 +227,11 @@ package resources
 				TextField.registerBitmapFont(_messageBoxButtonFont, MESSAGE_BOX_BUTTON);
 			}
 			return MESSAGE_BOX_BUTTON;
+		}
+
+		private function onArial16Restore():void
+		{
+			_arial16Texture.root.uploadAtfData(new arial16Asset());
 		}
 
 		private function onTitleButton31Restore():void
