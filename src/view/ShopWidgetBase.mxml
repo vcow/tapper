@@ -79,7 +79,7 @@
             super.dispose();
         }
 
-        private function onDataChanged(data:UnitInfo):void
+        protected function onDataChanged(data:UnitInfo):void
         {
             if (data) dispatchEventWith("dataChanged");
         }

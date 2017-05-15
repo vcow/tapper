@@ -3,7 +3,7 @@
                      xmlns:view="view.*" xmlns:wooden="view.wooden.*" removedFromStage="onRemovedFromStage()">
 
     <fx:Declarations>
-        <wooden:WoodenShopWidgetView id="widgetView" text="{updateData(_mediator.data)}" includeInLayout="false"
+        <wooden:WoodenShopWidgetView id="widgetView" includeInLayout="false"
                                      close="hideView()" complete="onRemovedFromStage()" timeout="2.5"
                                      glowColor="#77cc00" color="#f2ffdf"/>
     </fx:Declarations>
@@ -16,19 +16,19 @@
 
         import vo.UnitInfo;
 
-        protected function updateData(data:UnitInfo):String
+        override protected function onDataChanged(data:UnitInfo):void
         {
+            super.onDataChanged(data);
+
             Starling.juggler.removeTweens(widgetView);
             widgetView.alpha = 1.0;
             widgetView.scale = 1.0;
 
             if (data)
             {
+                widgetView.text = data.name;
                 showView();
-                return data.name;
             }
-
-            return "";
         }
 
         private function hideView():void
@@ -80,15 +80,10 @@
             return widgetView;
         }
 
-        override protected function initialize():void
-        {
-            super.initialize();
-            updateData(null);
-        }
-
         override public function dispose():void
         {
             widgetView.dispose();
+
             super.dispose();
         }
 
