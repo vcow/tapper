@@ -19,10 +19,7 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
-        import feathers.text.BitmapFontTextFormat;
-
         import resources.AtlasLibrary;
-        import resources.FontLibrary;
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 

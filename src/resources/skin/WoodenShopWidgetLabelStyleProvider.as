@@ -13,7 +13,7 @@ package resources.skin
 		{
 			label.textRendererProperties = {
 				wordWrap: true,
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().arial16, NaN,
+				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().russo, NaN,
 					0xffffff, TextFormatAlign.CENTER)
 			};
 		}

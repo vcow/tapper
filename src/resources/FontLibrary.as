@@ -6,11 +6,11 @@ package resources
 
 	public class FontLibrary
 	{
-		[Embed(source="fonts/arial_16.atf", mimeType="application/octet-stream")]
-		private static const arial16Asset:Class;
+		[Embed(source="fonts/russo.atf", mimeType="application/octet-stream")]
+		private static const russoAsset:Class;
 
-		[Embed(source="fonts/arial_16.fnt", mimeType="application/octet-stream")]
-		private static const arial16Description:Class;
+		[Embed(source="fonts/russo.fnt", mimeType="application/octet-stream")]
+		private static const russoDescription:Class;
 
 		[Embed(source="fonts/title_button_31.atf", mimeType="application/octet-stream")]
 		private static const titleButton31Asset:Class;
@@ -66,7 +66,7 @@ package resources
 		[Embed(source="fonts/message_box_button.atf", mimeType="application/octet-stream")]
 		private static const messageBoxButtonAsset:Class;
 
-		private static const ARIAL_16:String = "arial16";
+		private static const RUSSO:String = "russo";
 
 		private static const TITLE_BUTTON_31:String = "titleButton31";
 
@@ -81,8 +81,8 @@ package resources
 		private static const MESSAGE_BOX:String = "messageBox";
 		private static const MESSAGE_BOX_BUTTON:String = "messageBoxButton";
 
-		private var _arial16Texture:Texture;
-		private var _arial16Font:BitmapFont;
+		private var _russoTexture:Texture;
+		private var _russoFont:BitmapFont;
 
 		private var _titleButton31Texture:Texture;
 		private var _titleButton31Font:BitmapFont;
@@ -119,15 +119,15 @@ package resources
 			return _instance;
 		}
 
-		public function get arial16():String
+		public function get russo():String
 		{
-			if (!_arial16Font) {
-				_arial16Texture = Texture.fromEmbeddedAsset(arial16Asset);
-				_arial16Texture.root.onRestore = onArial16Restore;
-				_arial16Font = new BitmapFont(_arial16Texture, new XML(new arial16Description()));
-				TextField.registerBitmapFont(_arial16Font, ARIAL_16);
+			if (!_russoFont) {
+				_russoTexture = Texture.fromEmbeddedAsset(russoAsset);
+				_russoTexture.root.onRestore = onRussoRestore;
+				_russoFont = new BitmapFont(_russoTexture, new XML(new russoDescription()));
+				TextField.registerBitmapFont(_russoFont, RUSSO);
 			}
-			return ARIAL_16;
+			return RUSSO;
 		}
 
 		public function get titleButton31():String
@@ -229,9 +229,9 @@ package resources
 			return MESSAGE_BOX_BUTTON;
 		}
 
-		private function onArial16Restore():void
+		private function onRussoRestore():void
 		{
-			_arial16Texture.root.uploadAtfData(new arial16Asset());
+			_russoTexture.root.uploadAtfData(new russoAsset());
 		}
 
 		private function onTitleButton31Restore():void
