@@ -99,7 +99,7 @@
             <f:AnchorLayoutData right="15" bottom="0"/>
         </f:layoutData>
 
-        <f:Label text="{LocaleManager.getInstance().getString('common', 'item.limit.label', [_unitInfoData.rest])}"
+        <f:Label text="{getLimitLabel(_unitInfoData.rest)}"
                  textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
                  scale="0.5"/>
     </f:LayoutGroup>
@@ -157,6 +157,19 @@
         private static function getPriceBack(available:Boolean):Image
         {
             return available ? null : new Image(atlas.getTexture("price_marker_red"));
+        }
+
+        private static function getLimitLabel(rest:int):String
+        {
+            if (rest > 0)
+            {
+                return LocaleManager.getInstance().getString("common", "item.limit.label", [rest]);
+            }
+            else if (rest == 0)
+            {
+                return LocaleManager.getInstance().getString("common", "item.limit.label.zero");
+            }
+            return null;
         }
         ]]></fx:Script>
 </f:LayoutGroupListItemRenderer>
