@@ -29,6 +29,8 @@ package commands
 			stream.open(file, FileMode.WRITE);
 			stream.writeUTFBytes(data);
 			stream.close();
+
+			AppFacade(facade).gameModel.isActive = false;
 		}
 
 		private function serializeGameModel():String

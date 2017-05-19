@@ -19,7 +19,7 @@ package mediators
 			super(mediatorName, viewComponent);
 		}
 
-		[Bindable(event="gameStateChanged")]
+		[Bindable(event="hasCurrentGameChanged")]
 		public function get hasCurrentGame():Boolean
 		{
 			return AppFacade(facade).gameModel.hasCurrentGame;
@@ -72,9 +72,9 @@ package mediators
 
 		private function onTrigger(trigger:String, value:*, ...args):void
 		{
-			if (trigger == TriggerBroadcaster.GAME_STATE)
+			if (trigger == TriggerBroadcaster.HAS_GAME_CHANGED)
 			{
-				dispatchEventWith("gameStateChanged");
+				dispatchEventWith("hasCurrentGameChanged");
 			}
 		}
 	}

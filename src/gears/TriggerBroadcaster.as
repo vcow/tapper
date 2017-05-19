@@ -4,8 +4,9 @@ package gears
 
 	public class TriggerBroadcaster extends Broadcaster
 	{
-		public static const GAME_STATE:String = "gameState";
-		public static const MONEY:String = "money";
+		public static const HAS_GAME_CHANGED:String = "hasGameChanged";
+		public static const IS_ACTIVE_CHANGED:String = "isActiveChanged";
+		public static const MONEY_CHANGED:String = "moneyChanged";
 		public static const TAP:String = "tap";
 		public static const BUY:String = "buy";
 
@@ -16,7 +17,7 @@ package gears
 
 		public function init(gameModel:GameModel):void
 		{
-			broadcast(MONEY, gameModel.money);
+			broadcast(MONEY_CHANGED, gameModel.money);
 			broadcast(TAP, gameModel.tapsTotal);
 		}
 	}

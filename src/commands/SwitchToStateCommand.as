@@ -15,12 +15,12 @@ package commands
 			switch (notification.getBody() as String)
 			{
 				case Const.STATE_GAME:
-					if (!gameModel.isActive)
+					if (!gameModel.isStarted)
 						sendNotification(Const.START_GAME);
 					break;
 				case Const.STATE_START:
 				case Const.STATE_SHOP:
-					if (gameModel.isActive)
+					if (gameModel.isStarted)
 						sendNotification(Const.STOP_GAME);
 					break;
 				default:

@@ -91,7 +91,7 @@ package vo
 			var result:int = 0;
 			for each (var condition:ConditionBase in _conditions)
 			{
-				if (trigger == TriggerBroadcaster.MONEY && condition is MoneyCondition)
+				if (trigger == TriggerBroadcaster.MONEY_CHANGED && condition is MoneyCondition)
 				{
 					if (condition.check(value)) result++;
 				}

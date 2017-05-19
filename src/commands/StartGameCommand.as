@@ -11,7 +11,7 @@ package commands
 	{
 		override public function execute(notification:INotification):void
 		{
-			if (!AppFacade(facade).gameModel.isActive)
+			if (!AppFacade(facade).gameModel.isStarted)
 				AppFacade(facade).gameModel.callbackId = Starling.juggler.repeatCall(onTick, 1.0);
 		}
 

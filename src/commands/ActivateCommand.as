@@ -31,6 +31,7 @@ package commands
 
 		override public function execute(notification:INotification):void
 		{
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 			var file:File = File.applicationStorageDirectory;
 			file = file.resolvePath(Const.APP_NAME + ".state");
 			if (file.exists && !file.isDirectory)
@@ -42,9 +43,10 @@ package commands
 			}
 			else
 			{
-				var gameModel:GameModel = AppFacade(facade).gameModel;
 				gameModel.hasCurrentGame = false;
 			}
+
+			gameModel.isActive = true;
 		}
 
 		private function deserializeGameModel(data:String):void

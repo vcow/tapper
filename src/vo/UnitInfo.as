@@ -99,8 +99,11 @@ package vo
 				_actionLabel = _action.description;
 			}
 
-			calculatePrice();
-			calculateRest();
+			if (gameModel.isActive)
+			{
+				calculatePrice();
+				calculateRest();
+			}
 
 			dispatchEventWith("dataChanged");
 		}
@@ -149,7 +152,7 @@ package vo
 		{
 			switch (trigger)
 			{
-				case TriggerBroadcaster.MONEY:
+				case TriggerBroadcaster.MONEY_CHANGED:
 					_currentPrice = NaN;
 					calculatePrice();
 
@@ -172,6 +175,13 @@ package vo
 						{
 							calculateRest();
 						}
+					}
+					break;
+				case TriggerBroadcaster.IS_ACTIVE_CHANGED:
+					if (value)
+					{
+						calculatePrice();
+						calculateRest();
 					}
 					break;
 			}

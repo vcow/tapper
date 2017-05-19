@@ -12,7 +12,7 @@ package commands
 	{
 		override public function execute(notification:INotification):void
 		{
-			if (AppFacade(facade).gameModel.isActive)
+			if (AppFacade(facade).gameModel.isStarted)
 			{
 				Starling.juggler.removeByID(AppFacade(facade).gameModel.callbackId);
 				AppFacade(facade).gameModel.callbackId = 0;

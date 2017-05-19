@@ -11,6 +11,7 @@ package models
 	{
 		private var _callbackId:uint;
 		private var _hasCurrentGame:Boolean;
+		private var _isActive:Boolean;
 		private var _money:Number = 0;
 		private var _tapsTotal:uint;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
@@ -53,7 +54,7 @@ package models
 			return _callbackId;
 		}
 
-		public function get isActive():Boolean
+		public function get isStarted():Boolean
 		{
 			return _callbackId != 0;
 		}
@@ -67,7 +68,19 @@ package models
 		{
 			if (value == _hasCurrentGame) return;
 			_hasCurrentGame = value;
-			triggerBroadcaster.broadcast(TriggerBroadcaster.GAME_STATE, _hasCurrentGame);
+			triggerBroadcaster.broadcast(TriggerBroadcaster.HAS_GAME_CHANGED, _hasCurrentGame);
+		}
+
+		public function get isActive():Boolean
+		{
+			return _isActive;
+		}
+
+		public function set isActive(value:Boolean):void
+		{
+			if (value == _isActive) return;
+			_isActive = value;
+			triggerBroadcaster.broadcast(TriggerBroadcaster.IS_ACTIVE_CHANGED, _isActive);
 		}
 
 		public function get money():Number
@@ -79,7 +92,7 @@ package models
 		{
 			if (value == _money) return;
 			_money = value;
-			triggerBroadcaster.broadcast(TriggerBroadcaster.MONEY, _money);
+			triggerBroadcaster.broadcast(TriggerBroadcaster.MONEY_CHANGED, _money);
 		}
 
 		public function get tapsTotal():uint
