@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6bd89aa7357198d687e02b91493d0a5b:93d99eb353e75b1b57bf840ecb309cff:e2b08ad155b3291df4cfe462fa841ac5$ -->
+<TextureAtlas imagePath="states.atf" width="2048" height="2048">
+    <SubTexture name="carriage" x="1" y="1" width="475" height="366"/>
+    <SubTexture name="god" x="478" y="1" width="475" height="366"/>
+    <SubTexture name="lucifer" x="955" y="1" width="475" height="366"/>
+    <SubTexture name="monarch" x="1432" y="1" width="475" height="366"/>
+    <SubTexture name="palpatin" x="1" y="369" rotated="true" width="366" height="475"/>
+    <SubTexture name="pope" x="1" y="846" rotated="true" width="366" height="475"/>
+    <SubTexture name="president" x="1" y="1323" rotated="true" width="366" height="475"/>
+    <SubTexture name="schoolar" x="369" y="369" width="475" height="366"/>
+    <SubTexture name="student" x="846" y="369" width="475" height="366"/>
+    <SubTexture name="ubermensch" x="1323" y="369" width="475" height="366"/>
+    <SubTexture name="vader" x="369" y="737" rotated="true" width="366" height="475"/>
+    <SubTexture name="zog" x="369" y="1214" rotated="true" width="366" height="475"/>
+</TextureAtlas>

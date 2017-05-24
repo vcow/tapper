@@ -60,6 +60,13 @@ package vo
 		{
 			if (value == _info) return;
 			_info = value;
+
+			if (_info)
+			{
+				if (_info.perClickProfit && _info.perClickProfit.maxCount) _tapsLeft = _info.perClickProfit.maxCount;
+				if (_info.perSecondProfit && _info.perSecondProfit.maxCount) _ticksLeft = _info.perSecondProfit.maxCount;
+			}
+
 			_icon = null;
 			dispatchEventWith("iconChanged");
 		}

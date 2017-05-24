@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
-               creationComplete="updateScroller()">
+               creationComplete="updateScroller()" addedToStage="{if (isCreated) updateScroller()}">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>

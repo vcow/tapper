@@ -42,7 +42,7 @@
                 facade.registerMediator(_mediator);
             }
 
-            var assets:Array = ["noise_anim", "shop", "units_big", "units_small", "wooden", "messagebox"];
+            var assets:Array = ["noise_anim", "shop", "units_big", "units_small", "wooden", "messagebox", "states"];
             for each (var asset:String in assets)
             {
                 for each (var ext:String in [".atf", ".xml"])
