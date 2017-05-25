@@ -26,11 +26,28 @@ package proxy
 				for (var i:int = 0, l:int = levels.length(); i < l; i++)
 					_levels.push(new LevelInfo(levels[i]));
 			}
+
+			_levels.sort(function (a:LevelInfo, b:LevelInfo):int
+			{
+				if (a.index > b.index) return 1;
+				if (a.index < b.index) return -1;
+				return 0;
+			});
 		}
 
 		public function get levels():Vector.<LevelInfo>
 		{
 			return _levels;
+		}
+
+		public function getLevel(index:int):LevelInfo
+		{
+			for (var i:int = 0, l:int = _levels.length; i < l; i++)
+			{
+				if (_levels[i].index == index)
+					return _levels[i];
+			}
+			return null;
 		}
 
 		public function getLevelById(id:String):LevelInfo

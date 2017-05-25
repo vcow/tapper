@@ -7,6 +7,10 @@ package commands
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	import proxy.AchievementsProxy;
+
+	import vo.AchievementInfo;
+
 	public class NewGameCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void
@@ -19,6 +23,9 @@ package commands
 			gameModel.tickCount = 0;
 			gameModel.level = 0;
 			gameModel.units.splice(0, gameModel.units.length);
+
+			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
+			for each (var achievement:AchievementInfo in achievementsProxy.achievements) achievement.receive(NaN);
 
 			gameModel.hasCurrentGame = false;
 

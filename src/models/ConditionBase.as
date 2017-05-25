@@ -31,5 +31,10 @@ package models
 		{
 			return _max;
 		}
+
+		public function reset():void
+		{
+			_reached = false;
+		}
 	}
 }

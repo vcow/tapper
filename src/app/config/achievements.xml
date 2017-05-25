@@ -5,7 +5,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="500"/>
+			<money min="5"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup2">
@@ -13,7 +13,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="1000"/>
+			<money min="10"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup3">
@@ -21,7 +21,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="5000"/>
+			<money min="15"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup4">
@@ -29,7 +29,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="10000"/>
+			<money min="20"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup5">
@@ -37,7 +37,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="20000"/>
+			<money min="25"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup6">
@@ -45,7 +45,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="35000"/>
+			<money min="30"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup7">
@@ -53,7 +53,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="50000"/>
+			<money min="35"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup8">
@@ -61,7 +61,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="100000"/>
+			<money min="40"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup9">
@@ -69,7 +69,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="200000"/>
+			<money min="45"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup10">
@@ -77,7 +77,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="350000"/>
+			<money min="50"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup11">
@@ -85,63 +85,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="500000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup12">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="750000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup13">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="1000000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup14">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="1250000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup15">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="1500000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup16">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="1750000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup17">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="2000000"/>
-		</conditions>
-	</achievement>
-	<achievement id="levelup18">
-		<rewards>
-			<action id="levelUp"/>
-		</rewards>
-		<conditions>
-			<money min="2500000"/>
+			<money min="55"/>
 		</conditions>
 	</achievement>
 </achievements>

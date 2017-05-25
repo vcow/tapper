@@ -168,7 +168,10 @@ package vo
 			{
 				_receivedTime = NaN;
 				if (_conditions.length > 0)
+				{
 					AppFacade(facade).gameModel.triggerBroadcaster.subscribe(onTrigger);
+					for each (var condition:ConditionBase in _conditions) condition.reset();
+				}
 			}
 			else
 			{

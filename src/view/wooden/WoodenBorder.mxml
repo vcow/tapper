@@ -4,11 +4,11 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup width="443" height="332" backgroundSkin="{new Quad(10, 10, 0xa0a0a0)}">
+    <f:ImageLoader source="{icon}" width="443" height="332" scaleContent="true" maintainAspectRatio="true">
         <f:layoutData>
             <f:AnchorLayoutData horizontalCenter="-5" verticalCenter="-6"/>
         </f:layoutData>
-    </f:LayoutGroup>
+    </f:ImageLoader>
 
     <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('img_border'))}"
                       touchable="false"/>
@@ -16,7 +16,7 @@
         import resources.AtlasLibrary;
 
         import starling.display.Image;
-        import starling.display.Quad;
+        import starling.textures.Texture;
         import starling.textures.TextureAtlas;
 
         private static var _atlas:TextureAtlas;
@@ -28,5 +28,15 @@
             }
             return _atlas;
         }
+
+        [Bindable]
+        public var icon:Texture;
+
+        [Bindable]
+        public var title:String;
+
+        [Bindable]
+        public var description:String;
+
         ]]></fx:Script>
 </f:LayoutGroup>

@@ -30,8 +30,8 @@ package
 
 		public static const ACHIEVE:String = "notifyAchieve";
 
-		public static const LEVEL_UP:String = "notifyLevelUp";
-		public static const SET_SKIN_BRONZE:String = "notifySetSkinBronze";
+		public static const LEVEL_UP:String = "levelUp";
+		public static const SET_SKIN_BRONZE:String = "setSkinBronze";
 
 		public static const SHOW_MESSAGE:String = "notifyShowMessage";
 

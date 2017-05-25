@@ -11,7 +11,11 @@ package mediators
 
 	import proxy.LevelsProxy;
 
+	import resources.AtlasLibrary;
+
 	import starling.events.Event;
+	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 
 	import view.GameScreenViewBase;
 
@@ -21,7 +25,17 @@ package mediators
 
 		private var _money:Number = 0;
 		private var _unitsList:ListCollection;
-		private var _levelDescription:String;
+		private var _currentLevel:LevelInfo;
+
+		private static var _atlasStateIcon:TextureAtlas;
+		private static function get atlasStateIcon():TextureAtlas
+		{
+			if (!_atlasStateIcon)
+			{
+				_atlasStateIcon = AtlasLibrary.getInstance().manager.getTextureAtlas("states");
+			}
+			return _atlasStateIcon;
+		}
 
 		public function GameScreenMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -50,8 +64,7 @@ package mediators
 				_unitsList = new ListCollection(gameModel.activeUnits);
 				dispatchEventWith("unitsListChanged");
 
-				_levelDescription = getLevelDescription();
-				dispatchEventWith("levelDescriptionChanged");
+				updateLevel();
 			}
 		}
 
@@ -80,8 +93,7 @@ package mediators
 					dispatchEventWith("unitsListChanged");
 					break;
 				case Const.UPDATE_LEVEL:
-					_levelDescription = getLevelDescription();
-					dispatchEventWith("levelDescriptionChanged");
+					updateLevel();
 					break;
 			}
 		}
@@ -98,19 +110,33 @@ package mediators
 			return _unitsList;
 		}
 
-		[Bindable(event="levelDescriptionChanged")]
-		public function get levelDescription():String
+		[Bindable(event="levelChanged")]
+		public function get levelTitle():String
 		{
-			return _levelDescription;
+			return _currentLevel ? _currentLevel.title : null;
 		}
 
-		private function getLevelDescription():String
+		[Bindable(event="levelChanged")]
+		public function get levelDescription():String
+		{
+			return _currentLevel ? _currentLevel.description : null;
+		}
+
+		[Bindable(event="levelChanged")]
+		public function get levelIcon():Texture
+		{
+			return _currentLevel ? atlasStateIcon.getTexture(_currentLevel.id) : null;
+		}
+
+		private function updateLevel():void
 		{
 			var levelsProxy:LevelsProxy = facade.retrieveProxy(LevelsProxy.NAME) as LevelsProxy;
-			var level:LevelInfo = levelsProxy.getLevelById(AppFacade(facade).gameModel.level.toString());
-			if (level)
-				return level.description || "";
-			return "";
+			var level:LevelInfo = levelsProxy.getLevel(AppFacade(facade).gameModel.level);
+			if (level != _currentLevel)
+			{
+				_currentLevel = level;
+				dispatchEventWith("levelChanged");
+			}
 		}
 
 		private function onShop(event:Event):void

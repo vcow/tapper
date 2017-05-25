@@ -16,7 +16,8 @@
             </wooden:layoutData>
         </wooden:WoodenIndicator>
 
-        <wooden:WoodenBorder>
+        <wooden:WoodenBorder icon="{_mediator.levelIcon}" title="{_mediator.levelTitle}"
+                             description="{_mediator.levelDescription}">
             <wooden:layoutData>
                 <f:AnchorLayoutData horizontalCenter="3" top="100"/>
             </wooden:layoutData>
@@ -60,42 +61,6 @@
                 <f:AnchorLayoutData horizontalCenter="0" bottom="42"/>
             </f:layoutData>
         </f:List>
-
-    <f:LayoutGroup touchable="false">
-        <f:layout>
-            <f:VerticalLayout gap="5" horizontalAlign="center"/>
-        </f:layout>
-        <f:layoutData>
-            <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-        </f:layoutData>
-
-        <!--f:LayoutGroup>
-            <f:layout>
-                <f:HorizontalLayout verticalAlign="middle" padding="1" gap="2"/>
-            </f:layout>
-            <f:layoutData>
-                <f:VerticalLayoutData percentWidth="100"/>
-            </f:layoutData>
-
-            <f:Label text="{_money}" styleProvider="{StylesLibrary.moneyLabelStyleProvider}">
-                <f:layoutData>
-                    <f:HorizontalLayoutData percentWidth="100"/>
-                </f:layoutData>
-            </f:Label>
-        </f:LayoutGroup-->
-
-        <f:LayoutGroup height="70">
-            <f:layout>
-                <f:AnchorLayout/>
-            </f:layout>
-
-            <f:Label text="{_mediator.levelDescription}" styleProvider="{StylesLibrary.levelDescriptionStyleProvider}">
-                <f:layoutData>
-                    <f:AnchorLayoutData verticalCenter="0"/>
-                </f:layoutData>
-            </f:Label>
-        </f:LayoutGroup>
-    </f:LayoutGroup>
 
     <fx:Script><![CDATA[
         import resources.AtlasLibrary;

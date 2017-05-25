@@ -1,22 +1,15 @@
 ﻿<?xml version="1.0"?>
 <levels>
-	<level id="0" description="level0.description"/>
-	<level id="1" description="level1.description"/>
-	<level id="2" description="level2.description"/>
-	<level id="3" description="level3.description"/>
-	<level id="4" description="level4.description"/>
-	<level id="5" description="level5.description"/>
-	<level id="6" description="level6.description"/>
-	<level id="7" description="level7.description"/>
-	<level id="8" description="level8.description"/>
-	<level id="9" description="level9.description"/>
-	<level id="10" description="level10.description"/>
-	<level id="11" description="level11.description"/>
-	<level id="12" description="level12.description"/>
-	<level id="13" description="level13.description"/>
-	<level id="14" description="level14.description"/>
-	<level id="15" description="level15.description"/>
-	<level id="16" description="level16.description"/>
-	<level id="17" description="level17.description"/>
-	<level id="18" description="level18.description"/>
+	<level id="schoolar" index="0" title="level.schoolar.title" description="level.schoolar.description"/>
+	<level id="student" index="1" title="level.student.title" description="level.student.description"/>
+	<level id="carriage" index="2" title="level.carriage.title" description="level.carriage.description"/>
+	<level id="monarch" index="3" title="level.monarch.title" description="level.monarch.description"/>
+	<level id="president" index="4" title="level.president.title" description="level.president.description"/>
+	<level id="pope" index="5" title="level.pope.title" description="level.pope.description"/>
+	<level id="zog" index="6" title="level.zog.title" description="level.zog.description"/>
+	<level id="lucifer" index="7" title="level.lucifer.title" description="level.lucifer.description"/>
+	<level id="vader" index="8" title="level.vader.title" description="level.vader.description"/>
+	<level id="palpatin" index="9" title="level.palpatin.title" description="level.palpatin.description"/>
+	<level id="ubermensch" index="10" title="level.ubermensch.title" description="level.ubermensch.description"/>
+	<level id="god" index="11" title="level.god.title" description="level.god.description"/>
 </levels>
