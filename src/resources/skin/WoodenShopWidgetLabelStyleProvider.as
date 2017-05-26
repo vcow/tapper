@@ -5,15 +5,13 @@ package resources.skin
 
 	import flash.text.TextFormatAlign;
 
-	import resources.FontLibrary;
-
 	public class WoodenShopWidgetLabelStyleProvider extends LabelStyleProviderBase
 	{
 		override protected function onSkinLabel(label:Label):void
 		{
 			label.textRendererProperties = {
 				wordWrap: true,
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().russo, NaN,
+				textFormat: new BitmapFontTextFormat("russo", NaN,
 					0xffffff, TextFormatAlign.CENTER)
 			};
 		}

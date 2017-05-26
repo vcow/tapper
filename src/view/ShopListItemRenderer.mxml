@@ -15,7 +15,7 @@
 
     <!-- Название товара -->
     <f:Label text="{_unitInfoData.name ? _unitInfoData.name.toUpperCase() : ''}" touchable="false"
-             textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopTitle23)}}">
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_title_23')}}">
         <f:layoutData>
             <f:AnchorLayoutData left="160" top="13"/>
         </f:layoutData>
@@ -46,7 +46,7 @@
                 <f:ImageLoader source="{atlas.getTexture('ppc_label')}"/>
 
                 <f:Label text="{_unitInfoData.ppcLabel}"
-                         textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20)}}"/>
+                         textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"/>
             </f:LayoutGroup>
 
             <!-- PPS -->
@@ -59,18 +59,18 @@
                 <f:ImageLoader source="{atlas.getTexture('pps_label')}"/>
 
                 <f:Label text="{_unitInfoData.ppsLabel}"
-                         textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20)}}"/>
+                         textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"/>
             </f:LayoutGroup>
         </f:LayoutGroup>
 
         <!-- Одноразовый профит -->
         <f:Label text="{_unitInfoData.profitLabel}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20)}}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"
                  includeInLayout="{Boolean(_unitInfoData.profitLabel)}" visible="{Boolean(_unitInfoData.profitLabel)}"/>
 
         <!-- Действие -->
         <f:Label text="{_unitInfoData.actionLabel}" wordWrap="true" maxWidth="116"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice20, NaN, 0xffffff, TextFormatAlign.LEFT, -7)}}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20', NaN, 0xffffff, TextFormatAlign.LEFT, -7)}}"
                  includeInLayout="{Boolean(_unitInfoData.actionLabel)}" visible="{Boolean(_unitInfoData.actionLabel)}"/>
     </f:LayoutGroup>
 
@@ -85,7 +85,7 @@
         </f:layoutData>
 
         <f:Label text="{_unitInfoData.priceLabel}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice31)}}"/>
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_31')}}"/>
     </f:LayoutGroup>
 
     <!-- Лимит -->
@@ -100,7 +100,7 @@
         </f:layoutData>
 
         <f:Label text="{getLimitLabel(_unitInfoData.rest)}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"
                  scale="0.5"/>
     </f:LayoutGroup>
 
@@ -116,7 +116,7 @@
         </f:layoutData>
 
         <f:Label text="{LocaleManager.getInstance().getString('common', 'item.profit.limit.label', [_unitInfoData.profitLimit])}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"
                  scale="0.5"/>
     </f:LayoutGroup>
 
@@ -125,7 +125,6 @@
         import feathers.utils.touch.TapToTrigger;
 
         import resources.AtlasLibrary;
-        import resources.FontLibrary;
         import resources.locale.LocaleManager;
 
         import starling.display.Image;

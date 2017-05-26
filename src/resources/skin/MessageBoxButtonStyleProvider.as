@@ -6,7 +6,6 @@ package resources.skin
 	import flash.geom.Rectangle;
 
 	import resources.AtlasLibrary;
-	import resources.FontLibrary;
 
 	import starling.display.Image;
 	import starling.textures.TextureAtlas;
@@ -26,7 +25,7 @@ package resources.skin
 			button.downSkin = image;
 
 			button.defaultLabelProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().messageBoxButton)
+				textFormat: new BitmapFontTextFormat("message_box_button")
 			};
 		}
 	}

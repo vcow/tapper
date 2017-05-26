@@ -45,11 +45,11 @@
             </f:layoutData>
 
             <f:Label text="{LocaleManager.getInstance().getString('common', 'shop.money.label')}"
-                     textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"
                      scale="0.73" paddingTop="15"/>
 
             <f:Label text="{_mediator.money}"
-                     textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}"/>
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}"/>
         </f:LayoutGroup>
     </f:LayoutGroup>
 
@@ -66,7 +66,6 @@
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
-        import resources.FontLibrary;
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 

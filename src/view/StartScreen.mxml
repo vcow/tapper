@@ -28,7 +28,7 @@
             </view:layoutData>
         </view:StartScreenTitle>
 
-        <f:LayoutGroup  minHeight="370">
+        <f:LayoutGroup id="buttonGroupContainer"  minHeight="370">
             <f:layout>
                 <f:AnchorLayout/>
             </f:layout>
@@ -42,7 +42,7 @@
                 </view:layoutData>
             </view:StartScreenProgress>
 
-            <f:LayoutGroup id="buttonGroup" visible="{progress >= 1.0}" touchable="false">
+            <!--f:LayoutGroup id="buttonGroup" visible="{progress >= 1.0}" touchable="false">
                 <f:layout>
                     <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="10"/>
                 </f:layout>
@@ -66,7 +66,7 @@
                 <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
                           styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="false"
                           triggered="{dispatchEventWith('openRating')}" alpha="0"/>
-            </f:LayoutGroup>
+            </f:LayoutGroup-->
         </f:LayoutGroup>
     </f:LayoutGroup>
 
@@ -79,6 +79,10 @@
 
     <fx:Script><![CDATA[
         import app.AppFacade;
+
+        import feathers.binding.utils.BindingUtils;
+
+        import feathers.binding.utils.ChangeWatcher;
 
         import mediators.StartScreenMediator;
 
@@ -94,11 +98,15 @@
         import starling.core.Starling;
 
         import starling.display.Image;
+        import starling.events.Event;
         import starling.filters.GlowFilter;
 
         public static const MEDIATOR_NAME:String = "startScreenMediator";
 
         private var _progress:Number = 0;
+
+        private var _hasGameWatcher:ChangeWatcher;
+        private var _buttonGroup:StartScreenButtonGroup;
 
         [Bindable]
         private var _mediator:StartScreenMediator;
@@ -134,7 +142,15 @@
             }
             _mediator = mediator;
 
+            if (_mediator)
+                _hasGameWatcher = BindingUtils.bindSetter(onHasGameWatcher, _mediator, "hasCurrentGame");
+
             if (stage) startAnimation();
+        }
+
+        private function onHasGameWatcher(value:Boolean):void
+        {
+            if (_buttonGroup) _buttonGroup.canContinueGame = value;
         }
 
         private function startAnimation():void
@@ -158,15 +174,30 @@
                 var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
                 facade.removeMediator(_mediator.getMediatorName());
                 _mediator = null;
+
+                _hasGameWatcher.unwatch();
             }
+
+            if (_buttonGroup)
+                _buttonGroup.removeEventListener(starling.events.Event.TRIGGERED, onButtonClick);
+
             super.dispose();
         }
 
         private function onAnimationComplete():void
         {
-            for (var i:int = 0, l:int = buttonGroup.numChildren; i < l; i++)
+            if (!_buttonGroup)
             {
-                var bn:starling.display.DisplayObject = buttonGroup.getChildAt(i);
+                _buttonGroup = new StartScreenButtonGroup();
+                _buttonGroup.canContinueGame = _mediator.hasCurrentGame;
+                _buttonGroup.touchable = false;
+                _buttonGroup.addEventListener(starling.events.Event.TRIGGERED, onButtonClick);
+                buttonGroupContainer.addChild(_buttonGroup);
+            }
+
+            for (var i:int = 0, l:int = _buttonGroup.numChildren; i < l; i++)
+            {
+                var bn:starling.display.DisplayObject = _buttonGroup.getChildAt(i);
                 var tween:Tween = new Tween(bn, 0.5);
                 tween.fadeTo(1.0);
                 tween.delay = 0.1 * i;
@@ -175,7 +206,7 @@
 
             if (tween)
             {
-                tween.onCompleteArgs = [buttonGroup];
+                tween.onCompleteArgs = [_buttonGroup];
                 tween.onComplete = function (buttonGroup:starling.display.DisplayObject):void
                 {
                     buttonGroup.touchable = true;
@@ -183,8 +214,13 @@
             }
             else
             {
-                buttonGroup.touchable = true;
+                _buttonGroup.touchable = true;
             }
+        }
+
+        private function onButtonClick(event:starling.events.Event):void
+        {
+            dispatchEventWith(event.data.toString());
         }
         ]]></fx:Script>
 </f:LayoutGroup>

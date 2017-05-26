@@ -6,7 +6,7 @@
     </f:layout>
 
     <f:Label text="{_unitData.count}" visible="{_unitData.count >= 0}" includeInLayout="{_unitData.count >= 0}"
-             textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().unitCount22)}}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('unit_count_22')}}"
              touchable="false">
         <f:layoutData>
             <f:AnchorLayoutData right="10" bottom="0"/>
@@ -15,8 +15,6 @@
 
     <fx:Script><![CDATA[
         import feathers.text.BitmapFontTextFormat;
-
-        import resources.FontLibrary;
 
         import starling.display.Image;
 

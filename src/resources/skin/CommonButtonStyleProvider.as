@@ -6,7 +6,6 @@ package resources.skin
 	import feathers.text.BitmapFontTextFormat;
 
 	import resources.AtlasLibrary;
-	import resources.FontLibrary;
 
 	import starling.display.ButtonState;
 	import starling.display.Image;
@@ -27,11 +26,11 @@ package resources.skin
 			button.paddingTop = 10;
 
 			button.defaultLabelProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31),
+				textFormat: new BitmapFontTextFormat("title_button_31"),
 				alpha: 1.0
 			};
 			button.disabledLabelProperties = {
-				textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().titleButton31),
+				textFormat: new BitmapFontTextFormat("title_button_31"),
 				alpha: 0.3
 			};
 

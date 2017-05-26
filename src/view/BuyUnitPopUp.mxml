@@ -8,7 +8,7 @@
         </f:layout>
 
         <f:Label text="{title}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopMessage)}}">
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_message')}}">
             <f:layoutData>
                 <f:AnchorLayoutData horizontalCenter="0" top="19"/>
             </f:layoutData>
@@ -32,7 +32,7 @@
         </f:LayoutGroup>
 
         <f:Label text="{price}"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52)}}">
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52')}}">
             <f:layoutData>
                 <f:AnchorLayoutData right="65" top="144"/>
             </f:layoutData>
@@ -72,7 +72,7 @@
             </f:layoutData>
 
             <f:Label text="{unavailableReason}" scale="0.73"
-                     textRendererProperties="{{textFormat: new BitmapFontTextFormat(FontLibrary.getInstance().shopPrice52, NaN, 0xffffff, TextFormatAlign.LEFT, -14)}}"/>
+                     textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52', NaN, 0xffffff, TextFormatAlign.LEFT, -14)}}"/>
         </f:LayoutGroup>
 
         <f:ImageLoader source="{atlas.getTexture('scotch')}">
@@ -90,7 +90,6 @@
         import feathers.text.BitmapFontTextFormat;
 
         import resources.AtlasLibrary;
-        import resources.FontLibrary;
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
