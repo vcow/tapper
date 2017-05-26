@@ -56,9 +56,17 @@ package mediators
 
 		private function onNewGame(event:Event):void
 		{
-			sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
-					LocaleManager.getInstance().getString("common", "message.new.game"),
-					onNewGameCallback, MessageBoxData.YES_BUTTON | MessageBoxData.NO_BUTTON));
+			if (hasCurrentGame)
+			{
+				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+						LocaleManager.getInstance().getString("common", "message.new.game"),
+						onNewGameCallback, MessageBoxData.YES_BUTTON | MessageBoxData.NO_BUTTON));
+			}
+			else
+			{
+				sendNotification(Const.NEW_GAME);
+				sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+			}
 		}
 
 		private function onNewGameCallback(result:uint):void

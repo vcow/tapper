@@ -76,6 +76,9 @@ package vo
 						case "unit":
 							_conditions.push(new UnitCondition(item));
 							break;
+						case "level":
+							_conditions.push(new LevelCondition(item));
+							break;
 						default:
 							throw Error("Unsupported condition " + item.name());
 					}
@@ -89,8 +92,13 @@ package vo
 		private function onTrigger(trigger:String, value:*, ...args):void
 		{
 			var result:int = 0;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 			for each (var condition:ConditionBase in _conditions)
 			{
+				if (condition is LevelCondition)
+				{
+					if (condition.check(gameModel.level)) result++;
+				}
 				if (trigger == TriggerBroadcaster.MONEY_CHANGED && condition is MoneyCondition)
 				{
 					if (condition.check(value)) result++;
@@ -108,12 +116,12 @@ package vo
 						{
 							if (UnitCondition(condition).unitId == unit.id)
 							{
-								if (condition.check(AppFacade(facade).gameModel.getUnitsCount(unit))) result++;
+								if (condition.check(gameModel.getUnitsCount(unit))) result++;
 							}
 						}
 						else
 						{
-							if (condition.check(AppFacade(facade).gameModel.units.length)) result++;
+							if (condition.check(gameModel.units.length)) result++;
 						}
 					}
 				}

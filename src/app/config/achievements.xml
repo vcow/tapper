@@ -6,6 +6,7 @@
 		</rewards>
 		<conditions>
 			<money min="5"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup2">
@@ -14,6 +15,7 @@
 		</rewards>
 		<conditions>
 			<money min="10"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup3">
@@ -22,6 +24,7 @@
 		</rewards>
 		<conditions>
 			<money min="15"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup4">
@@ -30,6 +33,7 @@
 		</rewards>
 		<conditions>
 			<money min="20"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup5">
@@ -38,6 +42,7 @@
 		</rewards>
 		<conditions>
 			<money min="25"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup6">
@@ -46,6 +51,7 @@
 		</rewards>
 		<conditions>
 			<money min="30"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup7">
@@ -54,6 +60,7 @@
 		</rewards>
 		<conditions>
 			<money min="35"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup8">
@@ -62,6 +69,7 @@
 		</rewards>
 		<conditions>
 			<money min="40"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup9">
@@ -70,6 +78,7 @@
 		</rewards>
 		<conditions>
 			<money min="45"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup10">
@@ -78,6 +87,7 @@
 		</rewards>
 		<conditions>
 			<money min="50"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 	<achievement id="levelup11">
@@ -86,6 +96,7 @@
 		</rewards>
 		<conditions>
 			<money min="55"/>
+			<level value="0"/>
 		</conditions>
 	</achievement>
 </achievements>

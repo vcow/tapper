@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.4.0</string>
+        <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/wooden.tps</string>
+        <string>C:/Work/research/mobile/tapper/assets/wooden.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -172,8 +172,6 @@
         <false/>
         <key>prependSmartFolderName</key>
         <false/>
-        <key>autodetectAnimations</key>
-        <true/>
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
@@ -299,6 +297,19 @@
                 <rect>108,21,216,42</rect>
                 <key>scale9Paddings</key>
                 <rect>108,21,216,42</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/wooden/level_title_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>67,11,133,22</rect>
+                <key>scale9Paddings</key>
+                <rect>67,11,133,22</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

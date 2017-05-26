@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:2d927ed9f61888864294f932a1c1abbd:2fc9d8575d35fa3adea3a092bf1fdc85:1cc5fdc1f9162fc7493e41e42713b02a$ -->
+<!-- $TexturePacker:SmartUpdate:3a4254b2aa0ae20da656bb380b33ef6a:597fb8123717b4d9995aa7fe046c7ea9:1cc5fdc1f9162fc7493e41e42713b02a$ -->
 <TextureAtlas imagePath="wooden.atf" width="1024" height="2048">
     <SubTexture name="0" x="945" y="634" rotated="true" width="46" height="31"/>
     <SubTexture name="1" x="945" y="667" rotated="true" width="46" height="31"/>
@@ -8,23 +8,24 @@
     <SubTexture name="3" x="944" y="733" rotated="true" width="46" height="31"/>
     <SubTexture name="4" x="944" y="766" rotated="true" width="46" height="31"/>
     <SubTexture name="5" x="944" y="799" rotated="true" width="46" height="31"/>
-    <SubTexture name="6" x="978" y="992" width="31" height="46"/>
-    <SubTexture name="7" x="790" y="968" rotated="true" width="46" height="31"/>
-    <SubTexture name="8" x="838" y="968" width="31" height="46"/>
-    <SubTexture name="9" x="790" y="1001" rotated="true" width="46" height="31"/>
+    <SubTexture name="6" x="944" y="832" rotated="true" width="46" height="31"/>
+    <SubTexture name="7" x="944" y="865" rotated="true" width="46" height="31"/>
+    <SubTexture name="8" x="944" y="898" rotated="true" width="46" height="31"/>
+    <SubTexture name="9" x="941" y="931" rotated="true" width="46" height="31"/>
     <SubTexture name="action_bn_down" x="579" y="726" width="363" height="89" frameX="0" frameY="0" frameWidth="364" frameHeight="90"/>
     <SubTexture name="action_bn_up" x="579" y="634" width="364" height="90"/>
     <SubTexture name="back" x="1" y="1" width="576" height="1024"/>
-    <SubTexture name="back_bn_down" x="694" y="968" width="94" height="93" frameX="0" frameY="0" frameWidth="94" frameHeight="95"/>
-    <SubTexture name="back_bn_up" x="881" y="935" rotated="true" width="95" height="94"/>
+    <SubTexture name="back_bn_down" x="845" y="913" width="94" height="93" frameX="0" frameY="0" frameWidth="94" frameHeight="95"/>
+    <SubTexture name="back_bn_up" x="847" y="817" rotated="true" width="95" height="94"/>
     <SubTexture name="bar" x="993" y="664" width="19" height="326" frameX="-6" frameY="0" frameWidth="28" frameHeight="326"/>
     <SubTexture name="img_border" x="579" y="1" rotated="true" width="434" height="545"/>
     <SubTexture name="indicator" x="579" y="548" width="432" height="84"/>
-    <SubTexture name="shop_bn_highlight_down" x="579" y="817" width="149" height="149"/>
-    <SubTexture name="shop_bn_highlight_up" x="730" y="817" width="149" height="149"/>
-    <SubTexture name="shop_bn_normal_down" x="881" y="832" width="101" height="101" frameX="-24" frameY="-24" frameWidth="149" frameHeight="149"/>
-    <SubTexture name="shop_bn_normal_up" x="579" y="968" width="113" height="113" frameX="-18" frameY="-18" frameWidth="149" frameHeight="149"/>
-    <SubTexture name="shop_widget_border" x="871" y="1031" width="90" height="90"/>
-    <SubTexture name="space" x="838" y="1016" width="31" height="46"/>
+    <SubTexture name="level_title_back" x="579" y="817" width="266" height="44"/>
+    <SubTexture name="shop_bn_highlight_down" x="579" y="863" width="149" height="149"/>
+    <SubTexture name="shop_bn_highlight_up" x="579" y="1014" width="149" height="149"/>
+    <SubTexture name="shop_bn_normal_down" x="730" y="978" width="101" height="101" frameX="-24" frameY="-24" frameWidth="149" frameHeight="149"/>
+    <SubTexture name="shop_bn_normal_up" x="730" y="863" width="113" height="113" frameX="-18" frameY="-18" frameWidth="149" frameHeight="149"/>
+    <SubTexture name="shop_widget_border" x="833" y="1008" width="90" height="90"/>
+    <SubTexture name="space" x="941" y="964" rotated="true" width="46" height="31"/>
     <SubTexture name="thumb" x="993" y="634" rotated="true" width="29" height="28"/>
 </TextureAtlas>
