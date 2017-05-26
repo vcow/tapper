@@ -9,7 +9,6 @@ package gears
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
-	import starling.display.Quad;
 	import starling.events.Event;
 
 	public class WindowManager
@@ -46,10 +45,10 @@ package gears
 			{
 				window.validate();
 				window.touchable = false;
-				window.x = Math.floor((Starling.current.nativeStage.stageWidth - window.width) / 2.0);
+				window.x = Math.floor((Starling.current.stage.stageWidth - window.width) / 2.0);
 				window.y = -window.height;
 				var tween:Tween = new Tween(window, 0.4, Transitions.EASE_OUT);
-				tween.animate("y", Math.floor((Starling.current.nativeStage.stageHeight - window.height) / 2.0));
+				tween.animate("y", Math.floor((Starling.current.stage.stageHeight - window.height) / 2.0));
 				tween.onCompleteArgs = [window];
 				tween.onComplete = function (self:FeathersControl):void
 				{
@@ -84,7 +83,7 @@ package gears
 
 					Starling.juggler.removeTweens(window);
 					var tween:Tween = new Tween(window, 0.4, Transitions.EASE_IN);
-					tween.animate("y", Math.floor(Starling.current.nativeStage.stageHeight + window.height));
+					tween.animate("y", Math.floor(Starling.current.stage.stageHeight + window.height));
 					tween.onCompleteArgs = [window, event.data, dispose];
 					tween.onComplete = function (self:FeathersControl, result:Object, dispose:Boolean):void
 					{
