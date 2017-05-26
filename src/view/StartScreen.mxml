@@ -41,39 +41,13 @@
                     <f:AnchorLayoutData bottom="0"/>
                 </view:layoutData>
             </view:StartScreenProgress>
-
-            <!--f:LayoutGroup id="buttonGroup" visible="{progress >= 1.0}" touchable="false">
-                <f:layout>
-                    <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="10"/>
-                </f:layout>
-                <f:layoutData>
-                    <f:AnchorLayoutData percentWidth="100" percentHeight="100"/>
-                </f:layoutData>
-
-                <f:Button label="{LocaleManager.getInstance().getString('common', 'continue.bn.label')}"
-                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                          isEnabled="{_mediator.hasCurrentGame}"
-                          triggered="{dispatchEventWith('continueGame')}" alpha="0"/>
-
-                <f:Button label="{LocaleManager.getInstance().getString('common', 'new.bn.label')}"
-                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                          triggered="{dispatchEventWith('newGame')}" alpha="0"/>
-
-                <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
-                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-                          triggered="{dispatchEventWith('openShop')}" alpha="0"/>
-
-                <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
-                          styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="false"
-                          triggered="{dispatchEventWith('openRating')}" alpha="0"/>
-            </f:LayoutGroup-->
         </f:LayoutGroup>
     </f:LayoutGroup>
 
     <fx:Metadata>
         [Event(name="continueGame", type="starling.events.Event")]
         [Event(name="newGame", type="starling.events.Event")]
-        [Event(name="openShop", type="starling.events.Event")]
+        [Event(name="openVip", type="starling.events.Event")]
         [Event(name="openRating", type="starling.events.Event")]
     </fx:Metadata>
 
@@ -81,7 +55,6 @@
         import app.AppFacade;
 
         import feathers.binding.utils.BindingUtils;
-
         import feathers.binding.utils.ChangeWatcher;
 
         import mediators.StartScreenMediator;
@@ -90,13 +63,8 @@
 
         import resources.AtlasLibrary;
 
-        import resources.StylesLibrary;
-        import resources.locale.LocaleManager;
-
         import starling.animation.Tween;
-
         import starling.core.Starling;
-
         import starling.display.Image;
         import starling.events.Event;
         import starling.filters.GlowFilter;

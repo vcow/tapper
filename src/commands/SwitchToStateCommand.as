@@ -20,6 +20,7 @@ package commands
 					break;
 				case Const.STATE_START:
 				case Const.STATE_SHOP:
+				case Const.STATE_VIP:
 					if (gameModel.isStarted)
 						sendNotification(Const.STOP_GAME);
 					break;

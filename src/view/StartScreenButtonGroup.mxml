@@ -18,7 +18,7 @@
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
               styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openShop')}" alpha="0"/>
+              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openVip')}" alpha="0"/>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
               styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="false"

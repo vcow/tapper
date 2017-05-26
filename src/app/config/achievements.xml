@@ -5,8 +5,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="5"/>
+			<money min="5000"/>
 			<level value="0"/>
+			<unit min="5">foreman</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup2">
@@ -14,8 +15,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="10"/>
-			<level value="0"/>
+			<money min="10000"/>
+			<level value="1"/>
+			<unit min="1">produsser</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup3">
@@ -23,8 +25,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="15"/>
-			<level value="0"/>
+			<money min="100000"/>
+			<level value="2"/>
+			<unit min="3">official</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup4">
@@ -32,8 +35,10 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="20"/>
-			<level value="0"/>
+			<money min="3000000"/>
+			<level value="3"/>
+			<unit min="3">greens</unit>
+			<unit min="3">deputy</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup5">
@@ -41,8 +46,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="25"/>
-			<level value="0"/>
+			<money min="6000000"/>
+			<level value="4"/>
+			<unit min="3">sect</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup6">
@@ -50,8 +56,8 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="30"/>
-			<level value="0"/>
+			<level value="5"/>
+			<unit min="1">frs</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup7">
@@ -59,8 +65,11 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="35"/>
-			<level value="0"/>
+			<money min="30000000"/>
+			<level value="6"/>
+			<unit min="1">frs</unit>
+			<unit min="1">oon</unit>
+			<unit min="1">nato</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup8">
@@ -68,8 +77,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="40"/>
-			<level value="0"/>
+			<money min="60000000"/>
+			<level value="7"/>
+			<unit min="1">death_star</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup9">
@@ -77,8 +87,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="45"/>
-			<level value="0"/>
+			<money min="100000000"/>
+			<level value="8"/>
+			<unit min="1">space_fleet</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup10">
@@ -86,8 +97,9 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="50"/>
-			<level value="0"/>
+			<money min="500000000"/>
+			<level value="9"/>
+			<unit min="1">planet_system</unit>
 		</conditions>
 	</achievement>
 	<achievement id="levelup11">
@@ -95,8 +107,8 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<money min="55"/>
-			<level value="0"/>
+			<level value="10"/>
+			<unit min="1">universe</unit>
 		</conditions>
 	</achievement>
 </achievements>

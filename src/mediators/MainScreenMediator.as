@@ -75,6 +75,9 @@ package mediators
 				case Const.STATE_SHOP:
 					mainScreen.showScreen("shopScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
+				case Const.STATE_VIP:
+					mainScreen.showScreen("vipScreenItem", Fade.createCrossfadeTransition(0.3));
+					break;
 				default:
 					throw Error("Unsupported state " + newState + ".");
 			}

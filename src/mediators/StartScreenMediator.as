@@ -34,6 +34,7 @@ package mediators
 			{
 				startScreen.addEventListener("continueGame", onStart);
 				startScreen.addEventListener("newGame", onNewGame);
+				startScreen.addEventListener("openVip", onVip);
 			}
 		}
 
@@ -46,12 +47,18 @@ package mediators
 			{
 				startScreen.removeEventListener("continueGame", onStart);
 				startScreen.removeEventListener("newGame", onNewGame);
+				startScreen.removeEventListener("openVip", onVip);
 			}
 		}
 
 		private function onStart(event:Event):void
 		{
 			sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+		}
+
+		private function onVip(event:Event):void
+		{
+			sendNotification(Const.SWITCH_TO, Const.STATE_VIP);
 		}
 
 		private function onNewGame(event:Event):void

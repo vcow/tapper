@@ -86,6 +86,7 @@
 
             addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreen()));
             addScreen("shopScreenItem", new ScreenNavigatorItem(new ShopScreen()));
+            addScreen("vipScreenItem", new ScreenNavigatorItem(new VipScreen()));
         }
 
         override public function dispose():void
