@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0"?>
 <levels>
-	<level id="schoolar" index="0" title="level.schoolar.title" description="level.schoolar.description"/>
-	<level id="student" index="1" title="level.student.title" description="level.student.description"/>
-	<level id="carriage" index="2" title="level.carriage.title" description="level.carriage.description"/>
-	<level id="monarch" index="3" title="level.monarch.title" description="level.monarch.description"/>
-	<level id="president" index="4" title="level.president.title" description="level.president.description"/>
-	<level id="pope" index="5" title="level.pope.title" description="level.pope.description"/>
-	<level id="zog" index="6" title="level.zog.title" description="level.zog.description"/>
-	<level id="lucifer" index="7" title="level.lucifer.title" description="level.lucifer.description"/>
-	<level id="vader" index="8" title="level.vader.title" description="level.vader.description"/>
-	<level id="palpatin" index="9" title="level.palpatin.title" description="level.palpatin.description"/>
-	<level id="ubermensch" index="10" title="level.ubermensch.title" description="level.ubermensch.description"/>
-	<level id="god" index="11" title="level.god.title" description="level.god.description"/>
+	<level id="0" icon="schoolar" title="level.schoolar.title" description="level.schoolar.description"/>
+	<level id="1" icon="student" title="level.student.title" description="level.student.description"/>
+	<level id="2" icon="carriage" title="level.carriage.title" description="level.carriage.description"/>
+	<level id="3" icon="monarch" title="level.monarch.title" description="level.monarch.description"/>
+	<level id="4" icon="president" title="level.president.title" description="level.president.description"/>
+	<level id="5" icon="pope" title="level.pope.title" description="level.pope.description"/>
+	<level id="6" icon="zog" title="level.zog.title" description="level.zog.description"/>
+	<level id="7" icon="lucifer" title="level.lucifer.title" description="level.lucifer.description"/>
+	<level id="8" icon="vader" title="level.vader.title" description="level.vader.description"/>
+	<level id="9" icon="palpatin" title="level.palpatin.title" description="level.palpatin.description"/>
+	<level id="10" icon="ubermensch" title="level.ubermensch.title" description="level.ubermensch.description"/>
+	<level id="11" icon="god" title="level.god.title" description="level.god.description"/>
 </levels>

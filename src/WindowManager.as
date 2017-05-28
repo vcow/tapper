@@ -1,5 +1,4 @@
-package gears
-{
+package {
 	import feathers.core.FeathersControl;
 	import feathers.core.PopUpManager;
 

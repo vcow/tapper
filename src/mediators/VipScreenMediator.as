@@ -15,7 +15,7 @@ package mediators
 			if (vipScreen)
 			{
 //				vipScreen.addEventListener(ShopScreen.BACK, onBack);
-//				vipScreen.addEventListener(ShopScreen.BUY_UNIT, onBuyUnit);
+//				vipScreen.addEventListener(ShopScreen.UNIT_PURCHASED, onBuyUnit);
 //
 //				var gameModel:GameModel = AppFacade(facade).gameModel;
 //
@@ -34,7 +34,7 @@ package mediators
 			if (vipScreen)
 			{
 //				vipScreen.removeEventListener(ShopScreen.BACK, onBack);
-//				vipScreen.removeEventListener(ShopScreen.BUY_UNIT, onBuyUnit);
+//				vipScreen.removeEventListener(ShopScreen.UNIT_PURCHASED, onBuyUnit);
 			}
 		}
 	}

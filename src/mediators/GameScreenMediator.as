@@ -61,7 +61,7 @@ package mediators
 				_money = Math.round(gameModel.money);
 				dispatchEventWith("moneyChanged");
 
-				_unitsList = new ListCollection(gameModel.activeUnits);
+				_unitsList = new ListCollection(gameModel.getActiveUnits());
 				dispatchEventWith("unitsListChanged");
 
 				updateLevel();
@@ -89,7 +89,7 @@ package mediators
 					dispatchEventWith("moneyChanged");
 					break;
 				case Const.UPDATE_UNITS_LIST:
-					_unitsList = new ListCollection(gameModel.activeUnits);
+					_unitsList = new ListCollection(gameModel.getActiveUnits());
 					dispatchEventWith("unitsListChanged");
 					break;
 				case Const.UPDATE_LEVEL:
@@ -125,7 +125,7 @@ package mediators
 		[Bindable(event="levelChanged")]
 		public function get levelIcon():Texture
 		{
-			return _currentLevel ? atlasStateIcon.getTexture(_currentLevel.id) : null;
+			return _currentLevel ? atlasStateIcon.getTexture(_currentLevel.iconId) : null;
 		}
 
 		private function updateLevel():void

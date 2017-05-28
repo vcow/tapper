@@ -69,11 +69,11 @@ package com.adobe.crypto
         private var cc:int;
         private var dd:int;
 
-        /* index for data read */
+        /* id for data read */
         private var arrIndexLen:int = 0;
-        /* index for hash computation */
+        /* id for hash computation */
         private var arrProcessIndex:int = 0;
-        /* index for removing stale arr values */
+        /* id for removing stale arr values */
         private var cleanIndex:int = 0;
         
         /** 

@@ -43,10 +43,18 @@ package commands
 			}
 			else
 			{
-				gameModel.hasCurrentGame = false;
+				if (gameModel.hasCurrentGame)
+				{
+					gameModel.hasCurrentGame = false;
+					sendNotification(Const.UPDATE_CURRENT_GAME, false);
+				}
 			}
 
-			gameModel.isActive = true;
+			if (!gameModel.isActive)
+			{
+				gameModel.isActive = true;
+				sendNotification(Const.UPDATE_ACTIVITY, true);
+			}
 		}
 
 		private function deserializeGameModel(data:String):void
@@ -59,7 +67,11 @@ package commands
 			catch (e:Error)
 			{
 				trace("Wrong data format.");
-				gameModel.hasCurrentGame = false;
+				if (gameModel.hasCurrentGame)
+				{
+					gameModel.hasCurrentGame = false;
+					sendNotification(Const.UPDATE_CURRENT_GAME, false);
+				}
 				return;
 			}
 
@@ -70,11 +82,19 @@ package commands
 			if (MD5.hashBytes(getBytes(dataObject)) != hash)
 			{
 				trace("Wrong signature.");
-				gameModel.hasCurrentGame = false;
+				if (gameModel.hasCurrentGame)
+				{
+					gameModel.hasCurrentGame = false;
+					sendNotification(Const.UPDATE_CURRENT_GAME, false);
+				}
 				return;
 			}
 
-			gameModel.hasCurrentGame = true;
+			if (!gameModel.hasCurrentGame)
+			{
+				gameModel.hasCurrentGame = true;
+				sendNotification(Const.UPDATE_CURRENT_GAME, true);
+			}
 
 			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
 
@@ -96,18 +116,19 @@ package commands
 			gameModel.level = dataObject.level;
 			gameModel.currentSkin = dataObject.skin;
 
-			gameModel.units.splice(0, gameModel.units.length);
+			gameModel.clearUnits();
 			for each (var listData:Object in dataObject.units)
 			{
 				var unit:Unit = new Unit(null, NaN, false);
 				unit.initializeNotifier(multitonKey);
 				deserializeUnit(unit, listData);
-				gameModel.units.push(unit);
+				gameModel.addUnit(unit);
 			}
 			gameModel.sortUnitsByPrice();
 
-			sendNotification(Const.UPDATE_LEVEL);
-			sendNotification(Const.UPDATE_MONEY);
+			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
+			sendNotification(Const.UPDATE_LEVEL, gameModel.level);
+			sendNotification(Const.UPDATE_MONEY, gameModel.money);
 			sendNotification(Const.UPDATE_UNITS_LIST);
 		}
 

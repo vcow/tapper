@@ -59,7 +59,7 @@
         import feathers.data.ListCollection;
         import feathers.text.BitmapFontTextFormat;
 
-        import gears.WindowManager;
+        import WindowManager;
 
         import mediators.ShopScreenMediator;
 

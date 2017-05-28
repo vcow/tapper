@@ -13,6 +13,11 @@ package app
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
 	import commands.SwitchToCommand;
+	import commands.UnitPurchasedCommand;
+	import commands.UpdateActivityCommand;
+	import commands.UpdateLevelCommand;
+	import commands.UpdateMoneyCommand;
+	import commands.UpdateTapsCommand;
 
 	import models.GameModel;
 
@@ -67,12 +72,17 @@ package app
 			registerCommand(Const.STOP_GAME, StopGameCommand);
 			registerCommand(Const.BUY, BuyUnitCommand);
 			registerCommand(Const.ACHIEVE, GetAchievementCommand);
-			registerCommand(Const.LEVEL_UP, LevelUpCommand);
-			registerCommand(Const.SET_SKIN_BRONZE, SetSkinBronzeCommand);
+			registerCommand(Const.LEVEL_UP_ACTION, LevelUpCommand);
+			registerCommand(Const.SET_SKIN_BRONZE_ACTION, SetSkinBronzeCommand);
 			registerCommand(Const.POP, PopCommand);
 			registerCommand(Const.SWITCH_TO, SwitchToCommand);
 			registerCommand(Const.POP_TO_ROOT, PopCommand);
 			registerCommand(Const.NEW_GAME, NewGameCommand);
+			registerCommand(Const.UPDATE_LEVEL, UpdateLevelCommand);
+			registerCommand(Const.UPDATE_MONEY, UpdateMoneyCommand);
+			registerCommand(Const.UPDATE_TAPS, UpdateTapsCommand);
+			registerCommand(Const.UNIT_PURCHASED, UnitPurchasedCommand);
+			registerCommand(Const.UPDATE_ACTIVITY, UpdateActivityCommand);
 		}
 
 		override protected function initializeModel():void
@@ -90,6 +100,9 @@ package app
 			unitsProxy.setData(XML(new unitsConfig()));
 			levelsProxy.setData(XML(new levelsConfig()));
 			achievementsProxy.setData(XML(new achievementsConfig()));
+
+			sendNotification(Const.UPDATE_MONEY, gameModel.money);
+			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
 		}
 	}
 }

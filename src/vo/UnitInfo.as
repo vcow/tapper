@@ -2,12 +2,12 @@ package vo
 {
 	import app.AppFacade;
 
-	import gears.TriggerBroadcaster;
-
 	import models.ActionReward;
 	import models.GameModel;
 	import models.ProfitInfo;
 	import models.RelValue;
+
+	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import resources.AtlasLibrary;
 	import resources.locale.LocaleManager;
@@ -67,7 +67,6 @@ package vo
 			for each (p in _src.action) _action = new ActionReward(p);
 
 			var gameModel:GameModel = AppFacade(facade).gameModel;
-			gameModel.triggerBroadcaster.subscribe(onTrigger);
 			if (gameModel.money != _money)
 			{
 				_money = gameModel.money;
@@ -148,24 +147,23 @@ package vo
 			return _atlasIconBig;
 		}
 
-		private function onTrigger(trigger:String, value:*, ...args):void
+		public function updateUnitWith(notification:INotification):void
 		{
-			switch (trigger)
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			switch (notification.getName())
 			{
-				case TriggerBroadcaster.MONEY_CHANGED:
+				case Const.UPDATE_MONEY:
 					_currentPrice = NaN;
 					calculatePrice();
 
-					var money:Number = value as Number;
-					if (money != _money)
+					if (gameModel.money != _money)
 					{
-						_money = money;
+						_money = gameModel.money;
 						dispatchEventWith("moneyChanged");
 					}
 					break;
-
-				case TriggerBroadcaster.BUY:
-					var unit:Unit = value as Unit;
+				case Const.UNIT_PURCHASED:
+					var unit:Unit = notification.getBody() as Unit;
 					if (unit && unit.info == this)
 					{
 						_currentPrice = NaN;
@@ -177,8 +175,8 @@ package vo
 						}
 					}
 					break;
-				case TriggerBroadcaster.IS_ACTIVE_CHANGED:
-					if (value)
+				case Const.UPDATE_ACTIVITY:
+					if (gameModel.isActive)
 					{
 						calculatePrice();
 						calculateRest();
@@ -193,7 +191,7 @@ package vo
 			var available:Boolean;
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 
-			var numUnits:int = gameModel.getUnitsCount(this);
+			var numUnits:int = gameModel.getUnitsCount(id);
 			var increase:Number = 0;
 			if (_priceGrowth)
 			{
@@ -210,7 +208,7 @@ package vo
 			else
 			{
 				newPrice = _calcPrice;
-				available = newPrice <= gameModel.money && (!_maxCount || gameModel.getUnitsCount(this) < _maxCount);
+				available = newPrice <= gameModel.money && (!_maxCount || gameModel.getUnitsCount(id) < _maxCount);
 			}
 
 			if (newPrice != _currentPrice)
@@ -233,7 +231,7 @@ package vo
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 			if (_maxCount)
 			{
-				rest = Math.max(0, _maxCount - gameModel.getUnitsCount(this));
+				rest = Math.max(0, _maxCount - gameModel.getUnitsCount(id));
 				available = _currentPrice <= gameModel.money && rest > 0;
 			}
 			else

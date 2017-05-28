@@ -22,15 +22,20 @@ package commands
 			gameModel.moneyTotal = 0;
 			gameModel.tickCount = 0;
 			gameModel.level = 0;
-			gameModel.units.splice(0, gameModel.units.length);
+			gameModel.clearUnits();
 
 			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
 			for each (var achievement:AchievementInfo in achievementsProxy.achievements) achievement.receive(NaN);
 
-			gameModel.hasCurrentGame = false;
+			if (gameModel.hasCurrentGame)
+			{
+				gameModel.hasCurrentGame = false;
+				sendNotification(Const.UPDATE_CURRENT_GAME, false);
+			}
 
-			sendNotification(Const.UPDATE_LEVEL);
-			sendNotification(Const.UPDATE_MONEY);
+			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
+			sendNotification(Const.UPDATE_LEVEL, gameModel.level);
+			sendNotification(Const.UPDATE_MONEY, gameModel.money);
 			sendNotification(Const.UPDATE_UNITS_LIST);
 		}
 	}

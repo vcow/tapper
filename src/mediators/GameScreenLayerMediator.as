@@ -13,7 +13,7 @@ package mediators
 
 	public class GameScreenLayerMediator extends Mediator
 	{
-		private static var _interests:Array = [Const.SET_SKIN_BRONZE];
+		private static var _interests:Array = [Const.SET_SKIN_BRONZE_ACTION];
 
 		public function GameScreenLayerMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -41,7 +41,7 @@ package mediators
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 			switch (notification.getName())
 			{
-				case Const.SET_SKIN_BRONZE:
+				case Const.SET_SKIN_BRONZE_ACTION:
 					var gameScreenLayer:GameScreen = getViewComponent() as GameScreen;
 					gameScreenLayer.setSkin(SkinType.BRONZE);
 					break;

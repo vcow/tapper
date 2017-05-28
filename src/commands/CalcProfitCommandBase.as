@@ -22,16 +22,19 @@ package commands
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 			var percent:Number = 0;
 
-			for (var i:int = 0, l:int = list.length; i < l; i++) {
+			for (var i:int = 0, l:int = list.length; i < l; i++)
+			{
 				var profit:ProfitInfo = list[i];
 				if (profit.value.percentValue) percent += profit.value.percentValue;
 				else inc += profit.value.value;
 			}
 			inc += gameModel.money * percent;
 
-			if (inc != 0) {
+			if (inc != 0)
+			{
 				gameModel.money += inc;
 				gameModel.moneyTotal += inc;
+				sendNotification(Const.UPDATE_MONEY, gameModel.money);
 				return true;
 			}
 			return false;
@@ -45,9 +48,11 @@ package commands
 			if (profit.value.percentValue) inc = gameModel.money * profit.value.percentValue;
 			else inc = profit.value.value;
 
-			if (inc != 0) {
+			if (inc != 0)
+			{
 				gameModel.money += inc;
 				gameModel.moneyTotal += inc;
+				sendNotification(Const.UPDATE_MONEY, gameModel.money);
 				return true;
 			}
 			return false;

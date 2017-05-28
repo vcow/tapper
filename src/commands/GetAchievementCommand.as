@@ -1,5 +1,9 @@
 package commands
 {
+	import app.AppFacade;
+
+	import models.GameModel;
+
 	import vo.AchievementInfo;
 
 	import models.ActionReward;
@@ -28,7 +32,10 @@ package commands
 				else if (reward is ProfitReward)
 				{
 					if (calcProfit(ProfitReward(reward)))
-						sendNotification(Const.UPDATE_MONEY);
+					{
+						var gameModel:GameModel = AppFacade(facade).gameModel;
+						sendNotification(Const.UPDATE_MONEY, gameModel.money);
+					}
 				}
 				else if (reward is PopUpReward)
 				{

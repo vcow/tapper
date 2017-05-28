@@ -62,7 +62,7 @@ package com.adobe.utils {
 			return ( x << nn ) | ( x >>> ( 32 - nn ) );
 		}
 		
-		/** String for quick lookup of a hex character based on index */
+		/** String for quick lookup of a hex character based on id */
 		private static var hexChars:String = "0123456789abcdef";
 		
 		/**

@@ -20,6 +20,7 @@ package commands
 			if (!gameModel.hasCurrentGame)
 			{
 				gameModel.hasCurrentGame = true;
+				sendNotification(Const.UPDATE_CURRENT_GAME, true);
 			}
 		}
 

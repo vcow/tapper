@@ -30,7 +30,12 @@ package commands
 			stream.writeUTFBytes(data);
 			stream.close();
 
-			AppFacade(facade).gameModel.isActive = false;
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			if (gameModel.isActive)
+			{
+				gameModel.isActive = false;
+				sendNotification(Const.UPDATE_ACTIVITY, false);
+			}
 		}
 
 		private function serializeGameModel():String
@@ -39,9 +44,10 @@ package commands
 			var achievementsProxy:AchievementsProxy = facade.retrieveProxy(AchievementsProxy.NAME) as AchievementsProxy;
 
 			var unitsList:Array = [];
-			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++)
+			var units:Vector.<Unit> = gameModel.getUnits();
+			for (var i:int = 0, l:int = units.length; i < l; i++)
 			{
-				unitsList.push(serializeUnit(gameModel.units[i]));
+				unitsList.push(serializeUnit(units[i]));
 			}
 
 			var achievementsList:Array = [];

@@ -16,9 +16,10 @@ package commands
 			gameModel.tickCount++;
 
 			var profitList:Vector.<ProfitInfo> = new Vector.<ProfitInfo>();
-			for (var i:int = 0, l:int = gameModel.units.length; i < l; i++)
+			var units:Vector.<Unit> = gameModel.getUnits();
+			for (var i:int = 0, l:int = units.length; i < l; i++)
 			{
-				var unit:Unit = gameModel.units[i];
+				var unit:Unit = units[i];
 				if (unit.active)
 				{
 					unit.tick();
@@ -27,7 +28,7 @@ package commands
 			}
 
 			if (calcProfitList(profitList))
-				sendNotification(Const.UPDATE_MONEY);
+				sendNotification(Const.UPDATE_MONEY, gameModel.money);
 		}
 	}
 }

@@ -4,9 +4,10 @@ package models
 	{
 		public function LevelCondition(src:XML)
 		{
-			super(false);
+			super(true);
 
-			if (src.hasOwnProperty("@value")) _min = _max = int(src.@value);
+			if (src.hasOwnProperty("@min")) _min = Number(src.@min);
+			if (src.hasOwnProperty("@max")) _max = Number(src.@max);
 		}
 	}
 }

@@ -21,8 +21,12 @@ package
 		public static const TAP:String = "notifyTap";
 
 		public static const UPDATE_MONEY:String = "notifyUpdateMoney";
+		public static const UPDATE_TAPS:String = "notifyUpdateTaps";
+		public static const UNIT_PURCHASED:String = "notifyUnitPurchased";
 		public static const UPDATE_UNITS_LIST:String = "notifyUpdateUnitsList";
 		public static const UPDATE_LEVEL:String = "notifyUpdateLevel";
+		public static const UPDATE_CURRENT_GAME:String = "notifyUpdateCurrentGame";
+		public static const UPDATE_ACTIVITY:String = "notifyUpdateActivity";
 
 		public static const START_GAME:String = "notifyStartGame";
 		public static const STOP_GAME:String = "notifyStopGame";
@@ -31,8 +35,8 @@ package
 
 		public static const ACHIEVE:String = "notifyAchieve";
 
-		public static const LEVEL_UP:String = "levelUp";
-		public static const SET_SKIN_BRONZE:String = "setSkinBronze";
+		public static const LEVEL_UP_ACTION:String = "levelUp";
+		public static const SET_SKIN_BRONZE_ACTION:String = "setSkinBronze";
 
 		public static const SHOW_MESSAGE:String = "notifyShowMessage";
 

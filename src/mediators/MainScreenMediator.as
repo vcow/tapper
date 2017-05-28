@@ -4,7 +4,7 @@ package mediators
 
 	import feathers.motion.Fade;
 
-	import gears.WindowManager;
+	import WindowManager;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 

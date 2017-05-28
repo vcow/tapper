@@ -2,6 +2,8 @@ package commands
 {
 	import app.AppFacade;
 
+	import models.GameModel;
+
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
@@ -9,9 +11,13 @@ package commands
 	{
 		override public function execute(notification:INotification):void
 		{
-			var level:int = int(notification.getBody());
-			AppFacade(facade).gameModel.level = level ? level : AppFacade(facade).gameModel.level + 1;
-			sendNotification(Const.UPDATE_LEVEL);
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			var level:int = int(notification.getBody()) || (gameModel.level + 1);
+			if (level != gameModel.level)
+			{
+				gameModel.level = level;
+				sendNotification(Const.UPDATE_LEVEL);
+			}
 		}
 	}
 }

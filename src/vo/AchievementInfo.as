@@ -1,10 +1,8 @@
 package vo
 {
-	import models.*;
-
 	import app.AppFacade;
 
-	import gears.TriggerBroadcaster;
+	import models.*;
 
 	import org.puremvc.as3.multicore.patterns.observer.Notifier;
 
@@ -84,13 +82,12 @@ package vo
 					}
 				}
 			}
-
-			if (!isReceived && _conditions.length > 0)
-				AppFacade(facade).gameModel.triggerBroadcaster.subscribe(onTrigger);
 		}
 
-		private function onTrigger(trigger:String, value:*, ...args):void
+		public function checkForAward():Boolean
 		{
+			if (isReceived) return false;
+
 			var result:int = 0;
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 			for each (var condition:ConditionBase in _conditions)
@@ -99,35 +96,28 @@ package vo
 				{
 					if (condition.check(gameModel.level)) result++;
 				}
-				if (trigger == TriggerBroadcaster.MONEY_CHANGED && condition is MoneyCondition)
+				else if (condition is MoneyCondition)
 				{
-					if (condition.check(value)) result++;
+					if (condition.check(gameModel.money)) result++;
 				}
-				else if (trigger == TriggerBroadcaster.TAP && condition is TapsCondition)
+				else if (condition is TapsCondition)
 				{
-					if (condition.check(value)) result++;
+					if (condition.check(gameModel.tapsTotal)) result++;
 				}
-				else if (trigger == TriggerBroadcaster.BUY && condition is UnitCondition)
+				else if (condition is UnitCondition)
 				{
-					var unit:UnitInfo = value as UnitInfo;
-					if (unit)
+					var unitCondition:UnitCondition = UnitCondition(condition);
+					if (unitCondition.unitId)
 					{
-						if (UnitCondition(condition).unitId)
-						{
-							if (UnitCondition(condition).unitId == unit.id)
-							{
-								if (condition.check(gameModel.getUnitsCount(unit))) result++;
-							}
-						}
-						else
-						{
-							if (condition.check(gameModel.units.length)) result++;
-						}
+						if (unitCondition.check(gameModel.getUnitsCount(unitCondition.unitId))) result++;
+					}
+					else
+					{
+						if (unitCondition.check(gameModel.getUnits().length)) result++;
 					}
 				}
 			}
-			if (result == _conditions.length)
-				sendNotification(Const.ACHIEVE, this);
+			return result == _conditions.length;
 		}
 
 		public function get id():String
@@ -177,14 +167,12 @@ package vo
 				_receivedTime = NaN;
 				if (_conditions.length > 0)
 				{
-					AppFacade(facade).gameModel.triggerBroadcaster.subscribe(onTrigger);
 					for each (var condition:ConditionBase in _conditions) condition.reset();
 				}
 			}
 			else
 			{
 				_receivedTime = timestamp;
-				AppFacade(facade).gameModel.triggerBroadcaster.unsubscribe(onTrigger);
 			}
 		}
 	}

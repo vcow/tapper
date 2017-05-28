@@ -9,7 +9,7 @@
     <fx:Script><![CDATA[
         import app.AppFacade;
 
-        import gears.WindowManager;
+        import WindowManager;
 
         import mediators.MainScreenMediator;
 

@@ -29,8 +29,8 @@ package proxy
 
 			_levels.sort(function (a:LevelInfo, b:LevelInfo):int
 			{
-				if (a.index > b.index) return 1;
-				if (a.index < b.index) return -1;
+				if (a.id > b.id) return 1;
+				if (a.id < b.id) return -1;
 				return 0;
 			});
 		}
@@ -44,7 +44,7 @@ package proxy
 		{
 			for (var i:int = 0, l:int = _levels.length; i < l; i++)
 			{
-				if (_levels[i].index == index)
+				if (_levels[i].id == index)
 					return _levels[i];
 			}
 			return null;
@@ -54,7 +54,7 @@ package proxy
 		{
 			for (var i:int = 0, l:int = _levels.length; i < l; i++)
 			{
-				if (_levels[i].id == id)
+				if (_levels[i].iconId == id)
 					return _levels[i];
 			}
 			return null;

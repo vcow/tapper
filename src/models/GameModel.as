@@ -1,28 +1,26 @@
 package models
 {
-	import gears.TriggerBroadcaster;
+	import flash.utils.Dictionary;
 
 	import org.puremvc.as3.multicore.core.Model;
 
 	import vo.Unit;
-	import vo.UnitInfo;
 
 	public class GameModel extends Model
 	{
 		private var _callbackId:uint;
-		private var _hasCurrentGame:Boolean;
-		private var _isActive:Boolean;
-		private var _money:Number = 0;
-		private var _tapsTotal:uint;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
-
-		private static const _triggerBroadcaster:TriggerBroadcaster = new TriggerBroadcaster();
+		private var _unitsById:Dictionary = new Dictionary();
 
 		public var tickCount:uint;
 		public var moneyTotal:Number;
 		public var level:uint;
 		public var currentSkin:String;
 		public var currentState:String;
+		public var hasCurrentGame:Boolean;
+		public var isActive:Boolean;
+		public var money:Number = 0;
+		public var tapsTotal:uint;
 
 		public function GameModel(key:String)
 		{
@@ -34,13 +32,6 @@ package models
 			currentSkin = SkinType.WOOD;
 			currentState = Const.STATE_START;
 			moneyTotal = 0;
-
-			_triggerBroadcaster.init(this);
-		}
-
-		public function get triggerBroadcaster():TriggerBroadcaster
-		{
-			return _triggerBroadcaster;
 		}
 
 		public function set callbackId(value:uint):void
@@ -59,70 +50,24 @@ package models
 			return _callbackId != 0;
 		}
 
-		public function get hasCurrentGame():Boolean
+		public function getUnitsCount(id:String):int
 		{
-			return _hasCurrentGame;
+			var byIdList:Vector.<Unit> = _unitsById[id];
+			return byIdList ? byIdList.length : 0;
 		}
 
-		public function set hasCurrentGame(value:Boolean):void
+		public function clearUnits():void
 		{
-			if (value == _hasCurrentGame) return;
-			_hasCurrentGame = value;
-			triggerBroadcaster.broadcast(TriggerBroadcaster.HAS_GAME_CHANGED, _hasCurrentGame);
+			_units.length = 0;
+			for each (var byIdList:Vector.<Unit> in _unitsById) byIdList.length = 0;
 		}
 
-		public function get isActive():Boolean
-		{
-			return _isActive;
-		}
-
-		public function set isActive(value:Boolean):void
-		{
-			if (value == _isActive) return;
-			_isActive = value;
-			triggerBroadcaster.broadcast(TriggerBroadcaster.IS_ACTIVE_CHANGED, _isActive);
-		}
-
-		public function get money():Number
-		{
-			return _money;
-		}
-
-		public function set money(value:Number):void
-		{
-			if (value == _money) return;
-			_money = value;
-			triggerBroadcaster.broadcast(TriggerBroadcaster.MONEY_CHANGED, _money);
-		}
-
-		public function get tapsTotal():uint
-		{
-			return _tapsTotal;
-		}
-
-		public function set tapsTotal(value:uint):void
-		{
-			if (value == _tapsTotal) return;
-			_tapsTotal = value;
-			triggerBroadcaster.broadcast(TriggerBroadcaster.TAP, _tapsTotal);
-		}
-
-		public function getUnitsCount(info:UnitInfo):int
-		{
-			var res:int = 0;
-			for (var i:int = 0, l:int = _units.length; i < l; i++)
-			{
-				if (_units[i].info === info) res++;
-			}
-			return res;
-		}
-
-		public function get units():Vector.<Unit>
+		public function getUnits():Vector.<Unit>
 		{
 			return _units;
 		}
 
-		public function get activeUnits():Vector.<Unit>
+		public function getActiveUnits():Vector.<Unit>
 		{
 			var res:Vector.<Unit> = new Vector.<Unit>();
 			for (var i:int = 0, l:int = _units.length; i < l; i++)
@@ -153,9 +98,18 @@ package models
 			return src;
 		}
 
+		public function addUnit(unit:Unit):void
+		{
+			_units.push(unit);
+			var byIdList:Vector.<Unit> = _unitsById[unit.info.id];
+			if (!byIdList) _unitsById[unit.info.id] = byIdList = new Vector.<Unit>();
+			byIdList.push(unit);
+		}
+
 		public function sortUnitsByPrice():void
 		{
 			_units.sort(sortByPrice);
+			for each (var byIdList:Vector.<Unit> in _unitsById) byIdList.sort(sortByPrice);
 		}
 
 		private static function sortByPrice(a:Unit, b:Unit):int

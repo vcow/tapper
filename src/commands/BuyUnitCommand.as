@@ -2,15 +2,12 @@ package commands
 {
 	import app.AppFacade;
 
-	import gears.TriggerBroadcaster;
-
 	import models.GameModel;
 
-	import vo.Unit;
-
-	import vo.UnitInfo;
-
 	import org.puremvc.as3.multicore.interfaces.INotification;
+
+	import vo.Unit;
+	import vo.UnitInfo;
 
 	public class BuyUnitCommand extends CalcProfitCommandBase
 	{
@@ -25,7 +22,7 @@ package commands
 				unit.initializeNotifier(multitonKey);
 				gameModel.money -= unitInfo.price;
 
-				gameModel.units.push(unit);
+				gameModel.addUnit(unit);
 				gameModel.sortUnitsByPrice();
 
 				if (unit.info.profit)
@@ -34,9 +31,8 @@ package commands
 				if (unit.info.action)
 					sendNotification(unit.info.action.id, unit.info.action.data);
 
-				gameModel.triggerBroadcaster.broadcast(TriggerBroadcaster.BUY, unit);
-
-				sendNotification(Const.UPDATE_MONEY);
+				sendNotification(Const.UNIT_PURCHASED, unit);
+				sendNotification(Const.UPDATE_MONEY, gameModel.money);
 				sendNotification(Const.UPDATE_UNITS_LIST);
 			}
 		}

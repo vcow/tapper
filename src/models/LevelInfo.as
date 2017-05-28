@@ -4,28 +4,28 @@ package models
 
 	public class LevelInfo
 	{
-		private var _id:String;
+		private var _id:int;
+		private var _iconId:String;
 		private var _title:String;
 		private var _description:String;
-		private var _index:int;
 
 		public function LevelInfo(src:XML)
 		{
 			var locale:LocaleManager = LocaleManager.getInstance();
-			_id = src.@id;
-			_index = int(src.@index);
+			_id = int(src.@id);
+			_iconId = src.hasOwnProperty("@icon") ? src.@icon.toString() : null;
 			_title = locale.getString('levels', src.@title) || src.@title;
 			_description = locale.getString('levels', src.@description) || src.@description;
 		}
 
-		public function get id():String
+		public function get iconId():String
 		{
-			return _id;
+			return _iconId;
 		}
 
-		public function get index():int
+		public function get id():int
 		{
-			return _index;
+			return _id;
 		}
 
 		public function get title():String

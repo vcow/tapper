@@ -2,7 +2,7 @@ package mediators
 {
 	import app.AppFacade;
 
-	import gears.TriggerBroadcaster;
+	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import resources.locale.LocaleManager;
 
@@ -14,6 +14,8 @@ package mediators
 
 	public class StartScreenMediator extends BindableMediator
 	{
+		private static var _interests:Array = [Const.UPDATE_CURRENT_GAME];
+
 		public function StartScreenMediator(mediatorName:String, viewComponent:Object)
 		{
 			super(mediatorName, viewComponent);
@@ -27,8 +29,6 @@ package mediators
 
 		override public function onRegister():void
 		{
-			AppFacade(facade).gameModel.triggerBroadcaster.subscribe(onTrigger);
-
 			var startScreen:StartScreen = getViewComponent() as StartScreen;
 			if (startScreen)
 			{
@@ -40,8 +40,6 @@ package mediators
 
 		override public function onRemove():void
 		{
-			AppFacade(facade).gameModel.triggerBroadcaster.unsubscribe(onTrigger);
-
 			var startScreen:StartScreen = getViewComponent() as StartScreen;
 			if (startScreen)
 			{
@@ -85,11 +83,13 @@ package mediators
 			}
 		}
 
-		private function onTrigger(trigger:String, value:*, ...args):void
+		override public function handleNotification(notification:INotification):void
 		{
-			if (trigger == TriggerBroadcaster.HAS_GAME_CHANGED)
+			switch (notification.getName())
 			{
-				dispatchEventWith("hasCurrentGameChanged");
+				case Const.UPDATE_CURRENT_GAME:
+					dispatchEventWith("hasCurrentGameChanged");
+					break;
 			}
 		}
 	}

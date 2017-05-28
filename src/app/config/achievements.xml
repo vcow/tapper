@@ -6,7 +6,7 @@
 		</rewards>
 		<conditions>
 			<money min="5000"/>
-			<level value="0"/>
+			<level min="0"/>
 			<unit min="5">foreman</unit>
 		</conditions>
 	</achievement>
@@ -16,7 +16,7 @@
 		</rewards>
 		<conditions>
 			<money min="10000"/>
-			<level value="1"/>
+			<level min="1"/>
 			<unit min="1">produsser</unit>
 		</conditions>
 	</achievement>
@@ -26,7 +26,7 @@
 		</rewards>
 		<conditions>
 			<money min="100000"/>
-			<level value="2"/>
+			<level min="2"/>
 			<unit min="3">official</unit>
 		</conditions>
 	</achievement>
@@ -36,7 +36,7 @@
 		</rewards>
 		<conditions>
 			<money min="3000000"/>
-			<level value="3"/>
+			<level min="3"/>
 			<unit min="3">greens</unit>
 			<unit min="3">deputy</unit>
 		</conditions>
@@ -47,7 +47,7 @@
 		</rewards>
 		<conditions>
 			<money min="6000000"/>
-			<level value="4"/>
+			<level min="4"/>
 			<unit min="3">sect</unit>
 		</conditions>
 	</achievement>
@@ -56,7 +56,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<level value="5"/>
+			<level min="5"/>
 			<unit min="1">frs</unit>
 		</conditions>
 	</achievement>
@@ -66,7 +66,7 @@
 		</rewards>
 		<conditions>
 			<money min="30000000"/>
-			<level value="6"/>
+			<level min="6"/>
 			<unit min="1">frs</unit>
 			<unit min="1">oon</unit>
 			<unit min="1">nato</unit>
@@ -78,7 +78,7 @@
 		</rewards>
 		<conditions>
 			<money min="60000000"/>
-			<level value="7"/>
+			<level min="7"/>
 			<unit min="1">death_star</unit>
 		</conditions>
 	</achievement>
@@ -88,7 +88,7 @@
 		</rewards>
 		<conditions>
 			<money min="100000000"/>
-			<level value="8"/>
+			<level min="8"/>
 			<unit min="1">space_fleet</unit>
 		</conditions>
 	</achievement>
@@ -98,7 +98,7 @@
 		</rewards>
 		<conditions>
 			<money min="500000000"/>
-			<level value="9"/>
+			<level min="9"/>
 			<unit min="1">planet_system</unit>
 		</conditions>
 	</achievement>
@@ -107,7 +107,7 @@
 			<action id="levelUp"/>
 		</rewards>
 		<conditions>
-			<level value="10"/>
+			<level min="10"/>
 			<unit min="1">universe</unit>
 		</conditions>
 	</achievement>
