@@ -25,6 +25,8 @@ package models
 
 		private static const LIMIT:Number = 999999999999.0;
 
+		public const addonModel:AddonModel = new AddonModel();
+
 		public function GameModel(key:String)
 		{
 			super(key);

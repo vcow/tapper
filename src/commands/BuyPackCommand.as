@@ -52,13 +52,17 @@ package commands
 					sendNotification(Const.ACHIEVE, achievement);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
-				case "silver_fishX5":
+				case "silver_fish_pack":
+					// Аквариум серебряных рыбок, добавляется в виде лимитированного юнита
 					var unitInfo:UnitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("silver_fish");
 					sendNotification(Const.BUY, unitInfo);
+					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
-				case "golden_fishX5":
+				case "golden_fish_pack":
+					// Аквариум золотых рыбок, добавляется в виде лимитированного юнита
 					unitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("golden_fish");
 					sendNotification(Const.BUY, unitInfo);
+					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
 				default:
 					throw Error("Unsupported pack " + _pack.id + ".");

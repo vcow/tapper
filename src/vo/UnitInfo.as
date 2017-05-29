@@ -184,6 +184,8 @@ package vo
 						calculateRest();
 					}
 					break;
+				default:
+					throw Error("Unsupported update with " + notification.getName() + ".");
 			}
 		}
 
@@ -208,7 +210,8 @@ package vo
 			}
 			_calcPrice = Math.round(_price + increase);
 
-			if (_maxCount > 0 && numUnits >= maxCount)
+			var maxCount:int = this.maxCount;
+			if (maxCount > 0 && numUnits >= maxCount)
 			{
 				newPrice = -1;
 				available = false;
@@ -216,7 +219,7 @@ package vo
 			else
 			{
 				newPrice = _calcPrice;
-				available = newPrice <= gameModel.money && (!_maxCount || gameModel.getUnitsCount(id) < _maxCount);
+				available = newPrice <= gameModel.money && (!maxCount || gameModel.getUnitsCount(id) < maxCount);
 			}
 
 			if (newPrice != _currentPrice)
@@ -237,9 +240,10 @@ package vo
 			var rest:int;
 			var available:Boolean;
 			var gameModel:GameModel = AppFacade(facade).gameModel;
-			if (_maxCount)
+			var maxCount:int = this.maxCount;
+			if (maxCount)
 			{
-				rest = Math.max(0, _maxCount - gameModel.getUnitsCount(id));
+				rest = Math.max(0, maxCount - gameModel.getUnitsCount(id));
 				available = _currentPrice <= gameModel.money && rest > 0;
 			}
 			else
@@ -346,7 +350,7 @@ package vo
 		[Bindable(event="dataChanged")]
 		public function get maxCount():int
 		{
-			return _maxCount;
+			return _maxCount ? _maxCount * AppFacade(facade).gameModel.addonModel.multiplier : 0;
 		}
 
 		[Bindable(event="dataChanged")]
