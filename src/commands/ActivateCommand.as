@@ -124,7 +124,7 @@ package commands
 				deserializeUnit(unit, listData);
 				gameModel.addUnit(unit);
 			}
-			gameModel.sortUnitsByPrice();
+			gameModel.sortUnitsByIndex();
 
 			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
 			sendNotification(Const.UPDATE_LEVEL, gameModel.level);

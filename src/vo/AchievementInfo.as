@@ -77,6 +77,9 @@ package vo
 						case "level":
 							_conditions.push(new LevelCondition(item));
 							break;
+						case "top":
+							_conditions.push(new TopCondition(item));
+							break;
 						default:
 							throw Error("Unsupported condition " + item.name());
 					}
@@ -94,27 +97,31 @@ package vo
 			{
 				if (condition is LevelCondition)
 				{
-					if (condition.check(gameModel.level)) result++;
+					if (condition.check(gameModel.level)) ++result;
 				}
 				else if (condition is MoneyCondition)
 				{
-					if (condition.check(gameModel.money)) result++;
+					if (condition.check(gameModel.money)) ++result;
 				}
 				else if (condition is TapsCondition)
 				{
-					if (condition.check(gameModel.tapsTotal)) result++;
+					if (condition.check(gameModel.tapsTotal)) ++result;
 				}
 				else if (condition is UnitCondition)
 				{
 					var unitCondition:UnitCondition = UnitCondition(condition);
 					if (unitCondition.unitId)
 					{
-						if (unitCondition.check(gameModel.getUnitsCount(unitCondition.unitId))) result++;
+						if (unitCondition.check(gameModel.getUnitsCount(unitCondition.unitId))) ++result;
 					}
 					else
 					{
-						if (unitCondition.check(gameModel.getUnits().length)) result++;
+						if (unitCondition.check(gameModel.getUnits().length)) ++result;
 					}
+				}
+				else if (condition is TopCondition)
+				{
+					if (condition.check(gameModel.topUnitIndex)) ++result;
 				}
 			}
 			return result == _conditions.length;

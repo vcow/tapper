@@ -13,7 +13,7 @@ package models
 		{
 			var locale:LocaleManager = LocaleManager.getInstance();
 			_id = int(src.@id);
-			_iconId = src.hasOwnProperty("@icon") ? src.@icon.toString() : null;
+			_iconId = src.@icon;
 			_title = locale.getString('levels', src.@title) || src.@title;
 			_description = locale.getString('levels', src.@description) || src.@description;
 		}

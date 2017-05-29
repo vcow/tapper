@@ -4,7 +4,7 @@ package models
 	{
 		public function MoneyCondition(src:XML)
 		{
-			super(true);
+			super(false);
 
 			if (src.hasOwnProperty("@min")) _min = Number(src.@min);
 			if (src.hasOwnProperty("@max")) _max = Number(src.@max);

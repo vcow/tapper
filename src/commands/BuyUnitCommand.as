@@ -23,7 +23,7 @@ package commands
 				gameModel.money -= unitInfo.price;
 
 				gameModel.addUnit(unit);
-				gameModel.sortUnitsByPrice();
+				gameModel.sortUnitsByIndex();
 
 				if (unit.info.profit)
 					calcProfit(unit.info.profit);

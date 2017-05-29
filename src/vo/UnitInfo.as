@@ -20,6 +20,7 @@ package vo
 		private var _src:XML;
 
 		private var _id:String;
+		private var _index:int;
 		private var _name:String;
 		private var _description:String;
 		private var _price:Number;
@@ -55,6 +56,7 @@ package vo
 
 			var locale:LocaleManager = LocaleManager.getInstance();
 			_id = _src.@id;
+			_index = _src.@index;
 			_name = locale.getString("units", _src.@name) || _src.@name;
 			_description = locale.getString("units", _src.@descrption) || _src.@description;
 			_price = Number(_src.@price);
@@ -256,6 +258,11 @@ package vo
 		public function get id():String
 		{
 			return _id;
+		}
+
+		public function get index():int
+		{
+			return _index;
 		}
 
 		[Bindable(event="dataChanged")]
