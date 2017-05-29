@@ -20,7 +20,7 @@ package commands
 			{
 				var unit:Unit = new Unit(unitInfo, unitInfo.price, unitInfo.perClickProfit || unitInfo.perSecondProfit);
 				unit.initializeNotifier(multitonKey);
-				gameModel.money -= unitInfo.price;
+				gameModel.setMoney(gameModel.money - unitInfo.price);
 
 				gameModel.addUnit(unit);
 				gameModel.sortUnitsByIndex();

@@ -120,9 +120,8 @@ package commands
 				achievement.receive(achievementMap[achievement.id]);
 			}
 
-			gameModel.money = dataObject.money;
+			gameModel.setMoney(dataObject.money);
 			gameModel.tapsTotal = dataObject.tapsTotal;
-			gameModel.moneyTotal = dataObject.moneyTotal;
 			gameModel.tickCount = dataObject.tickCount;
 			gameModel.level = dataObject.level;
 			gameModel.currentSkin = dataObject.skin;

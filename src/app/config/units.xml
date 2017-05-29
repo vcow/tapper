@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <units>
+	<unit id="silver_fish" index="0" name="name.silver_fish" description="description.silver_fish" price="0" priceGrowth="0">
+		<ppc value="100%" maxCount="3"/>
+	</unit>
+	<unit id="golden_fish" index="0" name="name.golden_fish" description="description.golden_fish" price="0" priceGrowth="0">
+		<ppc value="200%" maxCount="3"/>
+	</unit>
 	<unit id="illegal" index="1" name="name.illegal" description="description.illegal" price="30" priceGrowth="10%">
 		<ppc value="1" maxCount="100"/>
 	</unit>

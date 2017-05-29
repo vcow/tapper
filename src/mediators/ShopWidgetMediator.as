@@ -78,6 +78,8 @@ package mediators
 			for (var i:int = 0, l:int = unitsProxy.units.length; i < l; i++)
 			{
 				var unit:UnitInfo = unitsProxy.units[i];
+				if (unit.price == 0) continue;
+
 				if (unit.price <= _lastMoney)
 				{
 					availableUnits[unit] = true;

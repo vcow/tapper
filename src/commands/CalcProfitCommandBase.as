@@ -32,9 +32,10 @@ package commands
 
 			if (inc != 0)
 			{
-				gameModel.money += inc;
-				gameModel.moneyTotal += inc;
-				sendNotification(Const.UPDATE_MONEY, gameModel.money);
+				if (!gameModel.setMoney(gameModel.money + inc))
+					sendNotification(Const.OVERFLOW);
+				else
+					sendNotification(Const.UPDATE_MONEY, gameModel.money);
 				return true;
 			}
 			return false;
@@ -50,9 +51,10 @@ package commands
 
 			if (inc != 0)
 			{
-				gameModel.money += inc;
-				gameModel.moneyTotal += inc;
-				sendNotification(Const.UPDATE_MONEY, gameModel.money);
+				if (!gameModel.setMoney(gameModel.money + inc))
+					sendNotification(Const.OVERFLOW);
+				else
+					sendNotification(Const.UPDATE_MONEY, gameModel.money);
 				return true;
 			}
 			return false;

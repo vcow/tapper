@@ -3,9 +3,12 @@ package commands
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	import proxy.UnitsProxy;
+
 	import vo.AchievementInfo;
 
 	import vo.Pack;
+	import vo.UnitInfo;
 
 	public class BuyPackCommand extends SimpleCommand
 	{
@@ -48,6 +51,14 @@ package commands
 					achievement.initializeNotifier(multitonKey);
 					sendNotification(Const.ACHIEVE, achievement);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+					break;
+				case "silver_fishX5":
+					var unitInfo:UnitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("silver_fish");
+					sendNotification(Const.BUY, unitInfo);
+					break;
+				case "golden_fishX5":
+					unitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("golden_fish");
+					sendNotification(Const.BUY, unitInfo);
 					break;
 				default:
 					throw Error("Unsupported pack " + _pack.id + ".");

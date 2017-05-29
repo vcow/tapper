@@ -60,7 +60,6 @@ package commands
 			var dataObject:Object = {
 				money: gameModel.money,
 				tapsTotal: gameModel.tapsTotal,
-				moneyTotal: gameModel.moneyTotal,
 				tickCount: gameModel.tickCount,
 				level: gameModel.level,
 				skin: gameModel.currentSkin,

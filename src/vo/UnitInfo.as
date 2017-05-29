@@ -189,6 +189,12 @@ package vo
 
 		private function calculatePrice():void
 		{
+			if (_price <= 0)
+			{
+				_currentPrice = 0;
+				return;
+			}
+
 			var newPrice:Number;
 			var available:Boolean;
 			var gameModel:GameModel = AppFacade(facade).gameModel;

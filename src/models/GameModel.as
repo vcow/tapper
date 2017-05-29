@@ -9,20 +9,21 @@ package models
 	public class GameModel extends Model
 	{
 		private var _callbackId:uint;
+		private var _money:Number = 0;
 		private var _units:Vector.<Unit> = new Vector.<Unit>();
 		private var _unitsById:Dictionary = new Dictionary();
 		private var _unitsByIndex:Dictionary = new Dictionary();
 		private var _topUnitIndex:int;
 
 		public var tickCount:uint;
-		public var moneyTotal:Number;
 		public var level:uint;
 		public var currentSkin:String;
 		public var currentState:String;
 		public var hasCurrentGame:Boolean;
 		public var isActive:Boolean;
-		public var money:Number = 0;
 		public var tapsTotal:uint;
+
+		private static const LIMIT:Number = 999999999999.0;
 
 		public function GameModel(key:String)
 		{
@@ -33,7 +34,6 @@ package models
 		{
 			currentSkin = SkinType.WOOD;
 			currentState = Const.STATE_START;
-			moneyTotal = 0;
 		}
 
 		public function set callbackId(value:uint):void
@@ -45,6 +45,26 @@ package models
 		public function get callbackId():uint
 		{
 			return _callbackId;
+		}
+
+		public function get money():Number
+		{
+			return _money;
+		}
+
+		public function setMoney(value:Number):Boolean
+		{
+			if (value > LIMIT)
+			{
+				if (_money < LIMIT)
+				{
+					_money = LIMIT;
+					return true;
+				}
+				return false;
+			}
+			_money = value;
+			return true;
 		}
 
 		public function get isStarted():Boolean
@@ -142,7 +162,9 @@ package models
 
 		private static function sortByIndex(a:Unit, b:Unit):int
 		{
-			if (a.info.index < b.info.index) return 1;
+			if (a.info.index > 0 && b.info.index <= 0) return 1;
+			else if (a.info.index <= 0 && b.info.index > 0) return -1;
+			else if (a.info.index < b.info.index) return 1;
 			else if (a.info.index > b.info.index) return -1;
 			return 0;
 		}

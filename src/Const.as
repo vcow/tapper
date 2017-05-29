@@ -47,6 +47,8 @@ package
 
 		public static const NEW_GAME:String = "notifyNewGame";
 
+		public static const OVERFLOW:String = "notifyOverflow";
+
 		public function Const()
 		{
 			throw Error("Const is a static class.");

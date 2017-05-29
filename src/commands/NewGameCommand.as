@@ -17,9 +17,8 @@ package commands
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 
-			gameModel.money = 0;
+			gameModel.setMoney(0);
 			gameModel.tapsTotal = 0;
-			gameModel.moneyTotal = 0;
 			gameModel.tickCount = 0;
 			gameModel.level = 0;
 			gameModel.clearUnits();

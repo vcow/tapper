@@ -46,7 +46,14 @@ package mediators
 				dispatchEventWith("moneyChanged");
 
 				var unitsProxy:UnitsProxy = facade.retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
-				_unitsList = new ListCollection(unitsProxy.units);
+				var unitsList:Vector.<UnitInfo> = new Vector.<UnitInfo>();
+				for (var i:int = 0, l:int = unitsProxy.units.length; i < l; i++)
+				{
+					var unitInfo:UnitInfo = unitsProxy.units[i];
+					if (unitInfo.price == 0) continue;
+					unitsList.push(unitInfo);
+				}
+				_unitsList = new ListCollection(unitsList);
 				dispatchEventWith("unitsListChanged");
 			}
 		}
@@ -88,13 +95,13 @@ package mediators
 
 		private function onBuyUnit(event:Event):void
 		{
-			var unit:UnitInfo = event.data as UnitInfo;
-			if (unit)
+			var unitInfo:UnitInfo = event.data as UnitInfo;
+			if (unitInfo)
 			{
 				var gameModel:GameModel = AppFacade(facade).gameModel;
-				if (unit.price <= gameModel.money)
+				if (unitInfo.price <= gameModel.money)
 				{
-					sendNotification(Const.BUY, unit);
+					sendNotification(Const.BUY, unitInfo);
 				}
 			}
 		}
