@@ -50,12 +50,14 @@
                 _mediator = facade.retrieveMediator(MEDIATOR_NAME) as ShopWidgetMediator;
                 facade.removeMediator(MEDIATOR_NAME);
                 _mediator.setViewComponent(this);
+                facade.registerMediator(_mediator);
             }
             else
             {
-                _mediator = new ShopWidgetMediator(MEDIATOR_NAME, this);
+                var mediator:ShopWidgetMediator = new ShopWidgetMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
             }
-            facade.registerMediator(_mediator);
 
             _dataChangeWatcher = BindingUtils.bindSetter(onDataChanged, _mediator, "data");
 

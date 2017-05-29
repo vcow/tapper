@@ -32,6 +32,7 @@ package commands
 		override public function execute(notification:INotification):void
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
+
 			var file:File = File.applicationStorageDirectory;
 			file = file.resolvePath(Const.APP_NAME + ".state");
 			if (file.exists && !file.isDirectory)
@@ -50,6 +51,16 @@ package commands
 				}
 			}
 
+			file = File.applicationStorageDirectory;
+			file = file.resolvePath(Const.APP_NAME + ".addon");
+			if (file.exists && !file.isDirectory)
+			{
+				stream ||= new FileStream();
+				stream.open(file, FileMode.READ);
+				deserializeAddon(stream.readUTFBytes(stream.bytesAvailable));
+				stream.close();
+			}
+
 			if (!gameModel.isActive)
 			{
 				gameModel.isActive = true;
@@ -62,7 +73,7 @@ package commands
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 			try
 			{
-				var dataObject:Object = JSON.parse(data as String);
+				var dataObject:Object = JSON.parse(data);
 			}
 			catch (e:Error)
 			{
@@ -139,6 +150,11 @@ package commands
 			unit.ticks = dataObject.ticks;
 			unit.buyPrice = dataObject.buyPrice;
 			unit.active = dataObject.active;
+		}
+
+		private function deserializeAddon(data:String):void
+		{
+			var gameModel:GameModel = AppFacade(facade).gameModel;
 		}
 	}
 }

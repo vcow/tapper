@@ -2,7 +2,7 @@ package
 {
 	public class Const
 	{
-		public static const APP_NAME:String = "simjew";
+		public static const APP_NAME:String = "simdev";
 		public static const APP_VERSION:String = "1.0.0.0";
 
 		public static const ON_OK:uint = 1;
@@ -32,6 +32,7 @@ package
 		public static const STOP_GAME:String = "notifyStopGame";
 
 		public static const BUY:String = "notifyBuy";
+		public static const BUY_PACK:String = "notifyBuyPack";
 
 		public static const ACHIEVE:String = "notifyAchieve";
 

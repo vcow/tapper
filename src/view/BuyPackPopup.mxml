@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{new Quad(10, 10, 0x898989)}">
+    <f:layout>
+        <f:VerticalLayout gap="30" horizontalAlign="center" padding="20"/>
+    </f:layout>
+
+    <f:Label text="{title}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
+
+    <f:Label text="{description}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
+
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="20"/>
+        </f:layout>
+
+        <f:Button styleProvider="{StylesLibrary.messageBoxButtonStyleProvider}" label="Ok"
+                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"/>
+
+        <f:Button styleProvider="{StylesLibrary.messageBoxButtonStyleProvider}" label="Cancel"
+                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}"/>
+    </f:LayoutGroup>
+
+    <fx:Metadata>
+        [Event(name="close", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import resources.StylesLibrary;
+
+        import starling.display.Quad;
+        import starling.events.Event;
+
+        import vo.Pack;
+
+        [Bindable]
+        private var title:String;
+
+        [Bindable]
+        private var description:String;
+
+        public function set pack(value:Pack):void
+        {
+            if (value)
+            {
+                title = value.title;
+                description = value.description;
+            }
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

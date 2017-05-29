@@ -14,15 +14,13 @@ package commands
 
 		override public function execute(notification:INotification):void
 		{
-			var currentState:String;
 			switch (notification.getName())
 			{
 				case Const.POP:
-					currentState = _stack.length > 1 ? _stack.pop() : _stack[0];
+					if (_stack.length > 1) _stack.pop();
 					break;
 				case Const.POP_TO_ROOT:
-					currentState = _stack[0];
-					if (_stack.length > 1) _stack.slice(1, _stack.length - 1);
+					if (_stack.length > 1) _stack.splice(1, _stack.length - 1);
 					break;
 				case Const.SWITCH_TO:
 					if (!_lockStack)
@@ -33,9 +31,6 @@ package commands
 			}
 
 			var gameModel:GameModel = AppFacade(facade).gameModel;
-			if (gameModel.currentState != currentState)
-				throw Error("Screen stack is broken.");
-
 			var prevState:String = _stack[_stack.length - 1];
 			if (gameModel.currentState != prevState)
 			{

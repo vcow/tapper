@@ -44,20 +44,14 @@ package mediators
 		override public function onRegister():void
 		{
 			var shopWidget:ShopWidgetBase = getViewComponent() as ShopWidgetBase;
-			if (shopWidget)
-			{
-				shopWidget.addEventListener("goToShop", onGoToShop);
-				_lastMoney = Math.round(AppFacade(facade).gameModel.money);
-			}
+			shopWidget.addEventListener("goToShop", onGoToShop);
+			_lastMoney = Math.round(AppFacade(facade).gameModel.money);
 		}
 
 		override public function onRemove():void
 		{
 			var shopWidget:ShopWidgetBase = getViewComponent() as ShopWidgetBase;
-			if (shopWidget)
-			{
-				shopWidget.removeEventListener("goToShop", onGoToShop);
-			}
+			shopWidget.removeEventListener("goToShop", onGoToShop);
 		}
 
 		override public function handleNotification(notification:INotification):void
@@ -67,7 +61,7 @@ package mediators
 			switch (notification.getName())
 			{
 				case Const.UPDATE_MONEY:
-					if (shopWidget.stage) updateMoney(shopWidget, gameModel);
+					updateMoney(shopWidget, gameModel);
 					break;
 			}
 		}

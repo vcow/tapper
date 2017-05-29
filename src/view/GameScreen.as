@@ -48,8 +48,9 @@ package view
 			}
 			else
 			{
-				_mediator = new GameScreenLayerMediator(MEDIATOR_NAME, this);
-				facade.registerMediator(_mediator);
+				var mediator:GameScreenLayerMediator = new GameScreenLayerMediator(MEDIATOR_NAME, this);
+				facade.registerMediator(mediator);
+				_mediator = mediator;
 			}
 
 			addChild(DisplayObject(_view));

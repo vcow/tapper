@@ -38,12 +38,14 @@ package view
 				_mediator = facade.retrieveMediator(MEDIATOR_NAME) as GameScreenMediator;
 				facade.removeMediator(MEDIATOR_NAME);
 				_mediator.setViewComponent(this);
+				facade.registerMediator(_mediator);
 			}
 			else
 			{
-				_mediator = new GameScreenMediator(MEDIATOR_NAME, this);
+				var mediator:GameScreenMediator = new GameScreenMediator(MEDIATOR_NAME, this);
+				facade.registerMediator(mediator);
+				_mediator = mediator;
 			}
-			facade.registerMediator(_mediator);
 		}
 
 		override public function dispose():void

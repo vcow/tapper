@@ -151,7 +151,7 @@ package mediators
 
 		private function onBack(event:Event):void
 		{
-			sendNotification(Const.POP);
+			sendNotification(Const.POP_TO_ROOT);
 		}
 	}
 }

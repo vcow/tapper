@@ -61,7 +61,6 @@ package
 
 		private function drawProgress(ratio:Number):void
 		{
-			trace ("--- draw progress", ratio);
 			const barWidth:int = 200;
 			const barHeight:int = 6;
 			var progressWidth:int = ratio * barWidth;

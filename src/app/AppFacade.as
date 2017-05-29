@@ -1,6 +1,7 @@
 package app
 {
 	import commands.ActivateCommand;
+	import commands.BuyPackCommand;
 	import commands.BuyUnitCommand;
 	import commands.DeactivateCommand;
 	import commands.GameTapCommand;
@@ -24,6 +25,7 @@ package app
 	import proxy.AchievementsProxy;
 
 	import proxy.LevelsProxy;
+	import proxy.PacksProxy;
 
 	import proxy.UnitsProxy;
 
@@ -71,6 +73,7 @@ package app
 			registerCommand(Const.START_GAME, StartGameCommand);
 			registerCommand(Const.STOP_GAME, StopGameCommand);
 			registerCommand(Const.BUY, BuyUnitCommand);
+			registerCommand(Const.BUY_PACK, BuyPackCommand);
 			registerCommand(Const.ACHIEVE, GetAchievementCommand);
 			registerCommand(Const.LEVEL_UP_ACTION, LevelUpCommand);
 			registerCommand(Const.SET_SKIN_BRONZE_ACTION, SetSkinBronzeCommand);
@@ -92,10 +95,12 @@ package app
 			var unitsProxy:UnitsProxy = new UnitsProxy();
 			var levelsProxy:LevelsProxy = new LevelsProxy();
 			var achievementsProxy:AchievementsProxy = new AchievementsProxy();
+			var packsProxy:PacksProxy = new PacksProxy();
 
 			registerProxy(unitsProxy);
 			registerProxy(levelsProxy);
 			registerProxy(achievementsProxy);
+			registerProxy(packsProxy);
 
 			unitsProxy.setData(XML(new unitsConfig()));
 			levelsProxy.setData(XML(new levelsConfig()));

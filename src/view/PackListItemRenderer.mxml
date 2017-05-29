@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+                               backgroundSkin="{new Quad(10, 10, 0x000099)}" minWidth="500" minHeight="90">
+
+    <f:Label text="{title}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
+
+    <fx:Script><![CDATA[
+        import feathers.utils.touch.TapToTrigger;
+
+        import resources.StylesLibrary;
+
+        import starling.display.Quad;
+
+        import vo.Pack;
+
+        private var _trigger:TapToTrigger;
+
+        [Bindable]
+        private var title:String;
+
+        override public function set data(value:Object):void
+        {
+            super.data = value;
+            var pack:Pack = data as Pack;
+            if (pack)
+            {
+                title = pack.title;
+            }
+        }
+
+        override protected function initialize():void
+        {
+            super.initialize();
+            _trigger = new TapToTrigger(this);
+        }
+        ]]></fx:Script>
+</f:LayoutGroupListItemRenderer>

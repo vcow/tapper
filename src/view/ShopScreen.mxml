@@ -16,7 +16,7 @@
         <!-- Кнопка возврата -->
         <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_normal'))}"
                   downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
-                  triggered="{dispatchEventWith(BACK)}">
+                  triggered="{dispatchEventWith('back')}">
             <f:layoutData>
                 <f:AnchorLayoutData left="25" top="21"/>
             </f:layoutData>
@@ -53,13 +53,16 @@
         </f:LayoutGroup>
     </f:LayoutGroup>
 
+    <fx:Metadata>
+        [Event(name="back", type="starling.events.Event")]
+        [Event(name="buyUnit", type="starling.events.Event")]
+    </fx:Metadata>
+
     <fx:Script><![CDATA[
         import app.AppFacade;
 
         import feathers.data.ListCollection;
         import feathers.text.BitmapFontTextFormat;
-
-        import WindowManager;
 
         import mediators.ShopScreenMediator;
 
@@ -75,9 +78,6 @@
         import starling.textures.TextureAtlas;
 
         import vo.UnitInfo;
-
-        public static const BACK:String = "back";
-        public static const BUY_UNIT:String = "buyUnit";
 
         private static const INVALIDATION_FLAG_AUTOSCROLL:String = "autoscroll";
 
@@ -108,8 +108,9 @@
             }
             else
             {
-                _mediator = new ShopScreenMediator(MEDIATOR_NAME, this);
-                facade.registerMediator(_mediator);
+                var mediator:ShopScreenMediator = new ShopScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
             }
         }
 
@@ -204,7 +205,7 @@
 
             if (event.data == Const.ON_OK)
             {
-                dispatchEventWith(BUY_UNIT, false, popup.data);
+                dispatchEventWith("buyUnit", false, popup.data);
             }
         }
 

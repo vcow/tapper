@@ -39,8 +39,9 @@
             }
             else
             {
-                _mediator = new MainScreenMediator(MEDIATOR_NAME, this);
-                facade.registerMediator(_mediator);
+                var mediator:MainScreenMediator = new MainScreenMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
             }
 
             // Atlases

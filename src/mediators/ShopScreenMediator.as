@@ -37,8 +37,8 @@ package mediators
 			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
 			if (shopScreen)
 			{
-				shopScreen.addEventListener(ShopScreen.BACK, onBack);
-				shopScreen.addEventListener(ShopScreen.BUY_UNIT, onBuyUnit);
+				shopScreen.addEventListener("back", onBack);
+				shopScreen.addEventListener("buyUnit", onBuyUnit);
 
 				var gameModel:GameModel = AppFacade(facade).gameModel;
 
@@ -56,8 +56,8 @@ package mediators
 			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
 			if (shopScreen)
 			{
-				shopScreen.removeEventListener(ShopScreen.BACK, onBack);
-				shopScreen.removeEventListener(ShopScreen.BUY_UNIT, onBuyUnit);
+				shopScreen.removeEventListener("back", onBack);
+				shopScreen.removeEventListener("buyUnit", onBuyUnit);
 			}
 		}
 
