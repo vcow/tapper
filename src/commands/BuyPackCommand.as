@@ -62,6 +62,12 @@ package commands
 					sendNotification(Const.BUY, unitInfo);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
+				case "golden_fish_pack":
+					// Аквариум золотых рыбок, добавляется в виде лимитированного юнита
+					unitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("golden_fish");
+					sendNotification(Const.BUY, unitInfo);
+					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+					break;
 				case "portal":
 					// Портал добавляет мультипликатор юнитов в дополнениях
 					var gameModel:GameModel = AppFacade(facade).gameModel;

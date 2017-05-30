@@ -25,9 +25,9 @@ package proxy
 			if (!_packs)
 			{
 				_packs = new Vector.<Pack>();
-				addPack("silver_fish", 10);
-				addPack("golden_fish", 15);
-				addPack("silver_fish_pack", 30);
+				addPack("silver_fish", 15);
+				addPack("golden_fish", 30);
+				addPack("silver_fish_pack", 35);
 				addPack("golden_fish_pack", 50);
 				addPack("portal", 25);
 			}

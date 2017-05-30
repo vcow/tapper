@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.4.0</string>
+        <string>4.3.3</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/units_big.tps</string>
+        <string>C:/Work/research/mobile/tapper/assets/units_big.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -172,8 +172,6 @@
         <false/>
         <key>prependSmartFolderName</key>
         <false/>
-        <key>autodetectAnimations</key>
-        <true/>
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
@@ -208,6 +206,7 @@
             <key type="filename">graphics/units/big/foreman.png</key>
             <key type="filename">graphics/units/big/frs.png</key>
             <key type="filename">graphics/units/big/galaxy.png</key>
+            <key type="filename">graphics/units/big/golden_fish.png</key>
             <key type="filename">graphics/units/big/greens.png</key>
             <key type="filename">graphics/units/big/illegal.png</key>
             <key type="filename">graphics/units/big/imagemaker.png</key>
@@ -228,6 +227,7 @@
             <key type="filename">graphics/units/big/sect.png</key>
             <key type="filename">graphics/units/big/seller.png</key>
             <key type="filename">graphics/units/big/ship.png</key>
+            <key type="filename">graphics/units/big/silver_fish.png</key>
             <key type="filename">graphics/units/big/space_fleet.png</key>
             <key type="filename">graphics/units/big/tv.png</key>
             <key type="filename">graphics/units/big/universe.png</key>
