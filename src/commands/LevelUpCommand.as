@@ -13,7 +13,7 @@ package commands
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 			var level:int = int(notification.getBody()) || (gameModel.level + 1);
-			if (level != gameModel.level)
+			if (level > gameModel.level)
 			{
 				gameModel.level = level;
 				sendNotification(Const.UPDATE_LEVEL);

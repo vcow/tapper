@@ -9,6 +9,7 @@ package app
 	import commands.GetAchievementCommand;
 	import commands.LevelUpCommand;
 	import commands.NewGameCommand;
+	import commands.OverflowCommand;
 	import commands.PopCommand;
 	import commands.SetSkinBronzeCommand;
 	import commands.StartGameCommand;
@@ -86,6 +87,7 @@ package app
 			registerCommand(Const.UPDATE_TAPS, UpdateTapsCommand);
 			registerCommand(Const.UNIT_PURCHASED, UnitPurchasedCommand);
 			registerCommand(Const.UPDATE_ACTIVITY, UpdateActivityCommand);
+			registerCommand(Const.OVERFLOW, OverflowCommand);
 		}
 
 		override protected function initializeModel():void
