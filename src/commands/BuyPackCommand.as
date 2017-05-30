@@ -9,7 +9,10 @@ package commands
 
 	import proxy.UnitsProxy;
 
+	import resources.locale.LocaleManager;
+
 	import vo.AchievementInfo;
+	import vo.MessageBoxData;
 
 	import vo.Pack;
 	import vo.UnitInfo;
@@ -42,6 +45,8 @@ package commands
 					achievement.initializeNotifier(multitonKey);
 					sendNotification(Const.ACHIEVE, achievement);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+							LocaleManager.getInstance().getString("common", "message.x2"), null, Const.ON_OK));
 					break;
 				case "golden_fish":
 					// Золотая рыбка, профит выдается сразу в виде ачивки
@@ -55,6 +60,8 @@ package commands
 					achievement.initializeNotifier(multitonKey);
 					sendNotification(Const.ACHIEVE, achievement);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+							LocaleManager.getInstance().getString("common", "message.x3"), null, Const.ON_OK));
 					break;
 				case "silver_fish_pack":
 					// Аквариум серебряных рыбок, добавляется в виде лимитированного юнита
