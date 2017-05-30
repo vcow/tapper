@@ -27,6 +27,8 @@ package
 		public static const UPDATE_LEVEL:String = "notifyUpdateLevel";
 		public static const UPDATE_CURRENT_GAME:String = "notifyUpdateCurrentGame";
 		public static const UPDATE_ACTIVITY:String = "notifyUpdateActivity";
+		public static const UPDATE_ADDONS:String = "notifyUpdateAddons";
+		public static const UPDATE_MULTIPLIER:String = "notifyUpdateMultiplier";
 
 		public static const START_GAME:String = "notifyStartGame";
 		public static const STOP_GAME:String = "notifyStopGame";
@@ -48,6 +50,8 @@ package
 		public static const NEW_GAME:String = "notifyNewGame";
 
 		public static const OVERFLOW:String = "notifyOverflow";
+
+		public static const SAVE_ADDONS:String = "notifySaveAddons";
 
 		public function Const()
 		{

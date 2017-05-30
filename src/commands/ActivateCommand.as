@@ -7,6 +7,7 @@ package commands
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.utils.ByteArray;
 
 	import models.GameModel;
 
@@ -57,8 +58,11 @@ package commands
 			{
 				stream ||= new FileStream();
 				stream.open(file, FileMode.READ);
-				deserializeAddon(stream.readUTFBytes(stream.bytesAvailable));
+				var data:ByteArray = new ByteArray();
+				stream.readBytes(data);
+				deserializeAddon(data);
 				stream.close();
+				sendNotification(Const.UPDATE_ADDONS);
 			}
 
 			if (!gameModel.isActive)
@@ -151,9 +155,15 @@ package commands
 			unit.active = dataObject.active;
 		}
 
-		private function deserializeAddon(data:String):void
+		private function deserializeAddon(data:ByteArray):void
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
+			try {
+				gameModel.addonModel.deserialize(data);
+			}
+			catch (e:Error) {
+				gameModel.addonModel.reset();
+			}
 		}
 	}
 }

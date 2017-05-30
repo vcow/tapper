@@ -14,6 +14,7 @@ package models
 		private var _unitsById:Dictionary = new Dictionary();
 		private var _unitsByIndex:Dictionary = new Dictionary();
 		private var _topUnitIndex:int;
+		private var _godModeOn:Boolean;
 
 		public var tickCount:uint;
 		public var level:uint;
@@ -42,6 +43,16 @@ package models
 		{
 			if (value == _callbackId) throw Error("Wrong callback Id.");
 			_callbackId = value;
+		}
+
+		public function get godMode():Boolean
+		{
+			return addonModel.godMode > 0 && _godModeOn;
+		}
+
+		public function setGodMode(value:Boolean):void
+		{
+			_godModeOn = value;
 		}
 
 		public function get callbackId():uint

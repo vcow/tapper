@@ -11,6 +11,7 @@ package app
 	import commands.NewGameCommand;
 	import commands.OverflowCommand;
 	import commands.PopCommand;
+	import commands.SaveAddonsCommand;
 	import commands.SetSkinBronzeCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
@@ -19,6 +20,7 @@ package app
 	import commands.UpdateActivityCommand;
 	import commands.UpdateLevelCommand;
 	import commands.UpdateMoneyCommand;
+	import commands.UpdateMultiplierCommand;
 	import commands.UpdateTapsCommand;
 
 	import models.GameModel;
@@ -88,6 +90,8 @@ package app
 			registerCommand(Const.UNIT_PURCHASED, UnitPurchasedCommand);
 			registerCommand(Const.UPDATE_ACTIVITY, UpdateActivityCommand);
 			registerCommand(Const.OVERFLOW, OverflowCommand);
+			registerCommand(Const.UPDATE_MULTIPLIER, UpdateMultiplierCommand);
+			registerCommand(Const.SAVE_ADDONS, SaveAddonsCommand);
 		}
 
 		override protected function initializeModel():void

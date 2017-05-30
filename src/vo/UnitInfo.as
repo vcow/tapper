@@ -184,6 +184,9 @@ package vo
 						calculateRest();
 					}
 					break;
+				case Const.UPDATE_MULTIPLIER:
+					calculateRest();
+					break;
 				default:
 					throw Error("Unsupported update with " + notification.getName() + ".");
 			}

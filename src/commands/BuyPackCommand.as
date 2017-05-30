@@ -1,5 +1,9 @@
 package commands
 {
+	import app.AppFacade;
+
+	import models.GameModel;
+
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
@@ -58,11 +62,12 @@ package commands
 					sendNotification(Const.BUY, unitInfo);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
-				case "golden_fish_pack":
-					// Аквариум золотых рыбок, добавляется в виде лимитированного юнита
-					unitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("golden_fish");
-					sendNotification(Const.BUY, unitInfo);
-					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
+				case "portal":
+					// Портал добавляет мультипликатор юнитов в дополнениях
+					var gameModel:GameModel = AppFacade(facade).gameModel;
+					gameModel.addonModel.multiplier += 1;
+					sendNotification(Const.UPDATE_MULTIPLIER, gameModel.addonModel.multiplier);
+					sendNotification(Const.SAVE_ADDONS);
 					break;
 				default:
 					throw Error("Unsupported pack " + _pack.id + ".");
