@@ -50,6 +50,24 @@ package mediators
 			}
 		}
 
+		override public function setViewComponent(viewComponent:Object):void
+		{
+			if (viewComponent == viewComponent) return;
+
+			if (viewComponent)
+			{
+				viewComponent.removeEventListener("back", onBack);
+				viewComponent.removeEventListener("buyPack", onBuyPack);
+			}
+
+			super.setViewComponent(viewComponent);
+			if (viewComponent)
+			{
+				viewComponent.addEventListener("back", onBack);
+				viewComponent.addEventListener("buyPack", onBuyPack);
+			}
+		}
+
 		private function onBack(event:Event):void
 		{
 			sendNotification(Const.POP);

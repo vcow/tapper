@@ -79,6 +79,26 @@ package mediators
 			}
 		}
 
+		override public function setViewComponent(viewComponent:Object):void
+		{
+			if (viewComponent == viewComponent) return;
+
+			if (viewComponent)
+			{
+				viewComponent.removeEventListener(GameScreenViewBase.BACK, onBack);
+				viewComponent.removeEventListener(GameScreenViewBase.SHOP, onShop);
+				viewComponent.removeEventListener(GameScreenViewBase.TAP, onTap);
+			}
+
+			super.setViewComponent(viewComponent);
+			if (viewComponent)
+			{
+				viewComponent.addEventListener(GameScreenViewBase.BACK, onBack);
+				viewComponent.addEventListener(GameScreenViewBase.SHOP, onShop);
+				viewComponent.addEventListener(GameScreenViewBase.TAP, onTap);
+			}
+		}
+
 		override public function handleNotification(notification:INotification):void
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;

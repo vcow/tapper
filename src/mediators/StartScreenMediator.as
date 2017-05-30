@@ -49,6 +49,26 @@ package mediators
 			}
 		}
 
+		override public function setViewComponent(viewComponent:Object):void
+		{
+			if (viewComponent == viewComponent) return;
+
+			if (viewComponent)
+			{
+				viewComponent.removeEventListener("continueGame", onStart);
+				viewComponent.removeEventListener("newGame", onNewGame);
+				viewComponent.removeEventListener("openVip", onVip);
+			}
+
+			super.setViewComponent(viewComponent);
+			if (viewComponent)
+			{
+				viewComponent.addEventListener("continueGame", onStart);
+				viewComponent.addEventListener("newGame", onNewGame);
+				viewComponent.addEventListener("openVip", onVip);
+			}
+		}
+
 		private function onStart(event:Event):void
 		{
 			sendNotification(Const.SWITCH_TO, Const.STATE_GAME);

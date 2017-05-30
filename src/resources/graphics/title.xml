@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:7dd66cafa307ec3c1c763bc9343f4f64:a2846da075519ac419233f2a1b972224:b02a08e20f4cdce60483e65273ad1152$ -->
+<!-- $TexturePacker:SmartUpdate:37f6f5d69a4335aa4c3b6b6d09204119:a0fb8b8bd0e83057f661447c54b45572:b02a08e20f4cdce60483e65273ad1152$ -->
 <TextureAtlas imagePath="title.atf" width="2048" height="2048">
     <SubTexture name="back" x="1" y="1" width="576" height="1024"/>
     <SubTexture name="Layer 1-letters_000" x="579" y="1" width="419" height="154"/>
@@ -57,4 +57,6 @@
     <SubTexture name="progress_back" x="1" y="1027" width="386" height="360" frameX="-5" frameY="-5" frameWidth="396" frameHeight="370"/>
     <SubTexture name="progress_bar" x="1" y="1966" width="386" height="25" frameX="-5" frameY="-5" frameWidth="396" frameHeight="35"/>
     <SubTexture name="progress_border" x="1998" y="1" rotated="true" width="35" height="396"/>
+    <SubTexture name="settings_down" x="1842" y="843" width="59" height="59" frameX="-2" frameY="-2" frameWidth="64" frameHeight="64"/>
+    <SubTexture name="settings_normal" x="313" y="1690" width="59" height="59" frameX="-2" frameY="-2" frameWidth="64" frameHeight="64"/>
 </TextureAtlas>

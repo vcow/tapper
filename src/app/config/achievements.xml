@@ -56,7 +56,7 @@
 		</rewards>
 		<conditions>
 			<level max="5"/>
-			<unit min="1">frs</unit>
+			<top min="1">oon</top>
 		</conditions>
 	</achievement>
 	<achievement id="levelup7">

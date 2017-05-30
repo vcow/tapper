@@ -68,6 +68,24 @@ package mediators
 			}
 		}
 
+		override public function setViewComponent(viewComponent:Object):void
+		{
+			if (viewComponent == viewComponent) return;
+
+			if (viewComponent)
+			{
+				viewComponent.removeEventListener("back", onBack);
+				viewComponent.removeEventListener("buyUnit", onBuyUnit);
+			}
+
+			super.setViewComponent(viewComponent);
+			if (viewComponent)
+			{
+				viewComponent.addEventListener("back", onBack);
+				viewComponent.addEventListener("buyUnit", onBuyUnit);
+			}
+		}
+
 		override public function handleNotification(notification:INotification):void
 		{
 			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;

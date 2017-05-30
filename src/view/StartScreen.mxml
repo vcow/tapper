@@ -44,6 +44,13 @@
         </f:LayoutGroup>
     </f:LayoutGroup>
 
+    <f:Button id="settingsButton" styleProvider="{StylesLibrary.settingsButtonStyleProvider}"
+              triggered="onSettings()" alpha="0" isEnabled="false">
+        <f:layoutData>
+            <f:AnchorLayoutData right="13" bottom="11"/>
+        </f:layoutData>
+    </f:Button>
+
     <fx:Metadata>
         [Event(name="continueGame", type="starling.events.Event")]
         [Event(name="newGame", type="starling.events.Event")]
@@ -62,6 +69,7 @@
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
+        import resources.StylesLibrary;
 
         import starling.animation.Tween;
         import starling.core.Starling;
@@ -184,11 +192,28 @@
             {
                 _buttonGroup.touchable = true;
             }
+
+            settingsButton.isEnabled = true;
+            tween = new Tween(settingsButton, 0.5);
+            tween.fadeTo(1.0);
+            Starling.juggler.add(tween);
         }
 
         private function onButtonClick(event:starling.events.Event):void
         {
             dispatchEventWith(event.data.toString());
+        }
+
+        private function onSettings():void
+        {
+            var settingsPopup:SettingsPopup = new SettingsPopup();
+            settingsPopup.addEventListener(starling.events.Event.CLOSE, function (event:starling.events.Event):void
+            {
+                settingsPopup.removeEventListener(starling.events.Event.CLOSE, arguments.callee);
+                settingsButton.isEnabled = true;
+            });
+            WindowManager.getInstance().openWindow(settingsPopup, true);
+            settingsButton.isEnabled = false;
         }
         ]]></fx:Script>
 </f:LayoutGroup>

@@ -54,6 +54,22 @@ package mediators
 			shopWidget.removeEventListener("goToShop", onGoToShop);
 		}
 
+		override public function setViewComponent(viewComponent:Object):void
+		{
+			if (viewComponent == viewComponent) return;
+
+			if (viewComponent)
+			{
+				viewComponent.removeEventListener("goToShop", onGoToShop);
+			}
+
+			super.setViewComponent(viewComponent);
+			if (viewComponent)
+			{
+				viewComponent.addEventListener("goToShop", onGoToShop);
+			}
+		}
+
 		override public function handleNotification(notification:INotification):void
 		{
 			var shopWidget:ShopWidgetBase = getViewComponent() as ShopWidgetBase;

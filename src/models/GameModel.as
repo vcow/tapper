@@ -45,12 +45,12 @@ package models
 			_callbackId = value;
 		}
 
-		public function get godMode():Boolean
+		public function get godMode():int
 		{
-			return addonModel.godMode > 0 && _godModeOn;
+			return _godModeOn ? addonModel.godMode : 0;
 		}
 
-		public function setGodMode(value:Boolean):void
+		public function switchGodMode(value:Boolean):void
 		{
 			_godModeOn = value;
 		}
