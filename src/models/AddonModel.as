@@ -4,6 +4,7 @@ package models
 
 	public class AddonModel
 	{
+		private static const VERSION:uint = 2;
 		public var multiplier:int;
 		public var godMode:int;
 		public const rooms:Vector.<String> = new Vector.<String>();
@@ -24,20 +25,23 @@ package models
 		public function serialize():ByteArray
 		{
 			var result:ByteArray = new ByteArray();
+			result.writeUnsignedInt(VERSION);
 			var flags:uint = 0;
 			flags |= godMode & 0x03;
 			flags |= (multiplier & 0xff) << 2;
 			result.writeUnsignedInt(flags);
+			flags = 0;
 			for each (var room:String in rooms)
 			{
 				switch (room)
 				{
-					case SkinType.WOOD: result.writeUTFBytes("w"); break;
-					case SkinType.BRONZE: result.writeUTFBytes("b"); break;
-					case SkinType.SILVER: result.writeUTFBytes("s"); break;
-					case SkinType.GOLD: result.writeUTFBytes("g"); break;
+					case SkinType.WOOD: flags |= 0x01; break;
+					case SkinType.BRONZE: flags |= 0x02; break;
+					case SkinType.SILVER: flags |= 0x04; break;
+					case SkinType.GOLD: flags |= 0x08; break;
 				}
 			}
+			result.writeUnsignedInt(flags);
 			result.position = 0;
 			return result;
 		}
@@ -45,19 +49,22 @@ package models
 		public function deserialize(data:ByteArray):void
 		{
 			data.position = 0;
-			var flags:uint = data.readUnsignedInt();
-			godMode = flags & 0x03;
-			multiplier = (flags >> 2) & 0xff;
-			rooms.length = 0;
-			while(data.bytesAvailable)
+			if (data.readUnsignedInt() != VERSION)
 			{
-				switch (data.readUTFBytes(1))
-				{
-					case "w": rooms.push(SkinType.WOOD); break;
-					case "b": rooms.push(SkinType.BRONZE); break;
-					case "s": rooms.push(SkinType.SILVER); break;
-					case "g": rooms.push(SkinType.GOLD); break;
-				}
+				reset();
+				trace ("Wrong add-on data version.");
+			}
+			else
+			{
+				var flags:uint = data.readUnsignedInt();
+				godMode = flags & 0x03;
+				multiplier = (flags >> 2) & 0xff;
+				rooms.length = 0;
+				flags = data.readUnsignedInt();
+				if ((flags & 0x01) != 0) rooms.push(SkinType.WOOD);
+				if ((flags & 0x02) != 0) rooms.push(SkinType.BRONZE);
+				if ((flags & 0x04) != 0) rooms.push(SkinType.SILVER);
+				if ((flags & 0x08) != 0) rooms.push(SkinType.GOLD);
 			}
 		}
 	}

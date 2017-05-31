@@ -24,6 +24,8 @@ package models
 		public var isActive:Boolean;
 		public var tapsTotal:uint;
 
+		public var lastActivityTimestamp:int;
+
 		private static const LIMIT:Number = 999999999999.0;
 
 		public const addonModel:AddonModel = new AddonModel();

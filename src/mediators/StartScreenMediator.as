@@ -27,6 +27,11 @@ package mediators
 			return AppFacade(facade).gameModel.hasCurrentGame;
 		}
 
+		override public function listNotificationInterests():Array
+		{
+			return _interests;
+		}
+
 		override public function onRegister():void
 		{
 			var startScreen:StartScreen = getViewComponent() as StartScreen;

@@ -2,6 +2,8 @@ package commands
 {
 	import app.AppFacade;
 
+	import flash.utils.getTimer;
+
 	import models.GameModel;
 	import models.ProfitInfo;
 	import vo.Unit;
@@ -13,6 +15,10 @@ package commands
 		override public function execute(notification:INotification):void
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
+			if (!gameModel.isStarted)
+				sendNotification(Const.START_GAME);
+			else
+				gameModel.lastActivityTimestamp = getTimer();
 
 			gameModel.tapsTotal++;
 			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
