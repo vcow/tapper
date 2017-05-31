@@ -2,16 +2,39 @@ package commands
 {
 	import app.AppFacade;
 
+	import flash.media.Sound;
+
 	import flash.utils.getTimer;
 
 	import models.GameModel;
 	import models.ProfitInfo;
+
+	import resources.AtlasLibrary;
+
+	import starling.utils.AssetManager;
+
 	import vo.Unit;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
+
 	public class GameTapCommand extends CalcProfitCommandBase
 	{
+		private static var _coinSounds:Vector.<Sound>;
+		private static function get coinSounds():Vector.<Sound>
+		{
+			if (!_coinSounds)
+			{
+				var manager:AssetManager = AtlasLibrary.getInstance().manager;
+				_coinSounds = new Vector.<Sound>();
+				for (var i:int = 1; i <= 6; i++) _coinSounds.push(manager.getSound("coin" + i));
+			}
+			return _coinSounds;
+		}
+
+		private static var _lastCoinSound:int;
+		private static var _soundCtr:int;
+
 		override public function execute(notification:INotification):void
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
@@ -36,7 +59,16 @@ package commands
 			}
 
 			if (calcProfitList(profitList, 1))
+			{
 				sendNotification(Const.UPDATE_MONEY, gameModel.money);
+
+				if (gameModel.lastActivityTimestamp - _lastCoinSound >= 500)
+				{
+					_lastCoinSound = gameModel.lastActivityTimestamp;
+					if (_soundCtr > 15) _soundCtr = Math.random() * _coinSounds.length;
+					SoundManager.getInstance().playSound(coinSounds[_soundCtr++ % coinSounds.length]);
+				}
+			}
 		}
 	}
 }

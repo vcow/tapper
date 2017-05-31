@@ -6,6 +6,8 @@ package commands
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
+	import resources.AtlasLibrary;
+
 	import vo.Unit;
 	import vo.UnitInfo;
 
@@ -34,6 +36,8 @@ package commands
 				sendNotification(Const.UNIT_PURCHASED, unit);
 				sendNotification(Const.UPDATE_MONEY, gameModel.money);
 				sendNotification(Const.UPDATE_UNITS_LIST);
+
+				SoundManager.getInstance().playSound(AtlasLibrary.getInstance().manager.getSound("buy"));
 			}
 		}
 	}

@@ -197,6 +197,8 @@
             tween = new Tween(settingsButton, 0.5);
             tween.fadeTo(1.0);
             Starling.juggler.add(tween);
+
+            SoundManager.getInstance().playMusic(AtlasLibrary.getInstance().manager.getSound("title"), false, false);
         }
 
         private function onButtonClick(event:starling.events.Event):void
