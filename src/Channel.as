@@ -13,6 +13,7 @@ package
 	{
 		private var _type:String;
 
+		private var _sound:Sound;
 		private var _soundChannel:SoundChannel;
 		private var _soundTransform:SoundTransform;
 		private var _loops:int;
@@ -31,29 +32,38 @@ package
 		{
 			if (_soundChannel) throw Error("Channel already played.");
 			volume = isNaN(volume) ? SoundManager.getInstance().getVolume(type) : volume;
+			_sound = sound;
 			_soundTransform = new SoundTransform(volume);
-			_soundChannel = sound.play(startTime, loops, _soundTransform);
+			_soundChannel = _sound.play(startTime, 1, _soundTransform);
 			_loops = loops;
-			if (_loops > 0)
-				_soundChannel.addEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+			_soundChannel.addEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
 		}
 
 		public function stop():void
 		{
 			if (!_soundChannel) throw Error("Can't stop nonexistent sound.");
-			if (_loops > 0)
-			{
-				_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
-				_loops = 0;
-			}
+			_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+
 			_soundChannel.stop();
+			_sound = null;
 			_soundChannel = null;
 			_soundTransform = null;
 		}
 
 		private function onComplete(event:flash.events.Event):void
 		{
-			dispatchEventWith(starling.events.Event.COMPLETE);
+			--_loops;
+			if (_loops <= 0)
+			{
+				dispatchEventWith(starling.events.Event.COMPLETE);
+			}
+			else
+			{
+				_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+				_soundChannel.stop();
+				_soundChannel = _sound.play(0, 1, _soundTransform);
+				_soundChannel.addEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+			}
 		}
 
 		public function set volume(value:Number):void

@@ -72,7 +72,8 @@
             }
 
             // Sound
-            assets = ["buy", "coin1", "coin2", "coin3", "coin4", "coin5", "coin6", "main", "shop", "title"];
+            assets = ["buy", "coin1", "coin2", "coin3", "coin4", "coin5", "coin6", "main", "shop",
+                "title", "wooden_sw_open", "click1", "click2", "click3"];
             for each (asset in assets)
             {
                 file = File.applicationDirectory.resolvePath("sound" + File.separator + asset + ".mp3");

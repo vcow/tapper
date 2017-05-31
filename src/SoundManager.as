@@ -90,7 +90,7 @@ package
 			channel.stop();
 		}
 
-		public function playSound(sound:Sound, exclusive:Boolean = false):void
+		public function playSound(sound:Sound, exclusive:Boolean = false):Channel
 		{
 			if (exclusive)
 			{
@@ -102,15 +102,24 @@ package
 			channel.play(sound, 0, 1, getVolume(SOUND));
 			channel.addEventListener(Event.COMPLETE, onSoundComplete);
 			_soundChannels.push(channel);
+			return channel;
 		}
 
 		private function onSoundComplete(event:Event):void
 		{
 			var channel:Channel = Channel(event.target);
 			channel.removeEventListener(Event.COMPLETE, onSoundComplete);
-			channel.stop();
+			stopChannel(channel);
+		}
+
+		public function stopChannel(channel:Channel):void
+		{
 			var index:int = _soundChannels.indexOf(channel);
-			if (index != -1) _soundChannels.splice(index, 1);
+			if (index != -1)
+			{
+				_soundChannels.splice(index, 1);
+				channel.stop();
+			}
 		}
 	}
 }

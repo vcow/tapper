@@ -9,12 +9,17 @@
     </fx:Declarations>
 
     <fx:Script><![CDATA[
+        import resources.AtlasLibrary;
+
         import starling.animation.Transitions;
         import starling.animation.Tween;
         import starling.core.Starling;
         import starling.display.DisplayObject;
+        import starling.events.Event;
 
         import vo.UnitInfo;
+
+        private var _soundChannel:Channel;
 
         override protected function onDataChanged(data:UnitInfo):void
         {
@@ -73,6 +78,25 @@
                 addChild(widgetView);
                 _isActive = true;
             }
+
+            if (this.stage)
+            {
+                var soundManager:SoundManager = SoundManager.getInstance();
+                if (_soundChannel)
+                {
+                    _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                    soundManager.stopChannel(_soundChannel);
+                }
+                _soundChannel = soundManager.playSound(AtlasLibrary.getInstance().manager.getSound("wooden_sw_open"));
+                _soundChannel.addEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+            }
+        }
+
+        private function onSoundComplete(event:starling.events.Event):void
+        {
+            _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+            _soundChannel = null;
+
         }
 
         override protected function get slider():starling.display.DisplayObject
@@ -82,6 +106,13 @@
 
         override public function dispose():void
         {
+            if (_soundChannel)
+            {
+                _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                SoundManager.getInstance().stopChannel(_soundChannel);
+                _soundChannel = null;
+            }
+
             widgetView.dispose();
             super.dispose();
         }
@@ -91,6 +122,13 @@
             Starling.juggler.removeTweens(widgetView);
             widgetView.removeFromParent();
             _isActive = false;
+
+            if (_soundChannel)
+            {
+                _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                SoundManager.getInstance().stopChannel(_soundChannel);
+                _soundChannel = null;
+            }
         }
         ]]></fx:Script>
 </view:ShopWidgetBase>
