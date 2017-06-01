@@ -81,7 +81,7 @@
                 assetManager.enqueueWithName(file, asset);
             }
 
-            AtlasLibrary.getInstance().manager.loadQueue(onLoadAssets);
+            assetManager.loadQueue(onLoadAssets);
         }
 
         private function onLoadAssets(ratio:Number):void

@@ -4,6 +4,8 @@ package mediators
 
 	import feathers.data.ListCollection;
 
+	import flash.media.Sound;
+
 	import models.GameModel;
 	import models.LevelInfo;
 
@@ -21,7 +23,8 @@ package mediators
 
 	public class GameScreenMediator extends BindableMediator
 	{
-		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST, Const.UPDATE_LEVEL];
+		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST,
+			Const.UPDATE_LEVEL, Const.PLAY_GAME_SOUND];
 
 		private var _money:Number = 0;
 		private var _unitsList:ListCollection;
@@ -115,6 +118,23 @@ package mediators
 				case Const.UPDATE_LEVEL:
 					updateLevel();
 					break;
+				case Const.PLAY_GAME_SOUND:
+					var sound:Sound = notification.getBody() as Sound;
+					if (sound)
+					{
+						var gameScreen:GameScreenViewBase = getViewComponent() as GameScreenViewBase;
+						var onPlayGameSound:Function = function (event:Event):void
+						{
+							if (event)
+								event.target.removeEventListener(Event.ADDED_TO_STAGE, onPlayGameSound);
+							var soundManager:SoundManager = SoundManager.getInstance();
+							soundManager.stopAllSounds(true);
+							soundManager.playSound(sound);
+						};
+						if (gameScreen.stage) onPlayGameSound(null);
+						else gameScreen.addEventListener(Event.ADDED_TO_STAGE, onPlayGameSound);
+					}
+					break;
 			}
 		}
 
@@ -145,7 +165,7 @@ package mediators
 		[Bindable(event="levelChanged")]
 		public function get levelIcon():Texture
 		{
-			return _currentLevel ? atlasStateIcon.getTexture(_currentLevel.iconId) : null;
+			return _currentLevel ? atlasStateIcon.getTexture(_currentLevel.assetId) : null;
 		}
 
 		private function updateLevel():void

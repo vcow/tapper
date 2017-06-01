@@ -27,7 +27,7 @@
 		<conditions>
 			<money min="100000"/>
 			<level min="2" max="2"/>
-			<top min="3">official</top>
+			<top min="2">official</top>
 		</conditions>
 	</achievement>
 	<achievement id="levelup4">
@@ -37,7 +37,7 @@
 		<conditions>
 			<money min="3000000"/>
 			<level min="3" max="3"/>
-			<top min="3">deputy</top>
+			<top min="1">deputy</top>
 		</conditions>
 	</achievement>
 	<achievement id="levelup5">

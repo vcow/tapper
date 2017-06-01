@@ -2,10 +2,20 @@ package commands
 {
 	import app.AppFacade;
 
+	import flash.filesystem.File;
+	import flash.media.Sound;
+
 	import models.GameModel;
+	import models.LevelInfo;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
+
+	import proxy.LevelsProxy;
+
+	import resources.AtlasLibrary;
+
+	import starling.utils.AssetManager;
 
 	public class LevelUpCommand extends SimpleCommand
 	{
@@ -17,6 +27,22 @@ package commands
 			{
 				gameModel.level = level;
 				sendNotification(Const.UPDATE_LEVEL);
+
+				var levelInfo:LevelInfo = LevelsProxy(facade.retrieveProxy(LevelsProxy.NAME)).getLevel(level);
+				var file:File = File.applicationDirectory.resolvePath("sound" + File.separator + levelInfo.assetId + ".mp3");
+				if (file.exists)
+				{
+					var assetManager:AssetManager = AtlasLibrary.getInstance().manager;
+					assetManager.enqueueWithName(file, levelInfo.assetId);
+					assetManager.loadQueue(function (ratio:Number):void
+					{
+						if (ratio >= 1.0)
+						{
+							var sound:Sound = assetManager.getSound(levelInfo.assetId);
+							if (sound) sendNotification(Const.PLAY_GAME_SOUND, sound);
+						}
+					});
+				}
 			}
 		}
 	}

@@ -53,6 +53,8 @@ package
 
 		public static const SAVE_ADDONS:String = "notifySaveAddons";
 
+		public static const PLAY_GAME_SOUND:String = "playGameSound";
+
 		public function Const()
 		{
 			throw Error("Const is a static class.");

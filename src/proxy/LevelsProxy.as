@@ -54,7 +54,7 @@ package proxy
 		{
 			for (var i:int = 0, l:int = _levels.length; i < l; i++)
 			{
-				if (_levels[i].iconId == id)
+				if (_levels[i].assetId == id)
 					return _levels[i];
 			}
 			return null;

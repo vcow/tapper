@@ -124,12 +124,9 @@ package
 			return _muteSounds;
 		}
 
-		public function playSound(sound:Sound, exclusive:Boolean = false):Channel
+		public function playSound(sound:Sound):Channel
 		{
 			if (_muteSounds) return null;
-
-			if (exclusive) stopAllSounds(true);
-
 			var channel:Channel = new Channel(SOUND);
 			channel.play(sound, 0, 1, getVolume(SOUND));
 			channel.addEventListener(Event.COMPLETE, onSoundComplete);

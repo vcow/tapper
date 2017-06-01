@@ -5,7 +5,7 @@ package models
 	public class LevelInfo
 	{
 		private var _id:int;
-		private var _iconId:String;
+		private var _assetId:String;
 		private var _title:String;
 		private var _description:String;
 
@@ -13,14 +13,14 @@ package models
 		{
 			var locale:LocaleManager = LocaleManager.getInstance();
 			_id = int(src.@id);
-			_iconId = src.@icon;
+			_assetId = src.@asset;
 			_title = locale.getString('levels', src.@title) || src.@title;
 			_description = locale.getString('levels', src.@description) || src.@description;
 		}
 
-		public function get iconId():String
+		public function get assetId():String
 		{
-			return _iconId;
+			return _assetId;
 		}
 
 		public function get id():int

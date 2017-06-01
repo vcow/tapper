@@ -115,7 +115,13 @@
             Starling.juggler.removeTweens(widgetView);
             widgetView.removeFromParent();
             _isActive = false;
-            SoundManager.getInstance().stopAllSounds(true);
+
+            if (_soundChannel)
+            {
+                _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                SoundManager.getInstance().stopSound(_soundChannel);
+                _soundChannel = null;
+            }
         }
         ]]></fx:Script>
 </view:ShopWidgetBase>
