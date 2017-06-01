@@ -85,10 +85,10 @@
                 if (_soundChannel)
                 {
                     _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
-                    soundManager.stopChannel(_soundChannel);
+                    soundManager.stopSound(_soundChannel);
                 }
                 _soundChannel = soundManager.playSound(AtlasLibrary.getInstance().manager.getSound("wooden_sw_open"));
-                _soundChannel.addEventListener(starling.events.Event.COMPLETE, onSoundComplete);
+                if (_soundChannel) _soundChannel.addEventListener(starling.events.Event.COMPLETE, onSoundComplete);
             }
         }
 
@@ -106,13 +106,6 @@
 
         override public function dispose():void
         {
-            if (_soundChannel)
-            {
-                _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
-                SoundManager.getInstance().stopChannel(_soundChannel);
-                _soundChannel = null;
-            }
-
             widgetView.dispose();
             super.dispose();
         }
@@ -122,13 +115,7 @@
             Starling.juggler.removeTweens(widgetView);
             widgetView.removeFromParent();
             _isActive = false;
-
-            if (_soundChannel)
-            {
-                _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
-                SoundManager.getInstance().stopChannel(_soundChannel);
-                _soundChannel = null;
-            }
+            SoundManager.getInstance().stopAllSounds(true);
         }
         ]]></fx:Script>
 </view:ShopWidgetBase>

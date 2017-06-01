@@ -17,6 +17,7 @@ package
 		private var _soundChannel:SoundChannel;
 		private var _soundTransform:SoundTransform;
 		private var _loops:int;
+		private var _restoreStartTime:Number = 0;
 
 		public function Channel(type:String)
 		{
@@ -28,26 +29,56 @@ package
 			return _type;
 		}
 
-		public function play(sound:Sound, startTime:Number = 0, loops:int = 1, volume:Number = NaN):void
+		public function play(sound:Sound = null, startTime:Number = NaN, loops:int = 1, volume:Number = NaN):void
 		{
-			if (_soundChannel) throw Error("Channel already played.");
+			if (!_sound && !sound) return;
+			if (_soundChannel)
+			{
+				_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+				_soundChannel.stop();
+			}
 			volume = isNaN(volume) ? SoundManager.getInstance().getVolume(type) : volume;
-			_sound = sound;
+			startTime = isNaN(startTime) ? _restoreStartTime : startTime;
+			_restoreStartTime = 0;
+			_sound = sound || _sound;
 			_soundTransform = new SoundTransform(volume);
 			_soundChannel = _sound.play(startTime, 1, _soundTransform);
 			_loops = loops;
 			_soundChannel.addEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
 		}
 
+		public function pause(sound:Sound = null, startTime:Number = 0, loops:int = 1, volume:Number = NaN):void
+		{
+			if (!_sound && !sound) return;
+			if (_soundChannel)
+			{
+				_restoreStartTime = _soundChannel.position;
+				_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+				_soundChannel.stop();
+				_soundChannel = null;
+			}
+			else
+			{
+				_restoreStartTime = 0;
+			}
+			_sound = sound || _sound;
+		}
+
 		public function stop():void
 		{
-			if (!_soundChannel) throw Error("Can't stop nonexistent sound.");
-			_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
-
-			_soundChannel.stop();
+			if (_soundChannel)
+			{
+				_soundChannel.removeEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
+				_soundChannel.stop();
+				_soundChannel = null;
+			}
 			_sound = null;
-			_soundChannel = null;
 			_soundTransform = null;
+		}
+
+		public function get isPlayed():Boolean
+		{
+			return _soundChannel && _loops > 0;
 		}
 
 		private function onComplete(event:flash.events.Event):void

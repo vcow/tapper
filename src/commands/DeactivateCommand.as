@@ -36,6 +36,10 @@ package commands
 				gameModel.isActive = false;
 				sendNotification(Const.UPDATE_ACTIVITY, false);
 			}
+
+			var soundManager:SoundManager = SoundManager.getInstance();
+			soundManager.muteMusic = true;
+			soundManager.muteSounds = true;
 		}
 
 		private function serializeGameModel():String

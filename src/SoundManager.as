@@ -8,13 +8,16 @@ package
 
 	public class SoundManager
 	{
-		private static const MUSIC:String = "music";
-		private static const SOUND:String = "sound";
+		public static const MUSIC:String = "music";
+		public static const SOUND:String = "sound";
 
 		private static var _instance:SoundManager;
 
 		private var _musicChannel:Channel;
 		private var _soundChannels:Vector.<Channel> = new Vector.<Channel>();
+
+		private var _muteMusic:Boolean;
+		private var _muteSounds:Boolean;
 
 		private var _musicVolume:Number = 1.0;
 		private var _soundVolume:Number = 1.0;
@@ -47,7 +50,7 @@ package
 			if (_musicChannel)
 			{
 				Starling.juggler.removeTweens(_musicChannel);
-				if (fade)
+				if (fade && !_muteMusic)
 				{
 					var tween:Tween = new Tween(_musicChannel, 0.7);
 					tween.animate("volume", 0);
@@ -71,7 +74,7 @@ package
 					position = Math.floor(sec * Math.random()) * 1000.0;
 				}
 				_musicChannel = new Channel(MUSIC);
-				if (fade)
+				if (fade && !_muteMusic)
 				{
 					_musicChannel.play(sound, position, int.MAX_VALUE, 0);
 					tween = new Tween(_musicChannel, 0.7);
@@ -80,7 +83,10 @@ package
 				}
 				else
 				{
-					_musicChannel.play(sound, position, int.MAX_VALUE);
+					if (_muteMusic)
+						_musicChannel.pause(sound, position, int.MAX_VALUE);
+					else
+						_musicChannel.play(sound, position, int.MAX_VALUE);
 				}
 			}
 		}
@@ -90,15 +96,41 @@ package
 			channel.stop();
 		}
 
+		public function set muteMusic(value:Boolean):void
+		{
+			if (value == _muteMusic) return;
+			_muteMusic = value;
+			if (_musicChannel)
+			{
+				if (_muteMusic) _musicChannel.pause();
+				else _musicChannel.play();
+			}
+		}
+
+		public function get muteMusic():Boolean
+		{
+			return _muteMusic;
+		}
+
+		public function set muteSounds(value:Boolean):void
+		{
+			if (value == _muteSounds) return;
+			_muteSounds = value;
+			if (_muteSounds) stopAllSounds(true);
+		}
+
+		public function get muteSound():Boolean
+		{
+			return _muteSounds;
+		}
+
 		public function playSound(sound:Sound, exclusive:Boolean = false):Channel
 		{
-			if (exclusive)
-			{
-				for each (var channel:Channel in _soundChannels) channel.stop();
-				_soundChannels.length = 0;
-			}
+			if (_muteSounds) return null;
 
-			channel = new Channel(SOUND);
+			if (exclusive) stopAllSounds(true);
+
+			var channel:Channel = new Channel(SOUND);
 			channel.play(sound, 0, 1, getVolume(SOUND));
 			channel.addEventListener(Event.COMPLETE, onSoundComplete);
 			_soundChannels.push(channel);
@@ -107,19 +139,24 @@ package
 
 		private function onSoundComplete(event:Event):void
 		{
-			var channel:Channel = Channel(event.target);
-			channel.removeEventListener(Event.COMPLETE, onSoundComplete);
-			stopChannel(channel);
+			stopSound(Channel(event.target));
 		}
 
-		public function stopChannel(channel:Channel):void
+		public function stopSound(channel:Channel, dispatchComplete:Boolean = false):void
 		{
 			var index:int = _soundChannels.indexOf(channel);
 			if (index != -1)
 			{
 				_soundChannels.splice(index, 1);
+				channel.removeEventListener(Event.COMPLETE, onSoundComplete);
 				channel.stop();
+				if (dispatchComplete) channel.dispatchEventWith(Event.COMPLETE);
 			}
+		}
+
+		public function stopAllSounds(dispatchComplete:Boolean = false):void
+		{
+			for each (var channel:Channel in _soundChannels) stopSound(channel, dispatchComplete);
 		}
 	}
 }

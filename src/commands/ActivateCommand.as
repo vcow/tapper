@@ -70,6 +70,10 @@ package commands
 				gameModel.isActive = true;
 				sendNotification(Const.UPDATE_ACTIVITY, true);
 			}
+
+			var soundManager:SoundManager = SoundManager.getInstance();
+			soundManager.muteMusic = gameModel.muteMusic;
+			soundManager.muteSounds = gameModel.muteSound;
 		}
 
 		private function deserializeGameModel(data:String):void
