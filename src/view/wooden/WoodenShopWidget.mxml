@@ -96,7 +96,6 @@
         {
             _soundChannel.removeEventListener(starling.events.Event.COMPLETE, onSoundComplete);
             _soundChannel = null;
-
         }
 
         override protected function get slider():starling.display.DisplayObject

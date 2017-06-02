@@ -39,7 +39,7 @@ package
 			}
 			volume = isNaN(volume) ? SoundManager.getInstance().getVolume(type) : volume;
 			startTime = isNaN(startTime) ? _restoreStartTime : startTime;
-			_restoreStartTime = 0;
+			_restoreStartTime = isNaN(startTime) ? 0 : startTime;
 			_sound = sound || _sound;
 			_soundTransform = new SoundTransform(volume);
 			_soundChannel = _sound.play(startTime, 1, _soundTransform);
@@ -101,7 +101,7 @@ package
 		{
 			if (!_soundTransform || value == _soundTransform.volume) return;
 			_soundTransform.volume = value;
-			_soundChannel.soundTransform = _soundTransform;
+			if (_soundChannel) _soundChannel.soundTransform = _soundTransform;
 		}
 
 		public function get volume():Number

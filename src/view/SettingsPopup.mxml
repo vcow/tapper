@@ -1,11 +1,36 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{new Image(atlas.getTexture('back'))}"
+               maxWidth="505" maxHeight="504">
     <f:layout>
-        <f:VerticalLayout gap="30"/>
+        <f:AnchorLayout/>
     </f:layout>
 
-    <f:Button label="Back" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              triggered="{dispatchEventWith(starling.events.Event.CLOSE)}"/>
+    <f:LayoutGroup>
+        <f:layout>
+            <f:VerticalLayout gap="5" horizontalAlign="center" verticalAlign="middle"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData left="30" right="30" top="94" bottom="110"/>
+        </f:layoutData>
+
+        <f:LayoutGroup>
+            <f:layout>
+                <f:HorizontalLayout gap="20" verticalAlign="middle"/>
+            </f:layout>
+
+            <f:Slider id="soundSlider" styleProvider="{StylesLibrary.settingsSliderStyleProvider}"
+                      minimum="0" maximum="1.0" value="0.5"/>
+        </f:LayoutGroup>
+    </f:LayoutGroup>
+
+    <f:Button defaultSkin="{new Image(atlas.getTexture('close_bn_normal'))}"
+              downSkin="{new Image(atlas.getTexture('close_bn_down'))}"
+              triggered="{dispatchEventWith(starling.events.Event.CLOSE)}">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="3" bottom="31"/>
+        </f:layoutData>
+    </f:Button>
 
     <fx:Metadata>
         [Event(name="close", type="starling.events.Event")]
@@ -18,14 +43,27 @@
 
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
+        import resources.AtlasLibrary;
         import resources.StylesLibrary;
 
+        import starling.display.Image;
         import starling.events.Event;
+        import starling.textures.TextureAtlas;
 
         public static const MEDIATOR_NAME:String = "settingsMediator";
 
         [Bindable]
         public var _mediator:SettingsMediator;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("settings");
+            }
+            return _atlas;
+        }
 
         override protected function initialize():void
         {

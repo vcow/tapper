@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:ee164733c97603ba79a0b22e7b907343:90fe2556679969ba154d1c01bc0cbbc6:a2a580ab863b2e73f5f9bd7baa1335cd$ -->
+<TextureAtlas imagePath="settings.atf" width="512" height="1024">
+    <SubTexture name="back" x="1" y="1" width="505" height="504"/>
+    <SubTexture name="close_bn_down" x="1" y="698" width="216" height="67" frameX="0" frameY="0" frameWidth="218" frameHeight="70"/>
+    <SubTexture name="close_bn_normal" x="1" y="626" width="218" height="70"/>
+    <SubTexture name="god_mode_normal" x="221" y="626" rotated="true" width="25" height="218" frameX="-2" frameY="-2" frameWidth="221" frameHeight="28"/>
+    <SubTexture name="god_mode_selected" x="272" y="595" rotated="true" width="27" height="220" frameX="0" frameY="0" frameWidth="221" frameHeight="28"/>
+    <SubTexture name="music_off_normal" x="327" y="507" width="85" height="85"/>
+    <SubTexture name="music_off_selected" x="414" y="507" width="85" height="85"/>
+    <SubTexture name="scroller_back" x="1" y="507" width="324" height="86"/>
+    <SubTexture name="scroller_bar" x="1" y="595" width="269" height="29" frameX="-27" frameY="-28" frameWidth="324" frameHeight="86"/>
+    <SubTexture name="sound_off_normal" x="327" y="594" width="85" height="85"/>
+    <SubTexture name="sound_off_selected" x="414" y="594" width="85" height="85"/>
+</TextureAtlas>

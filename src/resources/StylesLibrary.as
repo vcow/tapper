@@ -8,6 +8,8 @@ package resources
 	import resources.skin.MoneyLabelStyleProvider;
 	import resources.skin.ScrollerStyleProviderBase;
 	import resources.skin.SettingsButtonStyleProvider;
+	import resources.skin.SettingsSliderStyleProvider;
+	import resources.skin.SliderStyleProviderBase;
 	import resources.skin.WoodenScrollerStyleProvider;
 	import resources.skin.WoodenShopButtonStyleHighlightedProvider;
 	import resources.skin.WoodenShopButtonStyleNormalProvider;
@@ -32,6 +34,8 @@ package resources
 
 		public static const shopScrollerStyleProvider:ScrollerStyleProviderBase = new ShopScrollerStyleProvider();
 		public static const woodenScrollerStyleProvider:ScrollerStyleProviderBase = new WoodenScrollerStyleProvider();
+
+		public static const settingsSliderStyleProvider:SliderStyleProviderBase = new SettingsSliderStyleProvider();
 
 		public function StylesLibrary()
 		{
