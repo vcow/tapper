@@ -23,8 +23,6 @@ package models
 		public var hasCurrentGame:Boolean;
 		public var isActive:Boolean;
 		public var tapsTotal:uint;
-		public var muteMusic:Boolean;
-		public var muteSound:Boolean;
 
 		public var lastActivityTimestamp:int;
 

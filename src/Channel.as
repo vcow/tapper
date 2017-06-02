@@ -29,7 +29,7 @@ package
 			return _type;
 		}
 
-		public function play(sound:Sound = null, startTime:Number = NaN, loops:int = 1, volume:Number = NaN):void
+		public function play(sound:Sound = null, startTime:Number = NaN, loops:int = 0, volume:Number = NaN):void
 		{
 			if (!_sound && !sound) return;
 			if (_soundChannel)
@@ -43,7 +43,7 @@ package
 			_sound = sound || _sound;
 			_soundTransform = new SoundTransform(volume);
 			_soundChannel = _sound.play(startTime, 1, _soundTransform);
-			_loops = loops;
+			_loops = loops > 0 ? loops : Math.max(_loops, 1);
 			_soundChannel.addEventListener(flash.events.Event.SOUND_COMPLETE, onComplete);
 		}
 

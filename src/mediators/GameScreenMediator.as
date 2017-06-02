@@ -129,12 +129,13 @@ package mediators
 								event.target.removeEventListener(Event.ADDED_TO_STAGE, onPlayGameSound);
 							var soundManager:SoundManager = SoundManager.getInstance();
 							soundManager.stopAllSounds(true);
-							soundManager.muteMusic = true;
+							var musicVolume:Number = soundManager.getVolume(SoundManager.MUSIC);
+							soundManager.setVolume(SoundManager.MUSIC, 0);
 							var channel:Channel = soundManager.playSound(sound);
 							channel.addEventListener(Event.COMPLETE, function (event:Event):void
 							{
 								channel.removeEventListener(Event.COMPLETE, arguments.callee);
-								soundManager.muteMusic = gameModel.muteMusic;
+								soundManager.setVolume(SoundManager.MUSIC, musicVolume);
 							});
 						};
 						if (gameScreen.stage) onPlayGameSound(null);

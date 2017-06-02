@@ -27,6 +27,7 @@ package commands
 			{
 				gameModel.level = level;
 				sendNotification(Const.UPDATE_LEVEL);
+				if (SoundManager.getInstance().muteSound) return;
 
 				var levelInfo:LevelInfo = LevelsProxy(facade.retrieveProxy(LevelsProxy.NAME)).getLevel(level);
 				var file:File = File.applicationDirectory.resolvePath("sound" + File.separator + levelInfo.assetId + ".mp3");

@@ -1,6 +1,10 @@
 package mediators
 {
+	import app.AppFacade;
+
 	import feathers.data.ListCollection;
+
+	import starling.events.Event;
 
 	import view.SettingsPopup;
 
@@ -18,8 +22,10 @@ package mediators
 			var settingsPopup:SettingsPopup = getViewComponent() as SettingsPopup;
 			if (settingsPopup)
 			{
-//				settingsPopup.addEventListener("back", onBack);
-//				settingsPopup.addEventListener("buyPack", onBuyPack);
+				settingsPopup.addEventListener("soundChanged", onSoundChanged);
+				settingsPopup.addEventListener("musicChanged", onMusicChanged);
+				settingsPopup.addEventListener("soundSwitch", onSoundSwitch);
+				settingsPopup.addEventListener("musicSwitch", onMusicSwitch);
 			}
 		}
 
@@ -28,8 +34,10 @@ package mediators
 			var settingsPopup:SettingsPopup = getViewComponent() as SettingsPopup;
 			if (settingsPopup)
 			{
-//				settingsPopup.removeEventListener("back", onBack);
-//				settingsPopup.removeEventListener("buyPack", onBuyPack);
+				settingsPopup.removeEventListener("soundChanged", onSoundChanged);
+				settingsPopup.removeEventListener("musicChanged", onMusicChanged);
+				settingsPopup.removeEventListener("soundSwitch", onSoundSwitch);
+				settingsPopup.removeEventListener("musicSwitch", onMusicSwitch);
 			}
 		}
 
@@ -47,6 +55,50 @@ package mediators
 			{
 
 			}
+		}
+
+		[Bindable(event="soundOffCChanged")]
+		public function get soundOff():Boolean
+		{
+			return SoundManager.getInstance().muteSound;
+		}
+
+		[Bindable(event="musicOffChanged")]
+		public function get musicOff():Boolean
+		{
+			return SoundManager.getInstance().muteMusic;
+		}
+
+		[Bindable(event="soundChanged")]
+		public function get soundValue():Number
+		{
+			return SoundManager.getInstance().getVolume(SoundManager.SOUND);
+		}
+
+		[Bindable(event="musicChanged")]
+		public function get musicValue():Number
+		{
+			return SoundManager.getInstance().getVolume(SoundManager.MUSIC);
+		}
+
+		private static function onSoundChanged(event:Event):void
+		{
+			SoundManager.getInstance().setVolume(SoundManager.SOUND, Number(event.data));
+		}
+
+		private static function onMusicChanged(event:Event):void
+		{
+			SoundManager.getInstance().setVolume(SoundManager.MUSIC, Number(event.data));
+		}
+
+		private static function onSoundSwitch(event:Event):void
+		{
+			SoundManager.getInstance().muteSound = Boolean(event.data);
+		}
+
+		private static function onMusicSwitch(event:Event):void
+		{
+			SoundManager.getInstance().muteMusic = Boolean(event.data);
 		}
 	}
 }

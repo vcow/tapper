@@ -19,7 +19,7 @@ package
 		private var _muteMusic:Boolean;
 		private var _muteSounds:Boolean;
 
-		private var _musicVolume:Number = 1.0;
+		private var _musicVolume:Number = 0.5;
 		private var _soundVolume:Number = 1.0;
 
 		public function SoundManager()
@@ -43,6 +43,30 @@ package
 				case MUSIC: return _musicVolume;
 			}
 			return 1.0;
+		}
+
+		public function setVolume(type:String, value:Number):void
+		{
+			if (isNaN(value) || value < 0) value = 0;
+			if (value > 1.0) value = 1.0;
+			switch (type)
+			{
+				case SOUND:
+					if (value != _soundVolume)
+					{
+						for each (var channel:Channel in _soundChannels)
+							channel.volume = value;
+						_soundVolume = value;
+					}
+					break;
+				case MUSIC:
+					if (value != _musicVolume)
+					{
+						if (_musicChannel) _musicChannel.volume = value;
+						_musicVolume = value;
+					}
+					break;
+			}
 		}
 
 		public function playMusic(sound:Sound, fade:Boolean = true, randomPosition:Boolean = true):void
@@ -78,15 +102,15 @@ package
 				{
 					_musicChannel.play(sound, position, int.MAX_VALUE, 0);
 					tween = new Tween(_musicChannel, 0.7);
-					tween.animate("volume", getVolume(MUSIC));
+					tween.animate("volume", _musicVolume);
 					Starling.juggler.add(tween);
 				}
 				else
 				{
 					if (_muteMusic)
-						_musicChannel.pause(sound, position, int.MAX_VALUE);
+						_musicChannel.pause(sound, position, int.MAX_VALUE, _musicVolume);
 					else
-						_musicChannel.play(sound, position, int.MAX_VALUE);
+						_musicChannel.play(sound, position, int.MAX_VALUE, _musicVolume);
 				}
 			}
 		}
@@ -112,7 +136,7 @@ package
 			return _muteMusic;
 		}
 
-		public function set muteSounds(value:Boolean):void
+		public function set muteSound(value:Boolean):void
 		{
 			if (value == _muteSounds) return;
 			_muteSounds = value;
@@ -128,7 +152,7 @@ package
 		{
 			if (_muteSounds) return null;
 			var channel:Channel = new Channel(SOUND);
-			channel.play(sound, 0, 1, getVolume(SOUND));
+			channel.play(sound, 0, 1, _soundVolume);
 			channel.addEventListener(Event.COMPLETE, onSoundComplete);
 			_soundChannels.push(channel);
 			return channel;

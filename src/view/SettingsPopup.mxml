@@ -16,11 +16,34 @@
 
         <f:LayoutGroup>
             <f:layout>
-                <f:HorizontalLayout gap="20" verticalAlign="middle"/>
+                <f:HorizontalLayout gap="-17" verticalAlign="middle"/>
             </f:layout>
 
             <f:Slider id="soundSlider" styleProvider="{StylesLibrary.settingsSliderStyleProvider}"
-                      minimum="0" maximum="1.0" value="0.5"/>
+                      minimum="0" maximum="1.0" change="{dispatchEventWith('soundChanged', false, soundSlider.value)}"
+                      value="{_mediator.soundValue}"/>
+
+            <f:Check id="soundOffCheck" defaultSkin="{new Image(atlas.getTexture('sound_off_normal'))}"
+                     downSkin="{new Image(atlas.getTexture('sound_off_selected'))}"
+                     defaultSelectedSkin="{new Image(atlas.getTexture('sound_off_selected'))}"
+                     change="{dispatchEventWith('soundSwitch', false, soundOffCheck.isSelected)}"
+                     isSelected="{_mediator.soundOff}"/>
+        </f:LayoutGroup>
+
+        <f:LayoutGroup>
+            <f:layout>
+                <f:HorizontalLayout gap="-17" verticalAlign="middle"/>
+            </f:layout>
+
+            <f:Slider id="musicSlider" styleProvider="{StylesLibrary.settingsSliderStyleProvider}"
+                      minimum="0" maximum="1.0" change="{dispatchEventWith('musicChanged', false, musicSlider.value)}"
+                      value="{_mediator.musicValue}"/>
+
+            <f:Check id="musicOffCheck" defaultSkin="{new Image(atlas.getTexture('music_off_normal'))}"
+                     downSkin="{new Image(atlas.getTexture('music_off_selected'))}"
+                     defaultSelectedSkin="{new Image(atlas.getTexture('music_off_selected'))}"
+                     change="dispatchEventWith('musicSwitch', false, musicOffCheck.isSelected)"
+                     isSelected="{_mediator.musicOff}"/>
         </f:LayoutGroup>
     </f:LayoutGroup>
 
@@ -34,6 +57,10 @@
 
     <fx:Metadata>
         [Event(name="close", type="starling.events.Event")]
+        [Event(name="soundChanged", type="starling.events.Event")]
+        [Event(name="musicChanged", type="starling.events.Event")]
+        [Event(name="soundSwitch", type="starling.events.Event")]
+        [Event(name="musicSwitch", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[

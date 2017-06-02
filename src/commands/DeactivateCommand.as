@@ -39,7 +39,7 @@ package commands
 
 			var soundManager:SoundManager = SoundManager.getInstance();
 			soundManager.muteMusic = true;
-			soundManager.muteSounds = true;
+			soundManager.muteSound = true;
 		}
 
 		private function serializeGameModel():String
@@ -61,6 +61,7 @@ package commands
 				if (achievement.isReceived) achievementsList.push(serializeAchievement(achievement));
 			}
 
+			var soundManager:SoundManager = SoundManager.getInstance();
 			var dataObject:Object = {
 				money: gameModel.money,
 				tapsTotal: gameModel.tapsTotal,
@@ -69,7 +70,9 @@ package commands
 				skin: gameModel.currentSkin,
 				units: unitsList,
 				achievements: achievementsList,
-				timestamp: new Date().time
+				timestamp: new Date().time,
+				music: int(soundManager.getVolume(SoundManager.MUSIC) * 1000.0 * (soundManager.muteMusic ? -1 : 1)),
+				sound: int(soundManager.getVolume(SoundManager.SOUND) * 1000.0 * (soundManager.muteSound ? -1 : 1))
 			};
 			dataObject.hash = MD5.hashBytes(getBytes(dataObject));
 			return JSON.stringify(dataObject);

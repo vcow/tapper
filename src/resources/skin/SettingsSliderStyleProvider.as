@@ -9,7 +9,6 @@ package resources.skin
 	import starling.display.Image;
 	import starling.display.Quad;
 	import starling.events.Event;
-	import starling.textures.RenderTexture;
 
 	import starling.textures.TextureAtlas;
 

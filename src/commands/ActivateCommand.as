@@ -8,6 +8,7 @@ package commands
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 
 	import models.GameModel;
 
@@ -71,9 +72,7 @@ package commands
 				sendNotification(Const.UPDATE_ACTIVITY, true);
 			}
 
-			var soundManager:SoundManager = SoundManager.getInstance();
-			soundManager.muteMusic = gameModel.muteMusic;
-			soundManager.muteSounds = gameModel.muteSound;
+			gameModel.lastActivityTimestamp = getTimer();
 		}
 
 		private function deserializeGameModel(data:String):void
@@ -143,6 +142,14 @@ package commands
 				gameModel.addUnit(unit);
 			}
 			gameModel.sortUnitsByIndex();
+
+			var soundManager:SoundManager = SoundManager.getInstance();
+			var value:Number = Number(dataObject.music);
+			soundManager.muteMusic = isNaN(value) ? false : value < 0;
+			soundManager.setVolume(SoundManager.MUSIC, isNaN(value) ? 0.5 : Math.abs(value) / 1000.0);
+			value = Number(dataObject.sound);
+			soundManager.muteSound = isNaN(value) ? false : value < 0;
+			soundManager.setVolume(SoundManager.SOUND, isNaN(value) ? 1.0 : Math.abs(value) / 1000.0);
 
 			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
 			sendNotification(Const.UPDATE_LEVEL, gameModel.level);
