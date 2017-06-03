@@ -68,16 +68,6 @@
         import starling.display.Image;
         import starling.textures.TextureAtlas;
 
-        private static var _click1:Sound;
-        private static function get click1():Sound
-        {
-            if (!_click1)
-            {
-                _click1 = AtlasLibrary.getInstance().manager.getSound("click1");
-            }
-            return _click1;
-        }
-
         private static var _click2:Sound;
         private static function get click2():Sound
         {
@@ -127,7 +117,6 @@
         private function onTapButton():void
         {
             dispatchEventWith(TAP, true);
-            SoundManager.getInstance().playSound(click1);
         }
         ]]></fx:Script>
 </view:GameScreenViewBase>

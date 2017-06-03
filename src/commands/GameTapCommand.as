@@ -20,6 +20,17 @@ package commands
 
 	public class GameTapCommand extends CalcProfitCommandBase
 	{
+
+		private static var _click1:Sound;
+		private static function get click1():Sound
+		{
+			if (!_click1)
+			{
+				_click1 = AtlasLibrary.getInstance().manager.getSound("click1");
+			}
+			return _click1;
+		}
+
 		private static var _coinSounds:Vector.<Sound>;
 		private static function get coinSounds():Vector.<Sound>
 		{
@@ -34,6 +45,7 @@ package commands
 
 		private static var _lastCoinSound:int;
 		private static var _soundCtr:int;
+		private static var _coinDelay:int = 500;
 
 		override public function execute(notification:INotification):void
 		{
@@ -62,11 +74,16 @@ package commands
 			{
 				sendNotification(Const.UPDATE_MONEY, gameModel.money);
 
-				if (gameModel.lastActivityTimestamp - _lastCoinSound >= 500)
+				if (gameModel.lastActivityTimestamp - _lastCoinSound >= _coinDelay)
 				{
 					_lastCoinSound = gameModel.lastActivityTimestamp;
 					if (_soundCtr > 15) _soundCtr = Math.random() * _coinSounds.length;
 					SoundManager.getInstance().playSound(coinSounds[_soundCtr++ % coinSounds.length]);
+					_coinDelay = 300 + Math.random() * 1000;
+				}
+				else
+				{
+					SoundManager.getInstance().playSound(click1);
 				}
 			}
 		}
