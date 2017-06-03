@@ -15,9 +15,9 @@
 			<action id="levelUp">2</action>
 		</rewards>
 		<conditions>
-			<money min="10000"/>
+			<money min="50000"/>
 			<level min="1" max="1"/>
-			<top min="1">produsser</top>
+			<top min="2">verwolf</top>
 		</conditions>
 	</achievement>
 	<achievement id="levelup3">
@@ -25,9 +25,9 @@
 			<action id="levelUp">3</action>
 		</rewards>
 		<conditions>
-			<money min="100000"/>
+			<money min="150000"/>
 			<level min="2" max="2"/>
-			<top min="2">official</top>
+			<top min="3">official</top>
 		</conditions>
 	</achievement>
 	<achievement id="levelup4">
@@ -35,7 +35,7 @@
 			<action id="levelUp">4</action>
 		</rewards>
 		<conditions>
-			<money min="3000000"/>
+			<money min="2000000"/>
 			<level min="3" max="3"/>
 			<top min="1">deputy</top>
 		</conditions>
@@ -45,9 +45,10 @@
 			<action id="levelUp">5</action>
 		</rewards>
 		<conditions>
-			<money min="6000000"/>
+			<money min="3500000"/>
 			<level min="4" max="4"/>
-			<top min="3">sect</top>
+			<unit min="1">sect</unit>
+			<top min="3">ship</top>
 		</conditions>
 	</achievement>
 	<achievement id="levelup6">
@@ -64,7 +65,7 @@
 			<action id="levelUp">7</action>
 		</rewards>
 		<conditions>
-			<money min="30000000"/>
+			<money min="5000000"/>
 			<level max="6"/>
 			<unit min="1">frs</unit>
 			<unit min="1">oon</unit>
@@ -76,7 +77,7 @@
 			<action id="levelUp">8</action>
 		</rewards>
 		<conditions>
-			<money min="60000000"/>
+			<money min="700000000"/>
 			<level max="7"/>
 			<unit min="1">death_star</unit>
 		</conditions>
@@ -86,7 +87,7 @@
 			<action id="levelUp">9</action>
 		</rewards>
 		<conditions>
-			<money min="100000000"/>
+			<money min="1200000000"/>
 			<level max="8"/>
 			<top min="1">space_fleet</top>
 		</conditions>
@@ -96,7 +97,7 @@
 			<action id="levelUp">10</action>
 		</rewards>
 		<conditions>
-			<money min="500000000"/>
+			<money min="3500000000"/>
 			<level max="9"/>
 			<top min="1">planet_system</top>
 		</conditions>

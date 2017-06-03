@@ -35,6 +35,7 @@ package commands
 			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
 			sendNotification(Const.UPDATE_LEVEL, gameModel.level);
 			sendNotification(Const.UPDATE_MONEY, gameModel.money);
+			sendNotification(Const.UPDATE_MULTIPLIER, gameModel.addonModel.multiplier);
 			sendNotification(Const.UPDATE_UNITS_LIST);
 		}
 	}
