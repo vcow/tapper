@@ -14,8 +14,8 @@ package models
 		private var _unitsById:Dictionary = new Dictionary();
 		private var _unitsByIndex:Dictionary = new Dictionary();
 		private var _topUnitIndex:int;
-		private var _godModeOn:Boolean;
 
+		public var godModeOff:Boolean;
 		public var tickCount:uint;
 		public var level:uint;
 		public var currentSkin:String;
@@ -47,14 +47,9 @@ package models
 			_callbackId = value;
 		}
 
-		public function get godMode():int
+		public function getGodMode():int
 		{
-			return _godModeOn ? addonModel.godMode : 0;
-		}
-
-		public function switchGodMode(value:Boolean):void
-		{
-			_godModeOn = value;
+			return godModeOff ? addonModel.godMode * -1 : addonModel.godMode;
 		}
 
 		public function get callbackId():uint

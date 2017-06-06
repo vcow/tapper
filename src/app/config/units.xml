@@ -4,7 +4,7 @@
 		<ppc value="100%" maxCount="3"/>
 	</unit>
 	<unit id="golden_fish" index="0" name="name.golden_fish" description="description.golden_fish" price="0" priceGrowth="0">
-		<ppc value="200%" maxCount="3"/>
+		<ppc value="200%" maxCount="30"/>
 	</unit>
 	<unit id="illegal" index="1" name="name.illegal" description="description.illegal" price="25" priceGrowth="10%">
 		<ppc value="1" maxCount="100"/>
@@ -131,6 +131,6 @@
 		<ppc value="1700000"/>
 	</unit>
 	<unit id="universe" index="34" name="name.universe" description="description.universe" price="100000000000" priceGrowth="10%" maxCount="1">
-		<action id="godMode" title="God mode" description="???"/>
+		<action id="godMode" title="God mode" description="description.godmode"/>
 	</unit>
 </units>

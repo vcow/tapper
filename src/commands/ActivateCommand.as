@@ -132,6 +132,7 @@ package commands
 			gameModel.tickCount = dataObject.tickCount;
 			gameModel.level = dataObject.level;
 			gameModel.currentSkin = dataObject.skin;
+			gameModel.godModeOff = dataObject.godModeOff;
 
 			gameModel.clearUnits();
 			for each (var listData:Object in dataObject.units)
@@ -154,6 +155,7 @@ package commands
 			sendNotification(Const.UPDATE_TAPS, gameModel.tapsTotal);
 			sendNotification(Const.UPDATE_LEVEL, gameModel.level);
 			sendNotification(Const.UPDATE_MONEY, gameModel.money);
+			sendNotification(Const.UPDATE_GOD_MODE, gameModel.addonModel.godMode);
 			sendNotification(Const.UPDATE_UNITS_LIST);
 		}
 

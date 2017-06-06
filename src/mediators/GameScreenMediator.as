@@ -13,32 +13,19 @@ package mediators
 
 	import proxy.LevelsProxy;
 
-	import resources.AtlasLibrary;
-
 	import starling.events.Event;
 	import starling.textures.Texture;
-	import starling.textures.TextureAtlas;
 
 	import view.GameScreenViewBase;
 
 	public class GameScreenMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST,
-			Const.UPDATE_LEVEL, Const.PLAY_GAME_SOUND];
+			Const.UPDATE_LEVEL, Const.PLAY_GAME_SOUND, Const.UPDATE_GOD_MODE];
 
 		private var _money:Number = 0;
 		private var _unitsList:ListCollection;
 		private var _currentLevel:LevelInfo;
-
-		private static var _atlasStateIcon:TextureAtlas;
-		private static function get atlasStateIcon():TextureAtlas
-		{
-			if (!_atlasStateIcon)
-			{
-				_atlasStateIcon = AtlasLibrary.getInstance().manager.getTextureAtlas("states");
-			}
-			return _atlasStateIcon;
-		}
 
 		public function GameScreenMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -142,6 +129,9 @@ package mediators
 						else gameScreen.addEventListener(Event.ADDED_TO_STAGE, onPlayGameSound);
 					}
 					break;
+				case Const.UPDATE_GOD_MODE:
+					dispatchEventWith("godModeChanged");
+					break;
 			}
 		}
 
@@ -170,9 +160,16 @@ package mediators
 		}
 
 		[Bindable(event="levelChanged")]
-		public function get levelIcon():Texture
+		public function get levelAssetId():String
 		{
-			return _currentLevel ? atlasStateIcon.getTexture(_currentLevel.assetId) : null;
+			return _currentLevel ? _currentLevel.assetId : null;
+		}
+
+		[Bindable(event="godModeChanged")]
+		public function get godMode():int
+		{
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			return gameModel.getGodMode();
 		}
 
 		private function updateLevel():void

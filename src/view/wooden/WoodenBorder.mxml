@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml">
+<f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml" xmlns:view="view.*">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:ImageLoader source="{icon}" width="443" height="332" scaleContent="true" maintainAspectRatio="true">
-        <f:layoutData>
+    <view:LevelView assetId="{assetId}" godMode="{godMode}" touchable="false">
+        <view:layoutData>
             <f:AnchorLayoutData horizontalCenter="-5" verticalCenter="-6"/>
-        </f:layoutData>
-    </f:ImageLoader>
+        </view:layoutData>
+    </view:LevelView>
 
     <f:Label text="{description}" maxWidth="430" filter="{new GlowFilter(0x000000, 1.0, 1.0, 1.0)}"
              textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_description', NaN, 0xffffff, TextFormatAlign.RIGHT, -12)}}">
@@ -41,7 +41,6 @@
 
         import starling.display.Image;
         import starling.filters.GlowFilter;
-        import starling.textures.Texture;
         import starling.textures.TextureAtlas;
 
         private static var _atlas:TextureAtlas;
@@ -66,7 +65,10 @@
         }
 
         [Bindable]
-        public var icon:Texture;
+        public var assetId:String;
+
+        [Bindable]
+        public var godMode:int;
 
         [Bindable]
         public var title:String;

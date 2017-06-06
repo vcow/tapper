@@ -16,8 +16,8 @@
         </wooden:layoutData>
     </wooden:WoodenIndicator>
 
-    <wooden:WoodenBorder icon="{_mediator.levelIcon}" title="{_mediator.levelTitle}"
-                         description="{_mediator.levelDescription}">
+    <wooden:WoodenBorder assetId="{_mediator.levelAssetId}" godMode="{_mediator.godMode}"
+                         title="{_mediator.levelTitle}" description="{_mediator.levelDescription}">
         <wooden:layoutData>
             <f:AnchorLayoutData horizontalCenter="3" top="100"/>
         </wooden:layoutData>

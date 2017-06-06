@@ -70,6 +70,7 @@ package commands
 				skin: gameModel.currentSkin,
 				units: unitsList,
 				achievements: achievementsList,
+				godModeOff: gameModel.godModeOff,
 				timestamp: new Date().time,
 				music: int(soundManager.getVolume(SoundManager.MUSIC) * 1000.0 * (soundManager.muteMusic ? -1 : 1)),
 				sound: int(soundManager.getVolume(SoundManager.SOUND) * 1000.0 * (soundManager.muteSound ? -1 : 1))

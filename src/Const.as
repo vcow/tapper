@@ -29,6 +29,7 @@ package
 		public static const UPDATE_ACTIVITY:String = "notifyUpdateActivity";
 		public static const UPDATE_ADDONS:String = "notifyUpdateAddons";
 		public static const UPDATE_MULTIPLIER:String = "notifyUpdateMultiplier";
+		public static const UPDATE_GOD_MODE:String = "notifyUpdateGodMode";
 
 		public static const START_GAME:String = "notifyStartGame";
 		public static const STOP_GAME:String = "notifyStopGame";
@@ -54,6 +55,8 @@ package
 		public static const SAVE_ADDONS:String = "notifySaveAddons";
 
 		public static const PLAY_GAME_SOUND:String = "playGameSound";
+
+		public static const ACTION_GOD_MODE:String = "godMode";
 
 		public function Const()
 		{
