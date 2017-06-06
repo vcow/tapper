@@ -171,7 +171,7 @@ package vo
 						_currentPrice = NaN;
 						calculatePrice();
 
-						if (_maxCount)
+						if (maxCount)
 						{
 							calculateRest();
 						}
@@ -185,6 +185,7 @@ package vo
 					}
 					break;
 				case Const.UPDATE_MULTIPLIER:
+					calculatePrice();
 					calculateRest();
 					break;
 				default:

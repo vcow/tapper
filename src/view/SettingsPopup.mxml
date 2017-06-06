@@ -45,6 +45,13 @@
                      change="dispatchEventWith('musicSwitch', false, musicOffCheck.isSelected)"
                      isSelected="{_mediator.musicOff}"/>
         </f:LayoutGroup>
+
+        <f:Check id="godModeCheck" defaultSkin="{new Image(atlas.getTexture('god_mode_normal'))}"
+                 downSkin="{new Image(atlas.getTexture('god_mode_selected'))}"
+                 defaultSelectedSkin="{new Image(atlas.getTexture('god_mode_selected'))}"
+                 isSelected="{!_mediator.godModeOff}" visible="{_mediator.hasGodMode}"
+                 includeInLayout="{_mediator.hasGodMode}"
+                 change="{dispatchEventWith('switchGodMode', false, godModeCheck.isSelected)}"/>
     </f:LayoutGroup>
 
     <f:Button defaultSkin="{new Image(atlas.getTexture('close_bn_normal'))}"
@@ -61,6 +68,7 @@
         [Event(name="musicChanged", type="starling.events.Event")]
         [Event(name="soundSwitch", type="starling.events.Event")]
         [Event(name="musicSwitch", type="starling.events.Event")]
+        [Event(name="switchGodMode", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[

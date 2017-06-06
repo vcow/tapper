@@ -1,5 +1,6 @@
 package app
 {
+	import commands.ActionGodModeCommand;
 	import commands.ActivateCommand;
 	import commands.BuyPackCommand;
 	import commands.BuyUnitCommand;
@@ -92,6 +93,7 @@ package app
 			registerCommand(Const.OVERFLOW, OverflowCommand);
 			registerCommand(Const.UPDATE_MULTIPLIER, UpdateMultiplierCommand);
 			registerCommand(Const.SAVE_ADDONS, SaveAddonsCommand);
+			registerCommand(Const.ACTION_GOD_MODE, ActionGodModeCommand);
 		}
 
 		override protected function initializeModel():void

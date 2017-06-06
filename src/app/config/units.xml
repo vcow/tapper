@@ -4,7 +4,7 @@
 		<ppc value="100%" maxCount="3"/>
 	</unit>
 	<unit id="golden_fish" index="0" name="name.golden_fish" description="description.golden_fish" price="0" priceGrowth="0">
-		<ppc value="200%" maxCount="30"/>
+		<ppc value="200%" maxCount="3"/>
 	</unit>
 	<unit id="illegal" index="1" name="name.illegal" description="description.illegal" price="25" priceGrowth="10%">
 		<ppc value="1" maxCount="100"/>
