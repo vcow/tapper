@@ -87,11 +87,18 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
+        import feathers.events.FeathersEventType;
         import feathers.text.BitmapFontTextFormat;
 
         import resources.AtlasLibrary;
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
+
+        import starling.animation.Transitions;
+
+        import starling.animation.Tween;
+
+        import starling.core.Starling;
 
         import starling.display.Image;
         import starling.events.Event;
@@ -102,6 +109,7 @@
         import vo.UnitInfo;
 
         private var _data:UnitInfo;
+        private var _vip:Button;
 
         [Bindable]
         private var price:String;
@@ -125,6 +133,9 @@
 
         public function set available(value:Boolean):void
         {
+            if (!value) startVip();
+            else stopVip();
+
             if (value == _available) return;
             _available = value;
             updateUnavailableReason();
@@ -166,7 +177,7 @@
                     label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
                     label.text = locale.getString("common", "item.ppс.long") + ": " +
                             (_data.perClickProfit.value.value ?
-                                    Math.round(_data.perClickProfit.value.value).toString() :
+                                    cropValueK(Math.round(_data.perClickProfit.value.value), 5).toString() :
                             Math.round(_data.perClickProfit.value.percentValue * 100.0) + "%");
                     descriptionGroup.addChild(label);
                 }
@@ -176,7 +187,7 @@
                     label.styleProvider = StylesLibrary.shopItemDescriptionLabelStyleProvider;
                     label.text = locale.getString("common", "item.pps.long") + ": " +
                             (_data.perSecondProfit.value.value ?
-                                    Math.round(_data.perSecondProfit.value.value).toString() :
+                                    cropValueK(Math.round(_data.perSecondProfit.value.value), 6).toString() :
                             Math.round(_data.perSecondProfit.value.percentValue * 100.0) + "%");
                     descriptionGroup.addChild(label);
                 }
@@ -202,6 +213,15 @@
             }
         }
 
+        private static function cropValueK(value:Number, limit:int):String
+        {
+            var l:Number = 10.0;
+            while (--limit > 0) l *= 10.0;
+            value = Math.round(value);
+            if (value >= l) return Math.floor(value / 1000.0) + "к";
+            return value.toString();
+        }
+
         private function updateUnavailableReason():void
         {
             if (!available && _data)
@@ -215,6 +235,57 @@
             {
                 unavailableReason = "";
             }
+        }
+
+        private function startVip():void
+        {
+            if (!_vip)
+            {
+                var skin:Image = new Image(atlas.getTexture("offer_back"));
+                _vip = new Button();
+                _vip.defaultSkin = skin;
+                _vip.pivotX = Math.floor(skin.width / 2.0);
+                _vip.pivotY = Math.floor(skin.height / 2.0);
+                _vip.addEventListener(starling.events.Event.TRIGGERED, onVip);
+                if (isCreated) animateVip();
+                else addEventListener(FeathersEventType.CREATION_COMPLETE, animateVip);
+            }
+        }
+
+        private function stopVip():void
+        {
+            if (_vip && !Starling.juggler.containsTweens(_vip))
+            {
+                removeEventListener(FeathersEventType.CREATION_COMPLETE, animateVip);
+                _vip.removeEventListener(starling.events.Event.TRIGGERED, onVip);
+                _vip = null;
+            }
+        }
+
+        private function animateVip(event:starling.events.Event = null):void
+        {
+            if (event)
+                removeEventListener(FeathersEventType.CREATION_COMPLETE, animateVip);
+
+            if (this.parent)
+            {
+                _vip.validate();
+                var destPoint:Point = new Point(Math.floor(Starling.current.stage.stageWidth / 2),
+                        Math.floor((Starling.current.stage.stageHeight - this.height) / 2 * 0.75));
+                var startPoint:Point = new Point(Math.floor(Starling.current.stage.stageWidth / 2), -height);
+                _vip.x = startPoint.x;
+                _vip.y = startPoint.y;
+                var tween:Tween = new Tween(_vip, 0.7, Transitions.EASE_OUT);
+                tween.moveTo(destPoint.x, destPoint.y);
+                tween.delay = 1.0;
+                Starling.juggler.add(tween);
+                this.parent.addChildAt(_vip, 0);
+            }
+        }
+
+        private function onVip(event:starling.events.Event):void
+        {
+
         }
         ]]></fx:Script>
 </f:LayoutGroup>
