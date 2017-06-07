@@ -56,6 +56,7 @@
     <fx:Metadata>
         [Event(name="back", type="starling.events.Event")]
         [Event(name="buyUnit", type="starling.events.Event")]
+        [Event(name="vip", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[
@@ -195,6 +196,7 @@
             popup.data = unit;
             popup.available = available;
             popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.addEventListener("openVip", onOpenVip);
             WindowManager.getInstance().openWindow(popup, true);
         }
 
@@ -202,11 +204,17 @@
         {
             var popup:BuyUnitPopUp = BuyUnitPopUp(event.target);
             popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.removeEventListener("openVip", onOpenVip);
 
             if (event.data == Const.ON_OK)
             {
                 dispatchEventWith("buyUnit", false, popup.data);
             }
+        }
+
+        private function onOpenVip(event:starling.events.Event):void
+        {
+            dispatchEventWith("vip");
         }
 
         private function onSelectUnit(event:starling.events.Event):void

@@ -40,7 +40,7 @@
 
         <f:Button defaultSkin="{new Image(atlas.getTexture('message_cancel_bn_normal'))}"
                   downSkin="{new Image(atlas.getTexture('message_cancel_bn_down'))}"
-                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}">
+                  triggered="{removeVip(); dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}">
             <f:layoutData>
                 <f:AnchorLayoutData left="49" bottom="32"/>
             </f:layoutData>
@@ -48,7 +48,7 @@
 
         <f:Button defaultSkin="{new Image(atlas.getTexture('message_ok_bn_normal'))}"
                   downSkin="{new Image(atlas.getTexture('message_ok_bn_down'))}"
-                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"
+                  triggered="{removeVip(); dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"
                   isEnabled="{available}">
             <f:layoutData>
                 <f:AnchorLayoutData right="26" bottom="17"/>
@@ -84,6 +84,7 @@
 
     <fx:Metadata>
         [Event(name="close", type="starling.events.Event")]
+        [Event(name="openVip", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[
@@ -247,8 +248,8 @@
                 _vip.pivotX = Math.floor(skin.width / 2.0);
                 _vip.pivotY = Math.floor(skin.height / 2.0);
                 _vip.addEventListener(starling.events.Event.TRIGGERED, onVip);
-                if (isCreated) animateVip();
-                else addEventListener(FeathersEventType.CREATION_COMPLETE, animateVip);
+                if (isCreated) delayedAnimateVip();
+                else addEventListener(FeathersEventType.CREATION_COMPLETE, delayedAnimateVip);
             }
         }
 
@@ -256,36 +257,75 @@
         {
             if (_vip && !Starling.juggler.containsTweens(_vip))
             {
-                removeEventListener(FeathersEventType.CREATION_COMPLETE, animateVip);
+                removeEventListener(FeathersEventType.CREATION_COMPLETE, delayedAnimateVip);
+                Starling.juggler.removeDelayedCalls(animateVip);
+                Starling.juggler.removeTweens(_vip);
                 _vip.removeEventListener(starling.events.Event.TRIGGERED, onVip);
+                _vip.removeFromParent(true);
                 _vip = null;
             }
         }
 
-        private function animateVip(event:starling.events.Event = null):void
+        private function delayedAnimateVip(event:starling.events.Event = null):void
         {
             if (event)
-                removeEventListener(FeathersEventType.CREATION_COMPLETE, animateVip);
+                removeEventListener(FeathersEventType.CREATION_COMPLETE, delayedAnimateVip);
+            Starling.juggler.delayCall(animateVip, 0.7);
+        }
 
+        private function animateVip():void
+        {
             if (this.parent)
             {
                 _vip.validate();
                 var destPoint:Point = new Point(Math.floor(Starling.current.stage.stageWidth / 2),
                         Math.floor((Starling.current.stage.stageHeight - this.height) / 2 * 0.75));
                 var startPoint:Point = new Point(Math.floor(Starling.current.stage.stageWidth / 2), -height);
-                _vip.x = startPoint.x;
+                var r:Number = Math.PI / 180.0 * 30.0 * Math.random() - Math.PI / 180.0 * 15.0;
+                _vip.x = Math.floor(startPoint.x + Math.random() * _vip.width - _vip.width / 2);
                 _vip.y = startPoint.y;
-                var tween:Tween = new Tween(_vip, 0.7, Transitions.EASE_OUT);
-                tween.moveTo(destPoint.x, destPoint.y);
-                tween.delay = 1.0;
+                _vip.rotation = r - Math.PI * 2 * Math.random();
+                var tween:Tween = new Tween(_vip, 0.4, Transitions.EASE_OUT);
+                tween.moveTo(Math.floor(destPoint.x + Math.random() * _vip.width - _vip.width / 2),
+                        Math.floor(destPoint.y + Math.random() * _vip.height - _vip.height / 2));
+                tween.rotateTo(r);
                 Starling.juggler.add(tween);
-                this.parent.addChildAt(_vip, 0);
+                this.parent.addChild(_vip);
             }
+        }
+
+        private function removeVip():void
+        {
+            if (_vip)
+            {
+                if (Starling.juggler.containsDelayedCalls(animateVip))
+                {
+                    Starling.juggler.removeDelayedCalls(animateVip);
+                    onVipComplete();
+                }
+                else
+                {
+                    Starling.juggler.removeTweens(_vip);
+                    _vip.removeEventListener(starling.events.Event.TRIGGERED, onVip);
+                    var tween:Tween = new Tween(_vip, 0.4, Transitions.EASE_IN);
+                    tween.animate("y", Starling.current.stage.stageHeight + _vip.height);
+                    tween.onComplete = onVipComplete;
+                    Starling.juggler.add(tween);
+                }
+            }
+        }
+
+        private function onVipComplete():void
+        {
+            _vip.removeFromParent(true);
+            _vip = null;
         }
 
         private function onVip(event:starling.events.Event):void
         {
-
+            removeVip();
+            dispatchEventWith("openVip");
+            dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL);
         }
         ]]></fx:Script>
 </f:LayoutGroup>

@@ -39,6 +39,7 @@ package mediators
 			{
 				shopScreen.addEventListener("back", onBack);
 				shopScreen.addEventListener("buyUnit", onBuyUnit);
+				shopScreen.addEventListener("vip", onVip);
 
 				var gameModel:GameModel = AppFacade(facade).gameModel;
 
@@ -65,6 +66,7 @@ package mediators
 			{
 				shopScreen.removeEventListener("back", onBack);
 				shopScreen.removeEventListener("buyUnit", onBuyUnit);
+				shopScreen.removeEventListener("vip", onVip);
 			}
 		}
 
@@ -76,6 +78,7 @@ package mediators
 			{
 				viewComponent.removeEventListener("back", onBack);
 				viewComponent.removeEventListener("buyUnit", onBuyUnit);
+				viewComponent.removeEventListener("vip", onVip);
 			}
 
 			super.setViewComponent(viewComponent);
@@ -83,6 +86,7 @@ package mediators
 			{
 				viewComponent.addEventListener("back", onBack);
 				viewComponent.addEventListener("buyUnit", onBuyUnit);
+				viewComponent.addEventListener("vip", onVip);
 			}
 		}
 
@@ -122,6 +126,11 @@ package mediators
 					sendNotification(Const.BUY, unitInfo);
 				}
 			}
+		}
+
+		private function onVip(event:Event):void
+		{
+			sendNotification(Const.SWITCH_TO, Const.STATE_VIP);
 		}
 
 		private function onBack(event:Event):void
