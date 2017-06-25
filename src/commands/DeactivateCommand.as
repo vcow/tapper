@@ -10,6 +10,8 @@ package commands
 
 	import models.GameModel;
 
+	import net.Connection;
+
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import proxy.AchievementsProxy;
@@ -40,6 +42,8 @@ package commands
 			var soundManager:SoundManager = SoundManager.getInstance();
 			soundManager.muteMusic = true;
 			soundManager.muteSound = true;
+
+			Connection.getInstance().stopMonitor();
 		}
 
 		private function serializeGameModel():String

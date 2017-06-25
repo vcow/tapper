@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()">
     <f:layout>
         <f:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="10"/>
     </f:layout>
@@ -21,7 +22,7 @@
               triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openVip')}" alpha="0"/>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
-              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="false"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{_pantheonAvailable}"
               triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openRating')}" alpha="0"/>
 
     <fx:Metadata>
@@ -29,6 +30,8 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
+        import net.Connection;
+
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
 
@@ -37,5 +40,23 @@
         [Bindable]
         public var canContinueGame:Boolean;
 
+        [Bindable]
+        private var _pantheonAvailable:Boolean;
+
+        private function onAddedToStage():void
+        {
+            Connection.getInstance().addEventListener("status", onConnectionStatusChanged);
+            onConnectionStatusChanged(null);
+        }
+
+        private function onRemovedFromStage():void
+        {
+            Connection.getInstance().removeEventListener("status", onConnectionStatusChanged);
+        }
+
+        private function onConnectionStatusChanged(event:starling.events.Event):void
+        {
+            _pantheonAvailable = Connection.getInstance().connecteed;
+        }
         ]]></fx:Script>
 </f:LayoutGroup>

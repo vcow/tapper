@@ -49,7 +49,6 @@ package resources.skin
 					button.labelOffsetY = 0;
 					button.iconOffsetX = 0;
 					button.iconOffsetY = 0;
-					button.alpha = 0.8;
 					break;
 				case ButtonState.DOWN:
 					button.useHandCursor = true;
@@ -57,7 +56,6 @@ package resources.skin
 					button.labelOffsetY = 1;
 					button.iconOffsetX = 1;
 					button.iconOffsetY = 1;
-					button.alpha = 1.0;
 					break;
 				default:
 					button.useHandCursor = true;
@@ -65,7 +63,6 @@ package resources.skin
 					button.labelOffsetY = 0;
 					button.iconOffsetX = 0;
 					button.iconOffsetY = 0;
-					button.alpha = 1.0;
 			}
 		}
 	}
