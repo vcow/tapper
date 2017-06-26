@@ -56,7 +56,7 @@
 
         private function onConnectionStatusChanged(event:starling.events.Event):void
         {
-            _pantheonAvailable = Connection.getInstance().connecteed;
+            _pantheonAvailable = Connection.getInstance().connected;
         }
         ]]></fx:Script>
 </f:LayoutGroup>
