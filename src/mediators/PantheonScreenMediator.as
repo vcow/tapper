@@ -16,6 +16,7 @@ package mediators
 	public class PantheonScreenMediator extends BindableMediator
 	{
 		private var _topList:ListCollection;
+		private var _connectionIsBusy:Boolean;
 
 		public function PantheonScreenMediator(mediatorName:String = null, viewComponent:Object = null)
 		{
@@ -58,6 +59,10 @@ package mediators
 
 		private function addListeners(view:EventDispatcher):void
 		{
+			var connection:Connection = Connection.getInstance();
+			connection.addEventListener("busy", onConnectionBusy);
+			onConnectionBusy(null);
+
 			view.addEventListener("back", onBack);
 			view.addEventListener("authenticate", onAuthenticate);
 			view.addEventListener("registerUser", onRegisterUser);
@@ -69,12 +74,25 @@ package mediators
 
 		public function removeListeners(view:EventDispatcher):void
 		{
+			var connection:Connection = Connection.getInstance();
+			connection.removeEventListener("busy", onConnectionBusy);
+
 			view.removeEventListener("back", onBack);
 			view.removeEventListener("authenticate", onAuthenticate);
 			view.removeEventListener("registerUser", onRegisterUser);
 			view.removeEventListener("setUserData", onSetUserData);
 			view.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			view.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		}
+
+		private function onConnectionBusy(event:Event):void
+		{
+			var busy:Boolean = Connection.getInstance().busy;
+			if (busy != _connectionIsBusy)
+			{
+				_connectionIsBusy = busy;
+				dispatchEventWith("connectionIsBusyChanged");
+			}
 		}
 
 		private function onAddedToStage(event:Event):void
@@ -153,6 +171,12 @@ package mediators
 		public function get topList():ListCollection
 		{
 			return _topList;
+		}
+
+		[Bindable(event="connectionIsBusyChanged")]
+		public function get connectionIsBusy():Boolean
+		{
+			return _connectionIsBusy;
 		}
 	}
 }
