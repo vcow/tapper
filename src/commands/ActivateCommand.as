@@ -137,6 +137,7 @@ package commands
 			gameModel.level = dataObject.level;
 			gameModel.currentSkin = dataObject.skin;
 			gameModel.godModeOff = dataObject.godModeOff;
+			gameModel.tutorial = dataObject.tutorial || {};
 
 			gameModel.clearUnits();
 			for each (var listData:Object in dataObject.units)

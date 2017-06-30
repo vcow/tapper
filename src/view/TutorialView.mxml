@@ -9,8 +9,14 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
+        import app.AppFacade;
+
         import feathers.controls.Label;
         import feathers.text.BitmapFontTextFormat;
+
+        import mediators.TutorialMediator;
+
+        import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import starling.animation.Tween;
         import starling.core.Starling;
@@ -21,12 +27,31 @@
         import flash.display.Sprite;
         import flash.display.BitmapData;
 
+        import vo.TutorialData;
+
         private var _tutorialIsVisible:Boolean;
         private var _skinTexture:Texture;
+
+        protected var _mediator:TutorialMediator;
+
+        public static const MEDIATOR_NAME:String = "tutorialMediator";
 
         override protected function initialize():void
         {
             super.initialize();
+
+            var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+            if (facade.hasMediator(MEDIATOR_NAME))
+            {
+                _mediator = facade.retrieveMediator(MEDIATOR_NAME) as TutorialMediator;
+                _mediator.setViewComponent(this);
+            }
+            else
+            {
+                var mediator:TutorialMediator = new TutorialMediator(MEDIATOR_NAME, this);
+                facade.registerMediator(mediator);
+                _mediator = mediator;
+            }
 
             Starling.current.nativeStage.addEventListener(flash.events.MouseEvent.MOUSE_DOWN, onTouch, false, int.MAX_VALUE);
         }
@@ -44,23 +69,30 @@
                 _skinTexture = null;
             }
 
+            if (_mediator)
+            {
+                var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+                facade.removeMediator(_mediator.getMediatorName());
+                _mediator = null;
+            }
+
             super.dispose();
         }
 
-        public function showScreen(frames:Vector.<TutorialFrame>, immediate:Boolean = false):void
+        public function showScreen(tutorialData:TutorialData, immediate:Boolean = false):void
         {
             Starling.juggler.removeTweens(this);
 
             if (_tutorialIsVisible)
                 hideScreen(true);
 
-            _skinTexture = createTexture(frames);
+            _skinTexture = createTexture(tutorialData.frames);
             back.backgroundSkin = new Image(_skinTexture);
 
             for (var i:int = this.numChildren - 1; i > 0; --i)
                 removeChildAt(i, true);
 
-            for each (var frame:TutorialFrame in frames)
+            for each (var frame:TutorialFrame in tutorialData.frames)
             {
                 if (frame.description)
                 {
@@ -106,7 +138,7 @@
                     if (label.y < 0) label.y = 0;
                     if (label.x + label.width > Starling.current.stage.stageWidth) label.x = Starling.current.stage.stageWidth - label.width;
                     if (label.y + label.height > Starling.current.stage.stageHeight) label.y = Starling.current.stage.stageHeight - label.height;
-                    
+
                     addChild(label);
                 }
             }
@@ -114,7 +146,7 @@
             if (immediate)
             {
                 this.alpha = 1.0;
-                dispatchEventWith("complete");
+                dispatchEventWith("complete", false, tutorialData.key);
             }
             else
             {
@@ -124,7 +156,7 @@
                 tween.onCompleteArgs = [this];
                 tween.onComplete = function (self:TutorialView):void
                 {
-                    self.dispatchEventWith("complete");
+                    self.dispatchEventWith("complete", false, tutorialData.key);
                 };
                 Starling.juggler.add(tween);
             }

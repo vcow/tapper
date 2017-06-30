@@ -77,7 +77,8 @@ package commands
 				godModeOff: gameModel.godModeOff,
 				timestamp: new Date().time,
 				music: int(soundManager.getVolume(SoundManager.MUSIC) * 1000.0 * (soundManager.muteMusic ? -1 : 1)),
-				sound: int(soundManager.getVolume(SoundManager.SOUND) * 1000.0 * (soundManager.muteSound ? -1 : 1))
+				sound: int(soundManager.getVolume(SoundManager.SOUND) * 1000.0 * (soundManager.muteSound ? -1 : 1)),
+				tutorial: gameModel.tutorial
 			};
 			dataObject.hash = MD5.hashBytes(getBytes(dataObject));
 			return JSON.stringify(dataObject);

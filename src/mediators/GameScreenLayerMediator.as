@@ -20,6 +20,8 @@ package mediators
 	import view.GameScreen;
 	import view.TutorialFrame;
 
+	import vo.TutorialData;
+
 	public class GameScreenLayerMediator extends Mediator
 	{
 		private static var _interests:Array = [Const.SET_SKIN_BRONZE_ACTION];
@@ -44,29 +46,36 @@ package mediators
 				gameScreenLayer.setSkin(gameModel.currentSkin);
 
 				var lm:LocaleManager = LocaleManager.getInstance();
-				var tutorialFrames:Vector.<TutorialFrame> = new Vector.<TutorialFrame>();
+				var tutorialData:TutorialData;
 				switch (gameModel.currentSkin)
 				{
 					case SkinType.WOOD:
-						tutorialFrames.push(new TutorialFrame(new flash.geom.Rectangle(14, 4, 106, 100),
-								lm.getString("common", "tutor.game.wood.back"), TutorialFrame.RIGHT, 40));
-						tutorialFrames.push(new TutorialFrame(new flash.geom.Rectangle(22, 528, 390, 110),
-								lm.getString("common", "tutor.game.wood.action"), TutorialFrame.TOP, 20));
-						tutorialFrames.push(new TutorialFrame(new flash.geom.Rectangle(423, 520, 124, 124),
-								lm.getString("common", "tutor.game.wood.shop"), TutorialFrame.BOTTOM, 120));
+						if (!gameModel.tutorial.gameScreenWooden)
+						{
+							tutorialData = new TutorialData("gameScreenWooden");
+							tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(14, 4, 106, 100),
+									lm.getString("common", "tutor.game.wood.back"), TutorialFrame.RIGHT, 40));
+							tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(22, 528, 390, 110),
+									lm.getString("common", "tutor.game.wood.action"), TutorialFrame.TOP, 20));
+							tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(423, 520, 124, 124),
+									lm.getString("common", "tutor.game.wood.shop"), TutorialFrame.BOTTOM, 120));
+						}
 						break;
 				}
-				if (gameScreenLayer.isCreated)
+
+				if (tutorialData)
 				{
-					sendNotification(Const.SHOW_TUTORIAL, tutorialFrames);
-				}
-				else
-				{
-					gameScreenLayer.addEventListener(FeathersEventType.CREATION_COMPLETE, function (event:Event):void
+					var onShowTutorial:Function = function (event:Event):void
 					{
-						gameScreenLayer.removeEventListener(FeathersEventType.CREATION_COMPLETE, arguments.callee);
-						sendNotification(Const.SHOW_TUTORIAL, tutorialFrames);
-					});
+						if (event)
+							event.target.removeEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
+						sendNotification(Const.SHOW_TUTORIAL, tutorialData);
+					};
+
+					if (gameScreenLayer.isCreated)
+						onShowTutorial(null);
+					else
+						gameScreenLayer.addEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
 				}
 			}
 		}

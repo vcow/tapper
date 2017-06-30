@@ -7,10 +7,10 @@ package mediators
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import view.MainScreen;
-	import view.TutorialFrame;
 	import view.messagebox.MessageBoxPopUp;
 
 	import vo.MessageBoxData;
+	import vo.TutorialData;
 
 	public class MainScreenMediator extends BindableMediator
 	{
@@ -55,7 +55,7 @@ package mediators
 						WindowManager.getInstance().openWindow(messageBox, true);
 						break;
 					case Const.SHOW_TUTORIAL:
-						mainScreen.tutorialScreen.showScreen(notification.getBody() as Vector.<TutorialFrame>);
+						mainScreen.tutorialScreen.showScreen(notification.getBody() as TutorialData);
 						break;
 					default:
 						throw Error("Not supported yet.");

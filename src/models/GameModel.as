@@ -26,6 +26,8 @@ package models
 
 		public var lastActivityTimestamp:int;
 
+		public var tutorial:Object = {};
+
 		private static const LIMIT:Number = 999999999999.0;
 
 		public const addonModel:AddonModel = new AddonModel();
