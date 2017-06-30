@@ -2,13 +2,16 @@
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
                autoSizeMode="stage" visible="false" touchable="false">
 
-    <f:LayoutGroup id="back" blendMode="{starling.display.BlendMode.MULTIPLY}"/>
+    <f:LayoutGroup id="back" blendMode="{starling.display.BlendMode.MULTIPLY}" alpha="0.7"/>
 
     <fx:Metadata>
         [Event(name="complete", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[
+        import feathers.controls.Label;
+        import feathers.text.BitmapFontTextFormat;
+
         import starling.animation.Tween;
         import starling.core.Starling;
         import starling.display.Image;
@@ -54,6 +57,60 @@
             _skinTexture = createTexture(frames);
             back.backgroundSkin = new Image(_skinTexture);
 
+            for (var i:int = this.numChildren - 1; i > 0; --i)
+                removeChildAt(i, true);
+
+            for each (var frame:TutorialFrame in frames)
+            {
+                if (frame.description)
+                {
+                    var bfTextFormat:BitmapFontTextFormat = new BitmapFontTextFormat("tutorial");
+                    switch (frame.align)
+                    {
+                        case TutorialFrame.LEFT:
+                            bfTextFormat.align = TextFormatAlign.RIGHT;
+                            break;
+                        case TutorialFrame.TOP:
+                        case TutorialFrame.BOTTOM:
+                            bfTextFormat.align = TextFormatAlign.CENTER;
+                            break;
+                        default:
+                            bfTextFormat.align = TextFormatAlign.LEFT;
+                    }
+                    var label:Label = new Label();
+                    label.textRendererProperties = {textFormat: bfTextFormat};
+                    label.text = frame.description;
+
+                    const offset:Number = 0;
+                    label.validate();
+                    switch (frame.align)
+                    {
+                        case TutorialFrame.LEFT:
+                            label.x = frame.frame.x - offset - label.width;
+                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y);
+                            break;
+                        case TutorialFrame.TOP:
+                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x);
+                            label.y = frame.frame.y - label.height - offset;
+                            break;
+                        case TutorialFrame.BOTTOM:
+                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x);
+                            label.y = frame.frame.y + frame.frame.height + offset;
+                            break;
+                        default:
+                            label.x = frame.frame.x + frame.frame.width + offset;
+                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y);
+                            break;
+                    }
+                    if (label.x < 0) label.x = 0;
+                    if (label.y < 0) label.y = 0;
+                    if (label.x + label.width > Starling.current.stage.stageWidth) label.x = Starling.current.stage.stageWidth - label.width;
+                    if (label.y + label.height > Starling.current.stage.stageHeight) label.y = Starling.current.stage.stageHeight - label.height;
+                    
+                    addChild(label);
+                }
+            }
+
             if (immediate)
             {
                 this.alpha = 1.0;
@@ -82,6 +139,16 @@
             canvas.graphics.drawRect(0, 0, Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
             canvas.graphics.endFill();
 
+            for each (var frame:TutorialFrame in frames)
+            {
+                canvas.graphics.beginFill(0xffffff);
+                if (frame.cornerRadius)
+                    canvas.graphics.drawRoundRect(frame.frame.x, frame.frame.y, frame.frame.width,
+                            frame.frame.height, frame.cornerRadius, frame.cornerRadius);
+                else
+                    canvas.graphics.drawRect(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height);
+                canvas.graphics.endFill();
+            }
 
             var source:flash.display.BitmapData = new flash.display.BitmapData(Starling.current.stage.stageWidth,
                     Starling.current.stage.stageHeight, true, 0x00000000);
@@ -100,12 +167,21 @@
 
             if (immediate)
             {
-
+                this.visible = false;
             }
             else
             {
-
+                Starling.juggler.removeTweens(this);
+                var tween:Tween = new Tween(this, 1.0);
+                tween.fadeTo(0);
+                tween.onCompleteArgs = [this];
+                tween.onComplete = function (self:TutorialView):void
+                {
+                    self.visible = false;
+                };
+                Starling.juggler.add(tween);
             }
+            _tutorialIsVisible = false;
         }
 
         private function onTouch(event:flash.events.MouseEvent):void

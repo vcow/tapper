@@ -12,12 +12,15 @@ package view
 		public var frame:Rectangle;
 		public var description:String;
 		public var align:String;
+		public var cornerRadius:Number;
 
-		public function TutorialFrame(frame:Rectangle, description:String, align:String)
+		public function TutorialFrame(frame:Rectangle = null, description:String = null,
+									  align:String = null, cornerRadius:Number = NaN)
 		{
 			this.frame = frame;
 			this.description = description;
 			this.align = align;
+			this.cornerRadius = cornerRadius;
 		}
 	}
 }

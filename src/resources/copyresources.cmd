@@ -1,6 +1,6 @@
 @echo off
-set out-assets-path=..\..\build\assets
-set out-sound-path=..\..\build\sound
+set out-assets-path=.\..\..\build\assets
+set out-sound-path=.\..\..\build\sound
 
 if exist %out-assets-path% rmdir /s /q %out-assets-path%
 mkdir %out-assets-path%

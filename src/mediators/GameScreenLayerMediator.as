@@ -4,12 +4,16 @@ package mediators
 
 	import feathers.events.FeathersEventType;
 
+	import flash.geom.Rectangle;
+
 	import models.GameModel;
 	import models.SkinType;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import org.puremvc.as3.multicore.patterns.mediator.Mediator;
+
+	import resources.locale.LocaleManager;
 
 	import starling.events.Event;
 
@@ -39,10 +43,18 @@ package mediators
 
 				gameScreenLayer.setSkin(gameModel.currentSkin);
 
+				var lm:LocaleManager = LocaleManager.getInstance();
 				var tutorialFrames:Vector.<TutorialFrame> = new Vector.<TutorialFrame>();
 				switch (gameModel.currentSkin)
 				{
-
+					case SkinType.WOOD:
+						tutorialFrames.push(new TutorialFrame(new flash.geom.Rectangle(14, 4, 106, 100),
+								lm.getString("common", "tutor.game.wood.back"), TutorialFrame.RIGHT, 40));
+						tutorialFrames.push(new TutorialFrame(new flash.geom.Rectangle(22, 528, 390, 110),
+								lm.getString("common", "tutor.game.wood.action"), TutorialFrame.TOP, 20));
+						tutorialFrames.push(new TutorialFrame(new flash.geom.Rectangle(423, 520, 124, 124),
+								lm.getString("common", "tutor.game.wood.shop"), TutorialFrame.BOTTOM, 120));
+						break;
 				}
 				if (gameScreenLayer.isCreated)
 				{
