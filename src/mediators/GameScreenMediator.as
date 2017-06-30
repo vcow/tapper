@@ -14,7 +14,6 @@ package mediators
 	import proxy.LevelsProxy;
 
 	import starling.events.Event;
-	import starling.textures.Texture;
 
 	import view.GameScreenViewBase;
 

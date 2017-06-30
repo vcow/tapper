@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               autoSizeMode="stage" visible="false" touchable="false">
+
+    <f:LayoutGroup id="back" blendMode="{starling.display.BlendMode.MULTIPLY}"/>
+
+    <fx:Metadata>
+        [Event(name="complete", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import starling.animation.Tween;
+        import starling.core.Starling;
+        import starling.display.Image;
+        import starling.textures.Texture;
+
+        import flash.events.MouseEvent;
+        import flash.display.Sprite;
+        import flash.display.BitmapData;
+
+        private var _tutorialIsVisible:Boolean;
+        private var _skinTexture:Texture;
+
+        override protected function initialize():void
+        {
+            super.initialize();
+
+            Starling.current.nativeStage.addEventListener(flash.events.MouseEvent.MOUSE_DOWN, onTouch, false, int.MAX_VALUE);
+        }
+
+        override public function dispose():void
+        {
+            Starling.juggler.removeTweens(this);
+
+            Starling.current.nativeStage.removeEventListener(flash.events.MouseEvent.MOUSE_DOWN, onTouch);
+
+            if (_skinTexture)
+            {
+                _skinTexture.root.onRestore = null;
+                _skinTexture.dispose();
+                _skinTexture = null;
+            }
+
+            super.dispose();
+        }
+
+        public function showScreen(frames:Vector.<TutorialFrame>, immediate:Boolean = false):void
+        {
+            Starling.juggler.removeTweens(this);
+
+            if (_tutorialIsVisible)
+                hideScreen(true);
+
+            _skinTexture = createTexture(frames);
+            back.backgroundSkin = new Image(_skinTexture);
+
+            if (immediate)
+            {
+                this.alpha = 1.0;
+                dispatchEventWith("complete");
+            }
+            else
+            {
+                this.alpha = 0;
+                var tween:Tween = new Tween(this, 1.0);
+                tween.fadeTo(1.0);
+                tween.onCompleteArgs = [this];
+                tween.onComplete = function (self:TutorialView):void
+                {
+                    self.dispatchEventWith("complete");
+                };
+                Starling.juggler.add(tween);
+            }
+            this.visible = true;
+            _tutorialIsVisible = true;
+        }
+
+        private function createTexture(frames:Vector.<TutorialFrame>):Texture
+        {
+            var canvas:flash.display.Sprite = new flash.display.Sprite();
+            canvas.graphics.beginFill(0x000000);
+            canvas.graphics.drawRect(0, 0, Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
+            canvas.graphics.endFill();
+
+
+            var source:flash.display.BitmapData = new flash.display.BitmapData(Starling.current.stage.stageWidth,
+                    Starling.current.stage.stageHeight, true, 0x00000000);
+            source.draw(canvas);
+            var texture:Texture = Texture.fromBitmapData(source);
+            texture.root.onRestore = function ():void
+            {
+                texture.root.uploadBitmapData(source);
+            };
+            return texture;
+        }
+
+        public function hideScreen(immediate:Boolean = false):void
+        {
+            if (!_tutorialIsVisible) return;
+
+            if (immediate)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private function onTouch(event:flash.events.MouseEvent):void
+        {
+            if (_tutorialIsVisible)
+                hideScreen();
+        }
+        ]]></fx:Script>
+</f:LayoutGroup>

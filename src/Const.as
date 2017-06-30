@@ -43,6 +43,7 @@ package
 		public static const SET_SKIN_BRONZE_ACTION:String = "setSkinBronze";
 
 		public static const SHOW_MESSAGE:String = "notifyShowMessage";
+		public static const SHOW_TUTORIAL:String = "notifyShowTutorial";
 
 		public static const POP:String = "notifyPop";
 		public static const POP_TO_ROOT:String = "notifyPopToRoot";

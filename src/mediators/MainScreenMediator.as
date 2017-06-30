@@ -4,18 +4,17 @@ package mediators
 
 	import feathers.motion.Fade;
 
-	import WindowManager;
-
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import view.MainScreen;
+	import view.TutorialFrame;
 	import view.messagebox.MessageBoxPopUp;
 
 	import vo.MessageBoxData;
 
 	public class MainScreenMediator extends BindableMediator
 	{
-		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_MESSAGE];
+		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_MESSAGE, Const.SHOW_TUTORIAL];
 
 		public function MainScreenMediator(mediatorName:String, viewComponent:Object)
 		{
@@ -55,6 +54,9 @@ package mediators
 						messageBox.data = notification.getBody() as MessageBoxData;
 						WindowManager.getInstance().openWindow(messageBox, true);
 						break;
+					case Const.SHOW_TUTORIAL:
+						mainScreen.tutorialScreen.showScreen(notification.getBody() as Vector.<TutorialFrame>);
+						break;
 					default:
 						throw Error("Not supported yet.");
 				}
@@ -67,16 +69,16 @@ package mediators
 			switch (newState)
 			{
 				case Const.STATE_START:
-					mainScreen.showScreen("startScreenItem", Fade.createCrossfadeTransition(0.3));
+					mainScreen.screenNavigator.showScreen("startScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				case Const.STATE_GAME:
-					mainScreen.showScreen("gameScreenItem", Fade.createCrossfadeTransition(0.3));
+					mainScreen.screenNavigator.showScreen("gameScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				case Const.STATE_SHOP:
-					mainScreen.showScreen("shopScreenItem", Fade.createCrossfadeTransition(0.3));
+					mainScreen.screenNavigator.showScreen("shopScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				case Const.STATE_VIP:
-					mainScreen.showScreen("vipScreenItem", Fade.createCrossfadeTransition(0.3));
+					mainScreen.screenNavigator.showScreen("vipScreenItem", Fade.createCrossfadeTransition(0.3));
 					break;
 				default:
 					throw Error("Unsupported state " + newState + ".");
