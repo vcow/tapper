@@ -40,7 +40,7 @@ package mediators
 			if (event.data is String)
 			{
 				var gameModel:GameModel = AppFacade(facade).gameModel;
-				gameModel[event.data] = 1;
+				gameModel.tutorial[event.data] = 1;
 			}
 		}
 	}

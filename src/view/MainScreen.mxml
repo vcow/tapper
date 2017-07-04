@@ -64,7 +64,7 @@
             // Fonts
             assets = ["message_box", "message_box_button", "russo", "shop_message", "shop_price_20",
                 "shop_price_31", "shop_price_52", "shop_title_23", "title_button_31", "unit_count_22",
-                "wooden_title", "wooden_description", "tutorial"];
+                "wooden_title", "wooden_description", "tutorial", "vip_title"];
             for each (asset in assets)
             {
                 for each (ext in [".atf", ".fnt"])
