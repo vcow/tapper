@@ -46,16 +46,17 @@
                      isSelected="{_mediator.musicOff}"/>
         </f:LayoutGroup>
 
-        <f:Check id="godModeCheck" defaultSkin="{new Image(atlas.getTexture('god_mode_normal'))}"
-                 downSkin="{new Image(atlas.getTexture('god_mode_selected'))}"
-                 defaultSelectedSkin="{new Image(atlas.getTexture('god_mode_selected'))}"
+        <f:Check id="godModeCheck" defaultIcon="{new Image(atlas.getTexture('god_mode_normal'))}"
+                 defaultSelectedIcon="{new Image(atlas.getTexture('god_mode_selected'))}"
+                 defaultLabelProperties="{{textFormat: new BitmapFontTextFormat('message_box_button')}}"
+                 label="{LocaleManager.getInstance().getString('common', 'settings.godmode.bn.title')}"
                  isSelected="{!_mediator.godModeOff}" visible="{_mediator.hasGodMode}"
-                 includeInLayout="{_mediator.hasGodMode}"
+                 includeInLayout="{_mediator.hasGodMode}" gap="10" labelOffsetY="3"
                  change="{dispatchEventWith('switchGodMode', false, godModeCheck.isSelected)}"/>
     </f:LayoutGroup>
 
-    <f:Button defaultSkin="{new Image(atlas.getTexture('close_bn_normal'))}"
-              downSkin="{new Image(atlas.getTexture('close_bn_down'))}"
+    <f:Button styleProvider="{StylesLibrary.settingsButtonStyleProvider}"
+              label="{LocaleManager.getInstance().getString('common', 'settings.close.bn.title')}"
               triggered="{dispatchEventWith(starling.events.Event.CLOSE)}">
         <f:layoutData>
             <f:AnchorLayoutData horizontalCenter="3" bottom="31"/>
@@ -74,12 +75,15 @@
     <fx:Script><![CDATA[
         import app.AppFacade;
 
+        import feathers.text.BitmapFontTextFormat;
+
         import mediators.SettingsMediator;
 
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
         import resources.StylesLibrary;
+        import resources.locale.LocaleManager;
 
         import starling.display.Image;
         import starling.events.Event;

@@ -8,6 +8,7 @@ package resources
 	import resources.skin.MoneyLabelStyleProvider;
 	import resources.skin.ScrollerStyleProviderBase;
 	import resources.skin.SettingsButtonStyleProvider;
+	import resources.skin.TitleSettingsButtonStyleProvider;
 	import resources.skin.SettingsSliderStyleProvider;
 	import resources.skin.SliderStyleProviderBase;
 	import resources.skin.WoodenScrollerStyleProvider;
@@ -20,6 +21,7 @@ package resources
 	public class StylesLibrary
 	{
 		public static const startScreenButtonStyleProvider:ButtonStyleProviderBase = new CommonButtonStyleProvider();
+		public static const titleSettingsButtonStyleProvider:ButtonStyleProviderBase = new TitleSettingsButtonStyleProvider();
 		public static const settingsButtonStyleProvider:ButtonStyleProviderBase = new SettingsButtonStyleProvider();
 
 		public static const messageBoxButtonStyleProvider:ButtonStyleProviderBase = new MessageBoxButtonStyleProvider();

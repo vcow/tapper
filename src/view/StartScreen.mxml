@@ -44,7 +44,7 @@
         </f:LayoutGroup>
     </f:LayoutGroup>
 
-    <f:Button id="settingsButton" styleProvider="{StylesLibrary.settingsButtonStyleProvider}"
+    <f:Button id="settingsButton" styleProvider="{StylesLibrary.titleSettingsButtonStyleProvider}"
               triggered="onSettings()" alpha="0" isEnabled="false">
         <f:layoutData>
             <f:AnchorLayoutData right="13" bottom="11"/>
