@@ -1,18 +1,35 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
     <f:layout>
-        <f:VerticalLayout gap="30"/>
+        <f:AnchorLayout/>
     </f:layout>
 
-    <f:Button label="Back" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              triggered="{dispatchEventWith('back')}"/>
-
-    <f:List dataProvider="{_mediator.packList}" itemRendererType="view.PackListItemRenderer"
-            triggered="onSelectPack(event)">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}" minWidth="576" minHeight="1024">
         <f:layout>
-            <f:VerticalLayout gap="10"/>
+            <f:AnchorLayout/>
         </f:layout>
-    </f:List>
+        <f:layoutData>
+            <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
+        </f:layoutData>
+
+        <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
+                  triggered="{dispatchEventWith('back')}">
+            <f:layoutData>
+                <f:AnchorLayoutData left="60" top="57"/>
+            </f:layoutData>
+        </f:Button>
+
+        <f:List dataProvider="{_mediator.packList}" itemRendererType="view.PackListItemRenderer"
+                triggered="onSelectPack(event)" maxHeight="656">
+            <f:layout>
+                <f:VerticalLayout gap="7"/>
+            </f:layout>
+            <f:layoutData>
+                <f:AnchorLayoutData horizontalCenter="-2" verticalCenter="52"/>
+            </f:layoutData>
+        </f:List>
+    </f:LayoutGroup>
 
     <fx:Metadata>
         [Event(name="back", type="starling.events.Event")]
@@ -26,13 +43,26 @@
 
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
-        import resources.StylesLibrary;
+        import resources.AtlasLibrary;
+
+        import starling.display.Image;
 
         import starling.events.Event;
+        import starling.textures.TextureAtlas;
 
         import vo.Pack;
 
         public static const MEDIATOR_NAME:String = "vipScreenMediator";
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("vip");
+            }
+            return _atlas;
+        }
 
         [Bindable]
         public var _mediator:VipScreenMediator;

@@ -1,6 +1,7 @@
 package resources
 {
 	import resources.skin.ButtonStyleProviderBase;
+	import resources.skin.BuyPackButtonStyleProvider;
 	import resources.skin.CommonButtonStyleProvider;
 	import resources.skin.LabelStyleProviderBase;
 	import resources.skin.LevelDescriptionStyleProvider;
@@ -25,6 +26,7 @@ package resources
 		public static const settingsButtonStyleProvider:ButtonStyleProviderBase = new SettingsButtonStyleProvider();
 
 		public static const messageBoxButtonStyleProvider:ButtonStyleProviderBase = new MessageBoxButtonStyleProvider();
+		public static const buyPackButtonStyleProvider:ButtonStyleProviderBase = new BuyPackButtonStyleProvider();
 
 		public static const woodenShopButtonStyleNormalProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleNormalProvider();
 		public static const woodenShopButtonStyleHighlightedProvider:ButtonStyleProviderBase = new WoodenShopButtonStyleHighlightedProvider();
