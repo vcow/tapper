@@ -1,19 +1,37 @@
 <?xml version="1.0"?>
 <f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-                               backgroundSkin="{new Quad(10, 10, 0x000099)}" minWidth="500" minHeight="90">
+                               backgroundSkin="{new Image(atlas.getTexture('card_back'))}"
+                               maxWidth="361" maxHeight="213">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
 
     <f:Label text="{title}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
 
     <fx:Script><![CDATA[
         import feathers.utils.touch.TapToTrigger;
 
+        import resources.AtlasLibrary;
+
         import resources.StylesLibrary;
 
-        import starling.display.Quad;
+        import starling.display.Image;
+
+        import starling.textures.TextureAtlas;
 
         import vo.Pack;
 
         private var _trigger:TapToTrigger;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("vip");
+            }
+            return _atlas;
+        }
 
         [Bindable]
         private var title:String;
