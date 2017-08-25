@@ -18,7 +18,7 @@
               triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'newGame')}" alpha="0"/>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
-              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{shopAvailable}"
               triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openVip')}" alpha="0"/>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
@@ -31,6 +31,7 @@
 
     <fx:Script><![CDATA[
         import net.Connection;
+        import net.Purchase;
 
         import resources.StylesLibrary;
         import resources.locale.LocaleManager;
@@ -42,6 +43,12 @@
 
         [Bindable]
         private var _pantheonAvailable:Boolean;
+
+        [Bindable(event="shopAvailableChanged")]
+        private function get shopAvailable():Boolean
+        {
+            return Purchase.getInstance().isSupported;
+        }
 
         private function onAddedToStage():void
         {

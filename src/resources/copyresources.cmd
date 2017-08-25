@@ -33,7 +33,7 @@ for /d %%X in (%out-sound-path%) do (
 
 for /d %%X in (%out-icon-path%) do (
     set out-path=%%~fX
-    pushd icon
+    pushd icons
     for /r %%I in (*.png) do (
         copy /y %%~fI !out-path! > nul
     )
