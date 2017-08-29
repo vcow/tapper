@@ -11,6 +11,7 @@ package commands
 	import models.GameModel;
 
 	import net.Connection;
+	import net.Purchase;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
@@ -44,6 +45,7 @@ package commands
 			soundManager.muteSound = true;
 
 			Connection.getInstance().stopMonitor();
+			Purchase.getInstance().stopMonitor();
 		}
 
 		private function serializeGameModel():String

@@ -42,7 +42,7 @@
 
     <!-- Identifies the ActionScript extensions used by an application. -->
     <extensions>
-        <extensionID>com.freshplanet.ane.AirInAppPurchase</extensionID>
+        <extensionID>com.pozirk.AndroidInAppPurchase</extensionID>
     </extensions>
 
     <!-- Settings for the application's initial window. Required. -->
@@ -224,7 +224,7 @@
         <manifestAdditions>
             <![CDATA[
             <manifest android:installLocation="auto">
-                <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22"></uses-sdk>
+                <!--uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22"></uses-sdk-->
                 <uses-permission android:name="android.permission.INTERNET"/>
                 <uses-permission android:name="com.android.vending.BILLING"/>
                 <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
@@ -239,14 +239,17 @@
                 <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
 
                 <!--<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>-->
-                <!--<application android:enabled="true">
-                    <activity android:excludeFromRecents="false">
+                <application android:enabled="true">
+                    <activity android:name="com.pozirk.payment.BillingActivity"
+					android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+					android:background="#30000000"/>
+                    <!--activity android:excludeFromRecents="false">
                         <intent-filter>
                             <action android:name="android.intent.action.MAIN"/>
                             <category android:name="android.intent.category.LAUNCHER"/>
                         </intent-filter>
-                    </activity>
-                </application>-->
+                    </activity-->
+                </application>
             </manifest>
             ]]>
             </manifestAdditions>

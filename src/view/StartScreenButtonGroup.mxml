@@ -18,7 +18,7 @@
               triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'newGame')}" alpha="0"/>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'shop.bn.label')}"
-              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{shopAvailable}"
+              styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{_shopAvailable}"
               triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openVip')}" alpha="0"/>
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
@@ -44,15 +44,13 @@
         [Bindable]
         private var _pantheonAvailable:Boolean;
 
-        [Bindable(event="shopAvailableChanged")]
-        private function get shopAvailable():Boolean
-        {
-            return Purchase.getInstance().isSupported;
-        }
+        [Bindable]
+        private var _shopAvailable:Boolean;
 
         private function onAddedToStage():void
         {
             Connection.getInstance().addEventListener("status", onConnectionStatusChanged);
+            Purchase.getInstance().addEventListener("status", onPurchaseStatusChanged);
             onConnectionStatusChanged(null);
         }
 
@@ -64,6 +62,11 @@
         private function onConnectionStatusChanged(event:starling.events.Event):void
         {
             _pantheonAvailable = Connection.getInstance().connected;
+        }
+
+        private function onPurchaseStatusChanged(event:starling.events.Event):void
+        {
+            _shopAvailable = Purchase.getInstance().isSupported;
         }
         ]]></fx:Script>
 </f:LayoutGroup>
