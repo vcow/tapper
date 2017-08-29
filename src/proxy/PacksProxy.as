@@ -25,19 +25,16 @@ package proxy
 			if (!_packs)
 			{
 				_packs = new Vector.<Pack>();
-				addPack("silver_fish", 15);
-				addPack("golden_fish", 30);
-				addPack("silver_fish_pack", 35);
-				addPack("golden_fish_pack", 50);
-				addPack("portal", 25);
+				_packs.push(new Pack("qtap.silver_fish"));
+				_packs.push(new Pack("qtap.golden_fish"));
+				_packs.push(new Pack("qtap.silver_fish.pack"));
+				_packs.push(new Pack("qtap.golden_fish.pack"));
+				_packs.push(new Pack("qtap.portal"));
+//				_packs.push(new Pack("qtap.bronze.room"));
+//				_packs.push(new Pack("qtap.silver.room"));
+//				_packs.push(new Pack("qtap.golden.room"));
 			}
 			return _packs;
-		}
-
-		private function addPack(id:String, price:Number):void
-		{
-			var pack:Pack = new Pack(id, _packs.length, price);
-			_packs.push(pack);
 		}
 	}
 }

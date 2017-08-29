@@ -2,14 +2,24 @@ package net
 {
 	import air.net.URLMonitor;
 
+	import app.AppFacade;
+
 	import com.pozirk.payment.android.InAppPurchase;
+	import com.pozirk.payment.android.InAppPurchaseDetails;
 	import com.pozirk.payment.android.InAppPurchaseEvent;
+	import com.pozirk.payment.android.InAppSkuDetails;
 
 	import flash.events.StatusEvent;
 
 	import flash.net.URLRequest;
 
+	import org.puremvc.as3.multicore.patterns.facade.Facade;
+
+	import proxy.PacksProxy;
+
 	import starling.events.EventDispatcher;
+
+	import vo.Pack;
 
 	[Event(name="status", type="starling.events.Event")]
 
@@ -22,6 +32,8 @@ package net
 
 		private var _iap:InAppPurchase;
 		private var _isSupported:Boolean;
+
+		private var _packsProxy:PacksProxy;
 
 		public static function getInstance():Purchase
 		{
@@ -57,6 +69,16 @@ package net
 			}
 		}
 
+		protected function get packsProxy():PacksProxy
+		{
+			if (!_packsProxy)
+			{
+				var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+				_packsProxy = PacksProxy(facade.retrieveProxy(PacksProxy.NAME));
+			}
+			return _packsProxy;
+		}
+
 		private function onStatusChanged(event:StatusEvent):void
 		{
 			var connected:Boolean = event.code == "Service.available";
@@ -88,6 +110,33 @@ package net
 				_isSupported = isSupported;
 				if (_connected)
 					dispatchEventWith("status", false, _isSupported ? "supported" : "unsupported");
+
+				if (_isSupported)
+				{
+					var packs:Array = [];
+					for each (var p:Pack in packsProxy.packs)
+						packs.push(p.id);
+
+					_iap.addEventListener(InAppPurchaseEvent.RESTORE_SUCCESS, onRestore);
+					_iap.addEventListener(InAppPurchaseEvent.RESTORE_ERROR, onRestore);
+					_iap.restore(packs);
+				}
+			}
+		}
+
+		private function onRestore(event:InAppPurchaseEvent):void
+		{
+			_iap.removeEventListener(InAppPurchaseEvent.RESTORE_SUCCESS, onRestore);
+			_iap.removeEventListener(InAppPurchaseEvent.RESTORE_ERROR, onRestore);
+
+			if (event.type == InAppPurchaseEvent.RESTORE_SUCCESS)
+			{
+				for each (var p:Pack in packsProxy.packs)
+				{
+					var skuDetails:InAppSkuDetails = _iap.getSkuDetails(p.id);
+					var purchaseDetails:InAppPurchaseDetails = _iap.getPurchaseDetails(p.id);
+					
+				}
 			}
 		}
 
