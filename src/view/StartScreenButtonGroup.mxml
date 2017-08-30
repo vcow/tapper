@@ -52,11 +52,13 @@
             Connection.getInstance().addEventListener("status", onConnectionStatusChanged);
             Purchase.getInstance().addEventListener("status", onPurchaseStatusChanged);
             onConnectionStatusChanged(null);
+            onPurchaseStatusChanged(null);
         }
 
         private function onRemovedFromStage():void
         {
             Connection.getInstance().removeEventListener("status", onConnectionStatusChanged);
+            Purchase.getInstance().removeEventListener("status", onPurchaseStatusChanged);
         }
 
         private function onConnectionStatusChanged(event:starling.events.Event):void

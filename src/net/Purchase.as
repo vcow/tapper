@@ -135,7 +135,18 @@ package net
 				{
 					var skuDetails:InAppSkuDetails = _iap.getSkuDetails(p.id);
 					var purchaseDetails:InAppPurchaseDetails = _iap.getPurchaseDetails(p.id);
-					
+
+					if (skuDetails)
+					{
+						p.price = skuDetails._price;
+						p.title = skuDetails._title;
+						p.description = skuDetails._descr;
+					}
+
+					if (purchaseDetails)
+					{
+
+					}
 				}
 			}
 		}

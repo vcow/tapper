@@ -42,7 +42,8 @@ package
 					.concat(LocalesLibrary.unitsBundle)
 					.concat(LocalesLibrary.levelsBundle)
 					.concat(LocalesLibrary.achievementsBundle)
-					.concat(LocalesLibrary.actionsBundle);
+					.concat(LocalesLibrary.actionsBundle)
+					.concat(LocalesLibrary.packsBundle);
 
 			LocaleManager.getInstance().addRequiredBundles(bundles, onLocalesComplete);
 		}

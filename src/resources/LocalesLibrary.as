@@ -34,6 +34,12 @@ package resources
 		[Embed(source="locale/ru_RU/actions.properties", mimeType="application/octet-stream")]
 		private static const actions_ru_RU:Class;
 
+		[Embed(source="locale/en_US/packs.properties", mimeType="application/octet-stream")]
+		private static const packs_en_US:Class;
+
+		[Embed(source="locale/ru_RU/packs.properties", mimeType="application/octet-stream")]
+		private static const packs_ru_RU:Class;
+
 		public static const commonBundle:Array = [
 			{ locale: "en_US", bundleName: "common", useLinebreak: true, bundle: ByteArray(new common_en_US()).toString() },
 			{ locale: "ru_RU", bundleName: "common", useLinebreak: true, bundle: ByteArray(new common_ru_RU()).toString() }
@@ -57,6 +63,11 @@ package resources
 		public static const actionsBundle:Array = [
 			{ locale: "en_US", bundleName: "actions", useLinebreak: true, bundle: ByteArray(new actions_en_US()).toString() },
 			{ locale: "ru_RU", bundleName: "actions", useLinebreak: true, bundle: ByteArray(new actions_ru_RU()).toString() }
+		];
+
+		public static const packsBundle:Array = [
+			{ locale: "en_US", bundleName: "packs", useLinebreak: true, bundle: ByteArray(new packs_en_US()).toString() },
+			{ locale: "ru_RU", bundleName: "packs", useLinebreak: true, bundle: ByteArray(new packs_ru_RU()).toString() }
 		];
 
 		public function LocalesLibrary()
