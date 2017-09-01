@@ -12,6 +12,7 @@ package net
 	import flash.events.StatusEvent;
 
 	import flash.net.URLRequest;
+	import flash.system.Capabilities;
 
 	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
@@ -35,6 +36,8 @@ package net
 
 		private var _packsProxy:PacksProxy;
 
+		private var _os:int = -1;
+
 		public static function getInstance():Purchase
 		{
 			if (!_instance)
@@ -48,10 +51,14 @@ package net
 		{
 			super();
 			if (_instance) throw Error("InAppPurchase is a singleton, use getInstance.");
-			_iap = new InAppPurchase();
 
-			_monitor = new URLMonitor(new URLRequest("https://www.google.com/"));
-			_monitor.addEventListener(StatusEvent.STATUS, onStatusChanged);
+			if (isAndroid)
+			{
+				_iap = new InAppPurchase();
+
+				_monitor = new URLMonitor(new URLRequest("https://www.google.com/"));
+				_monitor.addEventListener(StatusEvent.STATUS, onStatusChanged);
+			}
 		}
 
 		public function startMonitor():void
@@ -67,6 +74,26 @@ package net
 				_connected = false;
 				dispatchEventWith("status", false, "unsupported");
 			}
+		}
+
+		private function os():int
+		{
+			if (_os < 0)
+			{
+				_os = Capabilities.manufacturer.indexOf("Android") > -1 ? 1 :
+						(Capabilities.manufacturer.indexOf("iOS") > -1 ? 2 : 0);
+			}
+			return _os;
+		}
+
+		protected function get isAndroid():Boolean
+		{
+			return os == 1;
+		}
+
+		protected function get isIOS():Boolean
+		{
+			return os == 2;
 		}
 
 		protected function get packsProxy():PacksProxy
@@ -153,7 +180,7 @@ package net
 
 		public function get isSupported():Boolean
 		{
-			return _connected && _isSupported;
+			return !isAndroid || _connected && _isSupported;
 		}
 	}
 }

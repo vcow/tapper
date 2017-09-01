@@ -60,6 +60,7 @@ package mediators
 		private function addListeners(view:EventDispatcher):void
 		{
 			var connection:Connection = Connection.getInstance();
+			connection.addEventListener("status", onConnectionStatusChanged);
 			connection.addEventListener("busy", onConnectionBusy);
 			onConnectionBusy(null);
 
@@ -75,6 +76,7 @@ package mediators
 		public function removeListeners(view:EventDispatcher):void
 		{
 			var connection:Connection = Connection.getInstance();
+			connection.removeEventListener("status", onConnectionStatusChanged);
 			connection.removeEventListener("busy", onConnectionBusy);
 
 			view.removeEventListener("back", onBack);
@@ -95,28 +97,47 @@ package mediators
 			}
 		}
 
+		private function onConnectionStatusChanged(event:Event):void
+		{
+			dispatchEventWith("pantheonAvailableChanged");
+		}
+
 		private function onAddedToStage(event:Event):void
 		{
 			var connection:Connection = Connection.getInstance();
-			var getData:Function = function (event:Event):void
+			if (connection.connected)
 			{
-				if (!connection.busy)
+				var getData:Function = function (event:Event):void
 				{
-					if (event)
-						connection.removeEventListener("busy", arguments.callee);
-					connection.addEventListener("error", onGetData);
-					connection.addEventListener("complete", onGetData);
-					connection.getData();
+					if (!connection.busy)
+					{
+						if (event)
+							connection.removeEventListener("busy", arguments.callee);
+						connection.addEventListener("error", onGetData);
+						connection.addEventListener("complete", onGetData);
+						connection.getData();
+					}
+				};
+				if (connection.busy)
+				{
+					connection.addEventListener("busy", getData);
 				}
-			};
-			if (connection.busy)
-			{
-				connection.addEventListener("busy", getData);
+				else
+				{
+					getData(null);
+				}
 			}
 			else
 			{
-				getData(null);
+				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+						LocaleManager.getInstance().getString("common", "message.connection.error"),
+						onMessageClose, MessageBoxData.OK_BUTTON));
 			}
+		}
+
+		private function onMessageClose(result:uint):void
+		{
+			sendNotification(Const.POP);
 		}
 
 		private function onGetData(event:Event):void
@@ -177,6 +198,12 @@ package mediators
 		public function get connectionIsBusy():Boolean
 		{
 			return _connectionIsBusy;
+		}
+
+		[Bindable(event="pantheonAvailableChanged")]
+		public function get pantheonAvailable():Boolean
+		{
+			return Connection.getInstance().connected;
 		}
 	}
 }

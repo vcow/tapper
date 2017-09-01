@@ -26,7 +26,8 @@
         <f:List id="listView" styleProvider="{StylesLibrary.shopScrollerStyleProvider}"
                 dataProvider="{getUnitsList(_mediator.unitsList)}"
                 itemRendererType="view.ShopListItemRenderer" isSelectable="false"
-                triggered="{onSelectUnit(event)}" maxHeight="600">
+                triggered="{onSelectUnit(event)}" maxHeight="600"
+                visible="{_mediator.shopAvailable}">
             <f:layout>
                 <f:VerticalLayout id="listViewLayout" gap="3"/>
             </f:layout>
