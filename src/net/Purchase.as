@@ -96,6 +96,11 @@ package net
 			return os == 2;
 		}
 
+		protected function get isMobile():Boolean
+		{
+			return os != 0;
+		}
+
 		protected function get packsProxy():PacksProxy
 		{
 			if (!_packsProxy)
@@ -180,7 +185,7 @@ package net
 
 		public function get isSupported():Boolean
 		{
-			return !isAndroid || _connected && _isSupported;
+			return _connected && _isSupported || !isMobile;
 		}
 	}
 }
