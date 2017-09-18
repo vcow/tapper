@@ -13,19 +13,9 @@
     <fx:Script><![CDATA[
         import resources.AtlasLibrary;
 
-        import starling.display.Quad;
-
         import starling.textures.TextureAtlas;
 
         import flash.events.TimerEvent;
-
-        override protected function initialize():void
-        {
-            super.initialize();
-            var q:Quad = new Quad(10, 10);
-            q.alpha = 0.5;
-            backgroundSkin = q;
-        }
 
         private static var _atlas:TextureAtlas;
         private static function get atlas():TextureAtlas
@@ -88,7 +78,7 @@
                 var m:int = now.getMinutes();
                 var h:int = now.getHours();
                 hourArrow.rotation = calcRotation((h % 12) * 60 + m, 720);
-                minuteArrow.rotation = calcRotation(m * 60 + s, 1200);
+                minuteArrow.rotation = calcRotation(m * 60 + s, 3600);
                 secondArrow.rotation = calcRotation(s * 1000 + now.getMilliseconds(), 60000);
             }
         }
