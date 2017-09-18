@@ -63,12 +63,15 @@ package net
 
 		public function startMonitor():void
 		{
-			_monitor.start();
+			if (_monitor)
+				_monitor.start();
 		}
 
 		public function stopMonitor():void
 		{
-			_monitor.stop();
+			if (_monitor)
+				_monitor.stop();
+
 			if (_connected)
 			{
 				_connected = false;
@@ -76,7 +79,7 @@ package net
 			}
 		}
 
-		private function os():int
+		private function get os():int
 		{
 			if (_os < 0)
 			{

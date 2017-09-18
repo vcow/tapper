@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009">
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:view="view.*">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
@@ -11,6 +11,12 @@
         <f:layoutData>
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
+
+        <view:VipWatches rotation="{Math.PI / 180.0 * 29.5}" touchable="false">
+            <view:layoutData>
+                <f:AnchorLayoutData top="34" right="3"/>
+            </view:layoutData>
+        </view:VipWatches>
 
         <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_normal'))}"
                   downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
