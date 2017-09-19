@@ -4,11 +4,17 @@ package mediators
 
 	import feathers.data.ListCollection;
 
+	import net.Purchase;
+
 	import proxy.PacksProxy;
+
+	import resources.locale.LocaleManager;
 
 	import starling.events.Event;
 
 	import view.VipScreen;
+
+	import vo.MessageBoxData;
 
 	import vo.Pack;
 
@@ -23,11 +29,16 @@ package mediators
 
 		override public function onRegister():void
 		{
+			Purchase.getInstance().addEventListener("status", onPurchaseStatusChanged);
+
 			var vipScreen:VipScreen = getViewComponent() as VipScreen;
 			if (vipScreen)
 			{
 				vipScreen.addEventListener("back", onBack);
 				vipScreen.addEventListener("buyPack", onBuyPack);
+
+				vipScreen.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+				if (vipScreen.stage) onAddedToStage(null);
 
 //				var gameModel:GameModel = AppFacade(facade).gameModel;
 //
@@ -42,11 +53,15 @@ package mediators
 
 		override public function onRemove():void
 		{
+			Purchase.getInstance().removeEventListener("status", onPurchaseStatusChanged);
+
 			var vipScreen:VipScreen = getViewComponent() as VipScreen;
 			if (vipScreen)
 			{
 				vipScreen.removeEventListener("back", onBack);
 				vipScreen.removeEventListener("buyPack", onBuyPack);
+
+				vipScreen.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			}
 		}
 
@@ -90,6 +105,32 @@ package mediators
 				_packList = new ListCollection(packsProxy.packs);
 			}
 			return _packList;
+		}
+
+		private function onAddedToStage(event:Event):void
+		{
+			if (!shopAvailable)
+			{
+				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+						LocaleManager.getInstance().getString("common", "message.purchase.error"),
+						onMessageClose, Const.ON_OK));
+			}
+		}
+
+		private function onMessageClose(result:uint):void
+		{
+			sendNotification(Const.POP);
+		}
+
+		private function onPurchaseStatusChanged(event:Event):void
+		{
+			dispatchEventWith("shopAvailable");
+		}
+
+		[Bindable(event="shopAvailable")]
+		public function get shopAvailable():Boolean
+		{
+			return Purchase.getInstance().isSupported;
 		}
 	}
 }

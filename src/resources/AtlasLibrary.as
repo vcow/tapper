@@ -1,5 +1,7 @@
 package resources
 {
+	import flash.utils.ByteArray;
+
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
@@ -32,9 +34,9 @@ package resources
 		{
 			if (_instance) throw Error("AtlasLibrary is a static class. Use getInstance() method.");
 
-			_titleTexture = Texture.fromEmbeddedAsset(titleAsset);
+			_titleTexture = Texture.fromAtfData(new titleAsset() as ByteArray);
 			_titleTexture.root.onRestore = onTitleRestore;
-			_globeTexture = Texture.fromEmbeddedAsset(globeAsset);
+			_globeTexture = Texture.fromAtfData(new globeAsset() as ByteArray);
 			_globeTexture.root.onRestore = onGlobeRestore;
 
 			_manager = new AssetManager();
@@ -50,12 +52,12 @@ package resources
 
 		private function onTitleRestore():void
 		{
-			_titleTexture.root.uploadAtfData(new titleAsset());
+			_titleTexture.root.uploadAtfData(new titleAsset() as ByteArray);
 		}
 
 		private function onGlobeRestore():void
 		{
-			_globeTexture.root.uploadAtfData(new globeAsset());
+			_globeTexture.root.uploadAtfData(new globeAsset() as ByteArray);
 		}
 
 		public static function getInstance():AtlasLibrary

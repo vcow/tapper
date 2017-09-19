@@ -27,7 +27,8 @@
         </f:Button>
 
         <f:List dataProvider="{_mediator.packList}" itemRendererType="view.PackListItemRenderer"
-                triggered="onSelectPack(event)" maxHeight="656">
+                triggered="onSelectPack(event)" maxHeight="656"
+                visible="{_mediator.shopAvailable}">
             <f:layout>
                 <f:VerticalLayout gap="7"/>
             </f:layout>

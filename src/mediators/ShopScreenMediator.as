@@ -6,12 +6,6 @@ package mediators
 
 	import models.GameModel;
 
-	import net.Purchase;
-
-	import resources.locale.LocaleManager;
-
-	import vo.MessageBoxData;
-
 	import vo.UnitInfo;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -41,16 +35,12 @@ package mediators
 
 		override public function onRegister():void
 		{
-			Purchase.getInstance().addEventListener("status", onPurchaseStatusChanged);
-
 			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
 			if (shopScreen)
 			{
 				shopScreen.addEventListener("back", onBack);
 				shopScreen.addEventListener("buyUnit", onBuyUnit);
 				shopScreen.addEventListener("vip", onVip);
-
-				shopScreen.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
 				var gameModel:GameModel = AppFacade(facade).gameModel;
 
@@ -70,38 +60,14 @@ package mediators
 			}
 		}
 
-		private function onAddedToStage(event:Event):void
-		{
-			if (!shopAvailable)
-			{
-				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
-						LocaleManager.getInstance().getString("common", "message.purchase.error"),
-						onMessageClose, Const.ON_OK));
-			}
-		}
-
-		private function onMessageClose(result:uint):void
-		{
-			sendNotification(Const.POP);
-		}
-
-		private function onPurchaseStatusChanged(event:Event):void
-		{
-			dispatchEventWith("shopAvailable");
-		}
-
 		override public function onRemove():void
 		{
-			Purchase.getInstance().removeEventListener("status", onPurchaseStatusChanged);
-
 			var shopScreen:ShopScreen = getViewComponent() as ShopScreen;
 			if (shopScreen)
 			{
 				shopScreen.removeEventListener("back", onBack);
 				shopScreen.removeEventListener("buyUnit", onBuyUnit);
 				shopScreen.removeEventListener("vip", onVip);
-
-				shopScreen.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			}
 		}
 
@@ -148,12 +114,6 @@ package mediators
 		public function get unitsList():ListCollection
 		{
 			return _unitsList;
-		}
-
-		[Bindable(event="shopAvailable")]
-		public function get shopAvailable():Boolean
-		{
-			return Purchase.getInstance().isSupported;
 		}
 
 		private function onBuyUnit(event:Event):void

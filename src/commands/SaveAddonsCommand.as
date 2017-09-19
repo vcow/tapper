@@ -16,7 +16,13 @@ package commands
 		override public function execute(notification:INotification):void
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
-			var file:File = File.applicationStorageDirectory;
+			try {
+				var file:File = File.documentsDirectory.resolvePath("miroed");
+				file.createDirectory();
+			}
+			catch (e:Error) {
+				file = File.applicationStorageDirectory;
+			}
 			file = file.resolvePath(Const.APP_NAME + ".addon");
 			var stream:FileStream = new FileStream();
 			stream.open(file, FileMode.WRITE);
