@@ -5,14 +5,25 @@
         import resources.AtlasLibrary;
 
         import starling.display.MovieClip;
+        import starling.textures.TextureAtlas;
 
         private var _clip:starling.display.MovieClip;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("title");
+            }
+            return _atlas;
+        }
 
         override protected function initialize():void
         {
             super.initialize();
 
-            _clip = new starling.display.MovieClip(AtlasLibrary.getInstance().title.getTextures("Layer 1-letters_"));
+            _clip = new starling.display.MovieClip(atlas.getTextures("Layer 1-letters_"));
             addChild(_clip);
         }
 

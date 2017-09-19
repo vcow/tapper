@@ -14,10 +14,18 @@ package resources.skin
 
 	public class CommonButtonStyleProvider extends ButtonStyleProviderBase
 	{
+		private static var _atlas:TextureAtlas;
+		private static function get atlas():TextureAtlas
+		{
+			if (!_atlas)
+			{
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("title");
+			}
+			return _atlas;
+		}
+
 		override protected function onSkinButton(button:Button):void
 		{
-			var atlas:TextureAtlas = AtlasLibrary.getInstance().title;
-
 			button.defaultSkin = new Image(atlas.getTexture("menu_bn_normal"));
 			button.downSkin = new Image(atlas.getTexture("menu_bn_down"));
 			button.disabledSkin = new Image(atlas.getTexture("menu_bn_disabled"));

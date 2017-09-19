@@ -14,7 +14,6 @@ package
 
 	import view.MainScreen;
 
-	[Frame(factoryClass="Preloader")]
 	[SWF(frameRate="60", backgroundColor="#000000")]
 	public class Main extends Sprite
 	{

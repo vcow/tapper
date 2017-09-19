@@ -6,6 +6,8 @@ package mediators
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
+	import starling.events.Event;
+
 	import view.MainScreen;
 	import view.messagebox.MessageBoxPopUp;
 
@@ -66,24 +68,41 @@ package mediators
 		private function switchToState(newState:String):void
 		{
 			var mainScreen:MainScreen = getViewComponent() as MainScreen;
+			var screenId:String;
 			switch (newState)
 			{
 				case Const.STATE_START:
-					mainScreen.screenNavigator.showScreen("startScreenItem", Fade.createCrossfadeTransition(0.3));
+					screenId = "startScreenItem";
 					break;
 				case Const.STATE_GAME:
-					mainScreen.screenNavigator.showScreen("gameScreenItem", Fade.createCrossfadeTransition(0.3));
+					screenId = "gameScreenItem";
 					break;
 				case Const.STATE_SHOP:
-					mainScreen.screenNavigator.showScreen("shopScreenItem", Fade.createCrossfadeTransition(0.3));
+					screenId = "shopScreenItem";
 					break;
 				case Const.STATE_VIP:
-					mainScreen.screenNavigator.showScreen("vipScreenItem", Fade.createCrossfadeTransition(0.3));
+					screenId = "vipScreenItem";
 					break;
 				default:
 					throw Error("Unsupported state " + newState + ".");
 			}
-			AppFacade(facade).gameModel.currentState = newState;
+
+			if (mainScreen.screenNavigator.hasScreen(screenId))
+			{
+				mainScreen.screenNavigator.showScreen(screenId, Fade.createCrossfadeTransition(0.3));
+				AppFacade(facade).gameModel.currentState = newState;
+			}
+			else
+			{
+				mainScreen.screenNavigator.addEventListener(Event.CHANGE, function (event:Event):void
+				{
+					if (mainScreen.screenNavigator.activeScreenID == screenId)
+					{
+						mainScreen.screenNavigator.removeEventListener(Event.CHANGE, arguments.callee);
+						AppFacade(facade).gameModel.currentState = newState;
+					}
+				});
+			}
 		}
 	}
 }

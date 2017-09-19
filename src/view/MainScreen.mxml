@@ -1,18 +1,29 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-               xmlns:screen="view.*">
+               xmlns:screen="view.*" creationComplete="onCreationComplete()">
 
-    <f:ScreenNavigator id="screenNavigator" autoSizeMode="stage">
-
-        <f:ScreenNavigatorItem id="startScreenItem">
-            <screen:StartScreen id="startScreen"/>
-        </f:ScreenNavigatorItem>
-    </f:ScreenNavigator>
+    <f:ScreenNavigator id="screenNavigator" autoSizeMode="stage"/>
 
     <screen:TutorialView id="tutorialScreen"/>
 
+    <fx:Declarations>
+        <f:LayoutGroup id="progressContainer" autoSizeMode="stage">
+            <f:layout>
+                <f:AnchorLayout/>
+            </f:layout>
+
+            <screen:PreloaderProgress id="preloaderProgress">
+                <screen:layoutData>
+                    <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
+                </screen:layoutData>
+            </screen:PreloaderProgress>
+        </f:LayoutGroup>
+    </fx:Declarations>
+
     <fx:Script><![CDATA[
         import app.AppFacade;
+
+        import feathers.controls.ScreenNavigatorItem;
 
         import mediators.MainScreenMediator;
 
@@ -20,12 +31,18 @@
 
         import resources.AtlasLibrary;
 
+        import starling.animation.Tween;
+
+        import starling.core.Starling;
+
         import starling.events.Event;
         import starling.utils.AssetManager;
 
         import view.messagebox.MessageBoxPopUp;
 
         public static const MEDIATOR_NAME:String = "mainScreenMediator";
+
+        private var _startScreen:StartScreen;
 
         [Bindable]
         private var _mediator:MainScreenMediator;
@@ -46,6 +63,52 @@
                 facade.registerMediator(mediator);
                 _mediator = mediator;
             }
+        }
+
+        private function onCreationComplete():void
+        {
+            this.addChildAt(progressContainer, 0);
+            loadStartScreen();
+        }
+
+        private function loadStartScreen():void
+        {
+            // Atlases
+            var assetManager:AssetManager = AtlasLibrary.getInstance().manager;
+            var assets:Array = ["title", "globe"];
+            for each (var asset:String in assets)
+            {
+                for each (var ext:String in [".atf", ".xml"])
+                {
+                    var file:File = File.applicationDirectory.resolvePath("assets" + File.separator + asset + ext);
+                    if (!file.exists) throw Error(file.nativePath + " asset isn't exists.");
+                    assetManager.enqueue(file);
+                }
+            }
+
+            assetManager.loadQueue(onPreload);
+        }
+
+        private function onPreload(ratio:Number):void
+        {
+            preloaderProgress.progress = ratio;
+
+            if (ratio >= 1.0)
+            {
+                _startScreen = new StartScreen();
+                screenNavigator.addScreen("startScreenItem", new ScreenNavigatorItem(_startScreen));
+                screenNavigator.showScreen("startScreenItem");
+                _startScreen.alpha = 0;
+                var tween:Tween = new Tween(_startScreen, 0.5);
+                tween.fadeTo(1.0);
+                tween.onComplete = loadMainContent;
+                Starling.juggler.add(tween);
+            }
+        }
+
+        private function loadMainContent():void
+        {
+            progressContainer.removeFromParent(true);
 
             // Atlases
             var assetManager:AssetManager = AtlasLibrary.getInstance().manager;
@@ -90,7 +153,7 @@
 
         private function onLoadAssets(ratio:Number):void
         {
-            startScreen.progress = ratio;
+            _startScreen.progress = ratio;
             if (ratio >= 1.0) startGame();
         }
 

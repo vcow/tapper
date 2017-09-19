@@ -7,16 +7,27 @@
 
         import resources.AtlasLibrary;
 
+        import starling.textures.TextureAtlas;
+
         private var _globe:Sphere;
 
         private var _totalTimes:Number = 0;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("globe");
+            }
+            return _atlas;
+        }
 
         override protected function initialize():void
         {
             super.initialize();
 
-            _globe = new Sphere(Math.floor(Math.min(width, height) / 2.0), 3,
-                    AtlasLibrary.getInstance().globe.getTexture("map"));
+            _globe = new Sphere(Math.floor(Math.min(width, height) / 2.0), 3, atlas.getTexture("map"));
             _globe.x = Math.floor(width / 2.0);
             _globe.y = Math.floor(height / 2.0);
             addChild(_globe);
