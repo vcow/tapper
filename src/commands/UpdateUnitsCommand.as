@@ -7,6 +7,9 @@ package commands
 
 	import vo.UnitInfo;
 
+	/**
+	 * Команда на обновление юнитов.
+	 */
 	public class UpdateUnitsCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

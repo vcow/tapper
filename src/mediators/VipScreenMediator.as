@@ -18,6 +18,9 @@ package mediators
 
 	import vo.Pack;
 
+	/**
+	 * Медиатор окна магазина приложения (VIP зона).
+	 */
 	public class VipScreenMediator extends BindableMediator
 	{
 		private var _packList:ListCollection;
@@ -128,6 +131,9 @@ package mediators
 		}
 
 		[Bindable(event="shopAvailable")]
+		/**
+		 * Флаг магазин доступен / недоступен
+		 */
 		public function get shopAvailable():Boolean
 		{
 			return Purchase.getInstance().isSupported;

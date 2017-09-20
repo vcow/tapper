@@ -14,6 +14,9 @@ package mediators
 	import vo.MessageBoxData;
 	import vo.TutorialData;
 
+	/**
+	 * Медиатор главного окна приложения.
+	 */
 	public class MainScreenMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.SWITCH_TO, Const.SHOW_MESSAGE, Const.SHOW_TUTORIAL];

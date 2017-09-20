@@ -13,6 +13,9 @@ package mediators
 
 	import vo.MessageBoxData;
 
+	/**
+	 * Медиатор Пантеона.
+	 */
 	public class PantheonScreenMediator extends BindableMediator
 	{
 		private var _topList:ListCollection;

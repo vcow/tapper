@@ -2,18 +2,24 @@ package models
 {
 	import flash.utils.ByteArray;
 
+	/**
+	 * Дополнительные параметры игры.
+	 */
 	public class AddonModel
 	{
-		private static const VERSION:uint = 2;
-		public var multiplier:int;
-		public var godMode:int;
-		public const rooms:Vector.<String> = new Vector.<String>();
+		private static const VERSION:uint = 2;						/// Версия совместимости.
+		public var multiplier:int;									/// Мультипликатор уникальных юнитов в Магазине.
+		public var godMode:int;										/// Режим Бога (0...3).
+		public const rooms:Vector.<String> = new Vector.<String>();	/// Список доступных Кабинетов.
 
 		public function AddonModel()
 		{
 			reset();
 		}
 
+		/**
+		 * Сброс (начало новой игры).
+		 */
 		public function reset():void
 		{
 			multiplier = 1;
@@ -22,6 +28,10 @@ package models
 			rooms.push(SkinType.WOOD);
 		}
 
+		/**
+		 * Сериализовать дополнительные параметры.
+		 * @return Возвращает сериализованные данные.
+		 */
 		public function serialize():ByteArray
 		{
 			var result:ByteArray = new ByteArray();
@@ -46,6 +56,10 @@ package models
 			return result;
 		}
 
+		/**
+		 * Десериализовать дополнительные параметры.
+		 * @param data Сериализованные данные.
+		 */
 		public function deserialize(data:ByteArray):void
 		{
 			data.position = 0;

@@ -12,6 +12,9 @@ package mediators
 
 	import view.SettingsPopup;
 
+	/**
+	 * Медиатор попапа настроек.
+	 */
 	public class SettingsMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.UPDATE_GOD_MODE];
@@ -21,6 +24,11 @@ package mediators
 		public function SettingsMediator(mediatorName:String = null, viewComponent:Object = null)
 		{
 			super(mediatorName, viewComponent);
+		}
+
+		override public function listNotificationInterests():Array
+		{
+			return _interests;
 		}
 
 		override public function onRegister():void
@@ -66,30 +74,45 @@ package mediators
 		}
 
 		[Bindable(event="soundOffCChanged")]
+		/**
+		 * Флаг звук включен / выключен.
+		 */
 		public function get soundOff():Boolean
 		{
 			return SoundManager.getInstance().muteSound;
 		}
 
 		[Bindable(event="musicOffChanged")]
+		/**
+		 * Флаг музыка включена / выключена.
+		 */
 		public function get musicOff():Boolean
 		{
 			return SoundManager.getInstance().muteMusic;
 		}
 
 		[Bindable(event="soundChanged")]
+		/**
+		 * Текущий уровень звука.
+		 */
 		public function get soundValue():Number
 		{
 			return SoundManager.getInstance().getVolume(SoundManager.SOUND);
 		}
 
 		[Bindable(event="musicChanged")]
+		/**
+		 * Текущий уровень музыки.
+		 */
 		public function get musicValue():Number
 		{
 			return SoundManager.getInstance().getVolume(SoundManager.MUSIC);
 		}
 
 		[Bindable(event="godModeChanged")]
+		/**
+		 * Флаг юзеру доступен / недоступен режим Бога.
+		 */
 		public function get hasGodMode():Boolean
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
@@ -97,6 +120,9 @@ package mediators
 		}
 
 		[Bindable(event="godModeChanged")]
+		/**
+		 * Флаг режим Бога включен / выключен.
+		 */
 		public function get godModeOff():Boolean
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;

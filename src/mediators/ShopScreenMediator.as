@@ -16,6 +16,9 @@ package mediators
 
 	import view.ShopScreen;
 
+	/**
+	 * Медиатор внутриигрового Магазина
+	 */
 	public class ShopScreenMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.UPDATE_MONEY];
@@ -105,12 +108,18 @@ package mediators
 		}
 
 		[Bindable(event="moneyChanged")]
+		/**
+		 * Текущее количество денег.
+		 */
 		public function get money():Number
 		{
 			return _money;
 		}
 
 		[Bindable(event="unitsListChanged")]
+		/**
+		 * Список товаров.
+		 */
 		public function get unitsList():ListCollection
 		{
 			return _unitsList;

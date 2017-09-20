@@ -10,6 +10,9 @@ package mediators
 
 	import view.TutorialView;
 
+	/**
+	 * Медиатор туториала.
+	 */
 	public class TutorialMediator extends Mediator
 	{
 		public function TutorialMediator(mediatorName:String = null, viewComponent:Object = null)

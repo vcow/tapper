@@ -11,7 +11,7 @@ package commands
 	 * Команда переключения состояния игры. Выполняет переключение в указанное состояние, или одну из команд
 	 * возврата: возврат к предыдущему состоянию, или возврат к стартовому состоянию.
 	 */
-	public class PopCommand extends SimpleCommand
+	public class SetStateCommand extends SimpleCommand
 	{
 		private static const _stack:Vector.<String> = new <String>[Const.STATE_START];
 		private static var _lockStack:Boolean;
