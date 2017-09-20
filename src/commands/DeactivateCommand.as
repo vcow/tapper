@@ -20,6 +20,10 @@ package commands
 	import vo.AchievementInfo;
 	import vo.Unit;
 
+	/**
+	 * Команда деактивации приложения. Вызывается при закрытии приложения или переходе его в неактивное состояние.
+	 * Сохраняет текущее состояние игры.
+	 */
 	public class DeactivateCommand extends SerializationCommandBase
 	{
 		override public function execute(notification:INotification):void

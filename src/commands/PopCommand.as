@@ -7,6 +7,10 @@ package commands
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	/**
+	 * Команда переключения состояния игры. Выполняет переключение в указанное состояние, или одну из команд
+	 * возврата: возврат к предыдущему состоянию, или возврат к стартовому состоянию.
+	 */
 	public class PopCommand extends SimpleCommand
 	{
 		private static const _stack:Vector.<String> = new <String>[Const.STATE_START];

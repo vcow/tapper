@@ -17,6 +17,9 @@ package commands
 
 	import starling.utils.AssetManager;
 
+	/**
+	 * Команда на смену уровня игрока.
+	 */
 	public class LevelUpCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

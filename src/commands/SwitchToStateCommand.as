@@ -9,6 +9,10 @@ package commands
 
 	import resources.AtlasLibrary;
 
+	/**
+	 * Вспомогательная команда на переключение состояния. Воспроизводит музыкальную тему, соответствующую
+	 * состоянию игры.
+	 */
 	public class SwitchToStateCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

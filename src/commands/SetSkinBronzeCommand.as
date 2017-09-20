@@ -8,6 +8,9 @@ package commands
 
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	/**
+	 * Команда на активацию Бронзового Кабинета.
+	 */
 	public class SetSkinBronzeCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

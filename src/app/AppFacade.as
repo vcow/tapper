@@ -35,6 +35,9 @@ package app
 
 	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
+	/**
+	 * Фассад приложения
+	 */
 	public class AppFacade extends Facade
 	{
 		public static const NAME:String = "appFacade";

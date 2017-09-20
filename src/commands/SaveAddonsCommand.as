@@ -11,6 +11,9 @@ package commands
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	/**
+	 * Команда на сохранение дополнительных игровых настроек.
+	 */
 	public class SaveAddonsCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

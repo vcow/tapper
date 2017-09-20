@@ -7,6 +7,9 @@ package commands
 
 	import vo.AchievementInfo;
 
+	/**
+	 * Команда на проверку получения ачивки.
+	 */
 	public class CheckAchievementsCommand extends SimpleCommand
 	{
 		private static var _isLocked:Boolean;

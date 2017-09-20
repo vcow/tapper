@@ -23,6 +23,10 @@ package commands
 	import vo.AchievementInfo;
 	import vo.Unit;
 
+	/**
+	 * Команда активации приложения. Вызывается при старте или выходе из неактивного режима. Восстанавливает
+	 * исходное состояние игры, проверяет целостность данных.
+	 */
 	public class ActivateCommand extends SerializationCommandBase
 	{
 		private var _unitsModel:UnitsProxy;

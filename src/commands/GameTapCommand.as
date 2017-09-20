@@ -17,7 +17,10 @@ package commands
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
-
+	/**
+	 * Команда нажатия на кнопку "Действовать". Рассчитывает профит, воспроизводит с определенной вероятностью
+	 * звук прадающей монетки.
+	 */
 	public class GameTapCommand extends CalcProfitCommandBase
 	{
 

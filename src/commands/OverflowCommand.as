@@ -11,6 +11,9 @@ package commands
 
 	import vo.MessageBoxData;
 
+	/**
+	 * Команда реакции на переполнение счетчика денег.
+	 */
 	public class OverflowCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

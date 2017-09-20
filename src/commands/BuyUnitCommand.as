@@ -11,6 +11,9 @@ package commands
 	import vo.Unit;
 	import vo.UnitInfo;
 
+	/**
+	 * Покупка юнита в игровом магазине.
+	 */
 	public class BuyUnitCommand extends CalcProfitCommandBase
 	{
 		override public function execute(notification:INotification):void
