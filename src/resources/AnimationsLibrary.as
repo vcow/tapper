@@ -1,5 +1,8 @@
 package resources
 {
+	/**
+	 * Библиотека DragonBones анимаций.
+	 */
 	public class AnimationsLibrary
 	{
 		[Embed(source="animations/schoolar_ske.json", mimeType="application/octet-stream")]

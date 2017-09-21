@@ -1,5 +1,8 @@
 package models
 {
+	/**
+	 * Условие на наличие у юзера определенного количества юнитов.
+	 */
 	public class UnitCondition extends ConditionBase
 	{
 		private var _unitId:String;

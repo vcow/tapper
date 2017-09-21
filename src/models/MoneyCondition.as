@@ -1,5 +1,8 @@
 package models
 {
+	/**
+	 * Условие на набор определенного количества денег.
+	 */
 	public class MoneyCondition extends ConditionBase
 	{
 		public function MoneyCondition(src:XML)

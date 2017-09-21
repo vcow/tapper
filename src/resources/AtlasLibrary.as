@@ -2,6 +2,9 @@ package resources
 {
 	import starling.utils.AssetManager;
 
+	/**
+	 * Библиотека графических ресурсов.
+	 */
 	public class AtlasLibrary
 	{
 		private static var _instance:AtlasLibrary;
@@ -13,6 +16,9 @@ package resources
 			_manager = new AssetManager();
 		}
 
+		/**
+		 * Менеджер ресурсов.
+		 */
 		public function get manager():AssetManager
 		{
 			return _manager;

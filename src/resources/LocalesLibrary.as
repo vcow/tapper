@@ -2,6 +2,9 @@ package resources
 {
 	import flash.utils.ByteArray;
 
+	/**
+	 * Библиотека локализаций.
+	 */
 	public class LocalesLibrary
 	{
 		[Embed(source="locale/en_US/common.properties", mimeType="application/octet-stream")]

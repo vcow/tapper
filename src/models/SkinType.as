@@ -1,5 +1,8 @@
 package models
 {
+	/**
+	 * Перечисление типов кабинетов.
+	 */
 	public class SkinType
 	{
 		public static const WOOD:String = "wood";

@@ -3,6 +3,9 @@ package proxy
 	import models.*;
 	import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 
+	/**
+	 * Прокси для уровней.
+	 */
 	public class LevelsProxy extends Proxy
 	{
 		public static const NAME:String = "levelsProxy";
@@ -35,11 +38,19 @@ package proxy
 			});
 		}
 
+		/**
+		 * Список уровней.
+		 */
 		public function get levels():Vector.<LevelInfo>
 		{
 			return _levels;
 		}
 
+		/**
+		 * Получить уровень по индексу.
+		 * @param index Индекс уровня.
+		 * @return Возвращает уровень с указанным индексом, или <code>null</code>, если такой не найден.
+		 */
 		public function getLevel(index:int):LevelInfo
 		{
 			for (var i:int = 0, l:int = _levels.length; i < l; i++)
@@ -50,6 +61,11 @@ package proxy
 			return null;
 		}
 
+		/**
+		 * Получить уровень по идентификатору.
+		 * @param id Идентификатор уровня.
+		 * @return Возвращает уровень с указанным идентификатором, или <code>null</code>, если такой не найден.
+		 */
 		public function getLevelById(id:String):LevelInfo
 		{
 			for (var i:int = 0, l:int = _levels.length; i < l; i++)

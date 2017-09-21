@@ -24,6 +24,9 @@ package net
 
 	[Event(name="status", type="starling.events.Event")]
 
+	/**
+	 * Соединение с магазином Google Play.
+	 */
 	public class Purchase extends EventDispatcher
 	{
 		private static var _instance:Purchase;
@@ -61,12 +64,18 @@ package net
 			}
 		}
 
+		/**
+		 * Старт мониторинга соединения с магазином.
+		 */
 		public function startMonitor():void
 		{
 			if (_monitor)
 				_monitor.start();
 		}
 
+		/**
+		 * Остановка мониторинга соединения с магазином.
+		 */
 		public function stopMonitor():void
 		{
 			if (_monitor)
@@ -89,16 +98,25 @@ package net
 			return _os;
 		}
 
+		/**
+		 * Флаг указывает, что приложение запущено под Android.
+		 */
 		protected function get isAndroid():Boolean
 		{
 			return os == 1;
 		}
 
+		/**
+		 * Флаг указывает, что приложение запущено под IOS.
+		 */
 		protected function get isIOS():Boolean
 		{
 			return os == 2;
 		}
 
+		/**
+		 * Флаг указывает, что приложение запущено на одной из поддерживаемых мобильных платформ.
+		 */
 		protected function get isMobile():Boolean
 		{
 			return os != 0;
@@ -186,6 +204,9 @@ package net
 			}
 		}
 
+		/**
+		 * Флаг указывает, что платежи в настоящее время поддерживаются / не поддерживаются.
+		 */
 		public function get isSupported():Boolean
 		{
 			return _connected && _isSupported || !isMobile;

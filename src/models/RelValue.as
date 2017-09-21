@@ -1,5 +1,9 @@
 package models
 {
+	/**
+	 * Количественное выражение профита. Профит может быть задан как абсолютное значение, так и относительное,
+	 * указываемое в процентах (n%).
+	 */
 	public class RelValue
 	{
 		public var value:Number;
@@ -12,6 +16,11 @@ package models
 			else value = Number(parts[1]);
 		}
 
+		/**
+		 * Применить профит к исходному значению.
+		 * @param value Исходное значение.
+		 * @return Возвращает значение с примененным к нему профитом.
+		 */
 		public function apply(value:Number):Number
 		{
 			if (!isNaN(this.value)) return this.value + value;

@@ -1,10 +1,12 @@
 package proxy
 {
-	import models.*;
 	import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 
 	import vo.AchievementInfo;
 
+	/**
+	 * Прокси для ачивок.
+	 */
 	public class AchievementsProxy extends Proxy
 	{
 		public static const NAME:String = "achievementsProxy";
@@ -34,11 +36,19 @@ package proxy
 			}
 		}
 
+		/**
+		 * Список ачивок.
+		 */
 		public function get achievements():Vector.<AchievementInfo>
 		{
 			return _achievements;
 		}
 
+		/**
+		 * Получить ачивку по идентификатору.
+		 * @param id Идентификатор ачивки.
+		 * @return Возвращает ачивку с указанным идентификатором, или <code>null</code>, если такой нет в списке.
+		 */
 		public function getAchievementById(id:String):AchievementInfo
 		{
 			for (var i:int = 0, l:int = _achievements.length; i < l; i++)
