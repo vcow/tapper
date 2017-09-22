@@ -11,7 +11,7 @@
         </f:layoutData>
     </f:LayoutGroup>
 
-    <f:ImageLoader id="buttonsBack" source="{AtlasLibrary.getInstance().title.getTexture('progress_back')}"
+    <f:ImageLoader id="buttonsBack" source="{atlas.getTexture('progress_back')}"
                    includeInLayout="false" touchable="false" visible="false"/>
 
     <fx:Metadata>
@@ -28,17 +28,28 @@
         import starling.core.Starling;
 
         import starling.display.Image;
+        import starling.textures.TextureAtlas;
 
         private static var _backgroundImage:Image;
 
         private var _progress:Number = 0;
         private var _expanded:Boolean;
 
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("title");
+            }
+            return _atlas;
+        }
+
         protected static function get backgroundImage():Image
         {
             if (!_backgroundImage)
             {
-                _backgroundImage = new Image(AtlasLibrary.getInstance().title.getTexture("progress_border"));
+                _backgroundImage = new Image(atlas.getTexture("progress_border"));
                 _backgroundImage.scale9Grid = new flash.geom.Rectangle(0, 15, 396, 5);
             }
             return _backgroundImage;
@@ -48,7 +59,7 @@
         {
             super.initialize();
 
-            var progressBar:Image = new Image(AtlasLibrary.getInstance().title.getTexture("progress_bar"));
+            var progressBar:Image = new Image(atlas.getTexture("progress_bar"));
             progressGroup.addChild(progressBar);
             updateProgress();
         }

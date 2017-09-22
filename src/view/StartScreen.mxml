@@ -5,7 +5,7 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup backgroundSkin="{new Image(AtlasLibrary.getInstance().title.getTexture('back'))}"
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}"
                    minWidth="576" minHeight="1024">
         <f:layout>
             <f:AnchorLayout/>
@@ -36,7 +36,8 @@
                 <f:AnchorLayoutData horizontalCenter="0" bottom="53"/>
             </f:layoutData>
 
-            <view:StartScreenProgress progress="{progress}" animationComplete="onAnimationComplete()">
+            <view:StartScreenProgress progress="{progress}" animationComplete="onAnimationComplete()"
+                                      visible="{_progressVisible}">
                 <view:layoutData>
                     <f:AnchorLayoutData bottom="0"/>
                 </view:layoutData>
@@ -76,8 +77,19 @@
         import starling.display.Image;
         import starling.events.Event;
         import starling.filters.GlowFilter;
+        import starling.textures.TextureAtlas;
 
         public static const MEDIATOR_NAME:String = "startScreenMediator";
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("title");
+            }
+            return _atlas;
+        }
 
         private var _progress:Number = 0;
 
@@ -87,6 +99,9 @@
         [Bindable]
         private var _mediator:StartScreenMediator;
 
+        [Bindable]
+        private var _progressVisible:Boolean;
+
         [Bindable(event="progressChanged")]
         public function get progress():Number
         {
@@ -95,6 +110,7 @@
 
         public function set progress(value:Number):void
         {
+            _progressVisible = true;
             if (value == _progress) return;
             _progress = value;
             dispatchEventWith("progressChanged");

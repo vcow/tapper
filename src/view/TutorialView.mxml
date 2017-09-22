@@ -1,8 +1,17 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
                autoSizeMode="stage" visible="false" touchable="false">
+    <f:layout>
+        <f:AnchorLayout/>
+    </f:layout>
 
     <f:LayoutGroup id="back" blendMode="{starling.display.BlendMode.MULTIPLY}" alpha="0.7"/>
+
+    <f:LayoutGroup id="labelContainer" width="576" height="1024">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="0" verticalCenter="0"/>
+        </f:layoutData>
+    </f:LayoutGroup>
 
     <fx:Metadata>
         [Event(name="complete", type="starling.events.Event")]
@@ -21,6 +30,7 @@
         import starling.animation.Tween;
         import starling.core.Starling;
         import starling.display.Image;
+        import starling.display.Quad;
         import starling.textures.Texture;
 
         import flash.events.MouseEvent;
@@ -89,9 +99,7 @@
             _skinTexture = createTexture(tutorialData.frames);
             back.backgroundSkin = new Image(_skinTexture);
 
-            for (var i:int = this.numChildren - 1; i > 0; --i)
-                removeChildAt(i, true);
-
+            labelContainer.removeChildren(0, -1, true);
             for each (var frame:TutorialFrame in tutorialData.frames)
             {
                 if (frame.description)
@@ -139,7 +147,8 @@
                     if (label.x + label.width > Starling.current.stage.stageWidth) label.x = Starling.current.stage.stageWidth - label.width;
                     if (label.y + label.height > Starling.current.stage.stageHeight) label.y = Starling.current.stage.stageHeight - label.height;
 
-                    addChild(label);
+                    label.includeInLayout = false;
+                    labelContainer.addChild(label);
                 }
             }
 
@@ -171,14 +180,18 @@
             canvas.graphics.drawRect(0, 0, Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
             canvas.graphics.endFill();
 
+            var offsetX:int = (Starling.current.stage.stageWidth - 576) / 2;
+            var offsetY:int = (Starling.current.stage.stageHeight - 1024) / 2;
+
             for each (var frame:TutorialFrame in frames)
             {
                 canvas.graphics.beginFill(0xffffff);
                 if (frame.cornerRadius)
-                    canvas.graphics.drawRoundRect(frame.frame.x, frame.frame.y, frame.frame.width,
+                    canvas.graphics.drawRoundRect(frame.frame.x + offsetX, frame.frame.y + offsetY, frame.frame.width,
                             frame.frame.height, frame.cornerRadius, frame.cornerRadius);
                 else
-                    canvas.graphics.drawRect(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height);
+                    canvas.graphics.drawRect(frame.frame.x + offsetX, frame.frame.y + offsetY,
+                            frame.frame.width, frame.frame.height);
                 canvas.graphics.endFill();
             }
 

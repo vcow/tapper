@@ -19,6 +19,9 @@ package resources
 	import resources.skin.ShopScrollerStyleProvider;
 	import resources.skin.WoodenShopWidgetLabelStyleProvider;
 
+	/**
+	 * Библиотека стилей для элементов UI.
+	 */
 	public class StylesLibrary
 	{
 		public static const startScreenButtonStyleProvider:ButtonStyleProviderBase = new CommonButtonStyleProvider();

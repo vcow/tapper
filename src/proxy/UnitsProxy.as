@@ -1,10 +1,12 @@
 package proxy
 {
-	import models.*;
 	import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 
 	import vo.UnitInfo;
 
+	/**
+	 * Прокси для юнитов.
+	 */
 	public class UnitsProxy extends Proxy
 	{
 		public static const NAME:String = "unitsProxy";
@@ -34,11 +36,20 @@ package proxy
 			}
 		}
 
+		/**
+		 * Список юнитов.
+		 */
 		public function get units():Vector.<UnitInfo>
 		{
 			return _units;
 		}
 
+		/**
+		 * Получить юнит по идентификатору.
+		 * @param id Идентификатор юнита.
+		 * @return Возвращает информацию по юниту с указанным идентификатором или <code>null</code>,
+		 * если такой не найден.
+		 */
 		public function getUnitById(id:String):UnitInfo
 		{
 			for (var i:int = 0, l:int = _units.length; i < l; i++)

@@ -1,5 +1,8 @@
 package models
 {
+	/**
+	 * Награда в виде профита.
+	 */
 	public class ProfitReward extends ProfitInfo implements IReward
 	{
 		public function ProfitReward(src:XML)

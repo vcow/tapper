@@ -2,6 +2,9 @@ package models
 {
 	import resources.locale.LocaleManager;
 
+	/**
+	 * Уровень
+	 */
 	public class LevelInfo
 	{
 		private var _id:int;
@@ -18,21 +21,33 @@ package models
 			_description = locale.getString('levels', src.@description) || src.@description;
 		}
 
+		/**
+		 * Идентификатор ассета.
+		 */
 		public function get assetId():String
 		{
 			return _assetId;
 		}
 
+		/**
+		 * Идентификатор уровня.
+		 */
 		public function get id():int
 		{
 			return _id;
 		}
 
+		/**
+		 * Заголовок уровня.
+		 */
 		public function get title():String
 		{
 			return _title;
 		}
 
+		/**
+		 * Описание уровня.
+		 */
 		public function get description():String
 		{
 			return _description;

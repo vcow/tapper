@@ -8,6 +8,10 @@ package commands
 
 	import starling.core.Starling;
 
+	/**
+	 * Команда на остановку игры. Игра останавливается каждый раз при выходе из Кабинета, или если юзер
+	 * не проявляет активность в течении 30 секунд.
+	 */
 	public class StopGameCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

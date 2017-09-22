@@ -11,12 +11,12 @@ package app
 	import commands.LevelUpCommand;
 	import commands.NewGameCommand;
 	import commands.OverflowCommand;
-	import commands.PopCommand;
+	import commands.SetStateCommand;
 	import commands.SaveAddonsCommand;
 	import commands.SetSkinBronzeCommand;
 	import commands.StartGameCommand;
 	import commands.StopGameCommand;
-	import commands.SwitchToCommand;
+	import commands.SwitchToStateCommand;
 	import commands.UnitPurchasedCommand;
 	import commands.UpdateActivityCommand;
 	import commands.UpdateLevelCommand;
@@ -35,6 +35,9 @@ package app
 
 	import org.puremvc.as3.multicore.patterns.facade.Facade;
 
+	/**
+	 * Фассад приложения
+	 */
 	public class AppFacade extends Facade
 	{
 		public static const NAME:String = "appFacade";
@@ -81,9 +84,9 @@ package app
 			registerCommand(Const.ACHIEVE, GetAchievementCommand);
 			registerCommand(Const.LEVEL_UP_ACTION, LevelUpCommand);
 			registerCommand(Const.SET_SKIN_BRONZE_ACTION, SetSkinBronzeCommand);
-			registerCommand(Const.POP, PopCommand);
-			registerCommand(Const.SWITCH_TO, SwitchToCommand);
-			registerCommand(Const.POP_TO_ROOT, PopCommand);
+			registerCommand(Const.POP, SetStateCommand);
+			registerCommand(Const.SWITCH_TO, SwitchToStateCommand);
+			registerCommand(Const.POP_TO_ROOT, SetStateCommand);
 			registerCommand(Const.NEW_GAME, NewGameCommand);
 			registerCommand(Const.UPDATE_LEVEL, UpdateLevelCommand);
 			registerCommand(Const.UPDATE_MONEY, UpdateMoneyCommand);

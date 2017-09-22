@@ -15,6 +15,11 @@ package commands
 
 	import vo.MessageBoxData;
 
+	/**
+	 * Команда на старт игры. Старт игры происходит только при входе в Кабинет. Здесь же запускается таймер для
+	 * подсчета профита за секунду. В таймер встроена защита, останавливающая игру, если юзер не проявляет
+	 * активность дольше 30 секунд.
+	 */
 	public class StartGameCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

@@ -1,5 +1,8 @@
 package models
 {
+	/**
+	 * Условие на определенное количество кликов по кнопке "Действовать".
+	 */
 	public class TapsCondition extends ConditionBase
 	{
 		public function TapsCondition(src:XML)

@@ -11,6 +11,9 @@ package commands
 
 	import vo.AchievementInfo;
 
+	/**
+	 * Команда на старт новой игры.
+	 */
 	public class NewGameCommand extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

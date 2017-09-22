@@ -43,6 +43,7 @@
     <!-- Identifies the ActionScript extensions used by an application. -->
     <extensions>
         <extensionID>com.pozirk.AndroidInAppPurchase</extensionID>
+        <extensionID>com.mesmotronic.ane.androidid</extensionID>
     </extensions>
 
     <!-- Settings for the application's initial window. Required. -->
@@ -227,7 +228,8 @@
                 <!--uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22"></uses-sdk-->
                 <uses-permission android:name="android.permission.INTERNET"/>
                 <uses-permission android:name="com.android.vending.BILLING"/>
-                <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+                <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
                 <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
                 <!--<uses-permission android:name="android.permission.VIBRATE"/>-->
                 <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->

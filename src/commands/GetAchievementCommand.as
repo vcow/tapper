@@ -15,6 +15,9 @@ package commands
 
 	import vo.MessageBoxData;
 
+	/**
+	 * Команда на получение ачивки.
+	 */
 	public class GetAchievementCommand extends CalcProfitCommandBase
 	{
 		override public function execute(notification:INotification):void

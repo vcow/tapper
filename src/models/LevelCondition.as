@@ -1,5 +1,8 @@
 package models
 {
+	/**
+	 * Условие на достижение игроком определенного уровня.
+	 */
 	public class LevelCondition extends ConditionBase
 	{
 		public function LevelCondition(src:XML)

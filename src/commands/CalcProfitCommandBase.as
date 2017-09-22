@@ -9,6 +9,9 @@ package commands
 
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	/**
+	 * Базовый класс для команд, подсчитывающих профит.
+	 */
 	public class CalcProfitCommandBase extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void
@@ -16,6 +19,12 @@ package commands
 			throw Error("Override this in child.");
 		}
 
+		/**
+		 * Расчет профита от нескольких юнитов.
+		 * @param list Список профитов.
+		 * @param initValue Исходное количество денег.
+		 * @return Возвращает <code>true</code>, если профит имеется, иначе <code>false</code>.
+		 */
 		protected function calcProfitList(list:Vector.<ProfitInfo>, initValue:Number = 0):Boolean
 		{
 			var inc:Number = initValue;
@@ -41,6 +50,11 @@ package commands
 			return false;
 		}
 
+		/**
+		 * Расчет профита.
+		 * @param profit Рассчитываемый профит.
+		 * @return Возвращает <code>true</code>, если профит имеется, иначе <code>false</code>.
+		 */
 		protected function calcProfit(profit:ProfitInfo):Boolean
 		{
 			var inc:Number = 0;

@@ -5,6 +5,10 @@ package commands
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
+	/**
+	 * Базовый класс для команд, поддерживающих сериализацию. Содержит алгоритм создания хеша для поддержания
+	 * целостности данных.
+	 */
 	public class SerializationCommandBase extends SimpleCommand
 	{
 		override public function execute(notification:INotification):void

@@ -8,6 +8,9 @@ package commands
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
 
+	/**
+	 * Команда тика таймера. Рассчитывает профит.
+	 */
 	public class GameTickCommand extends CalcProfitCommandBase
 	{
 		override public function execute(notification:INotification):void

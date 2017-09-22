@@ -17,6 +17,9 @@ package mediators
 
 	import view.GameScreenViewBase;
 
+	/**
+	 * Медиатор Кабинета.
+	 */
 	public class GameScreenMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.UPDATE_MONEY, Const.UPDATE_UNITS_LIST,
@@ -134,37 +137,56 @@ package mediators
 			}
 		}
 
+
 		[Bindable(event="moneyChanged")]
+		/**
+		 * Текущее количество денег.
+		 */
 		public function get money():Number
 		{
 			return _money;
 		}
 
 		[Bindable(event="unitsListChanged")]
+		/**
+		 * Текущий список юнитов.
+		 */
 		public function get unitsList():ListCollection
 		{
 			return _unitsList;
 		}
 
 		[Bindable(event="levelChanged")]
+		/**
+		 * Подпись текущего уровня игрока.
+		 */
 		public function get levelTitle():String
 		{
 			return _currentLevel ? _currentLevel.title : null;
 		}
 
 		[Bindable(event="levelChanged")]
+		/**
+		 * Описание текущего уровня игрока.
+		 */
 		public function get levelDescription():String
 		{
 			return _currentLevel ? _currentLevel.description : null;
 		}
 
 		[Bindable(event="levelChanged")]
+		/**
+		 * Идентификатор ассета для текущего уровня игрока.
+		 */
 		public function get levelAssetId():String
 		{
 			return _currentLevel ? _currentLevel.assetId : null;
 		}
 
 		[Bindable(event="godModeChanged")]
+		/**
+		 * Режим Бога (0...3)
+		 */
 		public function get godMode():int
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;

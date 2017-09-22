@@ -16,6 +16,9 @@ package mediators
 
 	import vo.UnitInfo;
 
+	/**
+	 * Медиатор виджета Магазина для Кабинета (кнопка и сообщения о доступных юнитах).
+	 */
 	public class ShopWidgetMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.UPDATE_MONEY];

@@ -7,6 +7,10 @@ package mediators
 
 	import starling.events.EventDispatcher;
 
+	/**
+	 * Базовый класс для медиаторов, содержащих Bindable поля для непосредственного использования
+	 * в mxml верстке.
+	 */
 	public class BindableMediator extends EventDispatcher implements IMediator
 	{
 		public static const NAME:String = 'Mediator';

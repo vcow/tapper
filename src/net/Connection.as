@@ -24,6 +24,9 @@ package net
 	[Event(name="busy", type="starling.events.Event")]
 	[Event(name="complete", type="starling.events.Event")]
 
+	/**
+	 * Соединение с сервером статистики.
+	 */
 	public class Connection extends EventDispatcher
 	{
 		private static var _instance:Connection;
@@ -71,11 +74,17 @@ package net
 			}
 		}
 
+		/**
+		 * Старт мониторинга подключения к серверу статистики.
+		 */
 		public function startMonitor():void
 		{
 			_monitor.start();
 		}
 
+		/**
+		 * Остановка мониторинга подключения к серверу статистики.
+		 */
 		public function stopMonitor():void
 		{
 			_monitor.stop();
@@ -86,21 +95,35 @@ package net
 			}
 		}
 
+		/**
+		 * Флаг указывает наличие / отсутствие подключения к серверу статистики.
+		 */
 		public function get connected():Boolean
 		{
 			return _connected;
 		}
 
+		/**
+		 * Флаг указывает на наличие / отсутствие необработанных запросов к серверу статистики.
+		 */
 		public function get busy():Boolean
 		{
 			return _loaders.length > 0;
 		}
 
+		/**
+		 * Получить данные статистики.
+		 */
 		public function getData():void
 		{
 			send(_url + "data/get/", null);
 		}
 
+		/**
+		 * Зарегистрировать нового игрока на сервере статистики.
+		 * @param login Логин.
+		 * @param password Пароль.
+		 */
 		public function register(login:String, password:String):void
 		{
 			var variables:URLVariables = new URLVariables();
@@ -109,6 +132,11 @@ package net
 			send(_url + "data/register/", variables);
 		}
 
+		/**
+		 * Аутентификация на сервере статистики.
+		 * @param login Логин.
+		 * @param password Пароль.
+		 */
 		public function auth(login:String, password:String):void
 		{
 			var variables:URLVariables = new URLVariables();
@@ -117,6 +145,11 @@ package net
 			send(_url + "data/auth/", variables);
 		}
 
+		/**
+		 * Передать новые данные для игрока на сервер статистики.
+		 * @param data Данные.
+		 * @param scores Новое количество набранных денег.
+		 */
 		public function setData(data:Object, scores:Number):void
 		{
 			var scoresText:String = (isNaN(scores) ? 0 : Math.floor(scores)).toString();

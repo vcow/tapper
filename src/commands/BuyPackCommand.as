@@ -17,6 +17,9 @@ package commands
 	import vo.Pack;
 	import vo.UnitInfo;
 
+	/**
+	 * Команда на покупку пака в магазине.
+	 */
 	public class BuyPackCommand extends SimpleCommand
 	{
 		private var _pack:Pack;
@@ -29,6 +32,9 @@ package commands
 			applyPack();
 		}
 
+		/**
+		 * Пак успешно куплен.
+		 */
 		private function applyPack():void
 		{
 			switch (_pack.id)

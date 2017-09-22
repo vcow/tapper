@@ -12,6 +12,9 @@ package mediators
 
 	import vo.MessageBoxData;
 
+	/**
+	 * Медиатор стартового окна.
+	 */
 	public class StartScreenMediator extends BindableMediator
 	{
 		private static var _interests:Array = [Const.UPDATE_CURRENT_GAME];
@@ -22,6 +25,9 @@ package mediators
 		}
 
 		[Bindable(event="hasCurrentGameChanged")]
+		/**
+		 * Флаг указвыает наличие / отсутствие текущей игры (возможность / невозможность продолжить игру).
+		 */
 		public function get hasCurrentGame():Boolean
 		{
 			return AppFacade(facade).gameModel.hasCurrentGame;

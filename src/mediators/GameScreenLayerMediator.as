@@ -22,6 +22,9 @@ package mediators
 
 	import vo.TutorialData;
 
+	/**
+	 * Медиатор базового слоя главного окна игры (Кабинета).
+	 */
 	public class GameScreenLayerMediator extends Mediator
 	{
 		private static var _interests:Array = [Const.SET_SKIN_BRONZE_ACTION];

@@ -8,6 +8,9 @@ package models
 
 	import vo.UnitInfo;
 
+	/**
+	 * Условие на покупку юзером юнита определенного уровня.
+	 */
 	public class TopCondition extends ConditionBase
 	{
 		private var _unitIndex:int = -1;

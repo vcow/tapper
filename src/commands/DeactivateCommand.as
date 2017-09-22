@@ -20,13 +20,23 @@ package commands
 	import vo.AchievementInfo;
 	import vo.Unit;
 
+	/**
+	 * Команда деактивации приложения. Вызывается при закрытии приложения или переходе его в неактивное состояние.
+	 * Сохраняет текущее состояние игры.
+	 */
 	public class DeactivateCommand extends SerializationCommandBase
 	{
 		override public function execute(notification:INotification):void
 		{
 			var data:String = serializeGameModel();
 			data.replace(/\n/g, File.lineEnding);
-			var file:File = File.applicationStorageDirectory;
+			try {
+				var file:File = File.documentsDirectory.resolvePath("miroed");
+				file.createDirectory();
+			}
+			catch (e:Error) {
+				file = File.applicationStorageDirectory;
+			}
 			file = file.resolvePath(Const.APP_NAME + ".state");
 			var stream:FileStream = new FileStream();
 			stream.open(file, FileMode.WRITE);

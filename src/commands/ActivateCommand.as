@@ -23,6 +23,10 @@ package commands
 	import vo.AchievementInfo;
 	import vo.Unit;
 
+	/**
+	 * Команда активации приложения. Вызывается при старте или выходе из неактивного режима. Восстанавливает
+	 * исходное состояние игры, проверяет целостность данных.
+	 */
 	public class ActivateCommand extends SerializationCommandBase
 	{
 		private var _unitsModel:UnitsProxy;
@@ -38,7 +42,13 @@ package commands
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 
-			var file:File = File.applicationStorageDirectory;
+			try {
+				var file:File = File.documentsDirectory.resolvePath("miroed");
+				file.createDirectory();
+			}
+			catch (e:Error) {
+				file = File.applicationStorageDirectory;
+			}
 			file = file.resolvePath(Const.APP_NAME + ".state");
 			if (file.exists && !file.isDirectory)
 			{
@@ -56,7 +66,13 @@ package commands
 				}
 			}
 
-			file = File.applicationStorageDirectory;
+			try {
+				file = File.documentsDirectory.resolvePath("miroed");
+				file.createDirectory();
+			}
+			catch (e:Error) {
+				file = File.applicationStorageDirectory;
+			}
 			file = file.resolvePath(Const.APP_NAME + ".addon");
 			if (file.exists && !file.isDirectory)
 			{
