@@ -6,14 +6,18 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:Label text="{title}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
+    <f:Label text="{title}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('vip_title', 36, 0x5a371b, TextFormatAlign.RIGHT, -5)}}">
+        <f:layoutData>
+            <f:AnchorLayoutData right="40" bottom="35"/>
+        </f:layoutData>
+    </f:Label>
 
     <fx:Script><![CDATA[
+        import feathers.text.BitmapFontTextFormat;
         import feathers.utils.touch.TapToTrigger;
 
         import resources.AtlasLibrary;
-
-        import resources.StylesLibrary;
 
         import starling.display.Image;
 
