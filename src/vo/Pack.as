@@ -1,8 +1,11 @@
 package vo
 {
+	import resources.AtlasLibrary;
 	import resources.locale.LocaleManager;
 
 	import starling.events.EventDispatcher;
+	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 
 	public class Pack extends EventDispatcher
 	{
@@ -10,8 +13,21 @@ package vo
 		private var _title:String;
 		private var _description:String;
 
+		private var _iconBig:Texture;
+		private var _iconSmall:Texture;
+
 		[Bindable]
 		public var  price:String = "0";
+
+		private static var _atlas:TextureAtlas;
+		private static function get atlas():TextureAtlas
+		{
+			if (!_atlas)
+			{
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("packs");
+			}
+			return _atlas;
+		}
 
 		public function Pack(id:String)
 		{
@@ -54,6 +70,18 @@ package vo
 		public function get description():String
 		{
 			return _description;
+		}
+
+		public function get iconBig():Texture
+		{
+			if (!_iconBig) _iconBig = atlas.getTexture("big/" + _id);
+			return _iconBig;
+		}
+
+		public function get iconSmall():Texture
+		{
+			if (!_iconSmall) _iconSmall = atlas.getTexture("small/" + _id);
+			return _iconSmall;
 		}
 	}
 }
