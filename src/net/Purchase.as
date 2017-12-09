@@ -23,6 +23,8 @@ package net
 	import vo.Pack;
 
 	[Event(name="status", type="starling.events.Event")]
+	[Event(name="purchaseComplete", type="starling.events.Event")]
+	[Event(name="purchaseFailed", type="starling.events.Event")]
 
 	/**
 	 * Соединение с магазином Google Play.
@@ -36,6 +38,8 @@ package net
 
 		private var _iap:InAppPurchase;
 		private var _isSupported:Boolean;
+
+		private var _isPurchased:Boolean;
 
 		private var _packsProxy:PacksProxy;
 
@@ -210,6 +214,41 @@ package net
 		public function get isSupported():Boolean
 		{
 			return _connected && _isSupported || !isMobile;
+		}
+
+		/**
+		 * Купить пак с указанным идентификатором.
+		 * @param packId идентификатор пака.
+		 */
+		public function purchase(packId:String):void
+		{
+			if (!isSupported || _isPurchased) return;
+
+			_isPurchased = true;
+
+			_iap.addEventListener(InAppPurchaseEvent.PURCHASE_SUCCESS, onPurchaseComplete);
+			_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ALREADY_OWNED, onPurchaseComplete);
+			_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ERROR, onPurchaseComplete);
+
+			_iap.purchase(packId, InAppPurchaseDetails.TYPE_INAPP);
+		}
+
+		private function onPurchaseComplete(event:InAppPurchaseEvent):void
+		{
+			_iap.removeEventListener(InAppPurchaseEvent.PURCHASE_SUCCESS, onPurchaseComplete);
+			_iap.removeEventListener(InAppPurchaseEvent.PURCHASE_ALREADY_OWNED, onPurchaseComplete);
+			_iap.removeEventListener(InAppPurchaseEvent.PURCHASE_ERROR, onPurchaseComplete);
+
+			if (event.type == InAppPurchaseEvent.PURCHASE_SUCCESS)
+			{
+				dispatchEventWith("purchaseComplete");
+			}
+			else
+			{
+				dispatchEventWith("purchaseFailed");
+			}
+
+			_isPurchased = false;
 		}
 	}
 }

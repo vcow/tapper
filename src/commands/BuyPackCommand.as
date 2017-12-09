@@ -4,12 +4,16 @@ package commands
 
 	import models.GameModel;
 
+	import net.Purchase;
+
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
 	import proxy.UnitsProxy;
 
 	import resources.locale.LocaleManager;
+
+	import starling.events.Event;
 
 	import vo.AchievementInfo;
 	import vo.MessageBoxData;
@@ -28,8 +32,30 @@ package commands
 		{
 			_pack = notification.getBody() as Pack;
 
-			// TODO:
+			var purchase:Purchase = Purchase.getInstance();
+			if (purchase.isSupported)
+			{
+				purchase.addEventListener("purchaseComplete", onPurchaseComplete);
+				purchase.addEventListener("purchaseFailed", onPurchaseFailed);
+
+				purchase.purchase(_pack.id);
+			}
+		}
+
+		private function onPurchaseComplete(event:Event):void
+		{
+			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
+			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
+
 			applyPack();
+		}
+
+		private function onPurchaseFailed(event:Event):void
+		{
+			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
+			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
+
+			// TODO:
 		}
 
 		/**
@@ -39,7 +65,7 @@ package commands
 		{
 			switch (_pack.id)
 			{
-				case "silver_fish":
+				case "qtap.silver_fish":
 					// Серебряная рыбка, профит выдается сразу в виде ачивки
 					var achievementData:XML =
 							<achievement id="silver_fish_achievement">
@@ -54,7 +80,7 @@ package commands
 					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 							LocaleManager.getInstance().getString("common", "message.x2"), null, Const.ON_OK));
 					break;
-				case "golden_fish":
+				case "qtap.golden_fish":
 					// Золотая рыбка, профит выдается сразу в виде ачивки
 					achievementData =
 							<achievement id="golden_fish_achievement">
@@ -69,19 +95,19 @@ package commands
 					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 							LocaleManager.getInstance().getString("common", "message.x3"), null, Const.ON_OK));
 					break;
-				case "silver_fish_pack":
+				case "qtap.silver_fish.pack":
 					// Аквариум серебряных рыбок, добавляется в виде лимитированного юнита
 					var unitInfo:UnitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("silver_fish");
 					sendNotification(Const.BUY, unitInfo);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
-				case "golden_fish_pack":
+				case "qtap.golden_fish.pack":
 					// Аквариум золотых рыбок, добавляется в виде лимитированного юнита
 					unitInfo = UnitsProxy(facade.retrieveProxy(UnitsProxy.NAME)).getUnitById("golden_fish");
 					sendNotification(Const.BUY, unitInfo);
 					sendNotification(Const.SWITCH_TO, Const.STATE_GAME);
 					break;
-				case "portal":
+				case "qtap.portal":
 					// Портал добавляет мультипликатор юнитов в дополнениях
 					var gameModel:GameModel = AppFacade(facade).gameModel;
 					gameModel.addonModel.multiplier += 1;
