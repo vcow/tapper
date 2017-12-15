@@ -226,11 +226,18 @@ package net
 
 			_isPurchased = true;
 
-			_iap.addEventListener(InAppPurchaseEvent.PURCHASE_SUCCESS, onPurchaseComplete);
-			_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ALREADY_OWNED, onPurchaseComplete);
-			_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ERROR, onPurchaseComplete);
+			if (_connected && _isSupported)
+			{
+				_iap.addEventListener(InAppPurchaseEvent.PURCHASE_SUCCESS, onPurchaseComplete);
+				_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ALREADY_OWNED, onPurchaseComplete);
+				_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ERROR, onPurchaseComplete);
 
-			_iap.purchase(packId, InAppPurchaseDetails.TYPE_INAPP);
+				_iap.purchase(packId, InAppPurchaseDetails.TYPE_INAPP);
+			}
+			else
+			{
+				dispatchEventWith("purchaseComplete");
+			}
 		}
 
 		private function onPurchaseComplete(event:InAppPurchaseEvent):void

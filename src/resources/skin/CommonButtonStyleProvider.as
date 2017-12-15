@@ -1,13 +1,13 @@
 package resources.skin
 {
 	import feathers.controls.Button;
+	import feathers.controls.ButtonState;
 	import feathers.events.FeathersEventType;
 	import feathers.layout.VerticalAlign;
 	import feathers.text.BitmapFontTextFormat;
 
 	import resources.AtlasLibrary;
 
-	import starling.display.ButtonState;
 	import starling.display.Image;
 	import starling.events.Event;
 	import starling.textures.TextureAtlas;

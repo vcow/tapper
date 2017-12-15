@@ -23,14 +23,14 @@ package resources.skin
 			image = new Image(atlas.getTexture("details_buy_bn_down"));
 			image.scale9Grid = rc;
 			button.downSkin = image;
-			button.paddingLeft = button.paddingRight = 16;
+			button.paddingLeft = button.paddingRight = 24;
+			button.paddingTop = 2;
 			button.maxHeight = 60;
 
-			var textFormat:BitmapFontTextFormat = new BitmapFontTextFormat("wooden_title", 28);
-			textFormat.letterSpacing = -1.5;
+			var textFormat:BitmapFontTextFormat = new BitmapFontTextFormat("currency", 28, 0x544317);
+			textFormat.letterSpacing = -0.5;
 			button.defaultLabelProperties = {
-				textFormat: textFormat,
-				scaleY: 1.1
+				textFormat: textFormat
 			};
 		}
 	}

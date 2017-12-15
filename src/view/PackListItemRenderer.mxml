@@ -20,10 +20,10 @@
         </f:layoutData>
     </f:ImageLoader>
 
-    <f:Label text="{price}" minWidth="110" scaleX="0.8"
-             textRendererProperties="{{textFormat: new BitmapFontTextFormat('currency', 32, 0xffffff, TextFormatAlign.CENTER)}}">
+    <f:Label text="{price}" minWidth="110" scaleX="0.85"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('currency', 32, 0x544317, TextFormatAlign.CENTER)}}">
         <f:layoutData>
-            <f:AnchorLayoutData left="156" top="28"/>
+            <f:AnchorLayoutData left="162" top="30"/>
         </f:layoutData>
     </f:Label>
 
