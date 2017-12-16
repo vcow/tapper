@@ -205,7 +205,11 @@ package net
 
 					if (purchaseDetails)
 					{
-
+						if (!p.consume)
+						{
+							var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+							facade.sendNotification(Const.RESTORE_PACK, p);
+						}
 					}
 				}
 			}
@@ -259,10 +263,18 @@ package net
 			}
 			else
 			{
-				if (event.type == InAppPurchaseEvent.PURCHASE_ALREADY_OWNED && _purchasedPack.consume)
+				if (event.type == InAppPurchaseEvent.PURCHASE_ALREADY_OWNED)
 				{
-					consume(_purchasedPack.id);
-					return;
+					if (_purchasedPack.consume)
+					{
+						consume(_purchasedPack.id);
+						return;
+					}
+					else
+					{
+						var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
+						facade.sendNotification(Const.RESTORE_PACK, _purchasedPack);
+					}
 				}
 				dispatchEventWith("purchaseFailed");
 			}

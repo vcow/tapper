@@ -55,7 +55,8 @@ package commands
 			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
 			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
 
-			// TODO:
+			sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+					LocaleManager.getInstance().getString("common", "message.purchase.failed"), null, Const.ON_OK));
 		}
 
 		/**
@@ -113,6 +114,8 @@ package commands
 					gameModel.addonModel.multiplier += 1;
 					sendNotification(Const.UPDATE_MULTIPLIER, gameModel.addonModel.multiplier);
 					sendNotification(Const.SAVE_ADDONS);
+					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+							LocaleManager.getInstance().getString("common", "message.portal"), null, Const.ON_OK));
 					break;
 				default:
 					throw Error("Unsupported pack " + _pack.id + ".");

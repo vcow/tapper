@@ -6,6 +6,7 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.system.Capabilities;
 
 	import resources.LocalesLibrary;
 	import resources.locale.LocaleManager;
@@ -52,7 +53,14 @@ package
 			if (!success)
 				throw Error("LocaleManager initialization failed.");
 
-			LocaleManager.getInstance().localeChain = ["ru_RU"];
+			switch (Capabilities.language)
+			{
+				case "ru":
+					LocaleManager.getInstance().localeChain = ["ru_RU"];
+					break;
+				default:
+					LocaleManager.getInstance().localeChain = ["en_US"];
+			}
 
 			_starling = new Starling(MainScreen, stage);
 

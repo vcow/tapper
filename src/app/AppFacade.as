@@ -11,6 +11,7 @@ package app
 	import commands.LevelUpCommand;
 	import commands.NewGameCommand;
 	import commands.OverflowCommand;
+	import commands.RestorePackCommand;
 	import commands.SetStateCommand;
 	import commands.SaveAddonsCommand;
 	import commands.SetSkinBronzeCommand;
@@ -81,6 +82,7 @@ package app
 			registerCommand(Const.STOP_GAME, StopGameCommand);
 			registerCommand(Const.BUY, BuyUnitCommand);
 			registerCommand(Const.BUY_PACK, BuyPackCommand);
+			registerCommand(Const.RESTORE_PACK, RestorePackCommand);
 			registerCommand(Const.ACHIEVE, GetAchievementCommand);
 			registerCommand(Const.LEVEL_UP_ACTION, LevelUpCommand);
 			registerCommand(Const.SET_SKIN_BRONZE_ACTION, SetSkinBronzeCommand);

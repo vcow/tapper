@@ -36,6 +36,7 @@ package
 
 		public static const BUY:String = "notifyBuy";
 		public static const BUY_PACK:String = "notifyBuyPack";
+		public static const RESTORE_PACK:String = "notifyRestorePack";
 
 		public static const ACHIEVE:String = "notifyAchieve";
 
