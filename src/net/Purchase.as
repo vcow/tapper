@@ -25,6 +25,8 @@ package net
 	[Event(name="status", type="starling.events.Event")]
 	[Event(name="purchaseComplete", type="starling.events.Event")]
 	[Event(name="purchaseFailed", type="starling.events.Event")]
+	[Event(name="consumeComplete", type="starling.events.Event")]
+	[Event(name="consumeFailed", type="starling.events.Event")]
 
 	/**
 	 * Соединение с магазином Google Play.
@@ -39,7 +41,8 @@ package net
 		private var _iap:InAppPurchase;
 		private var _isSupported:Boolean;
 
-		private var _isPurchased:Boolean;
+		private var _purchasedPack:Pack;
+		private var _isConsumed:Boolean;
 
 		private var _packsProxy:PacksProxy;
 
@@ -218,13 +221,13 @@ package net
 
 		/**
 		 * Купить пак с указанным идентификатором.
-		 * @param packId идентификатор пака.
+		 * @param pack покупаемый пак.
 		 */
-		public function purchase(packId:String):void
+		public function purchase(pack:Pack):void
 		{
-			if (!isSupported || _isPurchased) return;
+			if (!isSupported || _purchasedPack) return;
 
-			_isPurchased = true;
+			_purchasedPack = pack;
 
 			if (_connected && _isSupported)
 			{
@@ -232,7 +235,7 @@ package net
 				_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ALREADY_OWNED, onPurchaseComplete);
 				_iap.addEventListener(InAppPurchaseEvent.PURCHASE_ERROR, onPurchaseComplete);
 
-				_iap.purchase(packId, InAppPurchaseDetails.TYPE_INAPP);
+				_iap.purchase(pack.id, InAppPurchaseDetails.TYPE_INAPP);
 			}
 			else
 			{
@@ -249,13 +252,78 @@ package net
 			if (event.type == InAppPurchaseEvent.PURCHASE_SUCCESS)
 			{
 				dispatchEventWith("purchaseComplete");
+				if (_purchasedPack.consume)
+				{
+					consume(_purchasedPack.id);
+				}
 			}
 			else
 			{
+				if (event.type == InAppPurchaseEvent.PURCHASE_ALREADY_OWNED && _purchasedPack.consume)
+				{
+					consume(_purchasedPack.id);
+					return;
+				}
 				dispatchEventWith("purchaseFailed");
 			}
 
-			_isPurchased = false;
+			_purchasedPack = null;
+		}
+
+		/**
+		 * Использовать купленный ранее пак.
+		 * @param packId Идентификатор пака.
+		 */
+		public function consume(packId:String):void
+		{
+			if (!(isSupported || _purchasedPack) || _isConsumed) return;
+
+			_isConsumed = true;
+
+			if ((_connected || _purchasedPack) && _isSupported)
+			{
+				_iap.addEventListener(InAppPurchaseEvent.CONSUME_SUCCESS, onConsumeComplete);
+				_iap.addEventListener(InAppPurchaseEvent.CONSUME_ERROR, onConsumeComplete);
+
+				_iap.consume(packId);
+			}
+			else
+			{
+				dispatchEventWith("consumeComplete");
+			}
+		}
+
+		private function onConsumeComplete(event:InAppPurchaseEvent):void
+		{
+			_iap.addEventListener(InAppPurchaseEvent.CONSUME_SUCCESS, onConsumeComplete);
+			_iap.addEventListener(InAppPurchaseEvent.CONSUME_ERROR, onConsumeComplete);
+
+			_isConsumed = false;
+
+			if (event.type == InAppPurchaseEvent.CONSUME_SUCCESS)
+			{
+				if (_purchasedPack)
+				{
+					var pack:Pack = _purchasedPack;
+					_purchasedPack = null;
+					purchase(pack);
+				}
+				else
+				{
+					dispatchEventWith("consumeComplete");
+				}
+			}
+			else
+			{
+				if (_purchasedPack)
+				{
+					onPurchaseComplete(event);
+				}
+				else
+				{
+					dispatchEventWith("consumeFailed");
+				}
+			}
 		}
 	}
 }

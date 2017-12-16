@@ -12,6 +12,7 @@ package vo
 		private var _id:String;
 		private var _title:String;
 		private var _description:String;
+		private var _consume:Boolean;
 
 		private var _iconBig:Texture;
 		private var _iconSmall:Texture;
@@ -29,12 +30,13 @@ package vo
 			return _atlas;
 		}
 
-		public function Pack(id:String)
+		public function Pack(id:String, consume:Boolean)
 		{
 			super();
 
 			var lm:LocaleManager = LocaleManager.getInstance();
 			_id = id;
+			_consume = consume;
 			title = "";
 			description = "";
 		}
@@ -42,6 +44,11 @@ package vo
 		public function get id():String
 		{
 			return _id;
+		}
+
+		public function get consume():Boolean
+		{
+			return _consume;
 		}
 
 		public function set title(value:String):void

@@ -25,11 +25,11 @@ package proxy
 			if (!_packs)
 			{
 				_packs = new Vector.<Pack>();
-				_packs.push(new Pack("qtap.silver_fish"));
-				_packs.push(new Pack("qtap.golden_fish"));
-				_packs.push(new Pack("qtap.silver_fish.pack"));
-				_packs.push(new Pack("qtap.golden_fish.pack"));
-				_packs.push(new Pack("qtap.portal"));
+				_packs.push(new Pack("qtap.silver_fish", true));
+				_packs.push(new Pack("qtap.golden_fish", true));
+				_packs.push(new Pack("qtap.silver_fish.pack", false));
+				_packs.push(new Pack("qtap.golden_fish.pack", true));
+				_packs.push(new Pack("qtap.portal", true));
 //				_packs.push(new Pack("qtap.bronze.room"));
 //				_packs.push(new Pack("qtap.silver.room"));
 //				_packs.push(new Pack("qtap.golden.room"));

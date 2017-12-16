@@ -38,7 +38,7 @@ package commands
 				purchase.addEventListener("purchaseComplete", onPurchaseComplete);
 				purchase.addEventListener("purchaseFailed", onPurchaseFailed);
 
-				purchase.purchase(_pack.id);
+				purchase.purchase(_pack);
 			}
 		}
 
