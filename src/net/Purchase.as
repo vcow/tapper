@@ -42,7 +42,7 @@ package net
 		private var _isSupported:Boolean;
 
 		private var _purchasedPack:Pack;
-		private var _isConsumed:Boolean;
+		private var _consumedPack:Pack;
 
 		private var _packsProxy:PacksProxy;
 
@@ -191,6 +191,7 @@ package net
 
 			if (event.type == InAppPurchaseEvent.RESTORE_SUCCESS)
 			{
+				var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
 				for each (var p:Pack in packsProxy.packs)
 				{
 					var skuDetails:InAppSkuDetails = _iap.getSkuDetails(p.id);
@@ -205,11 +206,7 @@ package net
 
 					if (purchaseDetails)
 					{
-						if (!p.consume)
-						{
-							var facade:AppFacade = Facade.getInstance(AppFacade.NAME) as AppFacade;
-							facade.sendNotification(Const.RESTORE_PACK, p);
-						}
+						facade.sendNotification(Const.RESTORE_PACK, p);
 					}
 				}
 			}
@@ -243,7 +240,9 @@ package net
 			}
 			else
 			{
+				_purchasedPack.isPurchased = true;
 				dispatchEventWith("purchaseComplete");
+				_purchasedPack = null;
 			}
 		}
 
@@ -255,19 +254,16 @@ package net
 
 			if (event.type == InAppPurchaseEvent.PURCHASE_SUCCESS)
 			{
+				_purchasedPack.isPurchased = true;
 				dispatchEventWith("purchaseComplete");
-				if (_purchasedPack.consume)
-				{
-					consume(_purchasedPack.id);
-				}
 			}
 			else
 			{
 				if (event.type == InAppPurchaseEvent.PURCHASE_ALREADY_OWNED)
 				{
-					if (_purchasedPack.consume)
+					if (_purchasedPack.isConsumable)
 					{
-						consume(_purchasedPack.id);
+						consume(_purchasedPack);
 						return;
 					}
 					else
@@ -284,24 +280,26 @@ package net
 
 		/**
 		 * Использовать купленный ранее пак.
-		 * @param packId Идентификатор пака.
+		 * @param pack Используемый пак.
 		 */
-		public function consume(packId:String):void
+		public function consume(pack:Pack):void
 		{
-			if (!(isSupported || _purchasedPack) || _isConsumed) return;
+			if (!isSupported || _consumedPack) return;
 
-			_isConsumed = true;
+			_consumedPack = pack;
 
-			if ((_connected || _purchasedPack) && _isSupported)
+			if (_connected && _isSupported)
 			{
 				_iap.addEventListener(InAppPurchaseEvent.CONSUME_SUCCESS, onConsumeComplete);
 				_iap.addEventListener(InAppPurchaseEvent.CONSUME_ERROR, onConsumeComplete);
 
-				_iap.consume(packId);
+				_iap.consume(pack.id);
 			}
 			else
 			{
+				_consumedPack.isPurchased = false;
 				dispatchEventWith("consumeComplete");
+				_consumedPack = null;
 			}
 		}
 
@@ -310,32 +308,25 @@ package net
 			_iap.addEventListener(InAppPurchaseEvent.CONSUME_SUCCESS, onConsumeComplete);
 			_iap.addEventListener(InAppPurchaseEvent.CONSUME_ERROR, onConsumeComplete);
 
-			_isConsumed = false;
-
 			if (event.type == InAppPurchaseEvent.CONSUME_SUCCESS)
 			{
+				_consumedPack.isPurchased = false;
+
 				if (_purchasedPack)
 				{
 					var pack:Pack = _purchasedPack;
 					_purchasedPack = null;
 					purchase(pack);
 				}
-				else
-				{
-					dispatchEventWith("consumeComplete");
-				}
+
+				dispatchEventWith("consumeComplete");
 			}
 			else
 			{
-				if (_purchasedPack)
-				{
-					onPurchaseComplete(event);
-				}
-				else
-				{
-					dispatchEventWith("consumeFailed");
-				}
+				dispatchEventWith("consumeFailed");
 			}
+
+			_consumedPack = null;
 		}
 	}
 }

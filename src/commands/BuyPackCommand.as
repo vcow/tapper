@@ -17,7 +17,6 @@ package commands
 
 	import vo.AchievementInfo;
 	import vo.MessageBoxData;
-
 	import vo.Pack;
 	import vo.UnitInfo;
 
@@ -26,15 +25,29 @@ package commands
 	 */
 	public class BuyPackCommand extends SimpleCommand
 	{
+		private static var _waitForBillingAction:Boolean;
 		private var _pack:Pack;
 
 		override public function execute(notification:INotification):void
 		{
+			if (_waitForBillingAction)
+			{
+				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+						LocaleManager.getInstance().getString("common", "message.wait.for.billing"), null, Const.ON_OK));
+				return;
+			}
+
 			_pack = notification.getBody() as Pack;
+			if (_pack.isConsumable && _pack.isPurchased)
+			{
+				applyPack();
+				return;
+			}
 
 			var purchase:Purchase = Purchase.getInstance();
 			if (purchase.isSupported)
 			{
+				_waitForBillingAction = true;
 				purchase.addEventListener("purchaseComplete", onPurchaseComplete);
 				purchase.addEventListener("purchaseFailed", onPurchaseFailed);
 
@@ -44,6 +57,7 @@ package commands
 
 		private function onPurchaseComplete(event:Event):void
 		{
+			_waitForBillingAction = false;
 			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
 			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
 
@@ -52,6 +66,7 @@ package commands
 
 		private function onPurchaseFailed(event:Event):void
 		{
+			_waitForBillingAction = false;
 			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
 			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
 
@@ -119,6 +134,50 @@ package commands
 					break;
 				default:
 					throw Error("Unsupported pack " + _pack.id + ".");
+			}
+
+			if (_pack.isConsumable)
+			{
+				_pack.isPurchased = false;
+				consumePack();
+			}
+		}
+
+		private function consumePack():void
+		{
+			var purchase:Purchase = Purchase.getInstance();
+			if (purchase.isSupported)
+			{
+				_waitForBillingAction = true;
+				purchase.addEventListener("consumeComplete", onConsumeComplete);
+				purchase.addEventListener("consumeFailed", onConsumeComplete);
+
+				purchase.consume(_pack);
+			}
+			else
+			{
+				purchase.addEventListener("status", onPurchaseStatusChanged);
+			}
+		}
+
+		private function onPurchaseStatusChanged(event:Event):void
+		{
+			event.target.removeEventListener("status", onPurchaseStatusChanged);
+			consumePack();
+		}
+
+		private function onConsumeComplete(event:Event):void
+		{
+			var purchase:Purchase = Purchase(event.target);
+
+			_waitForBillingAction = false;
+			purchase.removeEventListener("consumeComplete", onConsumeComplete);
+			purchase.removeEventListener("consumeFailed", onConsumeComplete);
+
+			if (event.type == "consumeFailed")
+			{
+				trace("Failed to consume pack", _pack.id);
+				consumePack();
 			}
 		}
 	}

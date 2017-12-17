@@ -16,7 +16,11 @@ package commands
 		{
 			_pack = notification.getBody() as Pack;
 
-			// TODO:
+			_pack.isPurchased = true;
+			switch (_pack.id)
+			{
+				// TODO:
+			}
 		}
 	}
 }

@@ -12,13 +12,15 @@ package vo
 		private var _id:String;
 		private var _title:String;
 		private var _description:String;
-		private var _consume:Boolean;
+		private var _isConsumable:Boolean;
 
 		private var _iconBig:Texture;
 		private var _iconSmall:Texture;
 
 		[Bindable]
 		public var  price:String = "0";
+
+		public var isPurchased:Boolean;
 
 		private static var _atlas:TextureAtlas;
 		private static function get atlas():TextureAtlas
@@ -36,7 +38,7 @@ package vo
 
 			var lm:LocaleManager = LocaleManager.getInstance();
 			_id = id;
-			_consume = consume;
+			_isConsumable = consume;
 			title = "";
 			description = "";
 		}
@@ -46,9 +48,9 @@ package vo
 			return _id;
 		}
 
-		public function get consume():Boolean
+		public function get isConsumable():Boolean
 		{
-			return _consume;
+			return _isConsumable;
 		}
 
 		public function set title(value:String):void
