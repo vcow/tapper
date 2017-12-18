@@ -25,7 +25,7 @@ package commands
 	 */
 	public class BuyPackCommand extends SimpleCommand
 	{
-		private static var _waitForBillingAction:Boolean;
+		private static var _waitForBillingAction:BuyPackCommand;
 		private var _pack:Pack;
 
 		override public function execute(notification:INotification):void
@@ -47,7 +47,7 @@ package commands
 			var purchase:Purchase = Purchase.getInstance();
 			if (purchase.isSupported)
 			{
-				_waitForBillingAction = true;
+				_waitForBillingAction = this;
 				purchase.addEventListener("purchaseComplete", onPurchaseComplete);
 				purchase.addEventListener("purchaseFailed", onPurchaseFailed);
 
@@ -57,7 +57,7 @@ package commands
 
 		private function onPurchaseComplete(event:Event):void
 		{
-			_waitForBillingAction = false;
+			_waitForBillingAction = null;
 			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
 			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
 
@@ -66,7 +66,7 @@ package commands
 
 		private function onPurchaseFailed(event:Event):void
 		{
-			_waitForBillingAction = false;
+			_waitForBillingAction = null;
 			event.target.removeEventListener("purchaseComplete", onPurchaseComplete);
 			event.target.removeEventListener("purchaseFailed", onPurchaseFailed);
 
@@ -148,7 +148,7 @@ package commands
 			var purchase:Purchase = Purchase.getInstance();
 			if (purchase.isSupported)
 			{
-				_waitForBillingAction = true;
+				_waitForBillingAction = this;
 				purchase.addEventListener("consumeComplete", onConsumeComplete);
 				purchase.addEventListener("consumeFailed", onConsumeComplete);
 
@@ -170,13 +170,13 @@ package commands
 		{
 			var purchase:Purchase = Purchase(event.target);
 
-			_waitForBillingAction = false;
+			_waitForBillingAction = null;
 			purchase.removeEventListener("consumeComplete", onConsumeComplete);
 			purchase.removeEventListener("consumeFailed", onConsumeComplete);
 
 			if (event.type == "consumeFailed")
 			{
-				trace("Failed to consume pack", _pack.id);
+				trace("-- Failed to consume pack", _pack.id);
 				consumePack();
 			}
 		}

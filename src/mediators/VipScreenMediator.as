@@ -94,7 +94,7 @@ package mediators
 		private function onBuyPack(event:Event):void
 		{
 			var pack:Pack = event.data as Pack;
-			if (pack)
+			if (pack && !Purchase.getInstance().waitingForAnswer)
 			{
 				sendNotification(Const.BUY_PACK, pack);
 			}

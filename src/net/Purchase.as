@@ -36,6 +36,7 @@ package net
 		private static var _instance:Purchase;
 
 		private var _monitor:URLMonitor;
+		private var _isMonitoring:Boolean;
 		private var _connected:Boolean;
 
 		private var _iap:InAppPurchase;
@@ -76,6 +77,8 @@ package net
 		 */
 		public function startMonitor():void
 		{
+			if (_isMonitoring) return;
+
 			if (_monitor)
 				_monitor.start();
 		}
@@ -85,6 +88,8 @@ package net
 		 */
 		public function stopMonitor():void
 		{
+			if (!_isMonitoring || waitingForAnswer) return;
+
 			if (_monitor)
 				_monitor.stop();
 
@@ -93,6 +98,14 @@ package net
 				_connected = false;
 				dispatchEventWith("status", false, "unsupported");
 			}
+		}
+
+		/**
+		 * Платежная система ожидает ответ от сервера.
+		 */
+		public function get waitingForAnswer():Boolean
+		{
+			return _purchasedPack || _consumedPack;
 		}
 
 		private function get os():int
