@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:view="view.*">
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:view="view.*"
+               removedFromStage="onRemovedFromStage()">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
@@ -61,6 +62,8 @@
 
         public static const MEDIATOR_NAME:String = "vipScreenMediator";
 
+        private var _purchasePopup:BuyPackPopup;
+
         private static var _atlas:TextureAtlas;
         private static function get atlas():TextureAtlas
         {
@@ -105,20 +108,32 @@
 
         private function onSelectPack(event:starling.events.Event):void
         {
+            if (_purchasePopup) return;
+
             var pack:Pack = event.data as Pack;
             if (pack)
             {
-                var popup:BuyPackPopup = new BuyPackPopup();
-                popup.pack = pack;
-                popup.addEventListener(starling.events.Event.CLOSE, function (event:starling.events.Event):void
+                _purchasePopup = new BuyPackPopup();
+                _purchasePopup.pack = pack;
+                _purchasePopup.addEventListener(starling.events.Event.CLOSE, function (event:starling.events.Event):void
                 {
-                    popup.removeEventListener(starling.events.Event.CLOSE, arguments.callee);
+                    _purchasePopup.removeEventListener(starling.events.Event.CLOSE, arguments.callee);
+                    _purchasePopup = null;
+
                     if (event.data == Const.ON_OK)
                     {
                         dispatchEventWith("buyPack", false, pack);
                     }
                 });
-                WindowManager.getInstance().openWindow(popup, true);
+                WindowManager.getInstance().openWindow(_purchasePopup, true);
+            }
+        }
+
+        private function onRemovedFromStage():void
+        {
+            if (_purchasePopup)
+            {
+                _purchasePopup.close(Const.ON_CANCEL);
             }
         }
         ]]></fx:Script>

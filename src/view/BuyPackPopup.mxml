@@ -8,7 +8,7 @@
 
     <f:Button defaultSkin="{new Image(atlas.getTexture('details_close_bn_normal'))}"
               downSkin="{new Image(atlas.getTexture('details_close_bn_down'))}"
-              triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}">
+              triggered="close(Const.ON_CANCEL)">
         <f:layoutData>
             <f:AnchorLayoutData top="15" right="25"/>
         </f:layoutData>
@@ -40,7 +40,7 @@
         </f:Label>
 
         <f:Button styleProvider="{StylesLibrary.buyPackButtonStyleProvider}" label="{buyBnLabel}"
-                  triggered="{dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"/>
+                  triggered="close(Const.ON_OK)"/>
     </f:LayoutGroup>
 
     <fx:Metadata>
@@ -93,6 +93,11 @@
                 icon = value.iconBig;
                 buyBnLabel = LocaleManager.getInstance().getString("common", "vip.buy.button.label") + " " + value.price;
             }
+        }
+
+        public function close(result:uint):void
+        {
+            dispatchEventWith(starling.events.Event.CLOSE, false, result);
         }
         ]]></fx:Script>
 </f:LayoutGroup>

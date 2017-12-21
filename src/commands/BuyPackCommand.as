@@ -2,6 +2,10 @@ package commands
 {
 	import app.AppFacade;
 
+	import flash.events.TimerEvent;
+
+	import flash.utils.Timer;
+
 	import models.GameModel;
 
 	import net.Purchase;
@@ -27,6 +31,8 @@ package commands
 	{
 		private static var _waitForBillingAction:BuyPackCommand;
 		private var _pack:Pack;
+
+		private var _waitForActiveTimer:Timer;
 
 		override public function execute(notification:INotification):void
 		{
@@ -79,6 +85,13 @@ package commands
 		 */
 		private function applyPack():void
 		{
+			var gameModel:GameModel = AppFacade(facade).gameModel;
+			if (!gameModel.isActive)
+			{
+				WaitForActive();
+				return;
+			}
+
 			switch (_pack.id)
 			{
 				case "qtap.silver_fish":
@@ -125,7 +138,6 @@ package commands
 					break;
 				case "qtap.portal":
 					// Портал добавляет мультипликатор юнитов в дополнениях
-					var gameModel:GameModel = AppFacade(facade).gameModel;
 					gameModel.addonModel.multiplier += 1;
 					sendNotification(Const.UPDATE_MULTIPLIER, gameModel.addonModel.multiplier);
 					sendNotification(Const.SAVE_ADDONS);
@@ -179,6 +191,26 @@ package commands
 				trace("-- Failed to consume pack", _pack.id);
 				consumePack();
 			}
+		}
+
+		private function WaitForActive():void
+		{
+			if (_waitForActiveTimer || _waitForBillingAction != this) return;
+
+			_waitForActiveTimer = new Timer(30);
+			_waitForActiveTimer.addEventListener(TimerEvent.TIMER, onWaitForActiveTimer);
+			_waitForActiveTimer.start();
+		}
+
+		private function onWaitForActiveTimer(event:TimerEvent):void
+		{
+			if (!AppFacade(facade).gameModel.isActive) return;
+
+			_waitForActiveTimer.removeEventListener(TimerEvent.TIMER, onWaitForActiveTimer);
+			_waitForActiveTimer.stop();
+			_waitForActiveTimer = null;
+
+			applyPack();
 		}
 	}
 }
