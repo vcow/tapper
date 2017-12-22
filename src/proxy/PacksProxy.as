@@ -27,9 +27,9 @@ package proxy
 				_packs = new Vector.<Pack>();
 				_packs.push(new Pack("qtap.silver_fish", true));
 				_packs.push(new Pack("qtap.golden_fish", true));
-				_packs.push(new Pack("qtap.silver_fish.pack", false));
+				_packs.push(new Pack("qtap.silver_fish.pack", true));
 				_packs.push(new Pack("qtap.golden_fish.pack", true));
-				_packs.push(new Pack("qtap.portal", true));
+				_packs.push(new Pack("qtap.portal", false));
 //				_packs.push(new Pack("qtap.bronze.room"));
 //				_packs.push(new Pack("qtap.silver.room"));
 //				_packs.push(new Pack("qtap.golden.room"));

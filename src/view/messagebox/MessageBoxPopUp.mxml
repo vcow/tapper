@@ -1,21 +1,22 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
                removedFromStage="onRemovedFromStage()">
+    <f:backgroundSkin>
+        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}">
+            <f:layout>
+                <f:VerticalLayout padding="6"/>
+            </f:layout>
+            <f:LayoutGroup backgroundSkin="{borderImage}" touchable="false">
+                <f:layoutData>
+                    <f:VerticalLayoutData percentWidth="100" percentHeight="100"/>
+                </f:layoutData>
+            </f:LayoutGroup>
+        </f:LayoutGroup>
+    </f:backgroundSkin>
+
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
-
-    <f:ImageLoader source="{atlas.getTexture('back')}">
-        <f:layoutData>
-            <f:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
-        </f:layoutData>
-    </f:ImageLoader>
-
-    <f:LayoutGroup backgroundSkin="{borderImage}" touchable="false">
-        <f:layoutData>
-            <f:AnchorLayoutData left="6" right="6" top="6" bottom="6"/>
-        </f:layoutData>
-    </f:LayoutGroup>
 
     <f:LayoutGroup>
         <f:layout>

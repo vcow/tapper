@@ -153,6 +153,8 @@ package commands
 				_pack.isPurchased = false;
 				consumePack();
 			}
+
+			sendNotification(Const.UPDATE_PACKS_LIST);
 		}
 
 		private function consumePack():void
@@ -195,7 +197,7 @@ package commands
 
 		private function WaitForActive():void
 		{
-			if (_waitForActiveTimer || _waitForBillingAction != this) return;
+			if (_waitForActiveTimer) return;
 
 			_waitForActiveTimer = new Timer(30);
 			_waitForActiveTimer.addEventListener(TimerEvent.TIMER, onWaitForActiveTimer);

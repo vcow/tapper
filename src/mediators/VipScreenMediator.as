@@ -1,10 +1,10 @@
 package mediators
 {
-	import app.AppFacade;
-
 	import feathers.data.ListCollection;
 
 	import net.Purchase;
+
+	import org.puremvc.as3.multicore.interfaces.INotification;
 
 	import proxy.PacksProxy;
 
@@ -15,7 +15,6 @@ package mediators
 	import view.VipScreen;
 
 	import vo.MessageBoxData;
-
 	import vo.Pack;
 
 	/**
@@ -23,11 +22,16 @@ package mediators
 	 */
 	public class VipScreenMediator extends BindableMediator
 	{
-		private var _packList:ListCollection;
+		private static var _interests:Array = [Const.UPDATE_PACKS_LIST];
 
 		public function VipScreenMediator(mediatorName:String = null, viewComponent:Object = null)
 		{
 			super(mediatorName, viewComponent);
+		}
+
+		override public function listNotificationInterests():Array
+		{
+			return _interests;
 		}
 
 		override public function onRegister():void
@@ -42,15 +46,6 @@ package mediators
 
 				vipScreen.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				if (vipScreen.stage) onAddedToStage(null);
-
-//				var gameModel:GameModel = AppFacade(facade).gameModel;
-//
-//				_money = Math.round(gameModel.money);
-//				dispatchEventWith("moneyChanged");
-//
-//				var unitsProxy:UnitsProxy = facade.retrieveProxy(UnitsProxy.NAME) as UnitsProxy;
-//				_unitsList = new ListCollection(unitsProxy.units);
-//				dispatchEventWith("unitsListChanged");
 			}
 		}
 
@@ -86,6 +81,16 @@ package mediators
 			}
 		}
 
+		override public function handleNotification(notification:INotification):void
+		{
+			switch (notification.getName())
+			{
+				case Const.UPDATE_PACKS_LIST:
+					dispatchEventWith("packsListChanged");
+					break;
+			}
+		}
+
 		private function onBack(event:Event):void
 		{
 			sendNotification(Const.POP);
@@ -100,14 +105,21 @@ package mediators
 			}
 		}
 
+		[Bindable(event="packsListChanged")]
+		/**
+		 * Список доступных для покупки товаров.
+		 */
 		public function get packList():ListCollection
 		{
-			if (!_packList)
+			var packsProxy:PacksProxy = PacksProxy(facade.retrieveProxy(PacksProxy.NAME));
+			var packList:ListCollection = new ListCollection();
+			for (var i:int = 0, l:int = packsProxy.packs.length; i < l; i++)
 			{
-				var packsProxy:PacksProxy = PacksProxy(facade.retrieveProxy(PacksProxy.NAME));
-				_packList = new ListCollection(packsProxy.packs);
+				var pack:Pack = packsProxy.packs[i];
+				if (!pack.isConsumable && pack.isPurchased) continue;
+				packList.addItem(pack);
 			}
-			return _packList;
+			return packList;
 		}
 
 		private function onAddedToStage(event:Event):void
@@ -127,10 +139,10 @@ package mediators
 
 		private function onPurchaseStatusChanged(event:Event):void
 		{
-			dispatchEventWith("shopAvailable");
+			dispatchEventWith("shopAvailableChanged");
 		}
 
-		[Bindable(event="shopAvailable")]
+		[Bindable(event="shopAvailableChanged")]
 		/**
 		 * Флаг магазин доступен / недоступен
 		 */
