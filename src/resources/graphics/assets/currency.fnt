@@ -4,7 +4,7 @@
   <pages>
     <page id="0" file="currency.png"/>
   </pages>
-  <chars count="179">
+  <chars count="180">
     <char id="1040" x="2" y="2" width="28" height="29" xoffset="-2" yoffset="8" xadvance="28" page="0" chnl="15"/>
     <char id="1041" x="2" y="33" width="29" height="28" xoffset="-1" yoffset="8" xadvance="27" page="0" chnl="15"/>
     <char id="1042" x="32" y="2" width="29" height="28" xoffset="-1" yoffset="8" xadvance="28" page="0" chnl="15"/>
@@ -132,6 +132,7 @@
     <char id="56" x="356" y="197" width="19" height="29" xoffset="2" yoffset="8" xadvance="21" page="0" chnl="15"/>
     <char id="57" x="2" y="238" width="19" height="30" xoffset="2" yoffset="8" xadvance="21" page="0" chnl="15"/>
     <char id="48" x="399" y="181" width="19" height="29" xoffset="2" yoffset="8" xadvance="21" page="0" chnl="15"/>
+    <char id="32" x="356" y="193" width="0" height="0" xoffset="0" yoffset="36" xadvance="11" page="0" chnl="15"/>
     <char id="45" x="365" y="62" width="14" height="5" xoffset="0" yoffset="25" xadvance="14" page="0" chnl="15"/>
     <char id="43" x="285" y="212" width="23" height="23" xoffset="2" yoffset="11" xadvance="24" page="0" chnl="15"/>
     <char id="61" x="444" y="151" width="23" height="10" xoffset="2" yoffset="18" xadvance="24" page="0" chnl="15"/>
