@@ -2,6 +2,7 @@ package app
 {
 	import commands.ActionGodModeCommand;
 	import commands.ActivateCommand;
+	import commands.ApplyPackCommand;
 	import commands.BuyPackCommand;
 	import commands.BuyUnitCommand;
 	import commands.DeactivateCommand;
@@ -83,6 +84,7 @@ package app
 			registerCommand(Const.BUY, BuyUnitCommand);
 			registerCommand(Const.BUY_PACK, BuyPackCommand);
 			registerCommand(Const.RESTORE_PACK, RestorePackCommand);
+			registerCommand(Const.APPLY_PACK, ApplyPackCommand);
 			registerCommand(Const.ACHIEVE, GetAchievementCommand);
 			registerCommand(Const.LEVEL_UP_ACTION, LevelUpCommand);
 			registerCommand(Const.SET_SKIN_BRONZE_ACTION, SetSkinBronzeCommand);

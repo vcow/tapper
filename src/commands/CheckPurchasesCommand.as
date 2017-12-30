@@ -24,7 +24,9 @@ package commands
 					for each (var p:Pack in packsProxy.packs)
 					{
 						if (p.isConsumable && p.isPurchased)
-							sendNotification(Const.BUY_PACK, p);
+						{
+							sendNotification(Const.APPLY_PACK, p);
+						}
 					}
 					break;
 			}
