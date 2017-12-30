@@ -92,6 +92,11 @@ package commands
 				return;
 			}
 
+			if (_pack.isConsumable)
+			{
+				_pack.isPurchased = false;
+			}
+
 			switch (_pack.id)
 			{
 				case "qtap.silver_fish":
@@ -150,7 +155,6 @@ package commands
 
 			if (_pack.isConsumable)
 			{
-				_pack.isPurchased = false;
 				consumePack();
 			}
 

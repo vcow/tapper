@@ -11,6 +11,7 @@ package commands
 		{
 			addSubCommand(PrepareToStateCommand);
 			addSubCommand(SetStateCommand);
+			addSubCommand(CheckPurchasesCommand);
 		}
 	}
 }

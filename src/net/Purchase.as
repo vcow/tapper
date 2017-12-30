@@ -285,6 +285,16 @@ package net
 						facade.sendNotification(Const.RESTORE_PACK, _purchasedPack);
 					}
 				}
+				else
+				{
+					// В любой непонятной ситуации пробуем законсюмить товар.
+					if (_purchasedPack.isConsumable)
+					{
+						consume(_purchasedPack);
+						_purchasedPack = null;
+						return;
+					}
+				}
 				dispatchEventWith("purchaseFailed");
 			}
 
@@ -321,6 +331,8 @@ package net
 			_iap.addEventListener(InAppPurchaseEvent.CONSUME_SUCCESS, onConsumeComplete);
 			_iap.addEventListener(InAppPurchaseEvent.CONSUME_ERROR, onConsumeComplete);
 
+			_consumedPack = null;
+
 			if (event.type == InAppPurchaseEvent.CONSUME_SUCCESS)
 			{
 				_consumedPack.isPurchased = false;
@@ -338,8 +350,6 @@ package net
 			{
 				dispatchEventWith("consumeFailed");
 			}
-
-			_consumedPack = null;
 		}
 	}
 }
