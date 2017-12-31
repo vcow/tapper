@@ -331,12 +331,11 @@ package net
 			_iap.addEventListener(InAppPurchaseEvent.CONSUME_SUCCESS, onConsumeComplete);
 			_iap.addEventListener(InAppPurchaseEvent.CONSUME_ERROR, onConsumeComplete);
 
+			_consumedPack.isPurchased &&= event.type != InAppPurchaseEvent.CONSUME_SUCCESS;
 			_consumedPack = null;
 
 			if (event.type == InAppPurchaseEvent.CONSUME_SUCCESS)
 			{
-				_consumedPack.isPurchased = false;
-
 				if (_purchasedPack)
 				{
 					var pack:Pack = _purchasedPack;
