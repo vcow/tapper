@@ -3,7 +3,6 @@ package commands
 	import app.AppFacade;
 
 	import flash.events.TimerEvent;
-
 	import flash.utils.Timer;
 
 	import models.GameModel;
@@ -13,16 +12,12 @@ package commands
 	import org.puremvc.as3.multicore.interfaces.INotification;
 	import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 
-	import proxy.UnitsProxy;
-
 	import resources.locale.LocaleManager;
 
 	import starling.events.Event;
 
-	import vo.AchievementInfo;
 	import vo.MessageBoxData;
 	import vo.Pack;
-	import vo.UnitInfo;
 
 	/**
 	 * Команда на покупку пака в магазине.
@@ -114,10 +109,31 @@ package commands
 
 		private function consumePack():void
 		{
+			_waitForBillingAction = this;
+
 			var purchase:Purchase = Purchase.getInstance();
 			if (purchase.isSupported)
 			{
-				_waitForBillingAction = this;
+				purchase.addEventListener("restoreComplete", onRestoreComplete);
+				purchase.addEventListener("restoreFailed", onRestoreComplete);
+
+				purchase.restore(new <Pack>[_pack]);
+			}
+			else
+			{
+				purchase.addEventListener("status", onPurchaseStatusChanged);
+			}
+		}
+
+		private function onRestoreComplete(event:Event):void
+		{
+			var purchase:Purchase = Purchase.getInstance();
+
+			purchase.removeEventListener("restoreComplete", onRestoreComplete);
+			purchase.removeEventListener("restoreFailed", onRestoreComplete);
+
+			if (event.type == "restoreComplete")
+			{
 				purchase.addEventListener("consumeComplete", onConsumeComplete);
 				purchase.addEventListener("consumeFailed", onConsumeComplete);
 
@@ -125,7 +141,7 @@ package commands
 			}
 			else
 			{
-				purchase.addEventListener("status", onPurchaseStatusChanged);
+				trace("-- Failed to restore pack", _pack.id);
 			}
 		}
 
@@ -146,7 +162,6 @@ package commands
 			if (event.type == "consumeFailed")
 			{
 				trace("-- Failed to consume pack", _pack.id);
-				consumePack();
 			}
 		}
 

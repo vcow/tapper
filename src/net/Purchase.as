@@ -27,6 +27,8 @@ package net
 	[Event(name="purchaseFailed", type="starling.events.Event")]
 	[Event(name="consumeComplete", type="starling.events.Event")]
 	[Event(name="consumeFailed", type="starling.events.Event")]
+	[Event(name="restoreComplete", type="starling.events.Event")]
+	[Event(name="restoreFailed", type="starling.events.Event")]
 
 	/**
 	 * Соединение с магазином Google Play.
@@ -184,16 +186,39 @@ package net
 				if (_connected)
 					dispatchEventWith("status", false, _isSupported ? "supported" : "unsupported");
 
-				if (_isSupported)
-				{
-					var packs:Array = [];
-					for each (var p:Pack in packsProxy.packs)
-						packs.push(p.id);
+				restore(packsProxy.packs);
+			}
+		}
 
-					_iap.addEventListener(InAppPurchaseEvent.RESTORE_SUCCESS, onRestore);
-					_iap.addEventListener(InAppPurchaseEvent.RESTORE_ERROR, onRestore);
-					_iap.restore(packs);
-				}
+		/**
+		 * Флаг указывает, что платежи в настоящее время поддерживаются / не поддерживаются.
+		 */
+		public function get isSupported():Boolean
+		{
+			return _connected && _isSupported || !isMobile;
+		}
+
+		/**
+		 * Восстановить покупки.
+		 * @param packs Список восстанавливаемых покупок.
+		 */
+		public function restore(packs:Vector.<Pack>):void
+		{
+			if (!isSupported) return;
+
+			if (_connected && _isSupported)
+			{
+				var packsId:Array = [];
+				for each (var p:Pack in packs)
+					packsId.push(p.id);
+
+				_iap.addEventListener(InAppPurchaseEvent.RESTORE_SUCCESS, onRestore);
+				_iap.addEventListener(InAppPurchaseEvent.RESTORE_ERROR, onRestore);
+				_iap.restore(packsId);
+			}
+			else
+			{
+				dispatchEventWith("restoreComplete");
 			}
 		}
 
@@ -222,15 +247,13 @@ package net
 						facade.sendNotification(Const.RESTORE_PACK, p);
 					}
 				}
-			}
-		}
 
-		/**
-		 * Флаг указывает, что платежи в настоящее время поддерживаются / не поддерживаются.
-		 */
-		public function get isSupported():Boolean
-		{
-			return _connected && _isSupported || !isMobile;
+				dispatchEventWith("restoreComplete");
+			}
+			else
+			{
+				dispatchEventWith("restoreFailed");
+			}
 		}
 
 		/**
