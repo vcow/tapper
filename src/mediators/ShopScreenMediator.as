@@ -3,8 +3,19 @@ package mediators
 	import app.AppFacade;
 
 	import feathers.data.ListCollection;
+	import feathers.events.FeathersEventType;
+
+	import flash.geom.Point;
+
+	import flash.geom.Rectangle;
 
 	import models.GameModel;
+
+	import resources.locale.LocaleManager;
+
+	import view.TutorialFrame;
+
+	import vo.TutorialData;
 
 	import vo.UnitInfo;
 
@@ -60,6 +71,25 @@ package mediators
 				}
 				_unitsList = new ListCollection(unitsList);
 				dispatchEventWith("unitsListChanged");
+
+				var lm:LocaleManager = LocaleManager.getInstance();
+				var tutorialData:TutorialData = new TutorialData("shopScreen");
+				tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(14, 5, 124, 124),
+						lm.getString("common", "tutor.shop.back"), TutorialFrame.RIGHT, 120, new Point(10, 0)));
+				tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(25, 226, 500, 640),
+						lm.getString("common", "tutor.shop.list"), TutorialFrame.TOP, 20, new Point(10, 5)));
+
+				var onShowTutorial:Function = function (event:Event):void
+				{
+					if (event)
+						event.target.removeEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
+					sendNotification(Const.SHOW_TUTORIAL, tutorialData);
+				};
+
+				if (shopScreen.isCreated)
+					onShowTutorial(null);
+				else
+					shopScreen.addEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
 			}
 		}
 

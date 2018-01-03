@@ -1,5 +1,6 @@
 package view
 {
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	public class TutorialFrame
@@ -11,16 +12,19 @@ package view
 
 		public var frame:Rectangle;
 		public var description:String;
-		public var align:String;
+		public var textAlign:String;
 		public var cornerRadius:Number;
+		public var textOffset:Point;
 
 		public function TutorialFrame(frame:Rectangle = null, description:String = null,
-									  align:String = null, cornerRadius:Number = NaN)
+									  textAlign:String = null, cornerRadius:Number = NaN,
+									  textOffset:Point = null)
 		{
 			this.frame = frame;
 			this.description = description;
-			this.align = align;
+			this.textAlign = textAlign;
 			this.cornerRadius = cornerRadius;
+			this.textOffset = textOffset;
 		}
 	}
 }

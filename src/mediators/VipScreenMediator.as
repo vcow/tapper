@@ -1,6 +1,11 @@
 package mediators
 {
 	import feathers.data.ListCollection;
+	import feathers.events.FeathersEventType;
+
+	import flash.geom.Point;
+
+	import flash.geom.Rectangle;
 
 	import net.Purchase;
 
@@ -12,10 +17,13 @@ package mediators
 
 	import starling.events.Event;
 
+	import view.TutorialFrame;
+
 	import view.VipScreen;
 
 	import vo.MessageBoxData;
 	import vo.Pack;
+	import vo.TutorialData;
 
 	/**
 	 * Медиатор окна магазина приложения (VIP зона).
@@ -46,6 +54,25 @@ package mediators
 
 				vipScreen.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				if (vipScreen.stage) onAddedToStage(null);
+
+				var lm:LocaleManager = LocaleManager.getInstance();
+				var tutorialData:TutorialData = new TutorialData("vipScreen");
+				tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(63, 41, 80, 80),
+						lm.getString("common", "tutor.vip.back"), TutorialFrame.RIGHT, 78, new Point(10, 0)));
+				tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(87, 220, 394, 680),
+						lm.getString("common", "tutor.vip.list"), TutorialFrame.TOP, 10, new Point(0, 5)));
+
+				var onShowTutorial:Function = function (event:Event):void
+				{
+					if (event)
+						event.target.removeEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
+					sendNotification(Const.SHOW_TUTORIAL, tutorialData);
+				};
+
+				if (vipScreen.isCreated)
+					onShowTutorial(null);
+				else
+					vipScreen.addEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
 			}
 		}
 

@@ -105,7 +105,7 @@
                 if (frame.description)
                 {
                     var bfTextFormat:BitmapFontTextFormat = new BitmapFontTextFormat("tutorial");
-                    switch (frame.align)
+                    switch (frame.textAlign)
                     {
                         case TutorialFrame.LEFT:
                             bfTextFormat.align = TextFormatAlign.RIGHT;
@@ -121,25 +121,25 @@
                     label.textRendererProperties = {textFormat: bfTextFormat};
                     label.text = frame.description;
 
-                    const offset:Number = 0;
+                    var offset:Point = frame.textOffset || new Point();
                     label.validate();
-                    switch (frame.align)
+                    switch (frame.textAlign)
                     {
                         case TutorialFrame.LEFT:
-                            label.x = frame.frame.x - offset - label.width;
-                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y);
+                            label.x = frame.frame.x - offset.x - label.width;
+                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y) + offset.y;
                             break;
                         case TutorialFrame.TOP:
-                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x);
-                            label.y = frame.frame.y - label.height - offset;
+                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x) + offset.x;
+                            label.y = frame.frame.y - label.height - offset.y;
                             break;
                         case TutorialFrame.BOTTOM:
-                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x);
-                            label.y = frame.frame.y + frame.frame.height + offset;
+                            label.x = Math.floor((frame.frame.width - label.width) / 2 + frame.frame.x) + offset.x;
+                            label.y = frame.frame.y + frame.frame.height + offset.y;
                             break;
                         default:
-                            label.x = frame.frame.x + frame.frame.width + offset;
-                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y);
+                            label.x = frame.frame.x + frame.frame.width + offset.x;
+                            label.y = Math.floor((frame.frame.height - label.height) / 2 + frame.frame.y) + offset.y;
                             break;
                     }
                     if (label.x < 0) label.x = 0;

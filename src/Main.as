@@ -55,11 +55,11 @@ package
 
 			switch (Capabilities.language)
 			{
-				case "ru":
-					LocaleManager.getInstance().localeChain = ["ru_RU"];
+				case "en":
+					LocaleManager.getInstance().localeChain = ["en_US"];
 					break;
 				default:
-					LocaleManager.getInstance().localeChain = ["en_US"];
+					LocaleManager.getInstance().localeChain = ["ru_RU"];
 			}
 
 			_starling = new Starling(MainScreen, stage);
