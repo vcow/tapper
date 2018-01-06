@@ -60,34 +60,34 @@ package mediators
 			}
 		}
 
-		private function addListeners(view:EventDispatcher):void
+		private function addListeners(viewScreen:EventDispatcher):void
 		{
 			var connection:Connection = Connection.getInstance();
 			connection.addEventListener("status", onConnectionStatusChanged);
 			connection.addEventListener("busy", onConnectionBusy);
 			onConnectionBusy(null);
 
-			view.addEventListener("back", onBack);
-			view.addEventListener("authenticate", onAuthenticate);
-			view.addEventListener("registerUser", onRegisterUser);
-			view.addEventListener("setUserData", onSetUserData);
-			view.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			view.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-			if (view["stage"]) onAddedToStage(null);
+			viewScreen.addEventListener("back", onBack);
+			viewScreen.addEventListener("authenticate", onAuthenticate);
+			viewScreen.addEventListener("registerUser", onRegisterUser);
+			viewScreen.addEventListener("setUserData", onSetUserData);
+			viewScreen.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			viewScreen.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			if (viewScreen["stage"]) onAddedToStage(null);
 		}
 
-		public function removeListeners(view:EventDispatcher):void
+		public function removeListeners(viewScreen:EventDispatcher):void
 		{
 			var connection:Connection = Connection.getInstance();
 			connection.removeEventListener("status", onConnectionStatusChanged);
 			connection.removeEventListener("busy", onConnectionBusy);
 
-			view.removeEventListener("back", onBack);
-			view.removeEventListener("authenticate", onAuthenticate);
-			view.removeEventListener("registerUser", onRegisterUser);
-			view.removeEventListener("setUserData", onSetUserData);
-			view.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			view.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			viewScreen.removeEventListener("back", onBack);
+			viewScreen.removeEventListener("authenticate", onAuthenticate);
+			viewScreen.removeEventListener("registerUser", onRegisterUser);
+			viewScreen.removeEventListener("setUserData", onSetUserData);
+			viewScreen.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			viewScreen.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
 		private function onConnectionBusy(event:Event):void

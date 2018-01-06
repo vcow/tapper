@@ -23,7 +23,7 @@
 
     <f:Button label="{LocaleManager.getInstance().getString('common', 'rating.bn.label')}"
               styleProvider="{StylesLibrary.startScreenButtonStyleProvider}" isEnabled="{_pantheonAvailable}"
-              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openRating')}" alpha="0"/>
+              triggered="{dispatchEventWith(starling.events.Event.TRIGGERED, false, 'openPantheon')}" alpha="0"/>
 
     <fx:Metadata>
         [Event(name="triggered", type="starling.events.Event")]

@@ -38,6 +38,11 @@ package commands
 					if (gameModel.isStarted)
 						sendNotification(Const.STOP_GAME);
 					break;
+				case Const.STATE_PANTHEON:
+					soundManager.playMusic(atlasLibrary.manager.getSound("champions"));
+					if (gameModel.isStarted)
+						sendNotification(Const.STOP_GAME);
+					break;
 				default:
 					throw Error("Unsupported state " + notification.getBody() + ".");
 			}

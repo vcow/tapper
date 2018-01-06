@@ -140,7 +140,7 @@
 
             // Sound
             assets = ["buy", "coin1", "coin2", "coin3", "coin4", "coin5", "coin6", "main", "shop",
-                "title", "wooden_sw_open", "click1", "click2", "click3"];
+                "title", "wooden_sw_open", "click1", "click2", "click3", "champions"];
             for each (asset in assets)
             {
                 file = File.applicationDirectory.resolvePath("sound" + File.separator + asset + ".mp3");
@@ -164,6 +164,7 @@
             screenNavigator.addScreen("gameScreenItem", new ScreenNavigatorItem(new GameScreen()));
             screenNavigator.addScreen("shopScreenItem", new ScreenNavigatorItem(new ShopScreen()));
             screenNavigator.addScreen("vipScreenItem", new ScreenNavigatorItem(new VipScreen()));
+            screenNavigator.addScreen("pantheonScreenItem", new ScreenNavigatorItem(new PantheonScreen()));
         }
 
         override public function dispose():void

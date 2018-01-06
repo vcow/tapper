@@ -46,6 +46,7 @@ package mediators
 				startScreen.addEventListener("continueGame", onStart);
 				startScreen.addEventListener("newGame", onNewGame);
 				startScreen.addEventListener("openVip", onVip);
+				startScreen.addEventListener("openPantheon", onPantheon);
 			}
 		}
 
@@ -57,6 +58,7 @@ package mediators
 				startScreen.removeEventListener("continueGame", onStart);
 				startScreen.removeEventListener("newGame", onNewGame);
 				startScreen.removeEventListener("openVip", onVip);
+				startScreen.removeEventListener("openPantheon", onPantheon);
 			}
 		}
 
@@ -69,6 +71,7 @@ package mediators
 				viewComponent.removeEventListener("continueGame", onStart);
 				viewComponent.removeEventListener("newGame", onNewGame);
 				viewComponent.removeEventListener("openVip", onVip);
+				viewComponent.removeEventListener("openPantheon", onPantheon);
 			}
 
 			super.setViewComponent(viewComponent);
@@ -77,6 +80,7 @@ package mediators
 				viewComponent.addEventListener("continueGame", onStart);
 				viewComponent.addEventListener("newGame", onNewGame);
 				viewComponent.addEventListener("openVip", onVip);
+				viewComponent.addEventListener("openPantheon", onPantheon);
 			}
 		}
 
@@ -88,6 +92,11 @@ package mediators
 		private function onVip(event:Event):void
 		{
 			sendNotification(Const.SWITCH_TO, Const.STATE_VIP);
+		}
+
+		private function onPantheon(event:Event):void
+		{
+			sendNotification(Const.SWITCH_TO, Const.STATE_PANTHEON);
 		}
 
 		private function onNewGame(event:Event):void

@@ -14,6 +14,7 @@ package
 		public static const STATE_GAME:String = "stateGame";
 		public static const STATE_SHOP:String = "stateShop";
 		public static const STATE_VIP:String = "stateVip";
+		public static const STATE_PANTHEON:String = "statePantheon";
 
 		public static const ACTIVATE:String = "notifyActivate";
 		public static const DEACTIVATE:String = "notifyDeactivate";

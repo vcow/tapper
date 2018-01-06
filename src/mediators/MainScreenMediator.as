@@ -86,6 +86,9 @@ package mediators
 				case Const.STATE_VIP:
 					screenId = "vipScreenItem";
 					break;
+				case Const.STATE_PANTHEON:
+					screenId = "pantheonScreenItem";
+					break;
 				default:
 					throw Error("Unsupported state " + newState + ".");
 			}
