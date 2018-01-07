@@ -12,7 +12,7 @@ package commands
 
 	import models.GameModel;
 
-	import net.Connection;
+	import net.Statistics;
 	import net.Purchase;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -93,7 +93,7 @@ package commands
 
 			gameModel.lastActivityTimestamp = getTimer();
 
-			Connection.getInstance().startMonitor();
+			Statistics.getInstance().startMonitor();
 			Purchase.getInstance().startMonitor();
 		}
 

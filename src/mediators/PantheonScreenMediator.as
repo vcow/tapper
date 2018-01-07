@@ -2,7 +2,7 @@ package mediators
 {
 	import feathers.data.ListCollection;
 
-	import net.Connection;
+	import net.Statistics;
 
 	import resources.locale.LocaleManager;
 
@@ -62,9 +62,9 @@ package mediators
 
 		private function addListeners(viewScreen:EventDispatcher):void
 		{
-			var connection:Connection = Connection.getInstance();
-			connection.addEventListener("status", onConnectionStatusChanged);
-			connection.addEventListener("busy", onConnectionBusy);
+			var statistics:Statistics = Statistics.getInstance();
+			statistics.addEventListener("status", onConnectionStatusChanged);
+			statistics.addEventListener("busy", onConnectionBusy);
 			onConnectionBusy(null);
 
 			viewScreen.addEventListener("back", onBack);
@@ -78,9 +78,9 @@ package mediators
 
 		public function removeListeners(viewScreen:EventDispatcher):void
 		{
-			var connection:Connection = Connection.getInstance();
-			connection.removeEventListener("status", onConnectionStatusChanged);
-			connection.removeEventListener("busy", onConnectionBusy);
+			var statistics:Statistics = Statistics.getInstance();
+			statistics.removeEventListener("status", onConnectionStatusChanged);
+			statistics.removeEventListener("busy", onConnectionBusy);
 
 			viewScreen.removeEventListener("back", onBack);
 			viewScreen.removeEventListener("authenticate", onAuthenticate);
@@ -92,7 +92,7 @@ package mediators
 
 		private function onConnectionBusy(event:Event):void
 		{
-			var busy:Boolean = Connection.getInstance().busy;
+			var busy:Boolean = Statistics.getInstance().busy;
 			if (busy != _connectionIsBusy)
 			{
 				_connectionIsBusy = busy;
@@ -107,23 +107,23 @@ package mediators
 
 		private function onAddedToStage(event:Event):void
 		{
-			var connection:Connection = Connection.getInstance();
-			if (connection.connected)
+			var statistics:Statistics = Statistics.getInstance();
+			if (statistics.connected)
 			{
 				var getData:Function = function (event:Event):void
 				{
-					if (!connection.busy)
+					if (!statistics.busy)
 					{
 						if (event)
-							connection.removeEventListener("busy", arguments.callee);
-						connection.addEventListener("error", onGetData);
-						connection.addEventListener("complete", onGetData);
-						connection.getData();
+							statistics.removeEventListener("busy", arguments.callee);
+						statistics.addEventListener("error", onGetData);
+						statistics.addEventListener("complete", onGetData);
+						statistics.getData();
 					}
 				};
-				if (connection.busy)
+				if (statistics.busy)
 				{
-					connection.addEventListener("busy", getData);
+					statistics.addEventListener("busy", getData);
 				}
 				else
 				{
@@ -145,9 +145,9 @@ package mediators
 
 		private function onGetData(event:Event):void
 		{
-			var connection:Connection = Connection.getInstance();
-			connection.removeEventListener("error", onGetData);
-			connection.removeEventListener("complete", onGetData);
+			var statistics:Statistics = Statistics.getInstance();
+			statistics.removeEventListener("error", onGetData);
+			statistics.removeEventListener("complete", onGetData);
 
 			if (event.type == "error")
 			{
@@ -206,7 +206,7 @@ package mediators
 		[Bindable(event="pantheonAvailableChanged")]
 		public function get pantheonAvailable():Boolean
 		{
-			return Connection.getInstance().connected;
+			return Statistics.getInstance().connected;
 		}
 	}
 }

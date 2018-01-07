@@ -13,6 +13,9 @@
         </f:layout>
     </f:List>
 
+    <f:Button label="Save Result" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+              triggered="onSaveResult()"/>
+
     <fx:Metadata>
         [Event(name="back", type="starling.events.Event")]
         [Event(name="authenticate", type="starling.events.Event")]
@@ -61,6 +64,11 @@
                 _mediator = null;
             }
             super.dispose();
+        }
+
+        private function onSaveResult():void
+        {
+
         }
         ]]></fx:Script>
 </f:LayoutGroup>

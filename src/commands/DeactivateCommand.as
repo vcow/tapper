@@ -10,7 +10,7 @@ package commands
 
 	import models.GameModel;
 
-	import net.Connection;
+	import net.Statistics;
 	import net.Purchase;
 
 	import org.puremvc.as3.multicore.interfaces.INotification;
@@ -54,7 +54,7 @@ package commands
 			soundManager.muteMusic = true;
 			soundManager.muteSound = true;
 
-			Connection.getInstance().stopMonitor();
+			Statistics.getInstance().stopMonitor();
 			Purchase.getInstance().stopMonitor();
 		}
 

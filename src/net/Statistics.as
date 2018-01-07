@@ -27,9 +27,9 @@ package net
 	/**
 	 * Соединение с сервером статистики.
 	 */
-	public class Connection extends EventDispatcher
+	public class Statistics extends EventDispatcher
 	{
-		private static var _instance:Connection;
+		private static var _instance:Statistics;
 		private static var _url:String;
 
 		private var _monitor:URLMonitor;
@@ -40,20 +40,20 @@ package net
 		public static const LOGIN_MAX_LENGTH:int = 12;
 		public static const PASSWORD_MAX_LENGTH:int = 50;
 
-		public static function getInstance():Connection
+		public static function getInstance():Statistics
 		{
 			if (!_instance)
 			{
-				_instance = new Connection("http://127.0.0.1:8000/");
-//				_instance = new Connection("http://vcow.pythonanywhere.com/");
+				_instance = new Statistics("http://127.0.0.1:8000/");
+//				_instance = new Statistics("http://vcow.pythonanywhere.com/");
 			}
 			return _instance
 		}
 
-		public function Connection(url:String)
+		public function Statistics(url:String)
 		{
 			super();
-			if (_instance) throw Error("Connection is a singleton, use getInstance.");
+			if (_instance) throw Error("Statistics is a singleton, use getInstance.");
 
 			URLRequestDefaults.authenticate = false;
 			URLRequestDefaults.cacheResponse = false;
