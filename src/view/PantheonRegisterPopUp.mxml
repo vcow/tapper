@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               backgroundSkin="{new Quad(300, 300)}">
+    <f:layout>
+        <f:VerticalLayout horizontalAlign="center" gap="20"/>
+    </f:layout>
+
+    <f:TextFieldTextEditor width="250" id="nameTextField"
+                           restrict="АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЪЭЮЯабвгдеёжзиклмнопрстуфхцчшщьъэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789._"/>
+
+        <f:Button label="Register" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+                  isEnabled="{nameTextField.text.length > 0}"
+                  triggered="{dispatchEventWith('close', false, Const.ON_OK)}"/>
+
+        <f:Button label="Cancel" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+                  triggered="{dispatchEventWith('close')}"/>
+
+    <fx:Metadata>
+        [Event(name="close", type="starling.events.Event")]
+        [Event(name="register", type="starling.events.Event")]
+    </fx:Metadata>
+
+    <fx:Script><![CDATA[
+        import resources.StylesLibrary;
+
+        import starling.display.Quad;
+        ]]></fx:Script>
+</f:LayoutGroup>

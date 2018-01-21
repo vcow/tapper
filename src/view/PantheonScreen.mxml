@@ -14,7 +14,7 @@
     </f:List>
 
     <f:Button label="Save Result" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              triggered="onSaveResult()"/>
+              triggered="{dispatchEventWith('setUserData')}"/>
 
     <fx:Metadata>
         [Event(name="back", type="starling.events.Event")]
@@ -31,6 +31,8 @@
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.StylesLibrary;
+
+        import starling.events.Event;
 
         public static const MEDIATOR_NAME:String = "pantheonScreenMediator";
 
@@ -66,9 +68,22 @@
             super.dispose();
         }
 
-        private function onSaveResult():void
+        public function showRegisterForm():void
         {
+            var popup:PantheonRegisterPopUp = new PantheonRegisterPopUp();
+            popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
+            WindowManager.getInstance().openWindow(popup, true);
+        }
 
+        private function onClosePopup(event:starling.events.Event):void
+        {
+            var popup:PantheonRegisterPopUp = PantheonRegisterPopUp(event.target);
+            popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
+
+            if (event.data == Const.ON_OK)
+            {
+                dispatchEventWith("registerUser");
+            }
         }
         ]]></fx:Script>
 </f:LayoutGroup>

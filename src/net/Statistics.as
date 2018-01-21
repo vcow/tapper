@@ -120,6 +120,14 @@ package net
 		}
 
 		/**
+		 * Разлогиниться.
+		 */
+		public function close():void
+		{
+			send(_url + "data/close/", null);
+		}
+
+		/**
 		 * Зарегистрировать нового игрока на сервере статистики.
 		 * @param login Логин.
 		 * @param password Пароль.
