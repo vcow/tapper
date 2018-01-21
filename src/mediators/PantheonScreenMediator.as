@@ -7,6 +7,7 @@ package mediators
 	import feathers.data.ListCollection;
 
 	import models.GameModel;
+	import models.SkinType;
 
 	import net.Statistics;
 
@@ -18,6 +19,8 @@ package mediators
 	import view.PantheonScreen;
 
 	import vo.MessageBoxData;
+	import vo.TopItem;
+	import vo.Unit;
 
 	/**
 	 * Медиатор Пантеона.
@@ -159,8 +162,8 @@ package mediators
 				return;
 			}
 
-			statistics.addEventListener("error", onGetData);
 			statistics.addEventListener("complete", onGetData);
+			statistics.addEventListener("error", onGetData);
 			statistics.getData();
 		}
 
@@ -180,8 +183,8 @@ package mediators
 			_currentRequestType = null;
 
 			var statistics:Statistics = Statistics.getInstance();
-			statistics.removeEventListener("error", onGetData);
 			statistics.removeEventListener("complete", onGetData);
+			statistics.removeEventListener("error", onGetData);
 
 			if (event.type == "error")
 			{
@@ -196,14 +199,14 @@ package mediators
 			}
 			else
 			{
-				// TODO:
+				updateTopList(event.data.leaders as Array, event.data.user);
 			}
 		}
 
 		public function onRemovedFromStage(event:Event):void
 		{
-			var statistics:Statistics = Statistics.getInstance();
-			statistics.close();
+//			var statistics:Statistics = Statistics.getInstance();
+//			statistics.close();
 
 			_currentRequestType = null;
 		}
@@ -215,7 +218,22 @@ package mediators
 
 		private function onRegisterUser(event:Event):void
 		{
+			var name:String = event.data as String;
+			if (!name || !pantheonAvailable || connectionIsBusy)
+			{
+				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+						LocaleManager.getInstance().getString("common", "message.statistics.error"),
+						onMessageClose, Const.ON_OK));
+				return;
+			}
 
+			var model:GameModel = AppFacade(facade).gameModel;
+			model.pantheonUserName = name;
+
+			var statistics:Statistics = Statistics.getInstance();
+			statistics.addEventListener("complete", onRegisterComplete);
+			statistics.addEventListener("error", onStatisticsError);
+			statistics.register(login, password);
 		}
 
 		private function generateLoginPassword():void
@@ -229,6 +247,36 @@ package mediators
 			_password = _password.substr(0, Statistics.PASSWORD_MAX_LENGTH);
 			while (_login.length < Statistics.LOGIN_MAX_LENGTH) _login += id;
 			_login = _login.substr(0, Statistics.LOGIN_MAX_LENGTH);
+		}
+
+		private function onRegisterComplete(event:Event):void
+		{
+			var statistics:Statistics = Statistics.getInstance();
+			statistics.removeEventListener("complete", onRegisterComplete);
+			statistics.removeEventListener("error", onStatisticsError);
+
+			switch (parseResponse(event.data))
+			{
+				case RESPONSE_OK:
+					if (_currentRequestType == SET_DATA)
+					{
+						_currentRequestType = null;
+						onSetUserData(null);
+					}
+					else
+					{
+						getData();
+					}
+					break;
+				case RESPONSE_NOT_AUTHENTICATED:
+					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+							LocaleManager.getInstance().getString("common", "message.statistics.registration_failed"),
+							onMessageClose, Const.ON_OK));
+					break;
+				default:
+					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+							"data_set: " + event.data.substr(0, 256), onMessageClose, Const.ON_OK));
+			}
 		}
 
 		private function onSetUserData(event:Event):void
@@ -256,6 +304,7 @@ package mediators
 		{
 			var statistics:Statistics = Statistics.getInstance();
 			statistics.removeEventListener("complete", onSetDataComplete);
+			statistics.removeEventListener("error", onStatisticsError);
 
 			switch (parseResponse(event.data))
 			{
@@ -264,6 +313,7 @@ package mediators
 					break;
 				case RESPONSE_NOT_AUTHENTICATED:
 					statistics.addEventListener("complete", onAuthComplete);
+					statistics.addEventListener("error", onStatisticsError);
 					statistics.auth(login, password);
 					break;
 				case RESPONSE_NOT_REGISTERED:
@@ -279,6 +329,7 @@ package mediators
 		{
 			var statistics:Statistics = Statistics.getInstance();
 			statistics.removeEventListener("complete", onAuthComplete);
+			statistics.removeEventListener("error", onStatisticsError);
 
 			switch (parseResponse(event.data))
 			{
@@ -312,6 +363,7 @@ package mediators
 					case "Wrong login password":
 						return RESPONSE_NOT_REGISTERED;
 					case "Not authenticated":
+					case "Already registered":
 						return RESPONSE_NOT_AUTHENTICATED;
 				}
 			}
@@ -330,7 +382,57 @@ package mediators
 
 		public function get userData():Object
 		{
-			return {};
+			var model:GameModel = AppFacade(facade).gameModel;
+			var units:Vector.<Unit> = model.getActiveUnits();
+			return {
+				user_name: model.pantheonUserName,
+				god: model.addonModel.godMode,
+				cabin: model.currentSkin,
+				cabin_max: getMaxRoom(model.addonModel.rooms),
+				level: model.level,
+				taps: model.tapsTotal,
+				units_count: units.length,
+				best_unit: units.length > 0 ? units[0].info.id : ""
+			};
+		}
+
+		private static function getMaxRoom(rooms:Vector.<String>):String
+		{
+			var r:String = SkinType.WOOD;
+			for each (var room:String in rooms)
+			{
+				switch (room)
+				{
+					case SkinType.GOLD:
+						r = room;
+						break;
+					case SkinType.SILVER:
+						if (r != SkinType.GOLD) r = room;
+						break;
+					case SkinType.BRONZE:
+						if (r == SkinType.WOOD) r = room;
+				}
+			}
+			return r;
+		}
+
+		private function updateTopList(data:Array, userRecord:Object = null):void
+		{
+			var top:Vector.<TopItem> = new Vector.<TopItem>();
+
+			for each (var raw:Object in data) top.push(new TopItem(raw));
+			if (userRecord) top.push(new TopItem(userRecord, true));
+
+			top.sort(function (a:TopItem, b:TopItem):int
+			{
+				if (a.scores > b.scores) return -1;
+				if (a.scores < b.scores) return 1;
+				// TODO: Добавить другие приоритеты сортировки, если появятся.
+				return 0;
+			});
+
+			_topList = new ListCollection(top);
+			dispatchEventWith("topListChanged");
 		}
 
 		public function get login():String
@@ -365,7 +467,7 @@ package mediators
 
 		private function generateId():String
 		{
-			return "123456789ABCDEF";
+			return "test_id_2";
 		}
 	}
 }

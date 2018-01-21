@@ -7,14 +7,14 @@
     <f:Button label="Back" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
               triggered="{dispatchEventWith('back')}"/>
 
+    <f:Button label="Save Result" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
+              triggered="{dispatchEventWith('setUserData')}"/>
+
     <f:List dataProvider="{_mediator.topList}" itemRendererType="view.TopListItemRenderer">
         <f:layout>
             <f:VerticalLayout gap="10"/>
         </f:layout>
     </f:List>
-
-    <f:Button label="Save Result" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              triggered="{dispatchEventWith('setUserData')}"/>
 
     <fx:Metadata>
         [Event(name="back", type="starling.events.Event")]
@@ -82,7 +82,7 @@
 
             if (event.data == Const.ON_OK)
             {
-                dispatchEventWith("registerUser");
+                dispatchEventWith("registerUser", false, popup.nameTextField.text);
             }
         }
         ]]></fx:Script>

@@ -171,7 +171,15 @@ package net
 		{
 			var buffer1:ByteArray = new ByteArray();
 			buffer1.writeUTFBytes(msg);
-			for (var i:int = 0, l:int = buffer1.length % 4; i < l; i++) buffer1.writeByte(0);
+			var l:int = buffer1.length % 4;
+			if (l > 0)
+			{
+				l = 4 - l;
+				for (var i:int = 0; i < l; i++)
+				{
+					buffer1.writeByte(0);
+				}
+			}
 			buffer1.position = 0;
 			var buffer2:ByteArray = new ByteArray();
 			while (buffer1.bytesAvailable)

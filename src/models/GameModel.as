@@ -18,6 +18,7 @@ package models
 		private var _unitsByIndex:Dictionary = new Dictionary();
 		private var _topUnitIndex:int;
 
+		public var pantheonUserName:String;		/// Имя игрока в пантеоне
 		public var godModeOff:Boolean;			/// Флаг режим Бога включен / выключен.
 		public var tickCount:uint;				/// Текущее количество тиков таймера.
 		public var level:uint;					/// Текущий уровень игрока.
@@ -42,6 +43,7 @@ package models
 
 		override protected function initializeModel():void
 		{
+			pantheonUserName = "";
 			currentSkin = SkinType.WOOD;
 			currentState = Const.STATE_START;
 		}

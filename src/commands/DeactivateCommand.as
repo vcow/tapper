@@ -83,6 +83,7 @@ package commands
 				tapsTotal: gameModel.tapsTotal,
 				tickCount: gameModel.tickCount,
 				level: gameModel.level,
+				name: gameModel.pantheonUserName,
 				skin: gameModel.currentSkin,
 				units: unitsList,
 				achievements: achievementsList,

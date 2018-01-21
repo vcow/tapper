@@ -153,6 +153,7 @@ package commands
 			gameModel.tapsTotal = dataObject.tapsTotal;
 			gameModel.tickCount = dataObject.tickCount;
 			gameModel.level = dataObject.level;
+			gameModel.pantheonUserName = dataObject.name || "";
 			gameModel.currentSkin = dataObject.skin;
 			gameModel.godModeOff = dataObject.godModeOff;
 			gameModel.tutorial = dataObject.tutorial || {};
