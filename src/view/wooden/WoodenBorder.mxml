@@ -29,7 +29,7 @@
         </f:layoutData>
 
         <f:Label text="{title}" paddingBottom="6"
-                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 30)}}"/>
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 30, 0x544317)}}"/>
     </f:LayoutGroup>
 
     <fx:Script><![CDATA[

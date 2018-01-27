@@ -20,7 +20,7 @@ package resources.skin
 			button.defaultSkin = new Image(atlas.getTexture("close_bn_normal"));
 			button.downSkin = new Image(atlas.getTexture("close_bn_down"));
 			button.defaultLabelProperties = {
-				textFormat: new BitmapFontTextFormat("wooden_title", 38)
+				textFormat: new BitmapFontTextFormat("wooden_title", 38, 0x544317)
 			};
 
 			button.addEventListener(FeathersEventType.STATE_CHANGE, stateChangeHandler);
