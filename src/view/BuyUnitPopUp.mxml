@@ -2,7 +2,7 @@
 <f:LayoutGroup xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
                initialize="updateData()" creationComplete="updateUnavailableReason()">
 
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('message_back'))}" maxWidth="479" maxHeight="295">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_message_back'))}" maxWidth="479" maxHeight="295">
         <f:layout>
             <f:AnchorLayout/>
         </f:layout>
@@ -38,16 +38,16 @@
             </f:layoutData>
         </f:Label>
 
-        <f:Button defaultSkin="{new Image(atlas.getTexture('message_cancel_bn_normal'))}"
-                  downSkin="{new Image(atlas.getTexture('message_cancel_bn_down'))}"
+        <f:Button defaultSkin="{new Image(atlas.getTexture('shop_message_cancel_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('shop_message_cancel_bn_down'))}"
                   triggered="{removeVip(); dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_CANCEL)}">
             <f:layoutData>
                 <f:AnchorLayoutData left="49" bottom="32"/>
             </f:layoutData>
         </f:Button>
 
-        <f:Button defaultSkin="{new Image(atlas.getTexture('message_ok_bn_normal'))}"
-                  downSkin="{new Image(atlas.getTexture('message_ok_bn_down'))}"
+        <f:Button defaultSkin="{new Image(atlas.getTexture('shop_message_ok_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('shop_message_ok_bn_down'))}"
                   triggered="{removeVip(); dispatchEventWith(starling.events.Event.CLOSE, false, Const.ON_OK)}"
                   isEnabled="{available}">
             <f:layoutData>
@@ -61,7 +61,7 @@
             <f:AnchorLayout/>
         </f:layout>
 
-        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('unavailable_back'))}"
+        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_unavailable_back'))}"
                        maxWidth="359" maxHeight="125">
             <f:layout>
                 <f:VerticalLayout horizontalAlign="center" verticalAlign="middle"
@@ -75,7 +75,7 @@
                      textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_52', NaN, 0xffffff, TextFormatAlign.LEFT, -14)}}"/>
         </f:LayoutGroup>
 
-        <f:ImageLoader source="{atlas.getTexture('scotch')}">
+        <f:ImageLoader source="{atlas.getTexture('shop_scotch')}">
             <f:layoutData>
                 <f:AnchorLayoutData horizontalCenter="-9"/>
             </f:layoutData>
@@ -148,7 +148,7 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }
@@ -242,7 +242,7 @@
         {
             if (!_vip)
             {
-                var skin:Image = new Image(atlas.getTexture("offer_back"));
+                var skin:Image = new Image(atlas.getTexture("shop_offer_back"));
                 _vip = new Button();
                 _vip.defaultSkin = skin;
                 _vip.pivotX = Math.floor(skin.width / 2.0);

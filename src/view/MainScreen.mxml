@@ -112,8 +112,7 @@
 
             // Atlases
             var assetManager:AssetManager = AtlasLibrary.getInstance().manager;
-            var assets:Array = ["noise_anim", "shop", "units_big", "units_small", "wooden", "messagebox",
-                "states", "settings", "vip", "packs"];
+            var assets:Array = ["noise_anim", "common_1", "units_big", "units_small", "wooden", "states", "packs"];
             for each (var asset:String in assets)
             {
                 for each (var ext:String in [".atf", ".xml"])

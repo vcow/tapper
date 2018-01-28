@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:766162fa63c16c9c9a52b03c26311de2:ef185988b45b957e157158c617ee37f5:e5ba87d2d500f6976dd939bbbfb4d9be$ -->
+<TextureAtlas imagePath="common_1.atf" width="2048" height="2048">
+    <SubTexture name="message_box_back" x="1350" y="804" width="475" height="322"/>
+    <SubTexture name="message_box_border" x="972" y="1968" width="81" height="78"/>
+    <SubTexture name="message_box_button_normal" x="1157" y="774" rotated="true" width="54" height="144"/>
+    <SubTexture name="message_box_button_normal_down" x="1831" y="784" width="144" height="54"/>
+    <SubTexture name="settings_back" x="1350" y="1" width="505" height="504"/>
+    <SubTexture name="settings_close_bn_down" x="1831" y="601" width="213" height="64" frameX="0" frameY="0" frameWidth="213" frameHeight="66"/>
+    <SubTexture name="settings_close_bn_normal" x="1831" y="533" width="213" height="66"/>
+    <SubTexture name="settings_god_mode_normal" x="454" y="2021" width="23" height="24" frameX="-4" frameY="-3" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="settings_god_mode_selected" x="425" y="2021" rotated="true" width="27" height="26" frameX="-1" frameY="0" frameWidth="30" frameHeight="30"/>
+    <SubTexture name="settings_music_off_normal" x="1219" y="34" width="85" height="85"/>
+    <SubTexture name="settings_music_off_selected" x="1219" y="121" width="85" height="85"/>
+    <SubTexture name="settings_scroller_back" x="1220" y="1057" rotated="true" width="86" height="324"/>
+    <SubTexture name="settings_scroller_bar" x="1216" y="740" rotated="true" width="29" height="269" frameX="-27" frameY="-28" frameWidth="324" frameHeight="86"/>
+    <SubTexture name="settings_sound_off_normal" x="1247" y="839" width="85" height="85"/>
+    <SubTexture name="settings_sound_off_selected" x="1220" y="1383" width="85" height="85"/>
+    <SubTexture name="shop_back" x="1" y="1" width="576" height="1024"/>
+    <SubTexture name="shop_back_bn_down" x="1247" y="1950" width="101" height="97"/>
+    <SubTexture name="shop_back_bn_normal" x="1247" y="740" width="101" height="97"/>
+    <SubTexture name="shop_item_back" x="1220" y="233" rotated="true" width="126" height="505" frameX="-1" frameY="0" frameWidth="507" frameHeight="126"/>
+    <SubTexture name="shop_item_limit_back" x="1857" y="74" width="190" height="37"/>
+    <SubTexture name="shop_message_back" x="1350" y="507" width="479" height="295"/>
+    <SubTexture name="shop_message_cancel_bn_down" x="1157" y="552" rotated="true" width="57" height="109"/>
+    <SubTexture name="shop_message_cancel_bn_normal" x="1157" y="663" rotated="true" width="57" height="109"/>
+    <SubTexture name="shop_message_ok_bn_down" x="1055" y="1968" width="190" height="71"/>
+    <SubTexture name="shop_message_ok_bn_normal" x="1857" y="1" width="190" height="71"/>
+    <SubTexture name="shop_offer_back" x="1831" y="667" width="180" height="115"/>
+    <SubTexture name="shop_ppc_label" x="53" y="2029" width="37" height="13" frameX="0" frameY="-6" frameWidth="43" frameHeight="24"/>
+    <SubTexture name="shop_pps_label" x="8" y="2029" width="43" height="13" frameX="0" frameY="-6" frameWidth="43" frameHeight="24"/>
+    <SubTexture name="shop_price_marker_green" x="1314" y="34" rotated="true" width="33" height="197" frameX="0" frameY="0" frameWidth="197" frameHeight="42"/>
+    <SubTexture name="shop_price_marker_red" x="1157" y="1" width="191" height="31" frameX="-3" frameY="0" frameWidth="197" frameHeight="42"/>
+    <SubTexture name="shop_scotch" x="1220" y="1011" width="115" height="44"/>
+    <SubTexture name="shop_scroll_bar" x="1" y="2029" width="5" height="17" frameX="-2" frameY="0" frameWidth="9" frameHeight="17"/>
+    <SubTexture name="shop_scroll_thumb" x="212" y="2029" rotated="true" width="38" height="9"/>
+    <SubTexture name="shop_scroll_thumb_center" x="92" y="2029" width="9" height="13"/>
+    <SubTexture name="shop_unavailable_back" x="1187" y="1589" rotated="true" width="125" height="359"/>
+    <SubTexture name="top_back" x="1" y="1027" rotated="true" width="1024" height="576"/>
+    <SubTexture name="top_blackboard" x="1027" y="1027" rotated="true" width="191" height="560"/>
+    <SubTexture name="top_bn1_down" x="1857" y="113" width="181" height="103"/>
+    <SubTexture name="top_bn1_normal" x="1857" y="218" width="181" height="103"/>
+    <SubTexture name="top_bn2_down" x="1857" y="323" width="181" height="103"/>
+    <SubTexture name="top_bn2_normal" x="1857" y="428" width="181" height="103"/>
+    <SubTexture name="top_popup_back" x="1" y="1605" width="422" height="422"/>
+    <SubTexture name="vip_arrow_hour" x="103" y="2029" rotated="true" width="41" height="12"/>
+    <SubTexture name="vip_arrow_min" x="146" y="2029" rotated="true" width="64" height="11"/>
+    <SubTexture name="vip_arrow_sec" x="212" y="2040" rotated="true" width="23" height="7"/>
+    <SubTexture name="vip_back" x="579" y="1" width="576" height="1024"/>
+    <SubTexture name="vip_back_bn_down" x="1247" y="926" rotated="true" width="51" height="81"/>
+    <SubTexture name="vip_back_bn_normal" x="1157" y="520" width="60" height="30" frameX="-10" frameY="-11" frameWidth="81" frameHeight="51"/>
+    <SubTexture name="vip_card_back" x="972" y="1605" rotated="true" width="213" height="361"/>
+    <SubTexture name="vip_details_back" x="425" y="1605" rotated="true" width="545" height="414"/>
+    <SubTexture name="vip_details_buy_bn_down" x="1157" y="34" rotated="true" width="60" height="241"/>
+    <SubTexture name="vip_details_buy_bn_normal" x="1157" y="277" rotated="true" width="60" height="241"/>
+    <SubTexture name="vip_details_close_bn_down" x="1157" y="920" width="53" height="53"/>
+    <SubTexture name="vip_details_close_bn_normal" x="1977" y="784" width="53" height="53"/>
+</TextureAtlas>

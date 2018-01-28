@@ -17,7 +17,7 @@
         </f:layoutData>
     </f:Label>
 
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('img_border'))}"
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('wooden_img_border'))}"
                       touchable="false"/>
 
     <f:LayoutGroup backgroundSkin="{levelTitleBack}" maxHeight="44" touchable="false">
@@ -58,7 +58,7 @@
         {
             if (!_levelTitleBack)
             {
-                _levelTitleBack = new Image(atlas.getTexture('level_title_back'));
+                _levelTitleBack = new Image(atlas.getTexture('wooden_level_title_back'));
                 _levelTitleBack.scale9Grid = new flash.geom.Rectangle(25, 0, 214, 44);
             }
             return _levelTitleBack;

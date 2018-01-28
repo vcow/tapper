@@ -19,7 +19,7 @@ package resources.skin
 		{
 			if (!_atlas)
 			{
-				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("settings");
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
 			}
 			return _atlas;
 		}
@@ -31,13 +31,13 @@ package resources.skin
 			slider.thumbFactory = thumbFactory;
 
 			var bar:LayoutGroup = new LayoutGroup();
-			var back:Image = new Image(atlas.getTexture("scroller_back"));
+			var back:Image = new Image(atlas.getTexture("settings_scroller_back"));
 			bar.width = back.width;
 			bar.height = back.height;
 			bar.addChild(back);
 			var track:LayoutGroup = new LayoutGroup();
 			track.clipContent = true;
-			var trackView:Image = new Image(atlas.getTexture("scroller_bar"));
+			var trackView:Image = new Image(atlas.getTexture("settings_scroller_bar"));
 			track.width = back.width * (slider.value / (slider.maximum - slider.minimum));
 			track.height = back.height;
 			track.addChild(trackView);

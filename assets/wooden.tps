@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.3.3</string>
+        <string>4.5.0</string>
         <key>fileName</key>
-        <string>C:/Work/research/mobile/tapper/assets/wooden.tps</string>
+        <string>C:/Work/tapper/assets/wooden.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -172,6 +172,8 @@
         <false/>
         <key>prependSmartFolderName</key>
         <false/>
+        <key>autodetectAnimations</key>
+        <true/>
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
@@ -220,8 +222,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/action_bn_down.png</key>
-            <key type="filename">graphics/skin/wooden/action_bn_up.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_action_bn_down.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_action_bn_up.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -234,7 +236,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/back.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -247,8 +249,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/back_bn_down.png</key>
-            <key type="filename">graphics/skin/wooden/back_bn_up.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_back_bn_down.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_back_bn_up.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -261,7 +263,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/bar.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_bar.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -274,7 +276,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/img_border.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_img_border.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -287,7 +289,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/indicator.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_indicator.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -300,7 +302,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/level_title_back.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_level_title_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -313,10 +315,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/shop_bn_highlight_down.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_highlight_up.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_normal_down.png</key>
-            <key type="filename">graphics/skin/wooden/shop_bn_normal_up.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_shop_bn_highlight_down.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_shop_bn_highlight_up.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_shop_bn_normal_down.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_shop_bn_normal_up.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -329,7 +331,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/shop_widget_border.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_shop_widget_border.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -342,7 +344,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/wooden/thumb.png</key>
+            <key type="filename">graphics/skin/wooden/wooden_thumb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

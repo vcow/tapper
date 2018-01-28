@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-                               backgroundSkin="{new Image(atlas.getTexture('item_back'))}"
+                               backgroundSkin="{new Image(atlas.getTexture('shop_item_back'))}"
                                initialize="{_trigger = new TapToTrigger(this)}">
     <f:layout>
         <f:AnchorLayout/>
@@ -43,7 +43,7 @@
                     <f:HorizontalLayout gap="10"/>
                 </f:layout>
 
-                <f:ImageLoader source="{atlas.getTexture('ppc_label')}"/>
+                <f:ImageLoader source="{atlas.getTexture('shop_ppc_label')}"/>
 
                 <f:Label text="{_unitInfoData.ppcLabel}"
                          textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"/>
@@ -56,7 +56,7 @@
                     <f:HorizontalLayout gap="10"/>
                 </f:layout>
 
-                <f:ImageLoader source="{atlas.getTexture('pps_label')}"/>
+                <f:ImageLoader source="{atlas.getTexture('shop_pps_label')}"/>
 
                 <f:Label text="{_unitInfoData.ppsLabel}"
                          textRendererProperties="{{textFormat: new BitmapFontTextFormat('shop_price_20')}}"/>
@@ -89,7 +89,7 @@
     </f:LayoutGroup>
 
     <!-- Лимит -->
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('item_limit_back'))}"
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_item_limit_back'))}"
                    maxHeight="37" visible="{_unitInfoData.rest >= 0}" includeInLayout="{_unitInfoData.rest >= 0}"
                    touchable="false">
         <f:layout>
@@ -105,7 +105,7 @@
     </f:LayoutGroup>
 
     <!-- Количество исользований -->
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('item_limit_back'))}"
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_item_limit_back'))}"
                    maxHeight="37" visible="{_unitInfoData.profitLimit > 0}" includeInLayout="{_unitInfoData.profitLimit > 0}"
                    touchable="false">
         <f:layout>
@@ -148,14 +148,14 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }
 
         private static function getPriceBack(available:Boolean):Image
         {
-            return available ? null : new Image(atlas.getTexture("price_marker_red"));
+            return available ? null : new Image(atlas.getTexture("shop_price_marker_red"));
         }
 
         private static function getLimitLabel(rest:int):String

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <view:GameScreenViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:f="library://ns.feathersui.com/mxml"
                          xmlns:wooden="view.wooden.*" xmlns:view="view.*"
-                         backgroundSkin="{new Image(atlas.getTexture('back'))}"
+                         backgroundSkin="{new Image(atlas.getTexture('wooden_back'))}"
                          minWidth="576" minHeight="1024">
     <view:layout>
         <f:AnchorLayout/>
@@ -23,8 +23,8 @@
         </wooden:layoutData>
     </wooden:WoodenBorder>
 
-    <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_up'))}"
-              downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
+    <f:Button defaultSkin="{new Image(atlas.getTexture('wooden_back_bn_up'))}"
+              downSkin="{new Image(atlas.getTexture('wooden_back_bn_down'))}"
               triggered="onBackButton()">
         <f:layoutData>
             <f:AnchorLayoutData left="23" top="12"/>
@@ -41,8 +41,8 @@
         <f:Button styleProvider="{_shopButtonStyleProvider}" triggered="onShopButton()"/>
     </wooden:WoodenShopWidget>
 
-    <f:Button defaultSkin="{new Image(atlas.getTexture('action_bn_up'))}"
-              downSkin="{new Image(atlas.getTexture('action_bn_down'))}"
+    <f:Button defaultSkin="{new Image(atlas.getTexture('wooden_action_bn_up'))}"
+              downSkin="{new Image(atlas.getTexture('wooden_action_bn_down'))}"
               triggered="onTapButton()">
         <f:layoutData>
             <f:AnchorLayoutData top="542" left="38"/>

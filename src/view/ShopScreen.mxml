@@ -5,7 +5,7 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}" minWidth="576" minHeight="1024">
+    <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('shop_back'))}" minWidth="576" minHeight="1024">
         <f:layout>
             <f:AnchorLayout/>
         </f:layout>
@@ -14,8 +14,8 @@
         </f:layoutData>
 
         <!-- Кнопка возврата -->
-        <f:Button defaultSkin="{new Image(atlas.getTexture('back_bn_normal'))}"
-                  downSkin="{new Image(atlas.getTexture('back_bn_down'))}"
+        <f:Button defaultSkin="{new Image(atlas.getTexture('shop_back_bn_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('shop_back_bn_down'))}"
                   triggered="{dispatchEventWith('back')}">
             <f:layoutData>
                 <f:AnchorLayoutData left="25" top="21"/>
@@ -92,7 +92,7 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-               backgroundSkin="{new Image(atlas.getTexture('back'))}"
+               backgroundSkin="{new Image(atlas.getTexture('settings_back'))}"
                maxWidth="505" maxHeight="504">
     <f:layout>
         <f:AnchorLayout/>
@@ -23,9 +23,9 @@
                       minimum="0" maximum="1.0" change="{dispatchEventWith('soundChanged', false, soundSlider.value)}"
                       value="{_mediator.soundValue}"/>
 
-            <f:Check id="soundOffCheck" defaultSkin="{new Image(atlas.getTexture('sound_off_normal'))}"
-                     downSkin="{new Image(atlas.getTexture('sound_off_selected'))}"
-                     defaultSelectedSkin="{new Image(atlas.getTexture('sound_off_selected'))}"
+            <f:Check id="soundOffCheck" defaultSkin="{new Image(atlas.getTexture('settings_sound_off_normal'))}"
+                     downSkin="{new Image(atlas.getTexture('settings_sound_off_selected'))}"
+                     defaultSelectedSkin="{new Image(atlas.getTexture('settings_sound_off_selected'))}"
                      change="{dispatchEventWith('soundSwitch', false, soundOffCheck.isSelected)}"
                      isSelected="{_mediator.soundOff}"/>
         </f:LayoutGroup>
@@ -39,15 +39,15 @@
                       minimum="0" maximum="1.0" change="{dispatchEventWith('musicChanged', false, musicSlider.value)}"
                       value="{_mediator.musicValue}"/>
 
-            <f:Check id="musicOffCheck" defaultSkin="{new Image(atlas.getTexture('music_off_normal'))}"
-                     downSkin="{new Image(atlas.getTexture('music_off_selected'))}"
-                     defaultSelectedSkin="{new Image(atlas.getTexture('music_off_selected'))}"
+            <f:Check id="musicOffCheck" defaultSkin="{new Image(atlas.getTexture('settings_music_off_normal'))}"
+                     downSkin="{new Image(atlas.getTexture('settings_music_off_selected'))}"
+                     defaultSelectedSkin="{new Image(atlas.getTexture('settings_music_off_selected'))}"
                      change="dispatchEventWith('musicSwitch', false, musicOffCheck.isSelected)"
                      isSelected="{_mediator.musicOff}"/>
         </f:LayoutGroup>
 
-        <f:Check id="godModeCheck" defaultIcon="{new Image(atlas.getTexture('god_mode_normal'))}"
-                 defaultSelectedIcon="{new Image(atlas.getTexture('god_mode_selected'))}"
+        <f:Check id="godModeCheck" defaultIcon="{new Image(atlas.getTexture('settings_god_mode_normal'))}"
+                 defaultSelectedIcon="{new Image(atlas.getTexture('settings_god_mode_selected'))}"
                  defaultLabelProperties="{{textFormat: new BitmapFontTextFormat('message_box_button')}}"
                  label="{LocaleManager.getInstance().getString('common', 'settings.godmode.bn.title')}"
                  isSelected="{!_mediator.godModeOff}" visible="{_mediator.hasGodMode}"
@@ -99,7 +99,7 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("settings");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }

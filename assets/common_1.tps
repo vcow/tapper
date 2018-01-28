@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.4.0</string>
+        <string>4.5.0</string>
         <key>fileName</key>
-        <string>C:/Work/tapper/assets/shop.tps</string>
+        <string>C:/Work/tapper/assets/common_1.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../src/resources/graphics/assets/shop.xml</filename>
+                <filename>../src/resources/graphics/assets/common_1.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -199,7 +199,120 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">graphics/skin/shop/back.png</key>
+            <key type="filename">graphics/skin/message_box/message_box_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>119,81,238,161</rect>
+                <key>scale9Paddings</key>
+                <rect>119,81,238,161</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/message_box/message_box_border.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,20,41,39</rect>
+                <key>scale9Paddings</key>
+                <rect>20,20,41,39</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/message_box/message_box_button_normal.png</key>
+            <key type="filename">graphics/skin/message_box/message_box_button_normal_down.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>36,14,72,27</rect>
+                <key>scale9Paddings</key>
+                <rect>36,14,72,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/settings/settings_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>126,126,253,252</rect>
+                <key>scale9Paddings</key>
+                <rect>126,126,253,252</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/settings/settings_close_bn_down.png</key>
+            <key type="filename">graphics/skin/settings/settings_close_bn_normal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>53,17,107,33</rect>
+                <key>scale9Paddings</key>
+                <rect>53,17,107,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/settings/settings_god_mode_normal.png</key>
+            <key type="filename">graphics/skin/settings/settings_god_mode_selected.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,15,15</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/settings/settings_music_off_normal.png</key>
+            <key type="filename">graphics/skin/settings/settings_music_off_selected.png</key>
+            <key type="filename">graphics/skin/settings/settings_sound_off_normal.png</key>
+            <key type="filename">graphics/skin/settings/settings_sound_off_selected.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>21,21,43,43</rect>
+                <key>scale9Paddings</key>
+                <rect>21,21,43,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/settings/settings_scroller_back.png</key>
+            <key type="filename">graphics/skin/settings/settings_scroller_bar.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>81,22,162,43</rect>
+                <key>scale9Paddings</key>
+                <rect>81,22,162,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/shop/shop_back.png</key>
+            <key type="filename">graphics/skin/top/top_back.png</key>
+            <key type="filename">graphics/skin/vip/vip_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -212,8 +325,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/back_bn_down.png</key>
-            <key type="filename">graphics/skin/shop/back_bn_normal.png</key>
+            <key type="filename">graphics/skin/shop/shop_back_bn_down.png</key>
+            <key type="filename">graphics/skin/shop/shop_back_bn_normal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -226,7 +339,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/item_back.png</key>
+            <key type="filename">graphics/skin/shop/shop_item_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -239,7 +352,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/item_limit_back.png</key>
+            <key type="filename">graphics/skin/shop/shop_item_limit_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -252,7 +365,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/message_back.png</key>
+            <key type="filename">graphics/skin/shop/shop_message_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -265,8 +378,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/message_cancel_bn_down.png</key>
-            <key type="filename">graphics/skin/shop/message_cancel_bn_normal.png</key>
+            <key type="filename">graphics/skin/shop/shop_message_cancel_bn_down.png</key>
+            <key type="filename">graphics/skin/shop/shop_message_cancel_bn_normal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -279,8 +392,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/message_ok_bn_down.png</key>
-            <key type="filename">graphics/skin/shop/message_ok_bn_normal.png</key>
+            <key type="filename">graphics/skin/shop/shop_message_ok_bn_down.png</key>
+            <key type="filename">graphics/skin/shop/shop_message_ok_bn_normal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -293,7 +406,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/offer_back.png</key>
+            <key type="filename">graphics/skin/shop/shop_offer_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -306,35 +419,35 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/ppc_label.png</key>
-            <key type="filename">graphics/skin/shop/pps_label.png</key>
+            <key type="filename">graphics/skin/shop/shop_ppc_label.png</key>
+            <key type="filename">graphics/skin/shop/shop_pps_label.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>11,3,22,7</rect>
+                <rect>11,6,22,12</rect>
                 <key>scale9Paddings</key>
-                <rect>11,3,22,7</rect>
+                <rect>11,6,22,12</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/price_marker_green.png</key>
-            <key type="filename">graphics/skin/shop/price_marker_red.png</key>
+            <key type="filename">graphics/skin/shop/shop_price_marker_green.png</key>
+            <key type="filename">graphics/skin/shop/shop_price_marker_red.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>49,8,99,16</rect>
+                <rect>49,11,99,21</rect>
                 <key>scale9Paddings</key>
-                <rect>49,8,99,16</rect>
+                <rect>49,11,99,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/scotch.png</key>
+            <key type="filename">graphics/skin/shop/shop_scotch.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -347,7 +460,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/scroll_bar.png</key>
+            <key type="filename">graphics/skin/shop/shop_scroll_bar.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -360,7 +473,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/scroll_thumb.png</key>
+            <key type="filename">graphics/skin/shop/shop_scroll_thumb.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -373,20 +486,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/scroll_thumb_center.png</key>
+            <key type="filename">graphics/skin/shop/shop_scroll_thumb_center.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,5,5</rect>
+                <rect>2,3,5,7</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,5,5</rect>
+                <rect>2,3,5,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">graphics/skin/shop/unavailable_back.png</key>
+            <key type="filename">graphics/skin/shop/shop_unavailable_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -396,13 +509,166 @@
                 <rect>90,31,180,63</rect>
                 <key>scale9Paddings</key>
                 <rect>90,31,180,63</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/top/top_blackboard.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>140,48,280,96</rect>
+                <key>scale9Paddings</key>
+                <rect>140,48,280,96</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/top/top_bn1_down.png</key>
+            <key type="filename">graphics/skin/top/top_bn1_normal.png</key>
+            <key type="filename">graphics/skin/top/top_bn2_down.png</key>
+            <key type="filename">graphics/skin/top/top_bn2_normal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>45,26,91,52</rect>
+                <key>scale9Paddings</key>
+                <rect>45,26,91,52</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/top/top_popup_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>106,106,211,211</rect>
+                <key>scale9Paddings</key>
+                <rect>106,106,211,211</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_arrow_hour.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,10,6,21</rect>
+                <key>scale9Paddings</key>
+                <rect>3,10,6,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_arrow_min.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,16,6,32</rect>
+                <key>scale9Paddings</key>
+                <rect>3,16,6,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_arrow_sec.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,6,4,12</rect>
+                <key>scale9Paddings</key>
+                <rect>2,6,4,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_back_bn_down.png</key>
+            <key type="filename">graphics/skin/vip/vip_back_bn_normal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,13,41,26</rect>
+                <key>scale9Paddings</key>
+                <rect>20,13,41,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_card_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>90,53,181,107</rect>
+                <key>scale9Paddings</key>
+                <rect>90,53,181,107</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_details_back.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>104,136,207,273</rect>
+                <key>scale9Paddings</key>
+                <rect>104,136,207,273</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_details_buy_bn_down.png</key>
+            <key type="filename">graphics/skin/vip/vip_details_buy_bn_normal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,15,121,30</rect>
+                <key>scale9Paddings</key>
+                <rect>60,15,121,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/vip/vip_details_close_bn_down.png</key>
+            <key type="filename">graphics/skin/vip/vip_details_close_bn_normal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,13,27,27</rect>
+                <key>scale9Paddings</key>
+                <rect>13,13,27,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
+            <filename>graphics/skin/message_box</filename>
+            <filename>graphics/skin/settings</filename>
             <filename>graphics/skin/shop</filename>
+            <filename>graphics/skin/top</filename>
+            <filename>graphics/skin/vip</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

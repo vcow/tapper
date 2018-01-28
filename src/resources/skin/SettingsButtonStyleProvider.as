@@ -15,10 +15,10 @@ package resources.skin
 	{
 		override protected function onSkinButton(button:Button):void
 		{
-			var atlas:TextureAtlas = AtlasLibrary.getInstance().manager.getTextureAtlas("settings");
+			var atlas:TextureAtlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
 
-			button.defaultSkin = new Image(atlas.getTexture("close_bn_normal"));
-			button.downSkin = new Image(atlas.getTexture("close_bn_down"));
+			button.defaultSkin = new Image(atlas.getTexture("settings_close_bn_normal"));
+			button.downSkin = new Image(atlas.getTexture("settings_close_bn_down"));
 			button.defaultLabelProperties = {
 				textFormat: new BitmapFontTextFormat("wooden_title", 38, 0x544317)
 			};

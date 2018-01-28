@@ -45,7 +45,7 @@ package resources.skin
 		private static function trackFactory():BasicButton
 		{
 			var track:BasicButton = new BasicButton();
-			var img:Image = new Image(atlas.getTexture("bar"));
+			var img:Image = new Image(atlas.getTexture("wooden_bar"));
 			img.scale9Grid = new flash.geom.Rectangle(0, 28, 28, 270);
 			track.defaultSkin = img;
 			return track;
@@ -54,7 +54,7 @@ package resources.skin
 		private static function thumbFactory():Button
 		{
 			var thumb:Button = new Button();
-			thumb.defaultSkin = new Image(atlas.getTexture("thumb"));
+			thumb.defaultSkin = new Image(atlas.getTexture("wooden_thumb"));
 			return thumb;
 		}
 	}

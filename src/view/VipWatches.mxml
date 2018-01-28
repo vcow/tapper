@@ -4,11 +4,11 @@
                addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()"
                creationComplete="initWatches()">
 
-    <f:ImageLoader id="secondArrow" source="{atlas.getTexture('arrow_sec')}" pivotX="3.5" pivotY="12.5" x="54" y="93"/>
+    <f:ImageLoader id="secondArrow" source="{atlas.getTexture('vip_arrow_sec')}" pivotX="3.5" pivotY="12.5" x="54" y="93"/>
 
-    <f:ImageLoader id="minuteArrow" source="{atlas.getTexture('arrow_min')}" pivotX="5.5" pivotY="50.5" x="54" y="54"/>
+    <f:ImageLoader id="minuteArrow" source="{atlas.getTexture('vip_arrow_min')}" pivotX="5.5" pivotY="50.5" x="54" y="54"/>
 
-    <f:ImageLoader id="hourArrow" source="{atlas.getTexture('arrow_hour')}" pivotX="6" pivotY="36" x="54" y="54"/>
+    <f:ImageLoader id="hourArrow" source="{atlas.getTexture('vip_arrow_hour')}" pivotX="6" pivotY="36" x="54" y="54"/>
 
     <fx:Script><![CDATA[
         import resources.AtlasLibrary;
@@ -22,7 +22,7 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("vip");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }

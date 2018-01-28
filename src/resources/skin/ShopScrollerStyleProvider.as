@@ -41,7 +41,7 @@ package resources.skin
 		{
 			if (!_atlas)
 			{
-				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("shop");
+				_atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
 			}
 			return _atlas;
 		}
@@ -49,7 +49,7 @@ package resources.skin
 		private static function trackFactory():BasicButton
 		{
 			var track:BasicButton = new BasicButton();
-			var img:Image = new Image(atlas.getTexture("scroll_bar"));
+			var img:Image = new Image(atlas.getTexture("shop_scroll_bar"));
 			img.scale9Grid = new flash.geom.Rectangle(0, 5, 9, 7);
 			track.defaultSkin = img;
 			return track;
@@ -60,11 +60,11 @@ package resources.skin
 			var skin:LayoutGroup = new LayoutGroup();
 			skin.layout = new AnchorLayout();
 
-			var partImg:Image = new Image(atlas.getTexture("scroll_thumb"));
+			var partImg:Image = new Image(atlas.getTexture("shop_scroll_thumb"));
 			partImg.scale9Grid = new flash.geom.Rectangle(0, 16, 9, 6);
 			skin.backgroundSkin = partImg;
 
-			partImg = new Image(atlas.getTexture("scroll_thumb_center"));
+			partImg = new Image(atlas.getTexture("shop_scroll_thumb_center"));
 			var part:LayoutGroup = new LayoutGroup();
 			part.layoutData = new AnchorLayoutData(NaN, NaN, NaN, NaN, 0, 0);
 			part.backgroundSkin = partImg;

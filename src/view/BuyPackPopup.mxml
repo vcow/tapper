@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-               backgroundSkin="{new Image(atlas.getTexture('details_back'))}"
+               backgroundSkin="{new Image(atlas.getTexture('vip_details_back'))}"
                maxWidth="414" minHeight="545">
     <f:layout>
         <f:AnchorLayout/>
     </f:layout>
 
-    <f:Button defaultSkin="{new Image(atlas.getTexture('details_close_bn_normal'))}"
-              downSkin="{new Image(atlas.getTexture('details_close_bn_down'))}"
+    <f:Button defaultSkin="{new Image(atlas.getTexture('vip_details_close_bn_normal'))}"
+              downSkin="{new Image(atlas.getTexture('vip_details_close_bn_down'))}"
               triggered="close(Const.ON_CANCEL)">
         <f:layoutData>
             <f:AnchorLayoutData top="15" right="25"/>
@@ -67,7 +67,7 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("vip");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }

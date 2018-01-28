@@ -43,7 +43,7 @@ package view
 		{
 			super();
 
-			width = 433;
+			width = 443;
 			height = 332;
 			clipContent = true;
 		}

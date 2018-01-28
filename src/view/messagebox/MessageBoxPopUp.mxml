@@ -2,7 +2,7 @@
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
                removedFromStage="onRemovedFromStage()">
     <f:backgroundSkin>
-        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('back'))}">
+        <f:LayoutGroup backgroundSkin="{new Image(atlas.getTexture('message_box_back'))}">
             <f:layout>
                 <f:VerticalLayout padding="6"/>
             </f:layout>
@@ -68,7 +68,7 @@
         {
             if (!_atlas)
             {
-                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("messagebox");
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
         }
@@ -78,7 +78,7 @@
         {
             if (!_borderImage)
             {
-                _borderImage = new Image(atlas.getTexture("border"));
+                _borderImage = new Image(atlas.getTexture("message_box_border"));
                 _borderImage.scale9Grid = new flash.geom.Rectangle(35, 35, 8, 8);
             }
             return _borderImage;

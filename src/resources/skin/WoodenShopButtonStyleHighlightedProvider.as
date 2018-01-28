@@ -22,8 +22,8 @@ package resources.skin
 		}
 		override protected function onSkinButton(button:Button):void
 		{
-			button.defaultSkin = new Image(atlas.getTexture("shop_bn_highlight_up"));
-			button.downSkin = new Image(atlas.getTexture("shop_bn_highlight_down"));
+			button.defaultSkin = new Image(atlas.getTexture("wooden_shop_bn_highlight_up"));
+			button.downSkin = new Image(atlas.getTexture("wooden_shop_bn_highlight_down"));
 		}
 	}
 }

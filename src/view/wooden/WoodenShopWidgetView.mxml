@@ -88,7 +88,7 @@
         {
             if (!_border)
             {
-                _border = new Image(woodenAtlas.getTexture("shop_widget_border"));
+                _border = new Image(woodenAtlas.getTexture("wooden_shop_widget_border"));
                 _border.scale9Grid = new flash.geom.Rectangle(43, 43, 4, 4);
             }
             return _border;
