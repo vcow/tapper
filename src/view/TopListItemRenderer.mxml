@@ -1,17 +1,23 @@
 <?xml version="1.0"?>
 <f:LayoutGroupListItemRenderer xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-                               backgroundSkin="{new Quad(10, 10, 0x000099)}" minWidth="500" minHeight="30">
+                               minWidth="450" filter="{itemFilter}">
     <f:layout>
-        <f:HorizontalLayout gap="10"/>
+        <f:VerticalLayout gap="-7" horizontalAlign="center"/>
     </f:layout>
 
-    <f:Label text="{title}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
-    <f:Label text="{scores}" styleProvider="{StylesLibrary.woodenShopWidgetLabelStyleProvider}"/>
+    <f:Label text="{title}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('marble_slab', 33)}}"/>
+
+    <f:Label text="{scores}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('marble_slab', 44)}}"/>
 
     <fx:Script><![CDATA[
-        import resources.StylesLibrary;
+        import feathers.text.BitmapFontTextFormat;
 
-        import starling.display.Quad;
+        import starling.filters.FragmentFilter;
+        import starling.filters.GlowFilter;
+
+        import view.StringUtils;
 
         import vo.TopItem;
 
@@ -19,7 +25,10 @@
         private var title:String;
 
         [Bindable]
-        private var scores:Number;
+        private var scores:String;
+
+        [Bindable]
+        private var itemFilter:FragmentFilter;
 
         override public function set data(value:Object):void
         {
@@ -29,7 +38,8 @@
             if (item)
             {
                 title = item.name;
-                scores = item.scores;
+                scores = StringUtils.divideByDigits(item.scores);
+                filter = item.isUserItem ? new GlowFilter(0xfffcc3, 2, 10, 1) : null;
             }
         }
         ]]></fx:Script>
