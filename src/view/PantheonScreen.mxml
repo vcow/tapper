@@ -12,7 +12,7 @@
             <f:AnchorLayoutData verticalCenter="0" horizontalCenter="0"/>
         </f:layoutData>
 
-        <f:List dataProvider="{_mediator.topList}" itemRendererType="view.TopListItemRenderer">
+        <f:List dataProvider="{_mediator.topList}" itemRendererType="view.TopListItemRenderer" clipContent="false">
             <f:layoutData>
                 <f:AnchorLayoutData horizontalCenter="2" top="125"/>
             </f:layoutData>
@@ -31,11 +31,17 @@
     <f:LayoutGroup maxWidth="560" maxHeight="191" backgroundSkin="{new Image(atlas.getTexture('top_blackboard'))}"
                    visible="{_mediator.userItem != null}">
         <f:layout>
-            <f:AnchorLayout/>
+            <f:VerticalLayout horizontalAlign="center" paddingTop="37" gap="14"/>
         </f:layout>
         <f:layoutData>
-            <f:AnchorLayoutData horizontalCenter="0" bottom="0"/>
+            <f:AnchorLayoutData horizontalCenter="1" bottom="-26"/>
         </f:layoutData>
+
+        <f:Label text="{getUserTitle(_mediator.userItem)}" scaleX="0.82" paddingRight="22"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('top_loser', 32, 0xebebeb)}}"/>
+
+        <f:Label text="{getUserScores(_mediator.userItem)}" scaleX="0.82" paddingRight="14"
+                 textRendererProperties="{{textFormat: new BitmapFontTextFormat('top_loser', NaN, 0xebebeb)}}"/>
     </f:LayoutGroup>
 
     <fx:Metadata>
@@ -48,15 +54,20 @@
     <fx:Script><![CDATA[
         import app.AppFacade;
 
+        import feathers.text.BitmapFontTextFormat;
+
         import mediators.PantheonScreenMediator;
 
         import org.puremvc.as3.multicore.patterns.facade.Facade;
 
         import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
 
         import starling.display.Image;
         import starling.events.Event;
         import starling.textures.TextureAtlas;
+
+        import vo.TopItem;
 
         public static const MEDIATOR_NAME:String = "pantheonScreenMediator";
 
@@ -72,6 +83,19 @@
 
         [Bindable]
         public var _mediator:PantheonScreenMediator;
+
+        private static function getUserTitle(user:TopItem):String
+        {
+            if (!user) return "";
+            return LocaleManager.getInstance().getString("common", "pantheon.record",
+                    [user.place, user.name]);
+        }
+
+        private static function getUserScores(user:TopItem):String
+        {
+            if (!user) return "";
+            return StringUtils.divideByDigits(user.scores);
+        }
 
         override protected function initialize():void
         {
@@ -114,7 +138,7 @@
             var popup:PantheonRegisterPopUp = PantheonRegisterPopUp(event.target);
             popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
 
-            dispatchEventWith("setUserName", false, event.data == Const.ON_OK ? popup.nameTextField.text : "");
+            dispatchEventWith("setUserName", false, event.data == Const.ON_OK ? popup.userName : "");
         }
         ]]></fx:Script>
 </f:LayoutGroup>

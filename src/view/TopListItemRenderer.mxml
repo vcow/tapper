@@ -22,13 +22,13 @@
 
     <f:ImageLoader source="{atlas.getTexture('top_leader_icon')}" visible="{isUserItem}" touchable="false">
         <f:layoutData>
-            <f:AnchorLayoutData left="0" verticalCenter="0"/>
+            <f:AnchorLayoutData left="-5" verticalCenter="0"/>
         </f:layoutData>
     </f:ImageLoader>
 
     <f:ImageLoader source="{atlas.getTexture('top_leader_icon')}" visible="{isUserItem}" touchable="false">
         <f:layoutData>
-            <f:AnchorLayoutData right="0" verticalCenter="0"/>
+            <f:AnchorLayoutData right="-5" verticalCenter="0"/>
         </f:layoutData>
     </f:ImageLoader>
 
@@ -36,6 +36,7 @@
         import feathers.text.BitmapFontTextFormat;
 
         import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
 
         import starling.filters.FragmentFilter;
         import starling.filters.GlowFilter;
@@ -72,7 +73,8 @@
             var item:TopItem = value as TopItem;
             if (item)
             {
-                title = item.name;
+                title = LocaleManager.getInstance().getString("common", "pantheon.record",
+                    [item.place, item.name]);
                 scores = StringUtils.divideByDigits(item.scores);
                 isUserItem = item.isUserItem;
                 filter = isUserItem ? new GlowFilter(0xfffcc3, 2, 10, 1) : null;

@@ -217,8 +217,8 @@ package mediators
 
 		public function onRemovedFromStage(event:Event):void
 		{
-//			var statistics:Statistics = Statistics.getInstance();
-//			statistics.close();
+			var statistics:Statistics = Statistics.getInstance();
+			statistics.close();
 
 			_currentRequestType = null;
 		}
@@ -587,7 +587,7 @@ package mediators
 
 		private function generateId():String
 		{
-			return "test_id_2";
+			return "test_id_6";
 		}
 	}
 }

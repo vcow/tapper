@@ -1,19 +1,44 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
-               backgroundSkin="{new Quad(300, 300)}">
+               backgroundSkin="{new Image(atlas.getTexture('top_popup_back'))}" maxWidth="422" maxHeight="422">
     <f:layout>
-        <f:VerticalLayout horizontalAlign="center" gap="20" padding="20"/>
+        <f:AnchorLayout/>
     </f:layout>
 
-    <f:TextInput width="250" height="50" id="nameTextField"
-                 restrict="АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЪЭЮЯабвгдеёжзиклмнопрстуфхцчшщьъэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789._"/>
+    <f:TextInput width="348" id="nameTextField" maxChars="8"
+                 restrict="АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЫЬЪЭЮЯабвгдежзиклмнопрстуфхцчшщыьъэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789. "
+                 prompt="Введите имя" textEditorFactory="bitmapFontTextEditorFactory"
+                 promptProperties="{{textFormat: new BitmapFontTextFormat('top_message', 42, 0x00451d, TextFormatAlign.CENTER)}}">
+    <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-1" top="63"/>
+        </f:layoutData>
+    </f:TextInput>
 
-    <f:Button label="Register" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              isEnabled="{nameTextField.text.length > 0}"
-              triggered="{dispatchEventWith('close', false, Const.ON_OK)}"/>
+    <f:LayoutGroup>
+        <f:layout>
+            <f:HorizontalLayout gap="-1"/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="0" bottom="50"/>
+        </f:layoutData>
 
-    <f:Button label="Cancel" styleProvider="{StylesLibrary.startScreenButtonStyleProvider}"
-              triggered="{dispatchEventWith('close')}"/>
+        <f:Button label="{LocaleManager.getInstance().getString('common', 'yes.bn.label').toUpperCase()}"
+                  defaultSkin="{new Image(atlas.getTexture('top_bn1_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('top_bn1_down'))}"
+                  defaultLabelProperties="{{textFormat: new BitmapFontTextFormat('marble_slab'), scaleX: 0.8}}"
+                  isEnabled="{getName(nameTextField.text).length > 0}"
+                  alpha="{getName(nameTextField.text).length > 0 ? 1.0 : 0.75}"
+                  triggered="{dispatchEventWith('close', false, Const.ON_OK)}"
+                  padding="10" labelOffsetY="-5"/>
+
+        <f:Button label="{LocaleManager.getInstance().getString('common', 'no.bn.label').toUpperCase()}"
+                  defaultSkin="{new Image(atlas.getTexture('top_bn2_normal'))}"
+                  downSkin="{new Image(atlas.getTexture('top_bn2_down'))}"
+                  defaultLabelProperties="{{textFormat: new BitmapFontTextFormat('marble_slab'), scaleX: 0.8}}"
+                  triggered="{dispatchEventWith('close')}"
+                  padding="10" labelOffsetY="-5"/>
+    </f:LayoutGroup>
+
 
     <fx:Metadata>
         [Event(name="close", type="starling.events.Event")]
@@ -21,8 +46,43 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
-        import resources.StylesLibrary;
+        import feathers.controls.text.BitmapFontTextEditor;
+        import feathers.core.ITextEditor;
+        import feathers.text.BitmapFontTextFormat;
 
-        import starling.display.Quad;
+        import resources.AtlasLibrary;
+        import resources.locale.LocaleManager;
+
+        import starling.display.Image;
+        import starling.textures.TextureAtlas;
+        import starling.utils.StringUtil;
+
+        private static var _atlas:TextureAtlas;
+        private static function get atlas():TextureAtlas
+        {
+            if (!_atlas)
+            {
+                _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
+            }
+            return _atlas;
+        }
+
+        public function get userName():String
+        {
+            return getName(nameTextField.text);
+        }
+
+        private static function getName(rawName:String):String
+        {
+            return StringUtil.trim(rawName);
+        }
+
+        private static function bitmapFontTextEditorFactory():ITextEditor
+        {
+            var textEditor:BitmapFontTextEditor = new BitmapFontTextEditor();
+            textEditor.styleProvider = null;
+            textEditor.textFormat = new BitmapFontTextFormat('top_message', 42, 0xb9feb9, TextFormatAlign.CENTER);
+            return textEditor;
+        }
         ]]></fx:Script>
 </f:LayoutGroup>
