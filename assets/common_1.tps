@@ -541,6 +541,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">graphics/skin/top/top_menu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>75,155,151,310</rect>
+                <key>scale9Paddings</key>
+                <rect>75,155,151,310</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">graphics/skin/top/top_menu_btn_down.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,32,44,64</rect>
+                <key>scale9Paddings</key>
+                <rect>22,32,44,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/top/top_popup_back.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
