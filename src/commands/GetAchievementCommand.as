@@ -43,7 +43,7 @@ package commands
 				else if (reward is PopUpReward)
 				{
 					sendNotification(Const.SHOW_MESSAGE,
-							new MessageBoxData(reward.description, null, MessageBoxData.OK_BUTTON));
+							new MessageBoxData(reward.description, null, Const.ON_OK));
 				}
 				else
 				{

@@ -24,6 +24,7 @@ package resources.skin
 			image.scale9Grid = rc;
 			button.downSkin = image;
 
+			button.paddingTop = 4;
 			button.defaultLabelProperties = {
 				textFormat: new BitmapFontTextFormat("message_box_button")
 			};

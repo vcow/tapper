@@ -20,7 +20,8 @@ package commands
 		{
 			var gameModel:GameModel = AppFacade(facade).gameModel;
 
-			gameModel.setMoney(0);
+			gameModel.setMoney(gameModel.startBonus);
+			gameModel.startBonus = 0;
 			gameModel.tapsTotal = 0;
 			gameModel.tickCount = 0;
 			gameModel.level = 0;

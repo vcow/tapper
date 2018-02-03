@@ -99,14 +99,14 @@
         {
             var lm:LocaleManager = LocaleManager.getInstance();
             buttonGroup.removeChildren();
-            if ((value & MessageBoxData.OK_BUTTON) != 0)
-                addButton(lm.getString("common", "ok.bn.label"), MessageBoxData.OK_BUTTON, this);
-            if ((value & MessageBoxData.YES_BUTTON) != 0)
-                addButton(lm.getString("common", "yes.bn.label"), MessageBoxData.YES_BUTTON, this);
-            if ((value & MessageBoxData.NO_BUTTON) != 0)
-                addButton(lm.getString("common", "no.bn.label"), MessageBoxData.NO_BUTTON, this);
-            if ((value & MessageBoxData.CANCEL_BUTTON) != 0)
-                addButton(lm.getString("common", "cancel.bn.label"), MessageBoxData.CANCEL_BUTTON, this);
+            if ((value & Const.ON_OK) != 0)
+                addButton(lm.getString("common", "ok.bn.label"), Const.ON_OK, this);
+            if ((value & Const.ON_YES) != 0)
+                addButton(lm.getString("common", "yes.bn.label"), Const.ON_YES, this);
+            if ((value & Const.ON_NO) != 0)
+                addButton(lm.getString("common", "no.bn.label"), Const.ON_NO, this);
+            if ((value & Const.ON_CANCEL) != 0)
+                addButton(lm.getString("common", "cancel.bn.label"), Const.ON_CANCEL, this);
         }
 
         private function addButton(label:String, data:uint, eventDispatcher:starling.events.EventDispatcher):void

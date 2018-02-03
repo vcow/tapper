@@ -42,6 +42,8 @@ package mediators
 
 		private var _currentRequestType:String;
 
+		private var _lastUserScores:Number = 0;
+
 		public function PantheonScreenMediator(mediatorName:String = null, viewComponent:Object = null)
 		{
 			super(mediatorName, viewComponent);
@@ -89,7 +91,6 @@ package mediators
 			onConnectionBusy(null);
 
 			viewScreen.addEventListener("back", onBack);
-			viewScreen.addEventListener("registerUser", onRegisterUser);
 			viewScreen.addEventListener("setUserData", onSetUserData);
 			viewScreen.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			viewScreen.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -103,7 +104,6 @@ package mediators
 			statistics.removeEventListener("busy", onConnectionBusy);
 
 			viewScreen.removeEventListener("back", onBack);
-			viewScreen.removeEventListener("registerUser", onRegisterUser);
 			viewScreen.removeEventListener("setUserData", onSetUserData);
 			viewScreen.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			viewScreen.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -149,7 +149,7 @@ package mediators
 			{
 				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 						LocaleManager.getInstance().getString("common", "message.connection.error"),
-						onMessageClose, MessageBoxData.OK_BUTTON));
+						onMessageClose, Const.ON_OK));
 			}
 		}
 
@@ -167,10 +167,22 @@ package mediators
 			statistics.getData();
 		}
 
-		private function showRegisterForm():void
+		private function getUserName(callback:Function):void
 		{
 			var screenView:PantheonScreen = viewComponent as PantheonScreen;
-			if (screenView) screenView.showRegisterForm();
+			if (screenView)
+			{
+				screenView.addEventListener("setUserName", function (event:Event):void
+				{
+					screenView.removeEventListener("setUserName", arguments.callee);
+					if (callback != null) callback(event.data);
+				});
+				screenView.showUserNameForm();
+			}
+			else
+			{
+				if (callback != null) callback("");
+			}
 		}
 
 		private function onMessageClose(result:uint):void
@@ -195,7 +207,7 @@ package mediators
 				}
 				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 						LocaleManager.getInstance().getString("common", "message.connection.error"),
-						null, MessageBoxData.OK_BUTTON));
+						null, Const.ON_OK));
 			}
 			else
 			{
@@ -216,9 +228,8 @@ package mediators
 			sendNotification(Const.POP);
 		}
 
-		private function onRegisterUser(event:Event):void
+		private function doRegisterUser(name:String):void
 		{
-			var name:String = event.data as String;
 			if (!name || !pantheonAvailable || connectionIsBusy)
 			{
 				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
@@ -289,15 +300,59 @@ package mediators
 				return;
 			}
 
+			var model:GameModel = AppFacade(facade).gameModel;
+			if (model.money <= 0)
+			{
+				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+						LocaleManager.getInstance().getString("common", "message.statistics.noMoney"),
+						null, Const.ON_OK));
+				return;
+			}
+
+			if (model.pantheonUserName)
+			{
+				doSetData(true);
+			}
+			else
+			{
+				getUserName(function (name:String):void
+				{
+					if (!name) return;
+					model.pantheonUserName = name;
+					doSetData(true);
+				});
+			}
+		}
+
+		private function doSetData(checkPrevResult:Boolean):void
+		{
+			var model:GameModel = AppFacade(facade).gameModel;
+			if (checkPrevResult)
+			{
+				if (model.money < _lastUserScores)
+				{
+					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
+							LocaleManager.getInstance().getString("common", "message.statistics.isDownshift",
+							[_lastUserScores, model.money]),
+							function (result:uint):void
+							{
+								if (result == Const.ON_YES)
+								{
+									doSetData(false);
+								}
+							}, Const.ON_YES | Const.ON_NO));
+					return;
+				}
+			}
+
 			if (_currentRequestType) return;
 			_currentRequestType = SET_DATA;
 
-			var gameModel:GameModel = AppFacade(facade).gameModel;
 			var statistics:Statistics = Statistics.getInstance();
 
 			statistics.addEventListener("complete", onSetDataComplete);
 			statistics.addEventListener("error", onStatisticsError);
-			statistics.setData(userData, gameModel.money);
+			statistics.setData(userData, model.money);
 		}
 
 		private function onSetDataComplete(event:Event):void
@@ -317,7 +372,20 @@ package mediators
 					statistics.auth(login, password);
 					break;
 				case RESPONSE_NOT_REGISTERED:
-					showRegisterForm();
+					var model:GameModel = AppFacade(facade).gameModel;
+					if (model.pantheonUserName)
+					{
+						doRegisterUser(model.pantheonUserName);
+					}
+					else
+					{
+						getUserName(function (name:String):void
+						{
+							if (!name) return;
+							model.pantheonUserName = name;
+							doRegisterUser(model.pantheonUserName);
+						});
+					}
 					break;
 				default:
 					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
@@ -345,7 +413,20 @@ package mediators
 					}
 					break;
 				case RESPONSE_NOT_REGISTERED:
-					showRegisterForm();
+					var model:GameModel = AppFacade(facade).gameModel;
+					if (model.pantheonUserName)
+					{
+						doRegisterUser(model.pantheonUserName);
+					}
+					else
+					{
+						getUserName(function (name:String):void
+						{
+							if (!name) return;
+							model.pantheonUserName = name;
+							doRegisterUser(model.pantheonUserName);
+						});
+					}
 					break;
 				default:
 					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
@@ -420,8 +501,44 @@ package mediators
 		{
 			var top:Vector.<TopItem> = new Vector.<TopItem>();
 
-			for each (var raw:Object in data) top.push(new TopItem(raw));
-			if (userRecord) top.push(new TopItem(userRecord, true));
+			for (var i:int = 0, l:int = Math.min(data.length, 10); i < l; ++i)
+			{
+				var item:TopItem = new TopItem(data[i]);
+				item.place = i + 1;
+				top.push(item);
+			}
+			if (userRecord)
+			{
+				var userItem:TopItem = new TopItem(userRecord, true);
+
+				var model:GameModel = AppFacade(facade).gameModel;
+				model.pantheonUserName = userItem.name || model.pantheonUserName;
+				_lastUserScores = userItem.scores;
+
+				if (userItem.place > 10)
+				{
+					this.userItem = userItem;
+				}
+				else
+				{
+					this.userItem = null;
+					for (i = 0, l = top.length; i < l; ++i)
+					{
+						item = top[i];
+						if (item.id == userItem.id)
+						{
+							top.removeAt(i);
+							top.insertAt(i, userItem);
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				_lastUserScores = 0;
+				this.userItem = null;
+			}
 
 			top.sort(function (a:TopItem, b:TopItem):int
 			{
@@ -446,6 +563,9 @@ package mediators
 			if (!_password) generateLoginPassword();
 			return _password;
 		}
+
+		[Bindable]
+		public var userItem:TopItem;
 
 		[Bindable(event="topListChanged")]
 		public function get topList():ListCollection

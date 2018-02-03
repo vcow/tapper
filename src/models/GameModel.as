@@ -18,7 +18,9 @@ package models
 		private var _unitsByIndex:Dictionary = new Dictionary();
 		private var _topUnitIndex:int;
 
-		public var pantheonUserName:String;		/// Имя игрока в пантеоне
+		public var startBonus:Number = 0;		/// Стартовый бонус.
+
+		public var pantheonUserName:String;		/// Имя игрока в пантеоне.
 		public var godModeOff:Boolean;			/// Флаг режим Бога включен / выключен.
 		public var tickCount:uint;				/// Текущее количество тиков таймера.
 		public var level:uint;					/// Текущий уровень игрока.

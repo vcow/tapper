@@ -105,7 +105,7 @@ package mediators
 			{
 				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 						LocaleManager.getInstance().getString("common", "message.new.game"),
-						onNewGameCallback, MessageBoxData.YES_BUTTON | MessageBoxData.NO_BUTTON));
+						onNewGameCallback, Const.ON_YES | Const.ON_NO));
 			}
 			else
 			{
@@ -116,7 +116,7 @@ package mediators
 
 		private function onNewGameCallback(result:uint):void
 		{
-			if (result == MessageBoxData.YES_BUTTON)
+			if (result == Const.ON_YES)
 			{
 				sendNotification(Const.NEW_GAME);
 				sendNotification(Const.SWITCH_TO, Const.STATE_GAME);

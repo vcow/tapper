@@ -14,7 +14,7 @@
 
         <f:List dataProvider="{_mediator.topList}" itemRendererType="view.TopListItemRenderer">
             <f:layoutData>
-                <f:AnchorLayoutData horizontalCenter="0" top="125"/>
+                <f:AnchorLayoutData horizontalCenter="2" top="125"/>
             </f:layoutData>
             <f:layout>
                 <f:VerticalLayout gap="5"/>
@@ -28,10 +28,20 @@
         </view:PantheonMenu>
     </f:LayoutGroup>
 
+    <f:LayoutGroup maxWidth="560" maxHeight="191" backgroundSkin="{new Image(atlas.getTexture('top_blackboard'))}"
+                   visible="{_mediator.userItem != null}">
+        <f:layout>
+            <f:AnchorLayout/>
+        </f:layout>
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="0" bottom="0"/>
+        </f:layoutData>
+    </f:LayoutGroup>
+
     <fx:Metadata>
         [Event(name="back", type="starling.events.Event")]
         [Event(name="authenticate", type="starling.events.Event")]
-        [Event(name="registerUser", type="starling.events.Event")]
+        [Event(name="setUserName", type="starling.events.Event")]
         [Event(name="setUserData", type="starling.events.Event")]
     </fx:Metadata>
 
@@ -44,10 +54,7 @@
 
         import resources.AtlasLibrary;
 
-        import resources.StylesLibrary;
-
         import starling.display.Image;
-
         import starling.events.Event;
         import starling.textures.TextureAtlas;
 
@@ -95,7 +102,7 @@
             super.dispose();
         }
 
-        public function showRegisterForm():void
+        public function showUserNameForm():void
         {
             var popup:PantheonRegisterPopUp = new PantheonRegisterPopUp();
             popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
@@ -107,10 +114,7 @@
             var popup:PantheonRegisterPopUp = PantheonRegisterPopUp(event.target);
             popup.removeEventListener(starling.events.Event.CLOSE, onClosePopup);
 
-            if (event.data == Const.ON_OK)
-            {
-                dispatchEventWith("registerUser", false, popup.nameTextField.text);
-            }
+            dispatchEventWith("setUserName", false, event.data == Const.ON_OK ? popup.nameTextField.text : "");
         }
         ]]></fx:Script>
 </f:LayoutGroup>

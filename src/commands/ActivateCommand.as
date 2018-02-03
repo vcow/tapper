@@ -64,6 +64,10 @@ package commands
 					gameModel.hasCurrentGame = false;
 					sendNotification(Const.UPDATE_CURRENT_GAME, false);
 				}
+				else
+				{
+					gameModel.startBonus = 1000;
+				}
 			}
 
 			try {

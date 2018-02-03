@@ -541,6 +541,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">graphics/skin/top/top_leader_icon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,13,27,26</rect>
+                <key>scale9Paddings</key>
+                <rect>13,13,27,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">graphics/skin/top/top_menu.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
