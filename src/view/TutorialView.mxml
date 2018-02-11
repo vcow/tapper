@@ -15,6 +15,7 @@
 
     <fx:Metadata>
         [Event(name="complete", type="starling.events.Event")]
+        [Event(name="closed", type="starling.events.Event")]
     </fx:Metadata>
 
     <fx:Script><![CDATA[
@@ -232,7 +233,10 @@
         private function onTouch(event:flash.events.MouseEvent):void
         {
             if (_tutorialIsVisible)
+            {
                 hideScreen();
+                dispatchEventWith("closed");
+            }
         }
         ]]></fx:Script>
 </f:LayoutGroup>

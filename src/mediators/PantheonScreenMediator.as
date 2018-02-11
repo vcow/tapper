@@ -5,6 +5,10 @@ package mediators
 	import com.mesmotronic.ane.AndroidID;
 
 	import feathers.data.ListCollection;
+	import feathers.events.FeathersEventType;
+
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	import models.GameModel;
 	import models.SkinType;
@@ -13,13 +17,19 @@ package mediators
 
 	import resources.locale.LocaleManager;
 
+	import starling.core.Starling;
+
 	import starling.events.Event;
 	import starling.events.EventDispatcher;
 
+	import view.MainScreen;
+
 	import view.PantheonScreen;
+	import view.TutorialFrame;
 
 	import vo.MessageBoxData;
 	import vo.TopItem;
+	import vo.TutorialData;
 	import vo.Unit;
 
 	/**
@@ -55,6 +65,43 @@ package mediators
 			if (pantheonScreen)
 			{
 				addListeners(pantheonScreen);
+
+				var gameModel:GameModel = AppFacade(facade).gameModel;
+				if (!gameModel.tutorial.pantheonScreen)
+				{
+					var lm:LocaleManager = LocaleManager.getInstance();
+					var tutorialData:TutorialData = new TutorialData("pantheonScreen");
+					tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(6, 16, 230, 72),
+							lm.getString("common", "tutor.pantheon.exit"), TutorialFrame.RIGHT, 16, new Point(10, 0)));
+					tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(6, 118, 230, 72),
+							lm.getString("common", "tutor.pantheon.save"), TutorialFrame.RIGHT, 16, new Point(10, 0)));
+					tutorialData.frames.push(new TutorialFrame(new flash.geom.Rectangle(48, 365, 96, 130),
+							lm.getString("common", "tutor.pantheon.collapse"), TutorialFrame.RIGHT, 20, new Point(10, 0)));
+
+					var onShowTutorial:Function = function (event:Event):void
+					{
+						if (event)
+							event.target.removeEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
+
+						pantheonScreen.pantheonMenu.expand();
+						var mainScreen:MainScreen = Starling.current.root as MainScreen;
+						if (mainScreen)
+						{
+							mainScreen.tutorialScreen.addEventListener("closed", function (event:Event):void
+							{
+								mainScreen.tutorialScreen.removeEventListener("closed", arguments.callee);
+								pantheonScreen.pantheonMenu.collapse(null, false);
+							});
+						}
+
+						sendNotification(Const.SHOW_TUTORIAL, tutorialData);
+					};
+
+					if (pantheonScreen.isCreated)
+						onShowTutorial(null);
+					else
+						pantheonScreen.addEventListener(FeathersEventType.CREATION_COMPLETE, onShowTutorial);
+				}
 			}
 		}
 
