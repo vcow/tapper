@@ -130,6 +130,8 @@
         {
             var popup:PantheonRegisterPopUp = new PantheonRegisterPopUp();
             popup.addEventListener(starling.events.Event.CLOSE, onClosePopup);
+            popup.scores = _mediator.scores;
+
             WindowManager.getInstance().openWindow(popup, true);
         }
 

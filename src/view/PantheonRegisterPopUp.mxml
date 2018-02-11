@@ -5,10 +5,43 @@
         <f:AnchorLayout/>
     </f:layout>
 
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.name.input.title')}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 36, 0x4d220d)}}"
+             scaleX="0.8" maxWidth="380">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" top="15"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.name.result.title')}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 36, 0x4d220d)}}"
+             scaleX="0.8" maxWidth="380">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" top="125"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:Label text="{scoresLabel}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('top_message', NaN, 0x4d220d)}}"
+             scaleX="0.8" maxWidth="380">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" top="164"/>
+        </f:layoutData>
+    </f:Label>
+
+    <f:Label text="{LocaleManager.getInstance().getString('common', 'pantheon.name.result.description')}"
+             textRendererProperties="{{textFormat: new BitmapFontTextFormat('wooden_title', 36, 0x4d220d, TextFormatAlign.CENTER, -24)}}"
+             maxWidth="380" wordWrap="true" scaleX="0.9">
+        <f:layoutData>
+            <f:AnchorLayoutData horizontalCenter="-2" bottom="150"/>
+        </f:layoutData>
+    </f:Label>
+
     <f:TextInput width="348" id="nameTextField" maxChars="8"
                  restrict="АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЫЬЪЭЮЯабвгдежзиклмнопрстуфхцчшщыьъэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789. "
-                 prompt="Введите имя" textEditorFactory="bitmapFontTextEditorFactory"
-                 promptProperties="{{textFormat: new BitmapFontTextFormat('top_message', 42, 0x00451d, TextFormatAlign.CENTER)}}">
+                 promptProperties="{{textFormat: new BitmapFontTextFormat('top_message', 42, 0x00451d, TextFormatAlign.CENTER)}}"
+                 prompt="{LocaleManager.getInstance().getString('common', 'pantheon.name.input.prompt')}"
+                 textEditorFactory="bitmapFontTextEditorFactory">
     <f:layoutData>
             <f:AnchorLayoutData horizontalCenter="-1" top="63"/>
         </f:layoutData>
@@ -57,6 +90,14 @@
         import starling.textures.TextureAtlas;
         import starling.utils.StringUtil;
 
+        private var _scoresLabel:String = "";
+
+        [Bindable(event="scoresChanged")]
+        private function get scoresLabel():String
+        {
+            return _scoresLabel;
+        }
+
         private static var _atlas:TextureAtlas;
         private static function get atlas():TextureAtlas
         {
@@ -65,6 +106,12 @@
                 _atlas = AtlasLibrary.getInstance().manager.getTextureAtlas("common_1");
             }
             return _atlas;
+        }
+
+        public function set scores(value:Number)
+        {
+            _scoresLabel = StringUtils.divideByDigits(value);
+            dispatchEventWith("scoresChanged");
         }
 
         public function get userName():String

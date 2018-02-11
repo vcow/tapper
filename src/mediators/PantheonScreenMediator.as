@@ -217,10 +217,16 @@ package mediators
 
 		public function onRemovedFromStage(event:Event):void
 		{
-			var statistics:Statistics = Statistics.getInstance();
-			statistics.close();
+//			var statistics:Statistics = Statistics.getInstance();
+//			statistics.close();
 
 			_currentRequestType = null;
+		}
+
+		public function get scores():Number
+		{
+			var model:GameModel = AppFacade(facade).gameModel;
+			return model.money;
 		}
 
 		private function onBack(event:Event):void
@@ -587,7 +593,7 @@ package mediators
 
 		private function generateId():String
 		{
-			return "test_id_6";
+			return "test_id_8";
 		}
 	}
 }
