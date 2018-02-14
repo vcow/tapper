@@ -130,6 +130,7 @@ package mediators
 			}
 		}
 
+		// Прослушивать события представления и соединения.
 		private function addListeners(viewScreen:EventDispatcher):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -144,6 +145,7 @@ package mediators
 			if (viewScreen["stage"]) onAddedToStage(null);
 		}
 
+		// Не прослушивать события представления и соединения.
 		public function removeListeners(viewScreen:EventDispatcher):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -156,6 +158,7 @@ package mediators
 			viewScreen.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
+		// Обработчик сообщения от соединения о том, что в настоящий момент соединение занято.
 		private function onConnectionBusy(event:Event):void
 		{
 			var busy:Boolean = Statistics.getInstance().busy;
@@ -166,11 +169,13 @@ package mediators
 			}
 		}
 
+		// Обработчик смены статуса соединения - доступно / недоступно
 		private function onConnectionStatusChanged(event:Event):void
 		{
 			dispatchEventWith("pantheonAvailableChanged");
 		}
 
+		// Представление добавлено на сцену
 		private function onAddedToStage(event:Event):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -178,6 +183,7 @@ package mediators
 			{
 				_currentRequestType = GET_DATA;
 
+				// Если соединение доступно, получит текущий рейтинг.
 				if (statistics.busy)
 				{
 					statistics.addEventListener("busy", function (event:Event):void
@@ -194,12 +200,14 @@ package mediators
 			}
 			else
 			{
+				// Если соединение недоступно, выдать предупреждение.
 				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 						LocaleManager.getInstance().getString("common", "message.connection.error"),
 						onMessageClose, Const.ON_OK));
 			}
 		}
 
+		// Вспомогательная функция, инициирует получение рейтинга.
 		private function getData():void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -214,6 +222,8 @@ package mediators
 			statistics.getData();
 		}
 
+		// Вспомогательная функция, возвращает текущее имя игрока в Пантеоне. Если имя неизвестно,
+		// открывается диалог с запросом имени у игрока.
 		private function getUserName(callback:Function):void
 		{
 			var screenView:PantheonScreen = viewComponent as PantheonScreen;
@@ -232,11 +242,13 @@ package mediators
 			}
 		}
 
+		// Общий обработчик закрытия окон сообщений об ошибках, просто закрывает Пантеон.
 		private function onMessageClose(result:uint):void
 		{
 			sendNotification(Const.POP);
 		}
 
+		// Обработчик получения рейтингов с сервера.
 		private function onGetData(event:Event):void
 		{
 			_currentRequestType = null;
@@ -262,6 +274,7 @@ package mediators
 			}
 		}
 
+		// Обработчик закрытия окна Пантеона.
 		public function onRemovedFromStage(event:Event):void
 		{
 //			var statistics:Statistics = Statistics.getInstance();
@@ -270,17 +283,22 @@ package mediators
 			_currentRequestType = null;
 		}
 
+		/**
+		 * Текущий рейтинг игрока.
+		 */
 		public function get scores():Number
 		{
 			var model:GameModel = AppFacade(facade).gameModel;
 			return model.money;
 		}
 
+		// Команда на закрытие Пантеона.
 		private function onBack(event:Event):void
 		{
 			sendNotification(Const.POP);
 		}
 
+		// Вспомогательная функция регистрации на сервере игрока с указанным именем.
 		private function doRegisterUser(name:String):void
 		{
 			if (!name || !pantheonAvailable || connectionIsBusy)
@@ -300,6 +318,7 @@ package mediators
 			statistics.register(login, password);
 		}
 
+		// Генерация на основе id устройства уникальных логина и пароля.
 		private function generateLoginPassword():void
 		{
 			var id:String = AndroidID.isSupported ? AndroidID.ANDROID_ID : generateId();
@@ -313,6 +332,7 @@ package mediators
 			_login = _login.substr(0, Statistics.LOGIN_MAX_LENGTH);
 		}
 
+		// Обработчик завершения регистрации.
 		private function onRegisterComplete(event:Event):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -343,6 +363,7 @@ package mediators
 			}
 		}
 
+		// Сохранить текущий результат в Пантеоне.
 		private function onSetUserData(event:Event):void
 		{
 			if (!pantheonAvailable || connectionIsBusy)
@@ -356,6 +377,7 @@ package mediators
 			var model:GameModel = AppFacade(facade).gameModel;
 			if (model.money <= 0)
 			{
+				// У юзера нулевой балланс, сохранять нечего.
 				sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 						LocaleManager.getInstance().getString("common", "message.statistics.noMoney"),
 						null, Const.ON_OK));
@@ -377,11 +399,13 @@ package mediators
 			}
 		}
 
+		// Вспомогательная функция сохранения результата на сервере.
 		private function doSetData(checkPrevResult:Boolean):void
 		{
 			var model:GameModel = AppFacade(facade).gameModel;
 			if (checkPrevResult)
 			{
+				// Проверить, не стал ли результат меньше предыдущего, выдать предупреждение.
 				if (model.money < _lastUserScores)
 				{
 					sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
@@ -408,6 +432,7 @@ package mediators
 			statistics.setData(userData, model.money);
 		}
 
+		// Обработчик сохранения результата на сервере.
 		private function onSetDataComplete(event:Event):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -446,6 +471,7 @@ package mediators
 			}
 		}
 
+		// Обработчик запроса на аутентификацию игрока в Пантеоне.
 		private function onAuthComplete(event:Event):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
@@ -487,6 +513,7 @@ package mediators
 			}
 		}
 
+		// Вспомогательная функция, переводит ответ от сервера в упрощенные значения для дальнейшей обработки.
 		private static function parseResponse(response:Object):String
 		{
 			if (response.hasOwnProperty("error"))
@@ -504,16 +531,23 @@ package mediators
 			return RESPONSE_OK;
 		}
 
+		// Общий обработчик получения ошибки от сервера.
 		private function onStatisticsError(event:Event):void
 		{
 			var statistics:Statistics = Statistics.getInstance();
-			statistics.removeEventListener("error", onSetDataComplete);
+			statistics.removeEventListener("complete", onAuthComplete);
+			statistics.removeEventListener("complete", onRegisterComplete);
+			statistics.removeEventListener("complete", onSetDataComplete);
+			statistics.removeEventListener("error", onStatisticsError);
 
 			sendNotification(Const.SHOW_MESSAGE, new MessageBoxData(
 					LocaleManager.getInstance().getString("common", "message.statistics.sendDataFailed"),
 					onMessageClose, Const.ON_OK));
 		}
 
+		/**
+		 * Текущие полученные от сервера данные по игроку.
+		 */
 		public function get userData():Object
 		{
 			var model:GameModel = AppFacade(facade).gameModel;
@@ -530,6 +564,8 @@ package mediators
 			};
 		}
 
+		// Вспомогательная функция, возвращает идентификатор лучшего кабинета, доступного в данный
+		// момент игроку. Добавлено для возможной поддержки указания типа кабинета в рейтинге.
 		private static function getMaxRoom(rooms:Vector.<String>):String
 		{
 			var r:String = SkinType.WOOD;
@@ -550,6 +586,7 @@ package mediators
 			return r;
 		}
 
+		// Обновить содержимое топ 10.
 		private function updateTopList(data:Array, userRecord:Object = null):void
 		{
 			var top:Vector.<TopItem> = new Vector.<TopItem>();
@@ -605,12 +642,18 @@ package mediators
 			dispatchEventWith("topListChanged");
 		}
 
+		/**
+		 * Текущий сгенерированный логин игрока.
+		 */
 		public function get login():String
 		{
 			if (!_login) generateLoginPassword();
 			return _login;
 		}
 
+		/**
+		 * Текущий сгенерированный пароль игрока.
+		 */
 		public function get password():String
 		{
 			if (!_password) generateLoginPassword();
@@ -640,7 +683,7 @@ package mediators
 
 		private function generateId():String
 		{
-			return "test_id_8";
+			return "test_id_9";
 		}
 	}
 }

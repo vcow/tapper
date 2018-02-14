@@ -44,8 +44,8 @@ package net
 		{
 			if (!_instance)
 			{
-				_instance = new Statistics("http://127.0.0.1:8000/");
-//				_instance = new Statistics("http://vcow.pythonanywhere.com/");
+//				_instance = new Statistics("http://127.0.0.1:8000/");
+				_instance = new Statistics("http://vcow.pythonanywhere.com/");
 			}
 			return _instance
 		}
