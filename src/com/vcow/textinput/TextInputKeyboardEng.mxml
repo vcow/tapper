@@ -118,7 +118,7 @@
             <f:HorizontalLayout gap="5" paddingTop="5"/>
         </f:layout>
 
-        <textinput:TextInputKeyboardButton label="eng" defaultLabelProperties="{buttonLabelProperties}"
+        <textinput:TextInputKeyboardButton label="рус" defaultLabelProperties="{buttonLabelProperties}"
                                            triggered="dispatchEventWith('switch_rus')" width="70"/>
         <f:LayoutGroup width="5"/>
         <textinput:TextInputKeyboardButton label="+" defaultLabelProperties="{buttonLabelProperties}"

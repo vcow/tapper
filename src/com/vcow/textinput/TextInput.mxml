@@ -6,8 +6,8 @@
         <f:AnchorLayout/>
     </f:layout>
 
-    <textinput:TextInputLabel text="{promptText}" textRendererProperties="{promptProperties}"
-                              touchable="false" visible="{promptVisibility &amp;&amp; !isEdited}">
+    <textinput:TextInputLabel text="{promptText}" textRendererProperties="{promptProperties}" touchable="false"
+                              visible="{promptVisibility &amp;&amp; !isEdited &amp;&amp; !text}">
         <textinput:layoutData>
             <f:AnchorLayoutData left="0" right="0" top="0" bottom="0"/>
         </textinput:layoutData>
