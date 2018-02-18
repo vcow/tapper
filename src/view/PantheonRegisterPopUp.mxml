@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <f:LayoutGroup xmlns:f="library://ns.feathersui.com/mxml" xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:textinput="com.vcow.textinput.*"
                backgroundSkin="{new Image(atlas.getTexture('top_popup_back'))}" maxWidth="422" maxHeight="422">
     <f:layout>
         <f:AnchorLayout/>
@@ -37,15 +38,15 @@
         </f:layoutData>
     </f:Label>
 
-    <f:TextInput width="348" id="nameTextField" maxChars="8"
-                 restrict="АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЫЬЪЭЮЯабвгдежзиклмнопрстуфхцчшщыьъэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789. "
-                 promptProperties="{{textFormat: new BitmapFontTextFormat('top_message', 42, 0x00451d, TextFormatAlign.CENTER)}}"
-                 prompt="{LocaleManager.getInstance().getString('common', 'pantheon.name.input.prompt')}"
-                 textEditorFactory="bitmapFontTextEditorFactory">
-    <f:layoutData>
+    <textinput:TextInput id="nameTextField" cursorColor="#b9feb9" width="348" cursorOffset="-2"
+                         textRendererProperties="{{textFormat: new flash.text.TextFormat('supermolot', 42, 0xb9feb9, null, null, null, null, null, TextFormatAlign.CENTER)}}"
+                         promptProperties="{{textFormat: new BitmapFontTextFormat('top_message', 42, 0x00451d, TextFormatAlign.CENTER)}}"
+                         promptText="{LocaleManager.getInstance().getString('common', 'pantheon.name.input.prompt')}"
+                         showPrompt="true" maxChars="8" verticalTextOffset="-4">
+        <textinput:layoutData>
             <f:AnchorLayoutData horizontalCenter="-1" top="63"/>
-        </f:layoutData>
-    </f:TextInput>
+        </textinput:layoutData>
+    </textinput:TextInput>
 
     <f:LayoutGroup>
         <f:layout>
@@ -79,8 +80,6 @@
     </fx:Metadata>
 
     <fx:Script><![CDATA[
-        import feathers.controls.text.BitmapFontTextEditor;
-        import feathers.core.ITextEditor;
         import feathers.text.BitmapFontTextFormat;
 
         import resources.AtlasLibrary;
@@ -91,6 +90,10 @@
         import starling.utils.StringUtil;
 
         private var _scoresLabel:String = "";
+
+        [Embed(source="supermolot_black.ttf", fontFamily="supermolot",
+                fontWeight="normal", fontStyle="normal", mimeType="application/x-font", embedAsCFF="false")]
+        public static const _supermolot_black_ttf:Class;
 
         [Bindable(event="scoresChanged")]
         private function get scoresLabel():String
@@ -108,7 +111,7 @@
             return _atlas;
         }
 
-        public function set scores(value:Number)
+        public function set scores(value:Number):void
         {
             _scoresLabel = StringUtils.divideByDigits(value);
             dispatchEventWith("scoresChanged");
@@ -122,14 +125,6 @@
         private static function getName(rawName:String):String
         {
             return StringUtil.trim(rawName);
-        }
-
-        private static function bitmapFontTextEditorFactory():ITextEditor
-        {
-            var textEditor:BitmapFontTextEditor = new BitmapFontTextEditor();
-            textEditor.styleProvider = null;
-            textEditor.textFormat = new BitmapFontTextFormat('top_message', 42, 0xb9feb9, TextFormatAlign.CENTER);
-            return textEditor;
         }
         ]]></fx:Script>
 </f:LayoutGroup>
