@@ -51,6 +51,8 @@ package net
 
 		private var _os:int = -1;
 
+		private var _consumeAfterPurchaseFail:Boolean;
+
 		public static function getInstance():Purchase
 		{
 			if (!_instance)
@@ -313,6 +315,7 @@ package net
 					// В любой непонятной ситуации пробуем законсюмить товар.
 					if (_purchasedPack.isConsumable)
 					{
+						_consumeAfterPurchaseFail = true;
 						consume(_purchasedPack);
 						_purchasedPack = null;
 						return;
@@ -366,12 +369,13 @@ package net
 					purchase(pack);
 				}
 
-				dispatchEventWith("consumeComplete");
+				dispatchEventWith(_consumeAfterPurchaseFail ? "purchaseFailed" : "consumeComplete");
 			}
 			else
 			{
-				dispatchEventWith("consumeFailed");
+				dispatchEventWith(_consumeAfterPurchaseFail ? "purchaseFailed" : "consumeFailed");
 			}
+			_consumeAfterPurchaseFail = false;
 		}
 	}
 }
